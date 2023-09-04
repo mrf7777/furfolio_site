@@ -10,3 +10,8 @@ class Home(generic.ListView):
     def get_queryset(self) -> QuerySet[Any]:
         return models.Offer.objects.all().order_by("-created date")
     
+class Offer(generic.DetailView):
+    model = models.Offer
+    context_object_name = "offer"
+    
+    

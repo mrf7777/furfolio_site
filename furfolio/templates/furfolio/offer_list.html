@@ -4,7 +4,7 @@
 <ul>
     {% for offer in object_list %}
         <a href="{% url 'offer_detail' offer.id %}">
-            <li> {{ offer }} </li>
+            <li>{{ offer }}</li>
         </a>
     {% endfor %}
 </ul>

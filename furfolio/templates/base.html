@@ -8,7 +8,10 @@
         </title>
     </head>
     <body>
-        {% include "login_link.html" %}
+        {% block login_link %}
+            {% include "login_link.html" %}
+        {% endblock %}
+        
         {% block content %}
         {% endblock %}
     </body>

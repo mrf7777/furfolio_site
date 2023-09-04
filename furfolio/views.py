@@ -13,5 +13,3 @@ class Home(generic.ListView):
 class Offer(generic.DetailView):
     model = models.Offer
     context_object_name = "offer"
-    
-    

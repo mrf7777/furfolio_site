@@ -13,4 +13,4 @@ class Offer(models.Model):
     updated_date = models.DateTimeField(name="updated date", auto_now=True)
     
     def __str__(self):
-        return "\"%s\" by %s" % (self.name, self.author.username)
+        return "Id: %i. \"%s\" by %s." % (self.id, self.name, self.author.username)

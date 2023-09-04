@@ -3,7 +3,9 @@
 {% block content %}
 <ul>
     {% for offer in object_list %}
-        <li> {{ offer }} </li>
+        <a href="{% url 'offer_detail' offer.id %}">
+            <li> {{ offer }} </li>
+        </a>
     {% endfor %}
 </ul>
 {% endblock %}

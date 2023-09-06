@@ -1,19 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>
-            {% block site_title %}
-            Furfolio
-            {% endblock %}
-        </title>
-    </head>
-    <body>
-        {% block login_link %}
-            {% include "login_link.html" %}
-        {% endblock %}
-        
-        {% block content %}
-        {% endblock %}
-    </body>
-</html>
 
+<head>
+    <title>
+        {% block site_title %}
+        Furfolio
+        {% endblock %}
+    </title>
+</head>
+
+<body>
+    {% block login_link %}
+        {% if user.is_authenticated == False %}
+            {% include "login_link.html" %}
+            <br>
+        {% endif %}
+    {% endblock %}
+
+    {% block signup_link %}
+        {% if user.is_authenticated == False %}
+            {% include "signup_link.html" %}
+            <br>
+        {% endif %}
+    {% endblock %}
+    
+    {% block logout_link %}
+        {% if user.is_authenticated %}
+            {% include "logout_link.html" %}
+            <br>
+        {% endif %}
+    {% endblock %}
+    
+    {% block content %}
+    {% endblock %}
+</body>
+
+</html>

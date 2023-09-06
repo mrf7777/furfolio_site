@@ -9,6 +9,8 @@ from .forms import CustomUserCreationForm
 
 class Home(generic.ListView):
     model = models.Offer
+    template_name = "furfolio/home.html"
+    context_object_name = "offer_list"
     
     def get_queryset(self) -> QuerySet[Any]:
         return models.Offer.objects.all().order_by("-created date")

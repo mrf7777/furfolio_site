@@ -1,11 +1,7 @@
-{% extends "base.html" %}
-
-{% block content %}
 <ul>
-    {% for offer in object_list %}
+    {% for offer in offer_list %}
         <a href="{% url 'offer_detail' offer.id %}">
             <li>{{ offer }}</li>
         </a>
     {% endfor %}
 </ul>
-{% endblock %}

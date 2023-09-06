@@ -10,6 +10,11 @@
 </head>
 
 <body>
+    {% block home_link %}
+        {% include "home_link.html"%}
+        <br>
+    {% endblock %}
+
     {% block login_link %}
         {% if user.is_authenticated == False %}
             {% include "login_link.html" %}

@@ -16,7 +16,7 @@ class Home(generic.ListView):
     context_object_name = "offer_list"
     
     def get_queryset(self) -> QuerySet[Any]:
-        return models.Offer.objects.all().order_by("-created date")
+        return models.Offer.objects.all().order_by("-created_date")
     
 class Offer(generic.DetailView):
     model = models.Offer

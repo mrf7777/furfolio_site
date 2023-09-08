@@ -13,7 +13,7 @@ class CustomUserCreationForm(UserCreationForm):
 class OfferForm(forms.ModelForm):
     class Meta:
         model = Offer
-        fields = ["name", "cutoff date"]
+        fields = ["name", "cutoff_date"]
         widgets = {
-            "cutoff date": forms.TextInput(attrs={"type": "datetime-local"})
+            "cutoff_date": forms.TextInput(attrs={"type": "datetime-local"})
         }

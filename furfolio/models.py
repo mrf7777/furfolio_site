@@ -2,13 +2,14 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
-from datetime import datetime, timedelta
+from django.utils import timezone
+from datetime import timedelta
 
 class User(AbstractUser):
     pass
 
 def seven_days_from_now():
-    return datetime.now() + timedelta(days=7)
+    return timezone.now() + timedelta(days=7)
 
 class Offer(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

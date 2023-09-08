@@ -8,7 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from . import models
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, OfferForm
 
 class Home(generic.ListView):
     model = models.Offer
@@ -30,7 +30,7 @@ class SignUp(generic.CreateView):
     
 class CreateOffer(LoginRequiredMixin, generic.CreateView):
     model = models.Offer
-    fields = ["name", "cutoff date"]
+    form_class = OfferForm
     template_name = "furfolio/offer_form.html"
     
     # https://koenwoortman.com/python-django-set-current-user-create-view/

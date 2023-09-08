@@ -1,7 +1,9 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import EmailField
+from django.core.exceptions import ValidationError
 from django import forms
 from .models import User, Offer
+from django.utils import timezone
 
 # https://docs.djangoproject.com/en/4.2/topics/auth/customizing/#custom-users-and-the-built-in-auth-forms
 class CustomUserCreationForm(UserCreationForm):
@@ -17,3 +19,9 @@ class OfferForm(forms.ModelForm):
         widgets = {
             "cutoff_date": forms.TextInput(attrs={"type": "datetime-local"})
         }
+    
+    def clean_cutoff_date(self):
+        cutoff_date = self.cleaned_data["cutoff_date"]
+        if cutoff_date <= timezone.now():
+            raise ValidationError("Offer cutoff date cannot be in the past.")
+        return cutoff_date

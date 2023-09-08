@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='offer',
-            name='cutoff date',
+            name='cutoff_date',
             field=models.DateTimeField(default=datetime.datetime.now),
         ),
     ]

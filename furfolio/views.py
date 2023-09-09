@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import generic
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from . import models
 from .forms import CustomUserCreationForm, OfferForm
@@ -38,8 +38,12 @@ class CreateOffer(LoginRequiredMixin, generic.CreateView):
         form.instance.author_id = self.request.user.id
         return super().form_valid(form)
 
-class UpdateOffer(LoginRequiredMixin, generic.UpdateView):
-    # TODO: ensure that only the author can update the offer
+class UpdateOffer(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = models.Offer
     form_class = OfferForm
     template_name = "furfolio/offer_update_form.html"
+    
+    # TODO: use the slightly more efficient version
+    # https://www.django-antipatterns.com/antipattern/checking-ownership-through-the-userpassestestmixin.html
+    def test_func(self):
+        return self.get_object().author.pk == self.request.user.pk

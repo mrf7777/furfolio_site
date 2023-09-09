@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.forms',
     'furfolio',
 ]
 
@@ -133,3 +134,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'furfolio.User'
 
 LOGOUT_REDIRECT_URL = '/'
+
+FORM_RENDERER = "furfolio.forms.CustomFormRenderer"

@@ -37,3 +37,9 @@ class CreateOffer(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         form.instance.author_id = self.request.user.id
         return super().form_valid(form)
+
+class UpdateOffer(LoginRequiredMixin, generic.UpdateView):
+    # TODO: ensure that only the author can update the offer
+    model = models.Offer
+    form_class = OfferForm
+    template_name = "furfolio/offer_update_form.html"

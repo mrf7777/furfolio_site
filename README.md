@@ -8,19 +8,16 @@
 
 # Tasks
 - [ ] Offer CRUD
-  - [ ] Create
-    - [ ] User can create offer with suboffers
-      - [ ] Can create offer
-      - [ ] Can create suboffers
-      - [ ] Can create offer and suboffers on the same page
+  - [x] Create
+    - [x] Can create offer
   - [ ] Read
     - [ ] Card list view of offers and maybe suboffers
       - [ ] Styled?
-    - [ ] Can read offer and suboffer details on one page
+    - [x] Can read offer details on one page
       - [ ] Styled?
       - [ ] Signed in author sees link to update details
   - [ ] Update
-    - [ ] Author can access an update offer/suboffer page
+    - [x] Author can access an update offer/suboffer page
     - [ ] Styled?
   - [ ] Delete
     - [ ] Author can click a delete button

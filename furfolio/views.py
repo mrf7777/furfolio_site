@@ -47,3 +47,10 @@ class UpdateOffer(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     # https://www.django-antipatterns.com/antipattern/checking-ownership-through-the-userpassestestmixin.html
     def test_func(self):
         return self.get_object().author.pk == self.request.user.pk
+    
+class User(generic.DetailView):
+    model = models.User
+    slug_field = "username"
+    slug_url_kwarg = "username"
+    context_object_name = "user"
+    template_name = "furfolio/user_detail.html"

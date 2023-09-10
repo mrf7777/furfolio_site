@@ -55,7 +55,7 @@ class DeleteOffer(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
     template_name = "furfolio/offer_delete.html"
     success_url = reverse_lazy("home")
     
-    def test_func(self) -> bool | None:
+    def test_func(self):
         return self.get_object().author.pk == self.request.user.pk
     
 class User(generic.DetailView):

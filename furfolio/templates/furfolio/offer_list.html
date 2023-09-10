@@ -1,7 +1,4 @@
-<ul>
-    {% for offer in offer_list %}
-        <a href="{% url 'offer_detail' offer.id %}">
-            <li>{{ offer }}</li>
-        </a>
-    {% endfor %}
-</ul>
+{% for offer in offer_list %}
+    {% include "./offer_card.html" with offer=offer only %}
+    <br>
+{% endfor %}

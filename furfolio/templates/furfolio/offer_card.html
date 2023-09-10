@@ -1,0 +1,16 @@
+{% comment "" %}
+Includable template.
+Expects an offer object.
+{% endcomment %}
+
+<div>
+    <div>
+        <a href="{% url "offer_detail" offer.pk %}">{{ offer.name }}</a>
+    </div>
+    <div>
+        By: <a href="{% url "user" offer.author.username %}">{{ offer.author.username }}</a>
+    </div>
+    <div>
+        Cutoff date: {{ offer.cutoff_date }}
+    </div>
+</div>

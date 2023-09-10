@@ -42,6 +42,8 @@
     - [ ] Styled?
   - [ ] Update
     - [ ] Update email
+    - [ ] Update profile picture
+    - [ ] Update user page description
     - [ ] change password
     - [ ] Styled edit page?
   - [ ] Delete

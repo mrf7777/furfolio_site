@@ -1,34 +1,54 @@
 {% comment "" %}
 Includable website header.
 {% endcomment %}
-
-{% block home_link %}
-    {% include "home_link.html"%}
-    <br>
-{% endblock %}
-
-{% block login_link %}
-    {% if user.is_authenticated == False %}
-        {% include "login_link.html" %}
-        <br>
-    {% endif %}
-{% endblock %}
-
-{% block signup_link %}
-    {% if user.is_authenticated == False %}
-        {% include "signup_link.html" %}
-        <br>
-    {% endif %}
-{% endblock %}
-
-{% block logout_link %}
-    {% if user.is_authenticated %}
-        {% include "logout_link.html" %}
-        <br>
-    {% endif %}
-{% endblock %}
-
-{% block create_offer_link %}
-    {% include "create_offer_link.html" %}
-    <br>
-{% endblock %}
+<nav class="navbar navbar-expand-md">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url "home" %}">Furfolio</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    {% block home_link %}
+                    <a class="nav-link" href="{% url 'home' %}">
+                        Home
+                    </a>
+                    {% endblock %}
+                </li>
+                <li class="nav-item">
+                {% block create_offer_link %}
+                    <a class="nav-link" href="{% url "create_offer" %}">
+                        Create Offer
+                    </a>
+                {% endblock %}
+                </li>
+                <li class="nav-item">
+                    {% block logout_link %}
+                        {% if user.is_authenticated %}
+                        <a class="nav-link" href="{% url 'logout' %}">
+                            Logout
+                        </a>
+                        {% endif %}
+                    {% endblock %}
+                </li>
+                <li class="nav-item">
+                    {% block signup_link %}
+                        {% if user.is_authenticated == False %}
+                        <a class="nav-link" href="{% url 'signup' %}">
+                            Sign up
+                        </a>
+                        {% endif %}
+                    {% endblock %}
+                </li>
+                <li class="nav-item">
+                    {% block login_link %}
+                        {% if user.is_authenticated == False %}
+                            {% include "login_link.html" %}
+                        {% endif %}
+                    {% endblock %}
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

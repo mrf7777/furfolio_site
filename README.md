@@ -105,6 +105,24 @@ Then just use the chat functionallity to get the requirements.
   - url
   - thumbnail
 
+# Offer template idea
+## iteration 1
+Assume that a creator on the platform frequently creates the same offer every
+month. A template can help the creator get an offer up and running quickly.
+
+- Why this feature?
+  - What is the problem?
+    - Authors may create offers that are very similar
+      - Because of schedule.
+      - Because they want to provide a set of similar offers at once.
+      - Because there is a detail that is common in all of their types of offers (like license and legal).
+  - Maybe when a user goes to create an offer, they can use multiple templates which define presets for different fields.
+    - One template for legal and one for description, so that the author can mix and match templates to quickly prototype an offer.
+  - Author may want to create a template based on an existing offer that they made.
+  - Built in templates can be made to give user a taste of the power of templates.
+- For whom?
+  - Commissioners
+
 # Example offers
 # using iteration 1 of offer modeling
 - I will draw a portriat

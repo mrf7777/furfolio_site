@@ -16,6 +16,9 @@
 
 # Tasks
 - [ ] Offer CRUD
+  - [ ] Fields support
+    - [ ] Price range
+    - [ ] Description
   - [x] Create
     - [x] Can create offer
   - [ ] Read

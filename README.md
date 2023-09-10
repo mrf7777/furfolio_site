@@ -19,13 +19,13 @@
   - [x] Create
     - [x] Can create offer
   - [ ] Read
-    - [ ] Card list view of offers and maybe suboffers
+    - [ ] Card list view of offers
       - [ ] Styled?
     - [x] Can read offer details on one page
       - [ ] Styled?
       - [ ] Signed in author sees link to update details
   - [ ] Update
-    - [x] Author can access an update offer/suboffer page
+    - [x] Author can access an update offer page
     - [ ] Styled?
   - [ ] Delete
     - [ ] Author can click a delete button

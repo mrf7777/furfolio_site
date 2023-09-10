@@ -2,4 +2,8 @@
 
 {% block content %}
     {{ offer }}
+    <br>
+    {% if user.pk == offer.author.pk %}
+        <a href="{% url "update_offer" offer.pk %}">Edit</a>
+    {% endif %}
 {% endblock %}

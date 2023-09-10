@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {{ offer }}
+    {% include "./offer_card.html" with offer=offer only %}
     <br>
     {% if user.pk == offer.author.pk %}
         <a href="{% url "update_offer" offer.pk %}">Edit</a>

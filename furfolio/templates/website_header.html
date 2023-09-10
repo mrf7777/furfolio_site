@@ -1,0 +1,34 @@
+{% comment "" %}
+Includable website header.
+{% endcomment %}
+
+{% block home_link %}
+    {% include "home_link.html"%}
+    <br>
+{% endblock %}
+
+{% block login_link %}
+    {% if user.is_authenticated == False %}
+        {% include "login_link.html" %}
+        <br>
+    {% endif %}
+{% endblock %}
+
+{% block signup_link %}
+    {% if user.is_authenticated == False %}
+        {% include "signup_link.html" %}
+        <br>
+    {% endif %}
+{% endblock %}
+
+{% block logout_link %}
+    {% if user.is_authenticated %}
+        {% include "logout_link.html" %}
+        <br>
+    {% endif %}
+{% endblock %}
+
+{% block create_offer_link %}
+    {% include "create_offer_link.html" %}
+    <br>
+{% endblock %}

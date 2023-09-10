@@ -54,3 +54,10 @@ class User(generic.DetailView):
     slug_url_kwarg = "username"
     context_object_name = "user"
     template_name = "furfolio/user_detail.html"
+    
+class DeleteOffer(generic.DeleteView):
+    model = models.Offer
+    slug_field = "username"
+    slug_url_kwarg = "username"
+    template_name = "furfolio/offer_delete.html"
+    success_url = reverse_lazy("home")

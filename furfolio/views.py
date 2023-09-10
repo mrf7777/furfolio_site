@@ -48,13 +48,6 @@ class UpdateOffer(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     def test_func(self):
         return self.get_object().author.pk == self.request.user.pk
     
-class User(generic.DetailView):
-    model = models.User
-    slug_field = "username"
-    slug_url_kwarg = "username"
-    context_object_name = "user"
-    template_name = "furfolio/user_detail.html"
-    
 class DeleteOffer(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
     model = models.Offer
     slug_field = "username"
@@ -64,3 +57,11 @@ class DeleteOffer(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
     
     def test_func(self) -> bool | None:
         return self.get_object().author.pk == self.request.user.pk
+    
+class User(generic.DetailView):
+    model = models.User
+    slug_field = "username"
+    slug_url_kwarg = "username"
+    context_object_name = "user"
+    template_name = "furfolio/user_detail.html"
+    

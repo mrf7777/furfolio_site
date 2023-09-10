@@ -27,8 +27,8 @@
   - [ ] Update
     - [x] Author can access an update offer page
     - [ ] Styled?
-  - [ ] Delete
-    - [ ] Author can click a delete button
+  - [x] Delete
+    - [x] Author can click a delete button
 
 # Notes
 ## iteration 1 of offer modeling

@@ -30,6 +30,21 @@
   - [x] Delete
     - [x] Author can click a delete button
 
+- [ ] User CRUD
+  - [ ] Read
+    - [x] User public profile page
+    - [ ] Styled?
+  - [ ] Create
+    - [x] User sign-up
+    - [ ] Styled?
+  - [ ] Update
+    - [ ] Update email
+    - [ ] change password
+    - [ ] Styled edit page?
+  - [ ] Delete
+    - [ ] User can delete account.
+    - [ ] Styled delete?
+
 # Notes
 ## iteration 1 of offer modeling
 - Offer fields ideas

@@ -1,10 +1,10 @@
 # Glossary
-| Term | Definition |
-| ------ | ------ |
-| Creator | A user role that expresses that the user primarily creates offers and intends to fulfill commissions made from those offers. |
-| Commissioner | In the context of a commission, the one who initiated the commission. |
-| Commissionee | In the context of a commission, the one who fulfills the request defined by the commission and the customer. |
-| Commission | A request initiated by a commissioner directed towards a commissionee to fulfill requirements as defined by the commissioner and the offer associated with the commission. |
+| Term         | Definition                                                                                                                                                                 |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Creator      | A user role that expresses that the user primarily creates offers and intends to fulfill commissions made from those offers.                                               |
+| Commissioner | In the context of a commission, the one who initiated the commission.                                                                                                      |
+| Commissionee | In the context of a commission, the one who fulfills the request defined by the commission and the customer.                                                               |
+| Commission   | A request initiated by a commissioner directed towards a commissionee to fulfill requirements as defined by the commissioner and the offer associated with the commission. |
 
 # Value
 - Publish commissions.
@@ -23,7 +23,7 @@
     - [x] Can create offer
   - [ ] Read
     - [x] Card list view of offers
-      - [ ] Styled?
+      - [x] Styled?
     - [x] Can read offer details on one page
       - [ ] Styled?
       - [x] Signed in author sees link to update details

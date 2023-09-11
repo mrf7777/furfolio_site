@@ -1,4 +1,4 @@
 {% for offer in offer_list %}
-    {% include "./offer_card.html" with offer=offer only %}
+    {% include "./offer_card.html" with offer=offer title_is_link=True only %}
     <br>
 {% endfor %}

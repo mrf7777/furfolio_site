@@ -136,3 +136,12 @@ AUTH_USER_MODEL = 'furfolio.User'
 LOGOUT_REDIRECT_URL = '/'
 
 FORM_RENDERER = "furfolio.forms.CustomFormRenderer"
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}

@@ -8,5 +8,6 @@ urlpatterns = [
     path('offers/<pk>/delete/', views.DeleteOffer.as_view(), name="delete_offer"),
     path('offers/<pk>/', views.Offer.as_view(), name="offer_detail"),
     path('accounts/signup/', views.SignUp.as_view(), name="signup"),
-    path('users/<username>/', views.User.as_view(), name="user")
+    path('users/<username>/', views.User.as_view(), name="user"),
+    path('users/', views.UserList.as_view(), name="user-list"),
 ]

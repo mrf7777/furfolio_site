@@ -3,14 +3,16 @@ Includable template.
 Expects an offer object.
 {% endcomment %}
 
-<div>
-    <div>
-        <a href="{% url "offer_detail" offer.pk %}">{{ offer.name }}</a>
+<div class="card">
+    <div class="card-header d-flex">
+        <h5>
+            <a class="text-decoration-none" href="{% url "offer_detail" offer.pk %}">{{ offer.name }}</a>
+        </h5>
+        <h6 class="text-body-secondary ms-auto">
+            By: <a class="text-decoration-none" href="{% url "user" offer.author.username %}">{{ offer.author.username }}</a>
+        </h6>
     </div>
-    <div>
-        By: <a href="{% url "user" offer.author.username %}">{{ offer.author.username }}</a>
-    </div>
-    <div>
+    <div class="card-body">
         Cutoff date: {{ offer.cutoff_date }}
     </div>
 </div>

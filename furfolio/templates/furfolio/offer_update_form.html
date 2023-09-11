@@ -4,8 +4,8 @@
 <form method="post">
     {% csrf_token %}
     {{ form }}
-    <input type="submit" value="Update">
+    <input class="btn btn-primary mt-3" type="submit" value="Update">
 </form>
 
-<a href="{% url "delete_offer" offer.pk %}"><button>Delete</button></a>
+<a href="{% url "delete_offer" offer.pk %}"><button class="btn btn-danger mt-3">Delete</button></a>
 {% endblock %}

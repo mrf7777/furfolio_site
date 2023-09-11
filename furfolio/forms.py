@@ -36,12 +36,14 @@ class LoginForm(AuthenticationForm):
 
 
 class OfferForm(forms.ModelForm):
+    cutoff_date = forms.SplitDateTimeField(widget=forms.SplitDateTimeWidget(
+        attrs={"class": "form-control"}, date_attrs={"type": "date", "class": "form-control"}))
+
     class Meta:
         model = Offer
         fields = ["name", "cutoff_date"]
         widgets = {
             "name": forms.TextInput(attrs={"class": "form-control"}),
-            "cutoff_date": forms.TextInput(attrs={"type": "datetime-local", "class": "form-control"})
         }
 
     def clean_cutoff_date(self):

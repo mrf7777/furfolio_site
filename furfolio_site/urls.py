@@ -16,19 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.contrib.auth import views as auth_views
-from furfolio import forms as furfolio_forms
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('furfolio.urls')),
-    # path('accounts/', include("django.contrib.auth.urls")),
-    path(
-        'accounts/login/',
-        auth_views.LoginView.as_view(
-            authentication_form=furfolio_forms.LoginForm
-        ),
-        name="login"
-    ),
-    path('accounts/logout/', auth_views.LogoutView.as_view(), name="logout"),
 ]

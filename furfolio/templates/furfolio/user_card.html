@@ -3,10 +3,12 @@ Includable user card.
 Expects object 'user'
 {% endcomment %}
 
-<a href="{% url "user" user.username %}" class="text-decoration-none">
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">{{ user.username }}</h5>
+<div class="mb-3">
+    <a href="{% url "user" user.username %}" class="text-decoration-none">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ user.username }}</h5>
+            </div>
         </div>
-    </div>
-</a>
+    </a>
+</div>

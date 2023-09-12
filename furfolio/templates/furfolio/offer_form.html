@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
+<h1>Create Offer</h1>
+
 <form action="{% url "create_offer" %}" method="post">
     {% csrf_token %}
     {{ form }}

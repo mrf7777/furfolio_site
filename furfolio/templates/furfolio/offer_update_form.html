@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
+<h1>Edit offer "{{ offer.name }}"</h1>
+
 <div class="d-flex justify-content-end">
     <a href="{% url "delete_offer" offer.pk %}"><button class="btn btn-danger">Delete</button></a>
 </div>

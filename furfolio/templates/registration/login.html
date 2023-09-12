@@ -4,6 +4,7 @@
 {% endblock %}
 
 {% block content %}
+<h1>Login</h1>
 
 <form method="post" action="{% url 'login' %}{% if next %}?next={{ next }}{% endif %}">
     {% csrf_token %}

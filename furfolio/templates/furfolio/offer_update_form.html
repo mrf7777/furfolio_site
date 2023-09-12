@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="d-flex justify-content-end">
+    <a href="{% url "delete_offer" offer.pk %}"><button class="btn btn-danger">Delete</button></a>
+</div>
+
 <form method="post">
     {% csrf_token %}
     {{ form }}
     <input class="btn btn-primary mt-3" type="submit" value="Update">
 </form>
-
-<a href="{% url "delete_offer" offer.pk %}"><button class="btn btn-danger mt-3">Delete</button></a>
 {% endblock %}

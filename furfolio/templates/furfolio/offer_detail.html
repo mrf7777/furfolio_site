@@ -4,6 +4,6 @@
     {% include "./offer_card.html" with offer=offer only %}
     <br>
     {% if user.pk == offer.author.pk %}
-        <a href="{% url "update_offer" offer.pk %}">Edit</a>
+        <a class="btn btn-primary" href="{% url "update_offer" offer.pk %}">Edit</a>
     {% endif %}
 {% endblock %}

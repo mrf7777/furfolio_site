@@ -1,6 +1,7 @@
 {% for field in form %}
     <div>
-        {{ field.label_tag }}
+        <h4>{{ field.label_tag }}</h4>
+        <p>{{ field.help_text }}</p>
         {{ field }}
         <span class="text-danger">
             {{ field.errors }}

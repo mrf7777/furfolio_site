@@ -22,6 +22,7 @@ class Offer(models.Model):
     name = models.CharField(
         max_length=80,
         name="name",
+        help_text="The name of your offer. Must be between 5 and 80 characters long.",
         validators=[validators.MinLengthValidator(5),]
     )
     cutoff_date = models.DateTimeField(

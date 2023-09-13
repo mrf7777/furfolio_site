@@ -27,7 +27,10 @@ class Offer(models.Model):
     cutoff_date = models.DateTimeField(
         name="cutoff_date",
         default=seven_days_from_now,
-        validators=[furfolio_validators.validate_datetime_not_in_past,]
+        validators=[
+            furfolio_validators.validate_datetime_not_in_past,
+            furfolio_validators.validate_datetime_at_least_12_hours,
+        ]
     )
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)

@@ -9,6 +9,7 @@ django-storages==1.14
 gunicorn==21.2.0
 jmespath==1.0.1
 packaging==23.1
+Pillow==10.0.0
 pip-autoremove==0.10.0
 psycopg2==2.9.7
 python-dateutil==2.8.2

@@ -32,8 +32,8 @@ class Offer(models.Model):
             furfolio_validators.validate_datetime_not_in_past,
             furfolio_validators.validate_datetime_at_least_12_hours,
         ],
-
     )
+    thumbnail = models.ImageField(name="thumbnail", blank=True, null=True)
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)
 

@@ -29,7 +29,7 @@
       - [x] Signed in author sees link to update details
   - [ ] Update
     - [x] Author can access an update offer page
-    - [ ] Styled?
+    - [x] Styled?
   - [x] Delete
     - [x] Author can click a delete button
 

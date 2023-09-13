@@ -39,7 +39,7 @@ class OfferForm(forms.ModelForm):
     cutoff_date = forms.SplitDateTimeField(
         widget=forms.SplitDateTimeWidget(
             date_attrs={"type": "date", "class": "form-control"}, time_attrs={"type": "time", "class": "form-control mt-1"}
-        )
+        ),
     )
 
     class Meta:

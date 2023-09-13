@@ -5,6 +5,7 @@ from django.core import validators
 from django.urls import reverse
 from django.utils import timezone
 from datetime import timedelta
+from . import validators as furfolio_validators
 
 
 class User(AbstractUser):
@@ -24,7 +25,10 @@ class Offer(models.Model):
         validators=[validators.MinLengthValidator(5),]
     )
     cutoff_date = models.DateTimeField(
-        name="cutoff_date", default=seven_days_from_now)
+        name="cutoff_date",
+        default=seven_days_from_now,
+        validators=[furfolio_validators.validate_datetime_not_in_past,]
+    )
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)
 

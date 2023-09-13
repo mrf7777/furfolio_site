@@ -48,9 +48,3 @@ class OfferForm(forms.ModelForm):
         widgets = {
             "name": forms.TextInput(attrs={"class": "form-control"}),
         }
-
-    def clean_cutoff_date(self):
-        cutoff_date = self.cleaned_data["cutoff_date"]
-        if cutoff_date <= timezone.now():
-            raise ValidationError("Offer cutoff date cannot be in the past.")
-        return cutoff_date

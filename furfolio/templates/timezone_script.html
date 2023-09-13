@@ -1,0 +1,8 @@
+{# used to capture user's timezone and to later set as current timezone: https://stackoverflow.com/a/76585802 #}
+<script>
+    let tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if (!tz) {
+        tz = "UTC"
+    }
+    document.cookie = "mytz=" + tz + ";path=/";
+</script>

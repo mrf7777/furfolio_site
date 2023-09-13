@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.forms',
+    'pwa',
     'furfolio',
 ]
 
@@ -158,3 +159,48 @@ STORAGES = {
         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
+
+# Progressive Web App (PWA) settings
+PWA_APP_NAME = "Furfolio"
+PWA_APP_DESCRIPTION = "Commission management platform for creators and customers."
+PWA_APP_LANG = 'en-US'
+PWA_APP_ICONS = [
+    {
+        'src': '/static/icons/favicon-16x16.png',
+        'sizes': '16x16',
+    },
+    {
+        'src': '/static/icons/favicon-32x32.png',
+        'sizes': '32x32',
+    },
+    {
+        'src': '/static/icons/favicon-48x48.png',
+        'sizes': '48x48',
+    },
+    {
+        'src': '/static/icons/favicon-167x167.png',
+        'sizes': '167x167',
+    },
+    {
+        'src': '/static/icons/favicon-180x180.png',
+        'sizes': '180x180',
+    },
+    {
+        'src': '/static/icons/favicon-192x192.png',
+        'sizes': '192x192',
+    },
+    {
+        'src': '/static/icons/favicon-512x512.png',
+        'sizes': '512x512',
+    },
+    {
+        'src': '/static/icons/favicon-768x768.png',
+        'sizes': '768x768',
+    },
+]
+PWA_APP_SPLASH_SCREEN = [
+    {
+        'src': '/static/icons/favicon-768x768.png',
+        'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
+    }
+]

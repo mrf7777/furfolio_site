@@ -46,7 +46,8 @@ class OfferForm(forms.ModelForm):
 
     class Meta:
         model = Offer
-        fields = ["name", "cutoff_date"]
+        fields = ["name", "cutoff_date", "thumbnail"]
         widgets = {
             "name": forms.TextInput(attrs={"class": "form-control"}),
+            "thumbnail": forms.FileInput(attrs={"class": "form-control"}),
         }

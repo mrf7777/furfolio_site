@@ -5,6 +5,9 @@ Expects a 'title_is_link':bool object
 {% endcomment %}
 
 <div class="card">
+    {% if offer.thumbnail %}
+    <img class="card-img-top" src="{{ offer.thumbnail.url }}">
+    {% endif %}
     <div class="card-header d-flex">
         <h5>
             {% if title_is_link %}

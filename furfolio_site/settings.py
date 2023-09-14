@@ -174,7 +174,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 MEDIA_URL = 'media/'
 if os.getenv("DEBUG", "False") == "True":
-    MEDIA_ROOT = './media'
+    MEDIA_ROOT = '.media'
 else:
     MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 

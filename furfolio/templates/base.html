@@ -35,10 +35,16 @@
     </div>
     <br>
 
-    <div class="container">
+    <div class="container mb-3">
         {% block content %}
         {% endblock %}
     </div>
+
+    <footer class="bg-secondary">
+        <div class="container pt-4 pb-5">
+            <img width="100px" src="{% static "logos/dark/dark-mono.svg" %}">
+        </div>
+    </footer>
 
     {% include "timezone_script.html" %}
 </body>

@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-{{ user }}
+
+<h4 class="d-flex align-items-center">
+    {% if user.avatar %}
+        <img class="me-3" src="{{ user.avatar.url }}">
+    {% endif %}
+    {{ user.username }}
+</h4>
 {% endblock %}

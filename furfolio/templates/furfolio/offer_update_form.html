@@ -16,12 +16,6 @@
     </div>
 </form>
 
-<script>
-    let update_button = document.getElementById("update-button")
-    update_button.addEventListener("click", function() {
-        update_button.style.display = "none"
-    })
-    console.log(update_button)
-</script>
+{% include "scripts/hide_on_click.html" with button_id="update-button" id_to_hide="update-button" only %}
 
 {% endblock %}

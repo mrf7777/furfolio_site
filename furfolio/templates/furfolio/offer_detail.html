@@ -1,8 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {% include "./offer_card.html" with offer=offer only %}
-    <br>
+    <h1 class="mb-1">{{ offer.name }}</h1>
+    {% if offer.thumbnail %}
+        <div class="d-flex justify-content-center mb-3">
+            <img class="rounded border border-2" src="{{ offer.thumbnail.url }}">
+        </div>
+    {% endif %}
+    <div class="mb-3">
+        <small>Cutoff date and time: {{ offer.cutoff_date }}</small>
+    </div>
     {% if user.pk == offer.author.pk %}
         <a class="btn btn-primary" href="{% url "update_offer" offer.pk %}">Edit</a>
     {% endif %}

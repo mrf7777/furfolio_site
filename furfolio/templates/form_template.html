@@ -1,5 +1,5 @@
 {% for field in form %}
-    <div>
+    <div class="mb-4">
         <h4>{{ field.label_tag }}</h4>
         <p>{{ field.help_text }}</p>
         {{ field }}
@@ -9,8 +9,9 @@
     </div>
 {% endfor %}
 
-<div>
+<div class="text-danger">
     {% if errors %}
-    Errors: {{ errors }}
+    <strong>Errors:</strong>
+    {{ errors }}
     {% endif %}
 </div>

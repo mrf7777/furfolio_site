@@ -18,5 +18,6 @@ def validate_datetime_at_least_12_hours(value: datetime):
 
 
 def validate_profile_image_is_right_size(value: ImageFieldFile):
-    if value.height != 100 or value.width != 100:
-        raise ValidationError("Avatar must be 100 by 100 pixels.")
+    AVATAR_WIDTH_HEIGHT = 64
+    if value.height != AVATAR_WIDTH_HEIGHT or value.width != AVATAR_WIDTH_HEIGHT:
+        raise ValidationError("Avatar must be 64 by 64 pixels.")

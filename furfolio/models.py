@@ -12,7 +12,7 @@ class User(AbstractUser):
     avatar = models.ImageField(
         name="avatar",
         blank=True,
-        help_text="Your avatar must be 100 by 100 pixels.",
+        help_text="Avatars are optional. Your avatar must be 64 by 64 pixels.",
         validators=[furfolio_validators.validate_profile_image_is_right_size,],
     )
 

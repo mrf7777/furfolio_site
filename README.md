@@ -1,6 +1,7 @@
 # Glossary
 | Term         | Definition                                                                                                                                                                 |
 | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| User | An agent that uses the application. |
 | Creator      | A user role that expresses that the user primarily creates offers and intends to fulfill commissions made from those offers.                                               |
 | Commissioner | In the context of a commission, the one who initiated the commission.                                                                                                      |
 | Commissionee | In the context of a commission, the one who fulfills the request defined by the commission and the customer.                                                               |

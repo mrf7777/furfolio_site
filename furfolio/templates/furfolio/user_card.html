@@ -3,13 +3,14 @@ Includable user card.
 Expects object 'user'
 {% endcomment %}
 
-<div class="mb-3">
-    <div class="card">
-        <h5 class="card-header">
-            <a class="text-decoration-none" href="{% url "user" user.username %}">{{ user.username }}</a>
-        </h5>
-        <div class="card-body">
-            <p class="card-text">Date joined: {{ user.date_joined }}</p>
-        </div>
+<div class="card">
+    <h5 class="card-header">
+        {% if user.avatar %}
+            <img src="{{ user.avatar.url }}">
+        {% endif %}
+        <a class="text-decoration-none" href="{% url "user" user.username %}">{{ user.username }}</a>
+    </h5>
+    <div class="card-body">
+        <p class="card-text">Date joined: {{ user.date_joined }}</p>
     </div>
 </div>

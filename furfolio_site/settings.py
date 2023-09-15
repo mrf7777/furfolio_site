@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.forms',
     'pwa',
+    'storages',
     'furfolio',
 ]
 
@@ -190,10 +191,24 @@ LOGOUT_REDIRECT_URL = '/'
 
 FORM_RENDERER = "furfolio.forms.CustomFormRenderer"
 
+def make_default_storage():
+    default_storage = {}
+    if os.getenv("DEVELOPMENT_MODE", "False") == "True":
+        default_storage["BACKEND"] = "django.core.files.storage.FileSystemStorage"
+    else:
+        default_storage["BACKEND"] = "storages.backends.s3.S3Storage"
+        default_storage["OPTIONS"] = {
+            "access_key": os.getenv("STORAGE_ACCESS_KEY"),
+            "secret_key": os.getenv("STORAGE_SECRET_KEY"),
+            "bucket_name": os.getenv("STORAGE_BUCKET_NAME"),
+            "region_name": os.getenv("STORAGE_REGION_NAME"),
+            "endpoint_url": os.getenv("STORAGE_ENDPOINT_URL"),
+        }
+    return default_storage
+        
+
 STORAGES = {
-    "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-    },
+    "default": make_default_storage(),
     "staticfiles": {
         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },

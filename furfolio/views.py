@@ -14,6 +14,10 @@ class Home(generic.TemplateView):
     template_name = "furfolio/home.html"
 
 
+class Dashboard(generic.TemplateView):
+    template_name = "furfolio/dashboard.html"
+
+
 class OfferList(generic.ListView):
     model = models.Offer
     template_name = "furfolio/offer_list.html"

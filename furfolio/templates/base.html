@@ -29,20 +29,24 @@
     {% progressive_web_app_meta %}
 </head>
 
-<body>
+<body class="d-flex flex-column vh-100">
     <div class="container-fluid">
         {% include "website_header.html" %}
     </div>
     <br>
 
-    <div class="container mb-3">
-        {% block content %}
-        {% endblock %}
-    </div>
+    <main class="flex-grow-1">
+        <div class="container mb-3">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </main>
 
     <footer class="bg-secondary">
         <div class="container pt-4 pb-5">
+            <a href="{% url "home" %}">
             <img width="100px" src="{% static "logos/dark/dark-mono.svg" %}">
+            </a>
         </div>
     </footer>
 

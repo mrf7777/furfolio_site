@@ -14,3 +14,10 @@ def validate_datetime_at_least_12_hours(value: datetime):
     if value < future_12_hours:
         raise ValidationError(
             "Provided date-time must be at least 12 hours into the future.")
+
+
+def validate_profile_image_is_right_size(value):
+    print("Profile image value:")
+    print(value)
+    print()
+    pass

@@ -9,7 +9,12 @@ from . import validators as furfolio_validators
 
 
 class User(AbstractUser):
-    pass
+    avatar = models.ImageField(
+        name="avatar",
+        blank=True,
+        help_text="Your avatar must be of small size.",
+        validators=[furfolio_validators.validate_profile_image_is_right_size,],
+    )
 
 
 def seven_days_from_now():

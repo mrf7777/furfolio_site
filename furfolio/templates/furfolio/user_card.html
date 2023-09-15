@@ -6,7 +6,7 @@ Expects object 'user'
 <div class="card">
     <h5 class="card-header">
         {% if user.avatar %}
-            <img src="{{ user.avatar.url }}">
+            <img class="me-3" src="{{ user.avatar.url }}">
         {% endif %}
         <a class="text-decoration-none" href="{% url "user" user.username %}">{{ user.username }}</a>
     </h5>

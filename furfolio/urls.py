@@ -13,7 +13,7 @@ urlpatterns = [
     path('offers/<pk>/', views.Offer.as_view(), name="offer_detail"),
     # users
     path('users/<username>/', views.User.as_view(), name="user"),
-    path('users/', views.UserList.as_view(), name="user-list"),
+    path('users/', views.UserList.as_view(), name="user_list"),
     # accounts
     path('accounts/signup/', views.SignUp.as_view(), name="signup"),
     path(

@@ -11,7 +11,7 @@
     {{ form }}
     
     <input class="btn btn-primary mt-3" type="submit" value="login">
-    <input type="hidden" name="next" value="{% if next %}{{ next }}{% else %}{% url 'home' %}{% endif %}">
+    <input type="hidden" name="next" value="{% if next %}{{ next }}{% else %}{% url 'offer_list' %}{% endif %}">
 </form>
 
 {% endblock %}

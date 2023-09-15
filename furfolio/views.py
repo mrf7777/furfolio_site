@@ -4,16 +4,15 @@ from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import generic
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from . import models
 from .forms import CustomUserCreationForm, OfferForm
 
 
-class Home(generic.ListView):
+class OfferList(generic.ListView):
     model = models.Offer
-    template_name = "furfolio/home.html"
+    template_name = "furfolio/offer_list.html"
     context_object_name = "offer_list"
 
     def get_queryset(self) -> QuerySet[Any]:
@@ -59,7 +58,7 @@ class DeleteOffer(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
     slug_field = "username"
     slug_url_kwarg = "username"
     template_name = "furfolio/offer_delete.html"
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("offer_list")
 
     def test_func(self):
         return self.get_object().author.pk == self.request.user.pk

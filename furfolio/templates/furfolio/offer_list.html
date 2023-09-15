@@ -1,5 +1,5 @@
-{% for offer in offer_list %}
-<div class="mb-3">
-    {% include "./offer_card.html" with offer=offer title_is_link=True only %}
-</div>
-{% endfor %}
+{% extends "base.html" %}
+
+{% block content %}
+{% include "./offer_list_template.html" with offer_list=offer_list%}
+{% endblock %}

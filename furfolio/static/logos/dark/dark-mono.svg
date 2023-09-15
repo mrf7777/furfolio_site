@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 1355.16 919.69999"
+   version="1.1"
+   id="svg390"
+   sodipodi:docname="Furfolio 1 dark mono.svg"
+   width="1355.16"
+   height="919.70001"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview392"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="0.18123816"
+     inkscape:cx="3089.8569"
+     inkscape:cy="466.23734"
+     inkscape:window-width="1920"
+     inkscape:window-height="1016"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg390" />
+  <defs
+     id="defs376">
+    <style
+       id="style374">.cls-1{fill:#fff;}.cls-2{fill:#0a1a2d;}</style>
+  </defs>
+  <g
+     id="Layer_9"
+     transform="translate(-382.68,-1712.95)">
+    <path
+       class="cls-1"
+       d="m 1172.62,1712.95 -789.01,455.53 550.26,317.69 789.01,-455.53 z m 59.67,455.53 -119.37,68.93 -179.05,-103.39 -179.06,103.39 -119.36,-68.92 537.15,-310.14 298.43,172.3 -119.37,68.92 -179.04,-103.38 -119.37,68.92 z"
+       id="path381" />
+    <path
+       class="cls-1"
+       d="m 382.69,1712.95 v 410.92 l 711.73,-410.92 z m 173.29,173.79 -59.68,34.46 v 60.81 c 0,0 -28.06,0 -28.06,0 V 1905 c 0,0 59.69,-34.46 59.69,-34.46 v -68.92 l 66.69,-38.52 14.03,24.3 -52.66,30.41 v 68.92 z"
+       id="path383" />
+    <path
+       class="cls-1"
+       d="m 1250.82,1712.95 473,273.09 v -273.09 z m 385.25,162.63 v -26.36 c 0,0 -29.85,-17.23 -29.85,-17.23 v -34.46 l -22.82,-13.18 14.03,-24.3 36.85,21.28 v 34.46 l 29.84,17.23 v 42.55 c 0,0 -28.05,0 -28.05,0 z"
+       id="path385" />
+    <polygon
+       class="cls-1"
+       points="1681.72,2168.48 933.87,2600.24 410.74,2298.22 410.74,2261.7 516.08,2322.52 516.08,2290.11 382.69,2213.1 382.68,2314.42 933.87,2632.65 1737.84,2168.48 1650.09,2117.82 1650.09,2150.22 "
+       id="polygon387" />
+  </g>
+</svg>

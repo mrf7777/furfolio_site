@@ -10,6 +10,10 @@ from . import models
 from .forms import CustomUserCreationForm, OfferForm
 
 
+class Home(generic.TemplateView):
+    template_name = "furfolio/home.html"
+
+
 class OfferList(generic.ListView):
     model = models.Offer
     template_name = "furfolio/offer_list.html"

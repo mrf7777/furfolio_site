@@ -4,8 +4,9 @@ from django.contrib.auth import views as auth_views
 from furfolio import forms as furfolio_forms
 
 urlpatterns = [
-    path('', views.OfferList.as_view(), name="offer_list"),
+    path('', views.Home.as_view(), name="home"),
     # offers
+    path('offers/', views.OfferList.as_view(), name="offer_list"),
     path('offers/create/', views.CreateOffer.as_view(), name="create_offer"),
     path('offers/<pk>/update/', views.UpdateOffer.as_view(), name="update_offer"),
     path('offers/<pk>/delete/', views.DeleteOffer.as_view(), name="delete_offer"),

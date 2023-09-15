@@ -203,6 +203,9 @@ def make_default_storage():
             "bucket_name": os.getenv("STORAGE_BUCKET_NAME"),
             "region_name": os.getenv("STORAGE_REGION_NAME"),
             "endpoint_url": os.getenv("STORAGE_ENDPOINT_URL"),
+            "object_parameters": {
+                "CacheControl": "max-age=86400" # cache one day
+            },
         }
     return default_storage
         

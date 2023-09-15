@@ -12,7 +12,16 @@
     {{ form }}
     <div class="d-flex">
         <a class="me-3" href="{% url "offer_detail" offer.pk %}"><button class="btn btn-secondary" type="button">Cancel</button></a>
-        <input class="btn btn-primary" type="submit" value="Update">
+        <input class="btn btn-primary" id="update-button" type="submit" value="Update">
     </div>
 </form>
+
+<script>
+    let update_button = document.getElementById("update-button")
+    update_button.addEventListener("click", function() {
+        update_button.style.display = "none"
+    })
+    console.log(update_button)
+</script>
+
 {% endblock %}

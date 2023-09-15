@@ -2,6 +2,8 @@
 
 {% block content %}
 {% for user in users %}
-    {% include "./user_card.html" with user=user only %}
+    <div class="mb-3">
+        {% include "./user_card.html" with user=user only %}
+    </div>
 {% endfor %}
 {% endblock %}

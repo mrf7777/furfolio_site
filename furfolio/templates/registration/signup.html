@@ -10,7 +10,7 @@
 
 {% block content %}
   <h1>Sign up</h1>
-  <form method="post">
+  <form enctype="multipart/form-data" method="post">
     {% csrf_token %}
     {{ form }}
     <button class="btn btn-primary mt-3" type="submit">Sign Up</button>

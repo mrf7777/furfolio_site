@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from django.db.models.fields.files import ImageFieldFile
 
 
 def validate_datetime_not_in_past(value: datetime):
@@ -16,8 +17,6 @@ def validate_datetime_at_least_12_hours(value: datetime):
             "Provided date-time must be at least 12 hours into the future.")
 
 
-def validate_profile_image_is_right_size(value):
-    print("Profile image value:")
-    print(value)
-    print()
-    pass
+def validate_profile_image_is_right_size(value: ImageFieldFile):
+    if value.height != 100 or value.width != 100:
+        raise ValidationError("Avatar must be 100 by 100 pixels.")

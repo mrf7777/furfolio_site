@@ -30,7 +30,8 @@ SECRET_KEY = os.getenv(
 DEBUG = os.getenv("DEBUG", "False") == "True"
 DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 
-ALLOWED_HOSTS = os.getenv("DJ_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+ALLOWED_HOSTS = os.getenv(
+    "DJ_ALLOWED_HOSTS", "127.0.0.1,localhost,0.0.0.0").split(",")
 
 
 # Application definition
@@ -191,6 +192,7 @@ LOGOUT_REDIRECT_URL = '/'
 
 FORM_RENDERER = "furfolio.forms.CustomFormRenderer"
 
+
 def make_default_storage():
     default_storage = {}
     if os.getenv("DEVELOPMENT_MODE", "False") == "True":
@@ -205,11 +207,11 @@ def make_default_storage():
             # TODO: consider using CDN endpoint in production instead: https://www.digitalocean.com/community/questions/edge-cdn-path-with-spaces-and-django-storages
             "endpoint_url": os.getenv("STORAGE_ENDPOINT_URL"),
             "object_parameters": {
-                "CacheControl": "max-age=86400" # cache one day
+                "CacheControl": "max-age=86400"  # cache one day
             },
         }
     return default_storage
-        
+
 
 STORAGES = {
     "default": make_default_storage(),

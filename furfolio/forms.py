@@ -49,5 +49,5 @@ class OfferForm(forms.ModelForm):
         fields = ["name", "cutoff_date", "thumbnail"]
         widgets = {
             "name": forms.TextInput(attrs={"class": "form-control"}),
-            "thumbnail": forms.FileInput(attrs={"class": "form-control"}),
+            "thumbnail": forms.ClearableFileInput(attrs={"class": "form-control"}),
         }

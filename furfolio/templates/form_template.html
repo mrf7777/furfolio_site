@@ -3,15 +3,17 @@
         <h4>{{ field.label_tag }}</h4>
         <p>{{ field.help_text }}</p>
         {{ field }}
-        <span class="text-danger">
-            {{ field.errors }}
-        </span>
+        {% if field.errors %}
+            <span class="text-danger">
+                {{ field.errors }}
+            </span>
+        {% endif %}
     </div>
 {% endfor %}
 
+{% if errors %}
 <div class="text-danger">
-    {% if errors %}
     <strong>Errors:</strong>
     {{ errors }}
-    {% endif %}
 </div>
+{% endif %}

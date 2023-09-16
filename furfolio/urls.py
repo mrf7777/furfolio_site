@@ -28,5 +28,5 @@ urlpatterns = [
     # dashboard
     path('dashboard/', views.Dashboard.as_view(), name="dashboard"),
     # static pages
-    path('/legal/terms-of-service', pages.TermsOfService.as_view(), name="terms_of_service")
+    path('legal/terms-of-service', pages.TermsOfService.as_view(), name="terms_of_service")
 ]

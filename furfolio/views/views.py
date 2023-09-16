@@ -6,8 +6,8 @@ from django.shortcuts import render
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
-from . import models
-from .forms import CustomUserCreationForm, OfferForm
+from .. import models
+from ..forms import CustomUserCreationForm, OfferForm
 
 
 class Home(generic.TemplateView):

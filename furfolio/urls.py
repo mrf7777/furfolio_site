@@ -1,5 +1,6 @@
 from django.urls import path, include
-from . import views
+from .views import views
+from .views import pages
 from django.contrib.auth import views as auth_views
 from furfolio import forms as furfolio_forms
 
@@ -26,4 +27,6 @@ urlpatterns = [
     path('accounts/logout/', auth_views.LogoutView.as_view(), name="logout"),
     # dashboard
     path('dashboard/', views.Dashboard.as_view(), name="dashboard"),
+    # static pages
+    path('/legal/terms-of-service', pages.TermsOfService.as_view(), name="terms_of_service")
 ]

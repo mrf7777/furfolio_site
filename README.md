@@ -166,3 +166,11 @@ month. A template can help the creator get an offer up and running quickly.
 - I will draw sketck portrat
   - $40-200
   - during FWA 2024
+
+# Convention space ideas.
+- QR Code for artists to print for their table to show URL for query for their offers.
+- QR Code for vending space which has URL for query for offers at the convention.
+- Convention can have a landing page with some customization that is more friendly than a query page.
+- Let people request commissions before vendors open via QR Code.
+  - Let creators make offers that will publish in the future. (needs new field)
+    - Let offers that are to-be-open still Publish but be closed for requests so that users can read about the offer beforehand.

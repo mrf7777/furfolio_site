@@ -1,5 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-<a href="{% url "create_offer" %}"><button class="btn btn-primary">Create Offer</button></a>
+<div class="mb-3">
+    <a href="{% url "create_offer" %}"><button class="btn btn-primary">Create Offer</button></a>
+</div>
+
+<h4>Commissions as Commissionee</h3>
+<div>
+    {% for commission in commissions_as_commissionee %}
+        <div>
+            {{ commission }}
+        </div>
+    {% endfor %}
+</div>
 {% endblock %}

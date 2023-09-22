@@ -5,7 +5,11 @@ from django.core import validators
 from django.urls import reverse
 from django.utils import timezone
 from datetime import timedelta
+import math
 from . import validators as furfolio_validators
+
+
+AVERAGE_CHARACTERS_PER_WORD = 4.7
 
 
 class User(AbstractUser):
@@ -47,3 +51,31 @@ class Offer(models.Model):
 
     def get_absolute_url(self):
         return reverse("offer_detail", kwargs={"pk": self.pk})
+
+# limit initial request text to about 800 words
+COMMISSION_INITIAL_REQUEST_TEXT_MAX_LENGTH = math.ceil(AVERAGE_CHARACTERS_PER_WORD * 800)
+
+class Commission(models.Model):
+    commissioner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        name="commissioner",
+        related_name="commission_set_as_commissioner",
+        on_delete=models.CASCADE,
+    )
+    commissionee = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        name="commissionee",
+        related_name="commission_set_as_commissionee",
+        on_delete=models.CASCADE
+    )
+    offer = models.ForeignKey(
+        Offer,
+        name="offer",
+        on_delete=models.CASCADE
+    )
+    initial_request_text = models.CharField(
+        name="initial_request_text",
+        max_length=COMMISSION_INITIAL_REQUEST_TEXT_MAX_LENGTH,
+        default="",
+    )
+    created_date = models.DateTimeField(name="created_date", auto_now_add=True)

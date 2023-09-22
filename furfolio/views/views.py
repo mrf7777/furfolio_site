@@ -77,10 +77,10 @@ class User(generic.DetailView):
     slug_field = "username"
     slug_url_kwarg = "username"
     context_object_name = "user"
-    template_name = "furfolio/user_detail.html"
+    template_name = "furfolio/users/user_detail.html"
 
 
 class UserList(generic.ListView):
     model = models.User
     context_object_name = "users"
-    template_name = "furfolio/user_list.html"
+    template_name = "furfolio/users/user_list.html"

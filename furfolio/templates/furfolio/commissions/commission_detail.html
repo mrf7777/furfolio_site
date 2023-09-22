@@ -1,5 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-    Details of some commission.
+<h4>Commission Details</h4>
+<div class="mb-3">
+    {% include "furfolio/offers/offer_card.html" with offer=commission.offer title_is_link=True %}
+</div>
+<div class="mb-3">
+    <h5>Initial Request Details</h5>
+    <p>{{ commission.initial_request_text }}</p>
+</div>
+<h5>Date Created</h5>
+<p>{{ commission.created_date }}</p>
 {% endblock %}

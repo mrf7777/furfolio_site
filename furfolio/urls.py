@@ -28,6 +28,7 @@ urlpatterns = [
     # dashboard
     path('dashboard/', views.Dashboard.as_view(), name="dashboard"),
     # commissions
+    path('commissions/<pk>', views.Commission.as_view(), name="commission_detail"),
     path('commissions/create/', views.CreateCommission.as_view(), name="create_commission"),
     # static pages
     path('legal/terms-of-service', pages.TermsOfService.as_view(), name="terms_of_service"),

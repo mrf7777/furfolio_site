@@ -97,3 +97,8 @@ class CreateCommission(generic.CreateView):
         initial["offer"] = self.request.GET["offer"]
         initial["commissioner"] = self.request.GET["commissioner"]
         return initial
+    
+class Commission(generic.DetailView):
+    model = models.Commission
+    template_name = "furfolio/commissions/commission_detail.html"
+    context_object_name = "commission"

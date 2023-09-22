@@ -13,13 +13,25 @@ AVERAGE_CHARACTERS_PER_WORD = 4.7
 
 
 class User(AbstractUser):
+    ROLE_BUYER = "BUYER"
+    ROLE_CREATOR = "CREATOR"
+    ROLE_CHOICES = [
+        (ROLE_BUYER, "Buyer"),
+        (ROLE_CREATOR, "Creator"),
+    ]
     avatar = models.ImageField(
         name="avatar",
         blank=True,
         help_text="Avatars are optional. Your avatar must be 64 by 64 pixels.",
         validators=[furfolio_validators.validate_profile_image_is_right_size,],
     )
-
+    role = models.CharField(
+        max_length=7,
+        choices=ROLE_CHOICES,
+        default=ROLE_BUYER,
+        help_text="Your role on this platform. This is used to optimize your experience and to let others know how you want to use this website."
+    )
+    
 
 def seven_days_from_now():
     return timezone.now() + timedelta(days=7)

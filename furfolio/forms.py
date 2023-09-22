@@ -23,10 +23,11 @@ class CustomUserCreationForm(UserCreationForm):
         self.fields["password1"].widget.attrs.update({"class": "form-control"})
         self.fields["password2"].widget.attrs.update({"class": "form-control"})
         self.fields["avatar"].widget.attrs.update({"class": "form-control"})
+        self.fields["role"].widget.attrs.update({"class": "form-control"})
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = UserCreationForm.Meta.fields + ("email", "avatar")
+        fields = UserCreationForm.Meta.fields + ("email", "role", "avatar")
 
 
 class LoginForm(AuthenticationForm):

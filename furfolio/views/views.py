@@ -20,7 +20,7 @@ class Dashboard(generic.TemplateView):
 
 class OfferList(generic.ListView):
     model = models.Offer
-    template_name = "furfolio/offer_list.html"
+    template_name = "furfolio/offers/offer_list.html"
     context_object_name = "offer_list"
 
     def get_queryset(self) -> QuerySet[Any]:
@@ -30,7 +30,7 @@ class OfferList(generic.ListView):
 class Offer(generic.DetailView):
     model = models.Offer
     context_object_name = "offer"
-    template_name = "furfolio/offer_detail.html"
+    template_name = "furfolio/offers/offer_detail.html"
 
 
 class SignUp(generic.CreateView):
@@ -42,7 +42,7 @@ class SignUp(generic.CreateView):
 class CreateOffer(LoginRequiredMixin, generic.CreateView):
     model = models.Offer
     form_class = OfferForm
-    template_name = "furfolio/offer_form.html"
+    template_name = "furfolio/offers/offer_form.html"
 
     # https://koenwoortman.com/python-django-set-current-user-create-view/
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
@@ -53,7 +53,7 @@ class CreateOffer(LoginRequiredMixin, generic.CreateView):
 class UpdateOffer(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = models.Offer
     form_class = OfferForm
-    template_name = "furfolio/offer_update_form.html"
+    template_name = "furfolio/offers/offer_update_form.html"
 
     # TODO: use the slightly more efficient version
     # https://www.django-antipatterns.com/antipattern/checking-ownership-through-the-userpassestestmixin.html
@@ -65,7 +65,7 @@ class DeleteOffer(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
     model = models.Offer
     slug_field = "username"
     slug_url_kwarg = "username"
-    template_name = "furfolio/offer_delete.html"
+    template_name = "furfolio/offers/offer_delete.html"
     success_url = reverse_lazy("offer_list")
 
     def test_func(self):

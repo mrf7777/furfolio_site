@@ -1,0 +1,20 @@
+{% comment "" %}
+Includable card that shows commission information
+Expects the following objects:
+commission: the commission object to show
+{% endcomment %}
+
+<div class="card" style="max-width: 500px">
+    <div class="card-body">
+        <a class="text-decoration-none" href="{% url "commission_detail" commission.pk %}">
+            <h5 class="card-title">
+                "{{ commission.commissioner.username }}" requested "{{ commission.offer.name }}"
+            </h5>
+        </a>
+        <div class="card-text">
+            <p>
+                <b>Details:</b> {{ commission.initial_request_text }}
+            </p>
+        </div>
+    </div>
+</div>

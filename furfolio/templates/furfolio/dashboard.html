@@ -8,8 +8,8 @@
 <h4>Commissions as Commissionee</h3>
 <div>
     {% for commission in commissions_as_commissionee %}
-        <div>
-            {{ commission }}
+        <div class="mb-3">
+            {% include "furfolio/commissions/commission_card.html" %}
         </div>
     {% endfor %}
 </div>

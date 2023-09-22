@@ -7,7 +7,7 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from .. import models
-from ..forms import CustomUserCreationForm, OfferForm
+from ..forms import CustomUserCreationForm, OfferForm, CommissionForm
 
 
 class Home(generic.TemplateView):
@@ -84,3 +84,16 @@ class UserList(generic.ListView):
     model = models.User
     context_object_name = "users"
     template_name = "furfolio/users/user_list.html"
+
+
+class CreateCommission(generic.CreateView):
+    model = models.Commission
+    template_name = "furfolio/commissions/commission_create.html"
+    form_class = CommissionForm
+    
+    # prefill offer and commissioner for the commission since these are hidden fields
+    def get_initial(self):
+        initial = super().get_initial()
+        initial["offer"] = self.request.GET["offer"]
+        initial["commissioner"] = self.request.GET["commissioner"]
+        return initial

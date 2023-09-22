@@ -14,6 +14,6 @@
         <a class="btn btn-primary mb-3" href="{% url "update_offer" offer.pk %}">Edit</a>
     {% endif %}
     <div>
-        <a class="btn btn-primary">Request Commission</a>
+        <a class="btn btn-primary" href="{% url "create_commission" %}?offer={{ offer.pk }}&commissioner={{ user.pk }}">Request Commission</a>
     </div>
 {% endblock %}

@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django import forms
 from django.utils import timezone
 from django.forms.renderers import TemplatesSetting
-from .models import User, Offer
+from .models import User, Offer, Commission
 
 
 class CustomFormRenderer(TemplatesSetting):
@@ -51,4 +51,15 @@ class OfferForm(forms.ModelForm):
         widgets = {
             "name": forms.TextInput(attrs={"class": "form-control"}),
             "thumbnail": forms.ClearableFileInput(attrs={"class": "form-control"}),
+        }
+
+
+class CommissionForm(forms.ModelForm):
+    class Meta:
+        model = Commission
+        fields = ["commissioner", "offer", "initial_request_text"]
+        widgets = {
+            "commissioner": forms.HiddenInput(),
+            "offer": forms.HiddenInput(),
+            "initial_request_text": forms.Textarea(attrs={"class": "form-control"})
         }

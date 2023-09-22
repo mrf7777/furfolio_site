@@ -27,7 +27,9 @@ urlpatterns = [
     path('accounts/logout/', auth_views.LogoutView.as_view(), name="logout"),
     # dashboard
     path('dashboard/', views.Dashboard.as_view(), name="dashboard"),
+    # commissions
+    path('commissions/create/', views.CreateCommission.as_view(), name="create_commission"),
     # static pages
     path('legal/terms-of-service', pages.TermsOfService.as_view(), name="terms_of_service"),
-    path('legal/privacy-policy', pages.PrivacyPolicy.as_view(), name="privacy_policy")
+    path('legal/privacy-policy', pages.PrivacyPolicy.as_view(), name="privacy_policy"),
 ]

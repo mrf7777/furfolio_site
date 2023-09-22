@@ -73,3 +73,5 @@ class Commission(models.Model):
         default="",
     )
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
+
+    

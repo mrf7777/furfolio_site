@@ -8,7 +8,7 @@ from .models import User, Offer
 
 
 class CustomFormRenderer(TemplatesSetting):
-    form_template_name = "form_template.html"
+    form_template_name = "furfolio/form_template.html"
 
 # https://docs.djangoproject.com/en/4.2/topics/auth/customizing/#custom-users-and-the-built-in-auth-forms
 

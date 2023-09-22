@@ -62,12 +62,6 @@ class Commission(models.Model):
         related_name="commission_set_as_commissioner",
         on_delete=models.CASCADE,
     )
-    commissionee = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        name="commissionee",
-        related_name="commission_set_as_commissionee",
-        on_delete=models.CASCADE
-    )
     offer = models.ForeignKey(
         Offer,
         name="offer",

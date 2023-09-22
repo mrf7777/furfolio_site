@@ -14,7 +14,7 @@ class Home(generic.TemplateView):
     template_name = "furfolio/home.html"
 
 
-class Dashboard(generic.TemplateView):
+class Dashboard(LoginRequiredMixin, generic.TemplateView):
     template_name = "furfolio/dashboard.html"
 
 

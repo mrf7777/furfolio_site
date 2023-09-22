@@ -1,4 +1,8 @@
-{% for field in form %}
+{% for hidden_field in form.hidden_fields %}
+{{ hidden_field }}
+{% endfor %}
+
+{% for field in form.visible_fields %}
     <div class="mb-4">
         <h4>{{ field.label_tag }}</h4>
         <p>{{ field.help_text }}</p>

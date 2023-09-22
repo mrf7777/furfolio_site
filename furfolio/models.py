@@ -67,7 +67,7 @@ class Commission(models.Model):
         name="offer",
         on_delete=models.CASCADE
     )
-    initial_request_text = models.CharField(
+    initial_request_text = models.TextField(
         name="initial_request_text",
         max_length=COMMISSION_INITIAL_REQUEST_TEXT_MAX_LENGTH,
         default="",

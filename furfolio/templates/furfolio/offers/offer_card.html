@@ -6,7 +6,7 @@ Expects a 'title_is_link':bool object
 
 <div class="card" style="max-width: 450px">
     {% if offer.thumbnail %}
-    <img class="card-img-top" src="{{ offer.thumbnail.url }}">
+    <img class="card-img-top bg-secondary" style="max-height: 40vh; object-fit: contain; " src="{{ offer.thumbnail.url }}">
     {% endif %}
     <div class="card-header d-flex">
         <h5>

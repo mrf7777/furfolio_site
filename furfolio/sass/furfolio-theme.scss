@@ -1,3 +1,11 @@
 // custom furfolio theme for the website
 
-@import "../../bootstrap-5.3.2/scss/bootstrap.scss"
+@use "./furfolio-colors";
+
+$primary: furfolio-colors.$dark-orange;
+$secondary: furfolio-colors.$gray-blue;
+$danger: furfolio-colors.$red;
+$light: #ffffff;
+$dark: furfolio-colors.$dark-blue;
+
+@import "../../bootstrap-5.3.2/scss/bootstrap.scss";

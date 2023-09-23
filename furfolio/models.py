@@ -68,6 +68,16 @@ class Offer(models.Model):
 COMMISSION_INITIAL_REQUEST_TEXT_MAX_LENGTH = math.ceil(AVERAGE_CHARACTERS_PER_WORD * 800)
 
 class Commission(models.Model):
+    STATE_REVIEW = "REVIEW"
+    STATE_ACCEPTED = "ACCEPTED"
+    STATE_IN_PROGRESS = "IN_PROGRESS"
+    STATE_CLOSED = "CLOSED"
+    STATE_CHOICES = [
+        (STATE_REVIEW, "Review"),
+        (STATE_ACCEPTED, "Accepted"),
+        (STATE_IN_PROGRESS, "In Progress"),
+        (STATE_CLOSED, "Closed"),
+    ]
     commissioner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         name="commissioner",
@@ -84,6 +94,12 @@ class Commission(models.Model):
         max_length=COMMISSION_INITIAL_REQUEST_TEXT_MAX_LENGTH,
         default="",
     )
+    state = models.CharField(
+        name="state",
+        max_length=11,
+        default=STATE_REVIEW,
+    )
+    
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
 
     def __str__(self):

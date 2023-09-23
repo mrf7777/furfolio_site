@@ -10,9 +10,9 @@
 <form enctype="multipart/form-data" method="post">
     {% csrf_token %}
     {{ form }}
-    <div class="d-flex">
-        <a class="me-3" href="{% url "offer_detail" offer.pk %}"><button class="btn btn-secondary" type="button">Cancel</button></a>
-        <input class="btn btn-primary" id="update-button" type="submit" value="Update">
+    <div class="d-flex align-items-center">
+        <input class="btn btn-primary me-3" id="update-button" type="submit" value="Update">
+        <a href="{% url "offer_detail" offer.pk %}">Cancel</a>
     </div>
 </form>
 

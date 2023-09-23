@@ -6,9 +6,11 @@ Requires some context objects passed in.
 {% endcomment %}
 
 <script>
-    let update_button = document.getElementById("{{ button_id }}")
-    update_button.addEventListener("click", function() {
-      let element_to_hide = document.getElementById("{{ id_to_hide }}")
-      element_to_hide.style.display = "none"
-    })
+{
+  let update_button = document.getElementById("{{ button_id }}")
+  update_button.addEventListener("click", function() {
+    let element_to_hide = document.getElementById("{{ id_to_hide }}")
+    element_to_hide.style.display = "none"
+  })
+}
 </script>

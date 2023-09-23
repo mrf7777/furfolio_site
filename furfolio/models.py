@@ -58,6 +58,7 @@ class Offer(models.Model):
             furfolio_validators.validate_datetime_at_least_12_hours,
         ],
     )
+    forced_closed = models.BooleanField(name="forced_closed", default=False)
     thumbnail = models.ImageField(name="thumbnail", blank=True, null=True)
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)
@@ -67,6 +68,13 @@ class Offer(models.Model):
 
     def get_absolute_url(self):
         return reverse("offer_detail", kwargs={"pk": self.pk})
+    
+    def is_closed(self):
+        if self.forced_closed:
+            return True
+        elif self.cutoff_date < timezone.now():
+            return True
+        return False
 
 # limit initial request text to about 800 words
 COMMISSION_INITIAL_REQUEST_TEXT_MAX_LENGTH = math.ceil(AVERAGE_CHARACTERS_PER_WORD * 800)

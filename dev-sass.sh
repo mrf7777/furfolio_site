@@ -1,0 +1,1 @@
+sass --watch ./furfolio/sass/furfolio-theme.scss  ./furfolio/static/style/style.css

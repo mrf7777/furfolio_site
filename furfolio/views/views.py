@@ -7,7 +7,7 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from .. import models
-from ..forms import CustomUserCreationForm, OfferForm, CommissionForm
+from ..forms import CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm
 
 
 class Home(generic.TemplateView):
@@ -83,6 +83,16 @@ class User(generic.DetailView):
     slug_url_kwarg = "username"
     context_object_name = "user"
     template_name = "furfolio/users/user_detail.html"
+
+
+class UpdateUser(generic.UpdateView):
+    model = models.User
+    form_class = CustomUserCreationForm
+    template_name = "furfolio/users/user_update.html"
+    context_object_name = "user"
+    slug_field = "username"
+    slug_url_kwarg = "username"
+    form_class = UpdateUserForm
 
 
 class UserList(generic.ListView):

@@ -30,6 +30,16 @@ class CustomUserCreationForm(UserCreationForm):
         fields = UserCreationForm.Meta.fields + ("email", "role", "avatar")
 
 
+class UpdateUserForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["role"].widget.attrs.update({"class": "form-control"})
+    
+    class Meta:
+        model = User
+        fields = ["role",]
+
+
 class LoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

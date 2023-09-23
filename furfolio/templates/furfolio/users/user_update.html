@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Update User Settings</h1>
+<form enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" class="btn btn-primary" value="Save Changes">
+</form>
+{% endblock %}

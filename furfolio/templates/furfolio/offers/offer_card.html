@@ -16,9 +16,9 @@ Expects a 'title_is_link':bool object
             {{ offer.name }}
             {% endif %}
         </h5>
-        <h6 class="text-body-secondary ms-auto">
-            By: <a class="text-decoration-none" href="{% url "user" offer.author.username %}">{{ offer.author.username }}</a>
-        </h6>
+        <span class="text-body-secondary ms-auto">
+            {% include "furfolio/users/badge.html" with user=offer.author only %}
+        </span>
     </div>
     <div class="card-body">
         Cutoff date: {{ offer.cutoff_date }}

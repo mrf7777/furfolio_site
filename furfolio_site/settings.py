@@ -209,6 +209,7 @@ def make_default_storage():
                 "CacheControl": "max-age=86400"  # cache one day
             },
             "default_acl": "public-read",
+            "querystring_auth": False,  # no need to add auth information in urls
         }
     return default_storage
 

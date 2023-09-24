@@ -16,7 +16,9 @@ Expects a 'title_is_link':bool object
             {{ offer.name }}
             {% endif %}
         </h5>
-        <div class="text-body-secondary ms-auto">
+        <div class="flex-fill">
+        </div>
+        <div class="text-body-secondary ms-3">
             {% include "furfolio/users/badge.html" with user=offer.author only %}
         </div>
     </div>

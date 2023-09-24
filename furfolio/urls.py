@@ -31,6 +31,7 @@ urlpatterns = [
     # commissions
     path('commissions/<pk>', views.Commission.as_view(), name="commission_detail"),
     path('commissions/create/', views.CreateCommission.as_view(), name="create_commission"),
+    path('commissions/<pk>/update/', views.UpdateCommission.as_view(), name="update_commission"),
     # static pages
     path('legal/terms-of-service', pages.TermsOfService.as_view(), name="terms_of_service"),
     path('legal/privacy-policy', pages.PrivacyPolicy.as_view(), name="privacy_policy"),

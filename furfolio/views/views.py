@@ -126,3 +126,12 @@ class Commission(LoginRequiredMixin, UserPassesTestMixin, generic.DetailView):
             return True
         else:
             return False
+        
+class UpdateCommission(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
+    model = models.Commission
+    template_name = "furfolio/commissions/commission_update.html"
+    form_class = CommissionForm
+    context_object_name = "commission"
+    
+    def test_func(self):
+        return True

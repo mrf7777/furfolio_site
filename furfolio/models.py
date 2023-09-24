@@ -106,8 +106,10 @@ class Commission(models.Model):
     )
     initial_request_text = models.TextField(
         name="initial_request_text",
+        help_text="First-pass requirements for the commission.",
         max_length=COMMISSION_INITIAL_REQUEST_TEXT_MAX_LENGTH,
         default="",
+        verbose_name="Initial Requirements"
     )
     attachment = models.FileField(
         name="attachment",

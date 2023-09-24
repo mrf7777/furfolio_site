@@ -208,6 +208,7 @@ def make_default_storage():
             "object_parameters": {
                 "CacheControl": "max-age=86400"  # cache one day
             },
+            "default_acl": "public-read",
         }
     return default_storage
 

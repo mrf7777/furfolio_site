@@ -101,7 +101,7 @@ class UserList(generic.ListView):
     template_name = "furfolio/users/user_list.html"
 
 
-class CreateCommission(generic.CreateView):
+class CreateCommission(LoginRequiredMixin, generic.CreateView):
     model = models.Commission
     template_name = "furfolio/commissions/commission_create.html"
     form_class = CommissionForm

@@ -113,6 +113,11 @@ class CreateCommission(LoginRequiredMixin, generic.CreateView):
         initial["commissioner"] = self.request.GET["commissioner"]
         return initial
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["offer"] = models.Offer.objects.filter(pk=self.request.GET["offer"])[0]
+        return context
+    
 class Commission(LoginRequiredMixin, UserPassesTestMixin, generic.DetailView):
     model = models.Commission
     template_name = "furfolio/commissions/commission_detail.html"

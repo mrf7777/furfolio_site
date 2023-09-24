@@ -4,8 +4,8 @@ Expects the following objects:
   - user: the user to make the badge of
 {% endcomment %}
 
-<span class="badge bg-secondary">
-    <a href="{% url "user" user.username %}" class="text-decoration-none text-reset fs-6">
+<div class="badge bg-secondary">
+    <a href="{% url "user" user.username %}" class="text-decoration-none text-reset">
         {{ user.username }}
     </a>
-</span>
+</div>

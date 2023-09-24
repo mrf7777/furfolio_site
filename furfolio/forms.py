@@ -80,9 +80,10 @@ class OfferFormUpdate(OfferForm):
 class CommissionForm(forms.ModelForm):
     class Meta:
         model = Commission
-        fields = ["commissioner", "offer", "initial_request_text"]
+        fields = ["commissioner", "offer", "initial_request_text", "attachment"]
         widgets = {
             "commissioner": forms.HiddenInput(),
             "offer": forms.HiddenInput(),
-            "initial_request_text": forms.Textarea(attrs={"class": "form-control"})
+            "initial_request_text": forms.Textarea(attrs={"class": "form-control"}),
+            "attachment": forms.ClearableFileInput(attrs={"class": "form-control"}),
         }

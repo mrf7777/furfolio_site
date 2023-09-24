@@ -109,6 +109,11 @@ class Commission(models.Model):
         max_length=COMMISSION_INITIAL_REQUEST_TEXT_MAX_LENGTH,
         default="",
     )
+    attachment = models.FileField(
+        name="attachment",
+        help_text="Optional file that is part of this request.",
+        blank=True,
+    )
     state = models.CharField(
         name="state",
         max_length=11,

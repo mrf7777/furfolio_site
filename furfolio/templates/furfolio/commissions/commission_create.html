@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form method="post">
+<form enctype="multipart/form-data" method="post">
     {% csrf_token %}
     {{ form }}
     <input class="btn btn-primary" type="submit" value="Create Commission">

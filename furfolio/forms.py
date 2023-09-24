@@ -67,6 +67,16 @@ class OfferForm(forms.ModelForm):
         }
 
 
+class OfferFormUpdate(OfferForm):
+    class Meta(OfferForm.Meta):
+        model = Offer
+        fields = ["name", "forced_closed", "cutoff_date", "thumbnail"]
+        widgets = {
+            **OfferForm.Meta.widgets,
+            "forced_closed": forms.CheckboxInput(attrs={"class": "form-check-input"}),
+        }
+
+
 class CommissionForm(forms.ModelForm):
     class Meta:
         model = Commission

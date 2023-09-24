@@ -58,7 +58,11 @@ class Offer(models.Model):
             furfolio_validators.validate_datetime_at_least_12_hours,
         ],
     )
-    forced_closed = models.BooleanField(name="forced_closed", default=False)
+    forced_closed = models.BooleanField(
+        name="forced_closed",
+        help_text="Indicates that the offer is closed, regardless if the cutoff date has passed or not.",
+        default=False,
+    )
     thumbnail = models.ImageField(name="thumbnail", blank=True, null=True)
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)

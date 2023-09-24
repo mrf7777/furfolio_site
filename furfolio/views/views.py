@@ -7,7 +7,7 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from .. import models
-from ..forms import CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm
+from ..forms import CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate
 
 
 class Home(generic.TemplateView):
@@ -57,7 +57,7 @@ class CreateOffer(LoginRequiredMixin, generic.CreateView):
 
 class UpdateOffer(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = models.Offer
-    form_class = OfferForm
+    form_class = OfferFormUpdate
     template_name = "furfolio/offers/offer_update_form.html"
 
     # TODO: use the slightly more efficient version

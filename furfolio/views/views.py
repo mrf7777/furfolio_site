@@ -138,6 +138,6 @@ class UpdateCommission(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateVi
     form_class = CommissionForm
     context_object_name = "commission"
     
-    # only let the author update the commission
+    # only let the offer author update the commission
     def test_func(self):
         return self.get_object().offer.author.pk == self.request.user.pk

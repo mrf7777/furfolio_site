@@ -8,7 +8,7 @@ Expects a 'title_is_link':bool object
     {% if offer.thumbnail %}
     <img class="card-img-top bg-secondary" style="max-height: 40vh; object-fit: contain; " src="{{ offer.thumbnail.url }}">
     {% endif %}
-    <div class="card-header d-flex">
+    <div class="card-header d-flex align-items-center">
         <h5>
             {% if title_is_link %}
             <a class="text-decoration-none" href="{% url "offer_detail" offer.pk %}">{{ offer.name }}</a>
@@ -16,9 +16,9 @@ Expects a 'title_is_link':bool object
             {{ offer.name }}
             {% endif %}
         </h5>
-        <span class="text-body-secondary ms-auto">
+        <div class="text-body-secondary ms-auto">
             {% include "furfolio/users/badge.html" with user=offer.author only %}
-        </span>
+        </div>
     </div>
     <div class="card-body">
         Cutoff date: {{ offer.cutoff_date }}

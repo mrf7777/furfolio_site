@@ -1,0 +1,11 @@
+{% comment "" %}
+Includable user badge: a small and clickable box that represents the user.
+Expects the following objects:
+  - user: the user to make the badge of
+{% endcomment %}
+
+<a href="{% url "user" user.username %}">
+    <span class="badge bg-secondary">
+        {{ user.username }}
+    </span>
+</a>

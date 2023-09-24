@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h4>Commission Details</h4>
-<div class="mb-3">
-    {% include "furfolio/offers/offer_card.html" with offer=commission.offer title_is_link=True %}
-</div>
+<h1>Commission Details</h1>
+
+<h5>User {% include "furfolio/users/badge.html" with user=commission.commissioner only %} is requesting <a href="{% url "offer_detail" commission.offer.pk %}">{{ commission.offer.name }}</a>.</h5>
+
 <div class="mb-3">
     <h5>Initial Request Details</h5>
     <p>{{ commission.initial_request_text }}</p>

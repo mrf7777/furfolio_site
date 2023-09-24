@@ -1,9 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
+<h1>Edit Commission</h1>
 <form enctype="multipart/form-data" method="post">
     {% csrf_token %}
     {{ form }}
-    <input class="btn btn-primary" type="submit" value="Save Changes">
+    <div class="d-flex align-items-center">
+        <input class="btn btn-primary me-3" type="submit" id="update-button" value="Save Changes">
+        <a href="{% url "commission_detail" commission.pk %}">Cancel</a>
+    </div>
 </form>
+
+{% include "furfolio/scripts/hide_on_click.html" with button_id="update-button" id_to_hide="update-button" %}
+
 {% endblock %}

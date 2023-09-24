@@ -16,54 +16,33 @@ class CustomFormRenderer(TemplatesSetting):
 class CustomUserCreationForm(UserCreationForm):
     email = EmailField(required=True)
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields["username"].widget.attrs.update({"class": "form-control"})
-        self.fields["email"].widget.attrs.update({"class": "form-control"})
-        self.fields["password1"].widget.attrs.update({"class": "form-control"})
-        self.fields["password2"].widget.attrs.update({"class": "form-control"})
-        self.fields["avatar"].widget.attrs.update({"class": "form-control"})
-        self.fields["role"].widget.attrs.update({"class": "form-control"})
-
     class Meta(UserCreationForm.Meta):
         model = User
         fields = UserCreationForm.Meta.fields + ("email", "role", "avatar")
 
 
 class UpdateUserForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields["role"].widget.attrs.update({"class": "form-control"})
-        self.fields["email"].widget.attrs.update({"class": "form-control"})
-        self.fields["avatar"].widget.attrs.update({"class": "form-control"})
-    
     class Meta:
         model = User
         fields = ["role", "email", "avatar"]
 
 
 class LoginForm(AuthenticationForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields["username"].widget.attrs.update({"class": "form-control"})
-        self.fields["password"].widget.attrs.update({"class": "form-control"})
+    pass
 
 
 class OfferForm(forms.ModelForm):
     cutoff_date = forms.SplitDateTimeField(
-        help_text="When you offer is no longer accepting commissions.",
+        help_text="When your offer is no longer accepting commissions.",
         label="Cutoff Time",
-        widget=forms.SplitDateTimeWidget(
-            date_attrs={"type": "date", "class": "form-control"}, time_attrs={"type": "time", "class": "form-control mt-1"}
-        ),
+        widget=forms.SplitDateTimeWidget(),
     )
 
     class Meta:
         model = Offer
         fields = ["name", "cutoff_date", "thumbnail"]
         widgets = {
-            "name": forms.TextInput(attrs={"class": "form-control"}),
-            "thumbnail": forms.ClearableFileInput(attrs={"class": "form-control"}),
+            "thumbnail": forms.ClearableFileInput(),
         }
 
 
@@ -71,10 +50,6 @@ class OfferFormUpdate(OfferForm):
     class Meta(OfferForm.Meta):
         model = Offer
         fields = ["name", "forced_closed", "cutoff_date", "thumbnail"]
-        widgets = {
-            **OfferForm.Meta.widgets,
-            "forced_closed": forms.CheckboxInput(attrs={"class": "form-check-input"}),
-        }
 
 
 class CommissionForm(forms.ModelForm):
@@ -84,6 +59,6 @@ class CommissionForm(forms.ModelForm):
         widgets = {
             "commissioner": forms.HiddenInput(),
             "offer": forms.HiddenInput(),
-            "initial_request_text": forms.Textarea(attrs={"class": "form-control"}),
-            "attachment": forms.ClearableFileInput(attrs={"class": "form-control"}),
+            "initial_request_text": forms.Textarea(),
+            "attachment": forms.ClearableFileInput(),
         }

@@ -113,7 +113,16 @@ class CreateCommission(LoginRequiredMixin, generic.CreateView):
         initial["commissioner"] = self.request.GET["commissioner"]
         return initial
     
-class Commission(generic.DetailView):
+class Commission(LoginRequiredMixin, UserPassesTestMixin, generic.DetailView):
     model = models.Commission
     template_name = "furfolio/commissions/commission_detail.html"
     context_object_name = "commission"
+    
+    def test_func(self):
+        object = self.get_object()
+        if object.offer.author.pk == self.request.user.pk:
+            return True
+        elif object.commissioner.pk == self.request.user.pk:
+            return True
+        else:
+            return False

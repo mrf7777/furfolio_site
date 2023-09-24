@@ -1,7 +1,27 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 <div class="d-flex flex-wrap align-items-end">
     {% include "./offer_list_template.html" with offer_list=offer_list%}
 </div>
+
+{% if is_paginated %}
+<div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center align-items-center" role="group">
+        {% if page_obj.has_previous %}
+            <a class="btn btn-primary" href="?page={{ page_obj.previous_page_number }}">
+                &#x23F4;
+            </a>
+        {% endif %}
+        <div class="mx-3">Page {{ page_obj.number }}</div>
+        {% if page_obj.has_next %}
+            <a class="btn btn-primary" href="?page={{ page_obj.next_page_number }}">
+                &#x23F5;
+            </a>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+
 {% endblock %}

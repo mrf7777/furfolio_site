@@ -27,6 +27,7 @@ class OfferList(generic.ListView):
     model = models.Offer
     template_name = "furfolio/offers/offer_list.html"
     context_object_name = "offer_list"
+    paginate_by = 5
 
     def get_queryset(self) -> QuerySet[Any]:
         return models.Offer.objects.all().order_by("-created_date")

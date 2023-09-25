@@ -124,6 +124,12 @@ class Commission(models.Model):
         STATE_IN_PROGRESS: "In Progress",
         STATE_CLOSED: "Closed",
     }
+    STATE_CHOICES = [
+        (STATE_REVIEW, "Review"),
+        (STATE_ACCEPTED, "Accepted"),
+        (STATE_IN_PROGRESS, "In Progress"),
+        (STATE_CLOSED, "Closed"),
+    ]
     commissioner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         name="commissioner",
@@ -149,6 +155,7 @@ class Commission(models.Model):
     state = models.CharField(
         name="state",
         max_length=11,
+        choices=STATE_CHOICES,
         default=STATE_REVIEW,
     )
 

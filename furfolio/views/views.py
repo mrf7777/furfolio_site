@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 from django.urls import reverse_lazy, reverse
 from .. import models
-from ..forms import CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm, UserSearchForm
+from ..forms import CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm, UserSearchForm, UpdateCommissionForm
 
 
 class Home(generic.TemplateView):
@@ -186,7 +186,7 @@ class Commission(LoginRequiredMixin, UserPassesTestMixin, generic.DetailView):
 class UpdateCommission(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = models.Commission
     template_name = "furfolio/commissions/commission_update.html"
-    form_class = CommissionForm
+    form_class = UpdateCommissionForm
     context_object_name = "commission"
 
     # only let the offer author update the commission

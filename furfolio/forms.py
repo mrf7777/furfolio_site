@@ -78,3 +78,9 @@ class CommissionForm(forms.ModelForm):
             "initial_request_text": forms.Textarea(),
             "attachment": forms.ClearableFileInput(),
         }
+
+
+class UpdateCommissionForm(CommissionForm):
+    class Meta(CommissionForm.Meta):
+        fields = ["commissioner", "offer",
+                  "state", "initial_request_text", "attachment"]

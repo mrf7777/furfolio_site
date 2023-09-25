@@ -2,7 +2,14 @@
 {% load static %}
 {% block content %}
 
-Buyer mode
+<h4>Your Commissions</h4>
+<div>
+    {% for commission in commissions_as_commissioner %}
+        <div class="mb-3">
+            {% include "furfolio/commissions/commission_card.html" with commission=commission only %}
+        </div>
+    {% endfor %}
+</div>
 
 <div class="mb-3 d-flex align-items-center">
     <div class="me-1">You are in buyer mode.</div>

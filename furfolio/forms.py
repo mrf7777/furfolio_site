@@ -7,6 +7,12 @@ from django.forms.renderers import TemplatesSetting
 from .models import User, Offer, Commission
 
 
+class TextSearchForm(forms.Form):
+    template_name = "furfolio/form_templates/grid.html"
+    text_query = forms.CharField(
+        label="Search", max_length=300, required=False)
+
+
 class CustomFormRenderer(TemplatesSetting):
     form_template_name = "furfolio/form_templates/default.html"
 
@@ -25,6 +31,10 @@ class UpdateUserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ["role", "email", "avatar"]
+
+
+class UserSearchForm(TextSearchForm):
+    pass
 
 
 class LoginForm(AuthenticationForm):
@@ -53,10 +63,8 @@ class OfferFormUpdate(OfferForm):
                   "forced_closed", "cutoff_date", "thumbnail"]
 
 
-class OfferSearchForm(forms.Form):
-    template_name = "furfolio/form_templates/grid.html"
-    text_query = forms.CharField(
-        label="Text Search", max_length=300, required=False)
+class OfferSearchForm(TextSearchForm):
+    pass
 
 
 class CommissionForm(forms.ModelForm):

@@ -2,14 +2,6 @@
 {% load static %}
 {% block content %}
 
-<div class="mb-3 d-flex align-items-center">
-    <div class="me-1">You are in creator mode.</div>
-    <a class="btn btn-primary" href="{% url "buyer_dashboard" %}">
-        <img class="me-1" style="width: 25px;" src="{% static "symbols/chasing-arrows-white.svg" %}">
-        Buyer Mode
-    </a>
-</div>
-
 <div class="mb-3">
     <a href="{% url "create_offer" %}"><button class="btn btn-primary">Create Offer</button></a>
 </div>
@@ -23,4 +15,13 @@
         </div>
     {% endfor %}
 </div>
+
+<div class="mb-3 d-flex align-items-center">
+    <div class="me-1">You are in creator mode.</div>
+    <a class="btn btn-primary" href="{% url "buyer_dashboard" %}">
+        <img class="me-1" style="width: 25px;" src="{% static "symbols/chasing-arrows-white.svg" %}">
+        Buyer Mode
+    </a>
+</div>
+
 {% endblock %}

@@ -47,6 +47,14 @@ OFFER_DESCRIPTION_MIN_LENGTH = math.floor(AVERAGE_CHARACTERS_PER_WORD * 4)
 
 
 class Offer(models.Model):
+    RATING_GENERAL = "GEN"
+    RATING_MATURE = "MAT"
+    RATING_ADULT = "ADL"
+    RATING_TO_CHOICES = {
+        (RATING_GENERAL, "General"),
+        (RATING_MATURE, "Mature"),
+        (RATING_ADULT, "Adult"),
+    }
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(
@@ -77,6 +85,12 @@ class Offer(models.Model):
         default=False,
     )
     thumbnail = models.ImageField(name="thumbnail", blank=True, null=True)
+    rating = models.CharField(
+        name="rating",
+        max_length=3,
+        choices=RATING_TO_CHOICES,
+        default=RATING_GENERAL,
+    )
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)
 

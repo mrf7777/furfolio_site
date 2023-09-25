@@ -3,7 +3,7 @@
 {% block content %}
 <h1>Commission Details</h1>
 
-<h5>User {% include "furfolio/users/badge.html" with user=commission.commissioner only %} is requesting <a href="{% url "offer_detail" commission.offer.pk %}">{{ commission.offer.name }}</a>.</h5>
+<h5>User {% include "furfolio/users/badge.html" with user=commission.commissioner only %} is requesting <a class="text-decoration-none" href="{% url "offer_detail" commission.offer.pk %}">{{ commission.offer.name }}</a>.</h5>
 
 <div class="mb-3">
     <h5>Initial Requirements</h5>
@@ -12,7 +12,7 @@
 {% if commission.attachment %}
 <div class="mb-3">
     <h5>Attachment</h5>
-    <a href="{{ commission.attachment.url }}">{{ commission.attachment.name }}</a>
+    <a class="text-decoration-none" href="{{ commission.attachment.url }}">{{ commission.attachment.name }}</a>
 </div>
 {% endif %}
 <h5>Date Created</h5>

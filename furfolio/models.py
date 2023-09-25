@@ -50,11 +50,11 @@ class Offer(models.Model):
     RATING_GENERAL = "GEN"
     RATING_MATURE = "MAT"
     RATING_ADULT = "ADL"
-    RATING_TO_CHOICES = {
+    RATING_TO_CHOICES = [
         (RATING_GENERAL, "General"),
         (RATING_MATURE, "Mature"),
         (RATING_ADULT, "Adult"),
-    }
+    ]
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(

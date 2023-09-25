@@ -1,0 +1,21 @@
+{% for hidden_field in form.hidden_fields %}
+{{ hidden_field }}
+{% endfor %}
+
+{% for field in form.visible_fields %}
+    <div class="row">
+        <div class="col-auto">
+            {{ field.label_tag }}
+        </div>
+        <div class="col">
+            {{ field }}
+        </div>
+    </div>
+{% endfor %}
+
+{% if errors %}
+<div class="text-danger">
+    <strong>Errors:</strong>
+    {{ errors }}
+</div>
+{% endif %}

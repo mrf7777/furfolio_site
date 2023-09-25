@@ -54,6 +54,7 @@ class OfferFormUpdate(OfferForm):
 
 
 class OfferSearchForm(forms.Form):
+    template_name = "furfolio/form_templates/grid.html"
     text_query = forms.CharField(
         label="Text Search", max_length=300, required=False)
 

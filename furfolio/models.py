@@ -41,6 +41,11 @@ def seven_days_from_now():
     return timezone.now() + timedelta(days=7)
 
 
+# limit offer description to about 1000 words
+OFFER_DESCRIPTION_MAX_LENGTH = math.ceil(AVERAGE_CHARACTERS_PER_WORD * 1000)
+# offer description must have at least about 4 words
+OFFER_DESCRIPTION_MIN_LENGTH = math.floor(AVERAGE_CHARACTERS_PER_WORD * 4)
+
 class Offer(models.Model):
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -49,6 +54,13 @@ class Offer(models.Model):
         name="name",
         help_text="Must be between 5 and 80 characters long.",
         validators=[validators.MinLengthValidator(5),]
+    )
+    description = models.TextField(
+        max_length=OFFER_DESCRIPTION_MAX_LENGTH,
+        name="description",
+        help_text="Describes the details of the offer.",
+        validators=[validators.MinLengthValidator(OFFER_DESCRIPTION_MIN_LENGTH),],
+        default="",
     )
     cutoff_date = models.DateTimeField(
         name="cutoff_date",

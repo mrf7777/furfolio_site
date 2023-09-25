@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>Edit Commission</h1>
-<form enctype="multipart/form-data" method="post">
+<form enctype="multipart/form-data" method="post" id="form">
     {% csrf_token %}
     {{ form }}
     <div class="d-flex align-items-center">
@@ -11,6 +11,6 @@
     </div>
 </form>
 
-{% include "furfolio/scripts/hide_on_click.html" with button_id="update-button" id_to_hide="update-button" %}
+{% include "furfolio/scripts/hide_on_submit.html" with form_id="form" id_to_hide="update-button" only %}
 
 {% endblock %}

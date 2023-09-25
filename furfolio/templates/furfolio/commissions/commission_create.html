@@ -3,12 +3,12 @@
 {% block content %}
 <h1>Create Commission for <a href="{% url "offer_detail" offer.pk %}">{{ offer.name }}</a> by {% include "furfolio/users/badge.html" with user=offer.author only %}</h1>
 
-<form enctype="multipart/form-data" method="post">
+<form enctype="multipart/form-data" method="post" id="form">
     {% csrf_token %}
     {{ form }}
     <input class="btn btn-primary" id="submit-button" type="submit" value="Create Commission">
 </form>
 
-{% include "furfolio/scripts/hide_on_click.html" with button_id="submit-button" id_to_hide="submit-button" %}
+{% include "furfolio/scripts/hide_on_submit.html" with form_id="form" id_to_hide="submit-button" only %}
 
 {% endblock %}

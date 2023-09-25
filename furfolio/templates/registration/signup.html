@@ -10,9 +10,11 @@
 
 {% block content %}
   <h1>Sign up</h1>
-  <form enctype="multipart/form-data" method="post">
+  <form enctype="multipart/form-data" method="post" id="form">
     {% csrf_token %}
     {{ form }}
-    <button class="btn btn-primary mt-3" type="submit">Sign Up</button>
+    <button class="btn btn-primary mt-3" type="submit" id="signup-button">Sign Up</button>
   </form>
+
+  {% include "furfolio/scripts/hide_on_submit.html" with form_id="form" id_to_hide="signup-button" only %}
 {% endblock %}

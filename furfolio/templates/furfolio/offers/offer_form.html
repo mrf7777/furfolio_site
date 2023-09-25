@@ -3,12 +3,12 @@
 {% block content %}
 <h1>Create Offer</h1>
 
-<form enctype="multipart/form-data" action="{% url "create_offer" %}" method="post">
+<form enctype="multipart/form-data" action="{% url "create_offer" %}" method="post" id="form">
     {% csrf_token %}
     {{ form }}
     <input class="btn btn-primary" id="create-button" type="submit" value="Create">
 </form>
 
-{% include "furfolio/scripts/hide_on_click.html" with button_id="create-button" id_to_hide="create-button" only %}
+{% include "furfolio/scripts/hide_on_submit.html" with form_id="form" id_to_hide="create-button" only %}
 
 {% endblock %}

@@ -28,8 +28,10 @@ class CreatorDashboard(LoginRequiredMixin, generic.TemplateView):
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["commissions_as_commissionee"] = models.Commission.objects.filter(
-            offer__author=self.request.user.pk)
+        context["commissions_in_review"] = models.Commission.objects.filter(
+            offer__author=self.request.user.pk,
+            state=models.Commission.STATE_REVIEW,
+        )
         return context
 
 

@@ -5,9 +5,9 @@
     <a href="{% url "create_offer" %}"><button class="btn btn-primary">Create Offer</button></a>
 </div>
 
-<h4>Commissions as Commissionee</h3>
+<h4>Commissions in Review</h4>
 <div>
-    {% for commission in commissions_as_commissionee %}
+    {% for commission in commissions_in_review %}
         <div class="mb-3">
             {% include "furfolio/commissions/commission_card.html" %}
         </div>

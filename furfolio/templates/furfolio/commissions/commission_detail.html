@@ -3,7 +3,7 @@
 {% block content %}
 <h1>Commission Details</h1>
 
-<h5>User {% include "furfolio/users/badge.html" with user=commission.commissioner only %} is requesting <a class="text-decoration-none" href="{% url "offer_detail" commission.offer.pk %}">{{ commission.offer.name }}</a>.</h5>
+<h4>User {% include "furfolio/users/badge.html" with user=commission.commissioner only %} is requesting <a class="text-decoration-none" href="{% url "offer_detail" commission.offer.pk %}">{{ commission.offer.name }}</a>.</h4>
 
 <div class="mb-3">
     <h5>Initial Requirements</h5>

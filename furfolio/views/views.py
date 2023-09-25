@@ -125,9 +125,9 @@ class UserList(generic.ListView):
             search_vector = SearchVector("username")
             search_query = SearchQuery(self.request.GET["text_query"])
             search_rank = SearchRank(search_vector, search_query)
-            return models.User.objects.annotate(rank=search_rank).order_by("-rank")
+            return models.User.objects.filter(role=models.User.ROLE_CREATOR).annotate(rank=search_rank).order_by("-rank")
         else:
-            return models.User.objects.all().order_by("-date_joined")
+            return models.User.objects.filter(role=models.User.ROLE_CREATOR).order_by("-date_joined")
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

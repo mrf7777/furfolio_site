@@ -17,7 +17,7 @@
 {% endif %}
 <h5>Date Created</h5>
 <p>{{ commission.created_date }}</p>
-{% if user.pk == commission.offer.author.pk %}
+{% if request.user.pk == commission.offer.author.pk %}
     <a href="{% url "update_commission" commission.pk %}"><button class="btn btn-primary">Edit</button></a>
 {% endif %}
 {% endblock %}

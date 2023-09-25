@@ -1,6 +1,14 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content %}
+
+<div class="mb-3 ms-auto">
+    <a class="btn btn-primary" href="{% url "buyer_dashboard" %}">
+        <img class="me-1" style="width: 32px;" src="{% static "symbols/chasing-arrows-white.svg" %}">
+        Buyer Mode
+    </a>
+</div>
+
 <div class="mb-3">
     <a href="{% url "create_offer" %}"><button class="btn btn-primary">Create Offer</button></a>
 </div>

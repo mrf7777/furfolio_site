@@ -7,7 +7,7 @@
    viewBox="0 0 16.933333 16.933333"
    version="1.1"
    id="svg5"
-   sodipodi:docname="chasing-arrows-black.svg"
+   sodipodi:docname="chasing-arrows-white.svg"
    inkscape:version="1.2.2 (732a01da63, 2022-12-09, custom)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -49,12 +49,12 @@
      inkscape:groupmode="layer"
      id="layer1">
     <path
-       style="fill:#000000;fill-opacity:1;stroke-width:0.264583"
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
        d="M 16.933333,2.1166666 12.7,0 l 0,1.0583333 -11.6416667,0 V 11.641666 L 3.1749999,10.583333 3.175,3.175 H 12.7 v 3.1749998 z"
        id="path5652"
        sodipodi:nodetypes="cccccccccc" />
     <path
-       style="fill:#000000;fill-opacity:1;stroke-width:0.264583"
+       style="fill:#ffffff;fill-opacity:1;stroke-width:0.264583"
        d="m 0,14.816666 4.2333331,2.11667 V 15.875002 H 15.875 l -10e-7,-10.5833355 -2.116666,1.0583337 V 13.758336 H 4.2333331 l 10e-8,-3.175003 z"
        id="path5779"
        sodipodi:nodetypes="cccccccccc" />

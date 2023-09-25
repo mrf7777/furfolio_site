@@ -1,9 +1,36 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block content %}
+
+<form method="get" class="mb-3">
+    <div class="mb-1">
+    {{ search_form }}
+    </div>
+    <input class="btn btn-primary" type="submit" value="Search">
+</form>
+
 {% for user in users %}
     <div class="mb-3">
         {% include "./user_card.html" with user=user only %}
     </div>
 {% endfor %}
+
+{% if is_paginated %}
+<div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center align-items-center" role="group">
+        {% if page_obj.has_previous %}
+            <a class="btn btn-primary" href="?page={{ page_obj.previous_page_number }}{% if request.GET.text_query %}&text_query={{ request.GET.text_query }}{% endif %}">
+                <img src="{% static "symbols/left-arrow-white.svg" %}" style="width: 16px;">
+            </a>
+        {% endif %}
+        <div class="mx-3">Page {{ page_obj.number }}</div>
+        {% if page_obj.has_next %}
+            <a class="btn btn-primary" href="?page={{ page_obj.next_page_number }}{% if request.GET.text_query %}&text_query={{ request.GET.text_query }}{% endif %}">
+                <img src="{% static "symbols/right-arrow-white.svg" %}" style="width: 16px;">
+            </a>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+
 {% endblock %}

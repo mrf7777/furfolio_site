@@ -40,7 +40,7 @@ class OfferForm(forms.ModelForm):
 
     class Meta:
         model = Offer
-        fields = ["name", "cutoff_date", "thumbnail"]
+        fields = ["name", "description", "cutoff_date", "thumbnail"]
         widgets = {
             "thumbnail": forms.ClearableFileInput(),
         }
@@ -49,7 +49,7 @@ class OfferForm(forms.ModelForm):
 class OfferFormUpdate(OfferForm):
     class Meta(OfferForm.Meta):
         model = Offer
-        fields = ["name", "forced_closed", "cutoff_date", "thumbnail"]
+        fields = ["name", "description", "forced_closed", "cutoff_date", "thumbnail"]
 
 
 class OfferSearchForm(forms.Form):

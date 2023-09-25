@@ -1,23 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Commission Details</h1>
 
-<h4>User {% include "furfolio/users/badge.html" with user=commission.commissioner only %} is requesting <a class="text-decoration-none" href="{% url "offer_detail" commission.offer.pk %}">{{ commission.offer.name }}</a>.</h4>
+<h4 class="mb-3">{% include "furfolio/users/badge.html" with user=commission.commissioner only %} wants <a class="text-decoration-none" href="{% url "offer_detail" commission.offer.pk %}">{{ commission.offer.name }}</a>.</h4>
+
+<div class="mb-3">
+    <b>State:</b> {% include "./state_badge.html" with commission=commission only %}
+</div>
 
 <div class="mb-3">
     <h5>Initial Requirements</h5>
     <p>{{ commission.initial_request_text }}</p>
 </div>
+
 {% if commission.attachment %}
 <div class="mb-3">
     <h5>Attachment</h5>
     <a class="text-decoration-none" href="{{ commission.attachment.url }}">{{ commission.attachment.name }}</a>
 </div>
 {% endif %}
+
 <h5>Date Created</h5>
 <p>{{ commission.created_date }}</p>
+
 {% if request.user.pk == commission.offer.author.pk %}
     <a href="{% url "update_commission" commission.pk %}"><button class="btn btn-primary">Edit</button></a>
 {% endif %}
+
 {% endblock %}

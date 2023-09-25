@@ -7,7 +7,7 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from .. import models
-from ..forms import CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate
+from ..forms import CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm
 
 
 class Home(generic.TemplateView):
@@ -31,6 +31,11 @@ class OfferList(generic.ListView):
 
     def get_queryset(self) -> QuerySet[Any]:
         return models.Offer.objects.all().order_by("-created_date")
+    
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["search_form"] = OfferSearchForm(self.request.GET)
+        return context
 
 
 class Offer(generic.DetailView):

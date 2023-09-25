@@ -52,6 +52,10 @@ class OfferFormUpdate(OfferForm):
         fields = ["name", "forced_closed", "cutoff_date", "thumbnail"]
 
 
+class OfferSearchForm(forms.Form):
+    text_query = forms.CharField(label="Text Search", max_length=300, required=False)
+
+
 class CommissionForm(forms.ModelForm):
     class Meta:
         model = Commission

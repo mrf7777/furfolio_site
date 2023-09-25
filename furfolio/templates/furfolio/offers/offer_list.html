@@ -2,6 +2,11 @@
 
 {% block content %}
 
+<form method="get" class="mb-3">
+    {{ search_form }}
+    <input class="btn btn-primary" type="submit" value="Search">
+</form>
+
 <div class="d-flex flex-wrap align-items-end">
     {% include "./offer_list_template.html" with offer_list=offer_list%}
 </div>
@@ -10,13 +15,13 @@
 <div class="d-flex justify-content-center">
     <div class="d-flex justify-content-center align-items-center" role="group">
         {% if page_obj.has_previous %}
-            <a class="btn btn-primary" href="?page={{ page_obj.previous_page_number }}">
+            <a class="btn btn-primary" href="?page={{ page_obj.previous_page_number }}{% if request.GET.text_query %}&text_query={{ request.GET.text_query }}{% endif %}">
                 &#x23F4;
             </a>
         {% endif %}
         <div class="mx-3">Page {{ page_obj.number }}</div>
         {% if page_obj.has_next %}
-            <a class="btn btn-primary" href="?page={{ page_obj.next_page_number }}">
+            <a class="btn btn-primary" href="?page={{ page_obj.next_page_number }}{% if request.GET.text_query %}&text_query={{ request.GET.text_query }}{% endif %}">
                 &#x23F5;
             </a>
         {% endif %}

@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 from django.urls import reverse_lazy
 from .. import models
 from ..forms import CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm
@@ -30,7 +31,14 @@ class OfferList(generic.ListView):
     paginate_by = 5
 
     def get_queryset(self) -> QuerySet[Any]:
-        return models.Offer.objects.all().order_by("-created_date")
+        # Search something if text query is provided. Otherwise, use most recent.
+        if "text_query" in self.request.GET:
+            search_vector = SearchVector("name")
+            search_query = SearchQuery(self.request.GET["text_query"])
+            search_rank = SearchRank(search_vector, search_query)
+            return models.Offer.objects.annotate(rank=search_rank).order_by("-rank")
+        else:
+            return models.Offer.objects.all().order_by("-created_date")
     
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

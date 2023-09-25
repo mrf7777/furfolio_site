@@ -17,10 +17,11 @@ class Home(generic.TemplateView):
 
 class Dashboard(LoginRequiredMixin, generic.TemplateView):
     template_name = "furfolio/dashboard.html"
-    
+
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        context =  super().get_context_data(**kwargs)
-        context["commissions_as_commissionee"] = models.Commission.objects.filter(offer__author=self.request.user.pk)
+        context = super().get_context_data(**kwargs)
+        context["commissions_as_commissionee"] = models.Commission.objects.filter(
+            offer__author=self.request.user.pk)
         return context
 
 
@@ -39,7 +40,7 @@ class OfferList(generic.ListView):
             return models.Offer.objects.annotate(rank=search_rank).order_by("-rank")
         else:
             return models.Offer.objects.all().order_by("-created_date")
-    
+
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["search_form"] = OfferSearchForm(self.request.GET)
@@ -99,7 +100,7 @@ class User(generic.DetailView):
     template_name = "furfolio/users/user_detail.html"
 
 
-class UpdateUser(generic.UpdateView):
+class UpdateUser(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = models.User
     form_class = CustomUserCreationForm
     template_name = "furfolio/users/user_update.html"
@@ -107,6 +108,9 @@ class UpdateUser(generic.UpdateView):
     slug_field = "username"
     slug_url_kwarg = "username"
     form_class = UpdateUserForm
+
+    def test_func(self):
+        return self.get_object().pk == self.request.user.pk
 
 
 class UserList(generic.ListView):
@@ -119,24 +123,26 @@ class CreateCommission(LoginRequiredMixin, generic.CreateView):
     model = models.Commission
     template_name = "furfolio/commissions/commission_create.html"
     form_class = CommissionForm
-    
+
     # prefill offer and commissioner for the commission since these are hidden fields
     def get_initial(self):
         initial = super().get_initial()
         initial["offer"] = self.request.GET["offer"]
         initial["commissioner"] = self.request.GET["commissioner"]
         return initial
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["offer"] = models.Offer.objects.filter(pk=self.request.GET["offer"])[0]
+        context["offer"] = models.Offer.objects.filter(
+            pk=self.request.GET["offer"])[0]
         return context
-    
+
+
 class Commission(LoginRequiredMixin, UserPassesTestMixin, generic.DetailView):
     model = models.Commission
     template_name = "furfolio/commissions/commission_detail.html"
     context_object_name = "commission"
-    
+
     def test_func(self):
         object = self.get_object()
         if object.offer.author.pk == self.request.user.pk:
@@ -145,13 +151,14 @@ class Commission(LoginRequiredMixin, UserPassesTestMixin, generic.DetailView):
             return True
         else:
             return False
-        
+
+
 class UpdateCommission(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = models.Commission
     template_name = "furfolio/commissions/commission_update.html"
     form_class = CommissionForm
     context_object_name = "commission"
-    
+
     # only let the offer author update the commission
     def test_func(self):
         return self.get_object().offer.author.pk == self.request.user.pk

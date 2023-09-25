@@ -2,9 +2,10 @@
 {% load static %}
 {% block content %}
 
-<div class="mb-3 ms-auto">
+<div class="mb-3 d-flex align-items-center">
+    <div class="me-1">You are in creator mode.</div>
     <a class="btn btn-primary" href="{% url "buyer_dashboard" %}">
-        <img class="me-1" style="width: 32px;" src="{% static "symbols/chasing-arrows-white.svg" %}">
+        <img class="me-1" style="width: 25px;" src="{% static "symbols/chasing-arrows-white.svg" %}">
         Buyer Mode
     </a>
 </div>

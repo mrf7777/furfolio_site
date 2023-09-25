@@ -1,0 +1,9 @@
+{% comment "" %}
+Includable commission status badge.
+Expects the following context objects:
+  - commission: The commission to display the status for.
+{% endcomment %}
+
+<div class="badge bg-info text-reset">
+    {{ commission.get_state.1 }}
+</div>

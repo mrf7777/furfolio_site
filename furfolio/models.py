@@ -31,11 +31,10 @@ class User(AbstractUser):
         default=ROLE_BUYER,
         help_text="Your role on this platform. This is used to optimize your experience and to let others know how you want to use this website."
     )
-    
+
     def get_absolute_url(self):
         return reverse("user", kwargs={"username": self.username})
-    
-    
+
 
 def seven_days_from_now():
     return timezone.now() + timedelta(days=7)
@@ -45,6 +44,7 @@ def seven_days_from_now():
 OFFER_DESCRIPTION_MAX_LENGTH = math.ceil(AVERAGE_CHARACTERS_PER_WORD * 1000)
 # offer description must have at least about 4 words
 OFFER_DESCRIPTION_MIN_LENGTH = math.floor(AVERAGE_CHARACTERS_PER_WORD * 4)
+
 
 class Offer(models.Model):
     author = models.ForeignKey(
@@ -59,7 +59,8 @@ class Offer(models.Model):
         max_length=OFFER_DESCRIPTION_MAX_LENGTH,
         name="description",
         help_text="Describes the details of the offer.",
-        validators=[validators.MinLengthValidator(OFFER_DESCRIPTION_MIN_LENGTH),],
+        validators=[validators.MinLengthValidator(
+            OFFER_DESCRIPTION_MIN_LENGTH),],
         default="",
     )
     cutoff_date = models.DateTimeField(
@@ -84,7 +85,7 @@ class Offer(models.Model):
 
     def get_absolute_url(self):
         return reverse("offer_detail", kwargs={"pk": self.pk})
-    
+
     def is_closed(self):
         if self.forced_closed:
             return True
@@ -92,20 +93,23 @@ class Offer(models.Model):
             return True
         return False
 
+
 # limit initial request text to about 800 words
-COMMISSION_INITIAL_REQUEST_TEXT_MAX_LENGTH = math.ceil(AVERAGE_CHARACTERS_PER_WORD * 800)
+COMMISSION_INITIAL_REQUEST_TEXT_MAX_LENGTH = math.ceil(
+    AVERAGE_CHARACTERS_PER_WORD * 800)
+
 
 class Commission(models.Model):
     STATE_REVIEW = "REVIEW"
     STATE_ACCEPTED = "ACCEPTED"
     STATE_IN_PROGRESS = "IN_PROGRESS"
     STATE_CLOSED = "CLOSED"
-    STATE_CHOICES = [
-        (STATE_REVIEW, "Review"),
-        (STATE_ACCEPTED, "Accepted"),
-        (STATE_IN_PROGRESS, "In Progress"),
-        (STATE_CLOSED, "Closed"),
-    ]
+    STATE_TO_HUMAN_READABLE = {
+        STATE_REVIEW: "Review",
+        STATE_ACCEPTED: "Accepted",
+        STATE_IN_PROGRESS: "In Progress",
+        STATE_CLOSED: "Closed",
+    }
     commissioner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         name="commissioner",
@@ -133,7 +137,7 @@ class Commission(models.Model):
         max_length=11,
         default=STATE_REVIEW,
     )
-    
+
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
 
     def __str__(self):
@@ -141,4 +145,6 @@ class Commission(models.Model):
 
     def get_absolute_url(self):
         return reverse("commission_detail", kwargs={"pk": self.pk})
-    
+
+    def get_state(self):
+        return (self.state, self.STATE_TO_HUMAN_READABLE[self.state])

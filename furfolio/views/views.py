@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from .. import models
 from ..forms import CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm, UserSearchForm
 
@@ -15,14 +15,26 @@ class Home(generic.TemplateView):
     template_name = "furfolio/home.html"
 
 
-class Dashboard(LoginRequiredMixin, generic.TemplateView):
-    template_name = "furfolio/dashboard.html"
+class DashboardRedirector(LoginRequiredMixin, generic.RedirectView):
+    def get_redirect_url(self, *args: Any, **kwargs: Any) -> str | None:
+        if self.request.user.role == models.User.ROLE_BUYER:
+            return reverse("buyer_dashboard")
+        elif self.request.user.role == models.User.ROLE_CREATOR:
+            return reverse("creator_dashboard")
+
+
+class CreatorDashboard(LoginRequiredMixin, generic.TemplateView):
+    template_name = "furfolio/dashboards/creator.html"
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["commissions_as_commissionee"] = models.Commission.objects.filter(
             offer__author=self.request.user.pk)
         return context
+
+
+class BuyerDashboard(LoginRequiredMixin, generic.TemplateView):
+    template_name = "furfolio/dashboards/buyer.html"
 
 
 class OfferList(generic.ListView):

@@ -14,7 +14,8 @@ urlpatterns = [
     path('offers/<pk>/', views.Offer.as_view(), name="offer_detail"),
     # users
     path('users/<username>/', views.User.as_view(), name="user"),
-    path('users/<username>/update/', views.UpdateUser.as_view(), name="update_user"),
+    path('users/<username>/update/',
+         views.UpdateUser.as_view(), name="update_user"),
     path('users/', views.UserList.as_view(), name="user_list"),
     # accounts
     path('accounts/signup/', views.SignUp.as_view(), name="signup"),
@@ -26,13 +27,20 @@ urlpatterns = [
         name="login"
     ),
     path('accounts/logout/', auth_views.LogoutView.as_view(), name="logout"),
-    # dashboard
-    path('dashboard/', views.Dashboard.as_view(), name="dashboard"),
+    # dashboards
+    path('dashboard/', views.DashboardRedirector.as_view(), name="dashboard"),
+    path('dashboard/creator/', views.CreatorDashboard.as_view(),
+         name="creator_dashboard"),
+    path('dashboard/buyer/', views.BuyerDashboard.as_view(), name="buyer_dashboard"),
     # commissions
     path('commissions/<pk>', views.Commission.as_view(), name="commission_detail"),
-    path('commissions/create/', views.CreateCommission.as_view(), name="create_commission"),
-    path('commissions/<pk>/update/', views.UpdateCommission.as_view(), name="update_commission"),
+    path('commissions/create/', views.CreateCommission.as_view(),
+         name="create_commission"),
+    path('commissions/<pk>/update/',
+         views.UpdateCommission.as_view(), name="update_commission"),
     # static pages
-    path('legal/terms-of-service', pages.TermsOfService.as_view(), name="terms_of_service"),
-    path('legal/privacy-policy', pages.PrivacyPolicy.as_view(), name="privacy_policy"),
+    path('legal/terms-of-service',
+         pages.TermsOfService.as_view(), name="terms_of_service"),
+    path('legal/privacy-policy',
+         pages.PrivacyPolicy.as_view(), name="privacy_policy"),
 ]

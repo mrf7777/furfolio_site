@@ -19,6 +19,11 @@ commission: the commission object to show
             <p>
                 <b>Details:</b> {{ commission.initial_request_text }}
             </p>
+            {% if commission.attachment %}
+            <p>
+                <b>Attachment:</b> <a class="text-decoration-none" href="{{ commission.attachment.url }}">{{ commission.attachment.name }}</a>
+            </p>
+            {% endif %}
         </div>
     </div>
 </div>

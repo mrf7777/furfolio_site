@@ -8,7 +8,7 @@ from .models import User, Offer, Commission
 
 
 class CustomFormRenderer(TemplatesSetting):
-    form_template_name = "furfolio/form_template.html"
+    form_template_name = "furfolio/form_templates/default.html"
 
 # https://docs.djangoproject.com/en/4.2/topics/auth/customizing/#custom-users-and-the-built-in-auth-forms
 
@@ -49,17 +49,20 @@ class OfferForm(forms.ModelForm):
 class OfferFormUpdate(OfferForm):
     class Meta(OfferForm.Meta):
         model = Offer
-        fields = ["name", "description", "forced_closed", "cutoff_date", "thumbnail"]
+        fields = ["name", "description",
+                  "forced_closed", "cutoff_date", "thumbnail"]
 
 
 class OfferSearchForm(forms.Form):
-    text_query = forms.CharField(label="Text Search", max_length=300, required=False)
+    text_query = forms.CharField(
+        label="Text Search", max_length=300, required=False)
 
 
 class CommissionForm(forms.ModelForm):
     class Meta:
         model = Commission
-        fields = ["commissioner", "offer", "initial_request_text", "attachment"]
+        fields = ["commissioner", "offer",
+                  "initial_request_text", "attachment"]
         widgets = {
             "commissioner": forms.HiddenInput(),
             "offer": forms.HiddenInput(),

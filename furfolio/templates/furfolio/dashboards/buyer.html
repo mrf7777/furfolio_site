@@ -1,1 +1,14 @@
-Buyer dashboard.
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+Buyer mode
+
+<div class="mb-3 d-flex align-items-center">
+    <div class="me-1">You are in buyer mode.</div>
+    <a class="btn btn-primary" href="{% url "creator_dashboard" %}">
+        <img class="me-1" style="width: 25px;" src="{% static "symbols/chasing-arrows-white.svg" %}">
+        Creator Mode
+    </a>
+</div>
+{% endblock %}

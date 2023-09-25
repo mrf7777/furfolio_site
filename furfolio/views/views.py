@@ -47,11 +47,11 @@ class OfferList(generic.ListView):
 
     def get_queryset(self) -> QuerySet[Any]:
         # Search something if text query is provided. Otherwise, use most recent.
-        if "text_query" in self.request.GET:
-            search_vector = SearchVector("name")
+        if "text_query" in self.request.GET and self.request.GET["text_query"].strip() != "":
+            search_vector = SearchVector("name", weight="A")
             search_query = SearchQuery(self.request.GET["text_query"])
             search_rank = SearchRank(search_vector, search_query)
-            return models.Offer.objects.annotate(rank=search_rank).order_by("-rank")
+            return models.Offer.objects.annotate(rank=search_rank).filter(rank__gte=0.2).order_by("-rank")
         else:
             return models.Offer.objects.all().order_by("-created_date")
 

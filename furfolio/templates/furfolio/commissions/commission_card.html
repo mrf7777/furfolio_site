@@ -6,11 +6,9 @@ commission: the commission object to show
 
 <div class="card">
     <div class="card-body">
-        <a class="text-decoration-none" href="{% url "commission_detail" commission.pk %}">
-            <h5 class="card-title">
-                "{{ commission.commissioner.username }}" requested "{{ commission.offer.name }}"
-            </h5>
-        </a>
+        <h5 class="card-title">
+            {% include "furfolio/users/badge.html" with user=commission.commissioner only %} - <a class="text-decoration-none" href="{% url "commission_detail" commission.pk %}">{{ commission.offer.name }}</a>
+        </h5>
         <div class="card-text">
             <p>
                 <b>Details:</b> {{ commission.initial_request_text }}

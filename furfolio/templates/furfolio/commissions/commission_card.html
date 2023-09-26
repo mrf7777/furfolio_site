@@ -6,6 +6,8 @@ csrf_token: the csrf_token
 request: the request object
 {% endcomment %}
 
+{% load static %}
+
 <div class="card">
     <div class="card-header">
         <div class="card-title d-flex align-items-center">
@@ -18,7 +20,7 @@ request: the request object
                 <form action="{% url "update_commission_status" commission.pk %}?next={{ request.get_full_path }}" method="post">
                     {% csrf_token %}
                     <input type="hidden" value="CLOSED" name="state">
-                    <button class="btn badge bg-black">Close</button>
+                    <button class="btn badge bg-black d-flex align-items-center"><img class="me-1" src="{% static "symbols/x-white.svg" %}" style="width: 12px;"> Close</button>
                 </form>
             </div>
         </div>

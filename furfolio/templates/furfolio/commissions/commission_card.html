@@ -16,7 +16,9 @@ request: the request object
             </h5>
             <div class="flex-fill"></div>
             <div class="d-flex flex-column">
-                {% include "./state_badge.html" with commission=commission only %}
+                <div class="mb-1">
+                    {% include "./state_badge.html" with commission=commission only %}
+                </div>
                 <form action="{% url "update_commission_status" commission.pk %}?next={{ request.get_full_path }}" method="post">
                     {% csrf_token %}
                     <input type="hidden" value="CLOSED" name="state">

@@ -4,7 +4,7 @@ Expects the following context objects:
   - commission: The commission to display the status for.
 {% endcomment %}
 
-<div class="badge text-reset
+<div class="badge text-reset fs-6
 {% if commission.get_state.0 == "REVIEW" %}
     bg-warning
 {% elif commission.get_state.0 == "ACCEPTED" %}

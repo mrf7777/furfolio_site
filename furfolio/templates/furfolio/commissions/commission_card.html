@@ -19,11 +19,13 @@ request: the request object
                 <div class="mb-1">
                     {% include "./state_badge.html" with commission=commission only %}
                 </div>
+                {% if commission.state != "CLOSED" %}
                 <form action="{% url "update_commission_status" commission.pk %}?next={{ request.get_full_path }}" method="post">
                     {% csrf_token %}
                     <input type="hidden" value="CLOSED" name="state">
                     <button class="btn badge bg-black d-flex align-items-center"><img class="me-1" src="{% static "symbols/x-white.svg" %}" style="width: 12px;"> Close</button>
                 </form>
+                {% endif %}
             </div>
         </div>
     </div>

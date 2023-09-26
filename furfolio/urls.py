@@ -38,6 +38,8 @@ urlpatterns = [
          name="create_commission"),
     path('commissions/<pk>/update/',
          views.UpdateCommission.as_view(), name="update_commission"),
+    path('commissions/<pk>/update/status/',
+         views.UpdateCommissionStatus.as_view(), name="update_commission_status"),
     # static pages
     path('legal/terms-of-service',
          pages.TermsOfService.as_view(), name="terms_of_service"),

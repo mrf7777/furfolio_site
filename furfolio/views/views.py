@@ -3,6 +3,7 @@ from django.db.models.query import QuerySet
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.shortcuts import redirect
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
@@ -199,3 +200,14 @@ class UpdateCommission(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateVi
     # only let the offer author update the commission
     def test_func(self):
         return self.get_object().offer.author.pk == self.request.user.pk
+
+
+class UpdateCommissionStatus(generic.View):
+    pass
+
+    def post(self, request, pk):
+        redirect_url = request.GET["next"]
+        commission = models.Commission.objects.filter(pk=pk)[0]
+        commission.state = request.POST["state"]
+        commission.save()
+        return redirect(redirect_url)

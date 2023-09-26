@@ -6,7 +6,7 @@
 <div>
     {% for commission in commissions_as_commissioner %}
         <div class="mb-3">
-            {% include "furfolio/commissions/commission_card.html" with commission=commission only %}
+            {% include "furfolio/commissions/commission_card.html" with commission=commission csrf_token=csrf_token request=request only %}
         </div>
     {% endfor %}
 </div>

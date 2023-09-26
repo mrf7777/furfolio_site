@@ -266,3 +266,8 @@ PWA_APP_SPLASH_SCREEN = [
         'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
     }
 ]
+
+# csrf
+if DEVELOPMENT_MODE is True:
+    CSRF_TRUSTED_ORIGINS = ['https://*.127.0.0.1', 'http://*.127.0.0.1',
+                            'https://*.localhost', 'http://*.localhost',]

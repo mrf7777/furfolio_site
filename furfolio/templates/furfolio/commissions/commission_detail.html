@@ -27,12 +27,4 @@
     <a href="{% url "update_commission" commission.pk %}"><button class="btn btn-primary">Edit</button></a>
 {% endif %}
 
-
-{# try single-button state update #}
-<form action="{% url "update_commission_status" commission.pk %}?next={{ request.get_full_path }}" method="post">
-    {% csrf_token %}
-    <input type="hidden" value="CLOSED" name="state">
-    <input type="submit" value="Close Commission">
-</form>
-
 {% endblock %}

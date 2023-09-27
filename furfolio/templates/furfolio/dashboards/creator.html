@@ -2,8 +2,9 @@
 {% load static %}
 {% block content %}
 
-<div class="mb-3">
-    <a href="{% url "create_offer" %}"><button class="btn btn-primary">Create Offer</button></a>
+<div class="mb-3 d-flex">
+    <a href="{% url "create_offer" %}"><button class="btn btn-primary me-3">Create Offer</button></a>
+    <a href="{% url "kanban_board" %}"><button class="btn btn-primary">Board</button></a>
 </div>
 
 <h4>Commissions in Review</h4>

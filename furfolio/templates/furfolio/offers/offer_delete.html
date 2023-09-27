@@ -1,13 +1,14 @@
-{% extends "base.html" %}
+{% extends "furfolio/layouts/title_body.html" %}
 
-{% block content %}
-<h1>Delete offer "{{ offer.name }}"</h1>
+{% block title %}
+Delete offer "{{ offer.name }}"
+{% endblock %}
 
+{% block body %}
 <form method="post">
     {% csrf_token %}
     <p>Are you sure you want to delete this offer? This cannot be undone. If you delete, this offer will be gone, forever!</p>
     {{ form }}
     <input class="btn btn-danger" value="Delete" type="submit">
 </form>
-
 {% endblock %}

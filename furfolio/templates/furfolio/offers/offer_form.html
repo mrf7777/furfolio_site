@@ -1,7 +1,10 @@
-{% extends "base.html" %}
+{% extends "furfolio/layouts/title_body.html" %}
 
-{% block content %}
-<h1>Create Offer</h1>
+{% block title %}
+Create Offer
+{% endblock %}
+
+{% block body %}
 
 <form enctype="multipart/form-data" action="{% url "create_offer" %}" method="post" id="form">
     {% csrf_token %}

@@ -1,7 +1,10 @@
-{% extends "base.html" %}
+{% extends "furfolio/layouts/title_body.html" %}
 
-{% block content %}
-    <h1 class="mb-1">{{ offer.name }}</h1>
+{% block title %}
+{{ offer.name }}
+{% endblock %}
+
+{% block body %}
     {% if offer.thumbnail %}
         <div class="d-flex justify-content-center mb-3">
             <img class="rounded border border-2 img-fluid" style="max-height: 40vh" src="{{ offer.thumbnail.url }}">

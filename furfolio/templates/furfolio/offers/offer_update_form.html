@@ -1,7 +1,10 @@
-{% extends "base.html" %}
+{% extends "furfolio/layouts/title_body.html" %}
 
-{% block content %}
-<h1>Edit offer "{{ offer.name }}"</h1>
+{% block title %}
+Edit offer "{{ offer.name }}"
+{% endblock %}
+
+{% block body %}
 
 <div class="d-flex justify-content-end">
     <a href="{% url "delete_offer" offer.pk %}"><button class="btn btn-danger">Delete</button></a>

@@ -17,7 +17,7 @@ request: the request object
             <div class="flex-fill"></div>
             <div class="d-flex flex-column">
                 <div class="mb-1">
-                    {% include "./state_badge.html" with commission=commission only %}
+                    {% include "./state_badge_using_commission.html" with commission=commission only %}
                 </div>
                 {% if commission.state != "CLOSED" %}
                 <form action="{% url "update_commission_status" commission.pk %}?next={{ request.get_full_path }}" method="post">

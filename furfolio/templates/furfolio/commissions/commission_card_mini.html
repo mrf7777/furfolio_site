@@ -30,7 +30,7 @@ request: the request object
             <form method="post" action="{% url "update_commission_status" commission.pk %}?next={{ request.get_full_path }}">
                 {% csrf_token %}
                 <input type="hidden" value="CLOSED" name="state">
-                {% include "./state_buttons/close_commission_button.html" %}
+                {% include "./state_buttons/close.html" %}
             </form>
         {% endif %}
     </div>

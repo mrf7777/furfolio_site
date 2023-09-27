@@ -30,10 +30,11 @@
 </head>
 
 <body class="d-flex flex-column vh-100">
+    {% block header %}
     <div class="container-fluid">
         {% include "furfolio/website_header.html" %}
     </div>
-    <br>
+    {% endblock %}
 
     <main class="flex-grow-1">
         <div class="container mb-3">

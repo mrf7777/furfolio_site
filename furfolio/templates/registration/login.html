@@ -1,10 +1,10 @@
-{% extends "base.html" %}
+{% extends "furfolio/layouts/title_body_no_header.html" %}
 
-{% block login_link %}
+{% block title %}
+Login
 {% endblock %}
 
-{% block content %}
-<h1>Login</h1>
+{% block body %}
 
 <form method="post" action="{% url 'login' %}{% if next %}?next={{ next }}{% endif %}">
     {% csrf_token %}

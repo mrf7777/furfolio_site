@@ -1,15 +1,10 @@
-{% extends "base.html" %}
+{% extends "furfolio/layouts/title_body_no_header.html" %}
 
-{% block login_link %}
+{% block title %}
+Sign Up
 {% endblock %}
 
-{% block signup_link %}
-{% endblock %}
-
-{% block site_title %}Sign Up{% endblock %}
-
-{% block content %}
-  <h1>Sign up</h1>
+{% block body %}
   <form enctype="multipart/form-data" method="post" id="form">
     {% csrf_token %}
     {{ form }}

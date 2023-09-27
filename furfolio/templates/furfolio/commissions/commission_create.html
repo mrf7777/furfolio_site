@@ -1,8 +1,10 @@
-{% extends "base.html" %}
+{% extends "furfolio/layouts/title_body.html" %}
 
-{% block content %}
-<h1>Create Commission for <a href="{% url "offer_detail" offer.pk %}">{{ offer.name }}</a> by {% include "furfolio/users/badge.html" with user=offer.author only %}</h1>
+{% block title %}
+Create Commission for <a href="{% url "offer_detail" offer.pk %}">{{ offer.name }}</a> by {% include "furfolio/users/badge.html" with user=offer.author only %}
+{% endblock %}
 
+{% block body %}
 <form enctype="multipart/form-data" method="post" id="form">
     {% csrf_token %}
     {{ form }}

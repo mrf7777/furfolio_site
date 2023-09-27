@@ -1,8 +1,10 @@
-{% extends "base.html" %}
+{% extends "furfolio/layouts/title_body.html" %}
 
-{% block content %}
+{% block title %}
+{% include "furfolio/users/badge.html" with user=commission.commissioner only %} wants <a class="text-decoration-none" href="{% url "offer_detail" commission.offer.pk %}">{{ commission.offer.name }}</a>.
+{% endblock %}
 
-<h4 class="mb-3">{% include "furfolio/users/badge.html" with user=commission.commissioner only %} wants <a class="text-decoration-none" href="{% url "offer_detail" commission.offer.pk %}">{{ commission.offer.name }}</a>.</h4>
+{% block body %}
 
 <div class="mb-3">
     <b>State:</b> {% include "./state_badge.html" with commission=commission only %}

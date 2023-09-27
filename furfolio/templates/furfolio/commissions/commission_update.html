@@ -1,7 +1,12 @@
-{% extends "base.html" %}
+{% extends "furfolio/layouts/title_body.html" %}
 
-{% block content %}
-<h1>Edit Commission</h1>
+{% block title %}
+{# TODO: link to commission? More Information in title? #}
+Edit Commission
+{% endblock %}
+
+{% block body %}
+
 <form enctype="multipart/form-data" method="post" id="form">
     {% csrf_token %}
     {{ form }}

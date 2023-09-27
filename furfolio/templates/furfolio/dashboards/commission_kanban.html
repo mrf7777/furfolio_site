@@ -1,7 +1,7 @@
 {% extends "furfolio/layouts/4_columns.html" %}
 
 {% block column_1_title %}
-Review
+{% include "furfolio/commissions/state_badge.html" with state="REVIEW" only %}
 {% endblock %}
 
 {% block column_1 %}
@@ -13,7 +13,7 @@ Review
 {% endblock %}
 
 {% block column_2_title %}
-Accepted
+{% include "furfolio/commissions/state_badge.html" with state="ACCEPTED" only %}
 {% endblock %}
 
 {% block column_2 %}
@@ -25,7 +25,7 @@ Accepted
 {% endblock %}
 
 {% block column_3_title %}
-In Progress
+{% include "furfolio/commissions/state_badge.html" with state="IN_PROGRESS" only %}
 {% endblock %}
 
 {% block column_3 %}
@@ -37,7 +37,7 @@ In Progress
 {% endblock %}
 
 {% block column_4_title %}
-Closed
+{% include "furfolio/commissions/state_badge.html" with state="CLOSED" only %}
 {% endblock %}
 
 {% block column_4 %}

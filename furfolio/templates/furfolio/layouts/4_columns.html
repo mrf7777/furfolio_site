@@ -5,7 +5,7 @@
 {% block content %}
 
 <div class="row">
-    <div class="col-md">
+    <div class="col-md" {% block column_1_attrs %}{% endblock %}>
         <div class="fs-3 mb-3">
             {% block column_1_title %}
                 Title 1
@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <div class="col-md">
+    <div class="col-md" {% block column_2_attrs %}{% endblock %}>
         <div class="fs-3 mb-3">
             {% block column_2_title %}
                 Title 2
@@ -31,7 +31,7 @@
         </div>
     </div>
 
-    <div class="col-md">
+    <div class="col-md" {% block column_3_attrs %}{% endblock %}>
         <div class="fs-3 mb-3">
             {% block column_3_title %}
                 Title 3
@@ -44,7 +44,7 @@
         </div>
     </div>
 
-    <div class="col-md">
+    <div class="col-md" {% block column_4_attrs %}{% endblock %}>
         <div class="fs-3 mb-3">
             {% block column_4_title %}
                 Title 4

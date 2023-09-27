@@ -26,12 +26,23 @@ request: the request object
     </div>
 
     <div class="card-footer d-flex flex-wrap">
+        <form method="post" action="{% url "update_commission_status" commission.pk %}?next={{ request.get_full_path }}">
+            {% csrf_token %}
+            <input type="hidden" value="REVIEW" name="state">
+            {% include "./state_buttons/review.html" %}
+        </form>
 
-        {% include "./state_buttons/review.html" %}
+        <form method="post" action="{% url "update_commission_status" commission.pk %}?next={{ request.get_full_path }}">
+            {% csrf_token %}
+            <input type="hidden" value="ACCEPTED" name="state">
+            {% include "./state_buttons/accept.html" %}
+        </form>
 
-        {% include "./state_buttons/accept.html" %}
-
-        {% include "./state_buttons/in_progress.html" %}
+        <form method="post" action="{% url "update_commission_status" commission.pk %}?next={{ request.get_full_path }}">
+            {% csrf_token %}
+            <input type="hidden" value="IN_PROGRESS" name="state">
+            {% include "./state_buttons/in_progress.html" %}
+        </form>
 
         {% if commission.state != "CLOSED" %}
             <form method="post" action="{% url "update_commission_status" commission.pk %}?next={{ request.get_full_path }}">

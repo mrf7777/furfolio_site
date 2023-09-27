@@ -1,7 +1,10 @@
-{% extends "base.html" %}
+{% extends "furfolio/layouts/title_body.html" %}
 
-{% block content %}
-<h1>Update User Settings</h1>
+{% block title %}
+Update User Settings
+{% endblock %}
+
+{% block body %}
 <form enctype="multipart/form-data" method="post" id="form">
     {% csrf_token %}
     {{ form }}

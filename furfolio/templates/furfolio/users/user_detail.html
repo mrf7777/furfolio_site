@@ -1,17 +1,18 @@
-{% extends "base.html" %}
+{% extends "furfolio/layouts/title_body.html" %}
 
-{% block content %}
+{% block title %}
+<div class="d-flex">
+    {% if user.avatar %}<img class="me-3" src="{{ user.avatar.url }}">{% endif %}{{ user.username }}
 
-{% if user.pk == request.user.pk %}
-<div class="d-flex justify-content-end">
-    <a href="{% url "update_user" user.username %}"><button class="btn btn-primary">Settings</button></a>
-</div>
-{% endif %}
+    <div class="flex-fill"></div>
 
-<h4 class="d-flex align-items-center">
-    {% if user.avatar %}
-        <img class="me-3" src="{{ user.avatar.url }}">
+    {% if user.pk == request.user.pk %}
+        <div class="d-flex justify-content-end">
+            <a href="{% url "update_user" user.username %}"><button class="btn btn-primary">Settings</button></a>
+        </div>
     {% endif %}
-    {{ user.username }}
-</h4>
+</div>
+{% endblock %}
+
+{% block body %}
 {% endblock %}

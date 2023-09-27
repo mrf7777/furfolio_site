@@ -55,19 +55,19 @@ class CommissionKanbanBoard(LoginRequiredMixin, generic.TemplateView):
         context["review_commissions"] = models.Commission.objects.filter(
             offer__author__pk=current_user_pk,
             state=models.Commission.STATE_REVIEW,
-        )
+        ).order_by("-updated_date")
         context["accepted_commissions"] = models.Commission.objects.filter(
             offer__author__pk=current_user_pk,
             state=models.Commission.STATE_ACCEPTED
-        )
+        ).order_by("-updated_date")
         context["in_progress_commissions"] = models.Commission.objects.filter(
             offer__author__pk=current_user_pk,
             state=models.Commission.STATE_IN_PROGRESS,
-        )
+        ).order_by("-updated_date")
         context["closed_commissions"] = models.Commission.objects.filter(
             offer__author__pk=current_user_pk,
             state=models.Commission.STATE_CLOSED
-        )
+        ).order_by("-updated_date")
         return context
 
 

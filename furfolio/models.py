@@ -154,6 +154,7 @@ class Commission(models.Model):
     )
 
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
+    updated_date = models.DateTimeField(name="updated_date", auto_now=True)
 
     def __str__(self):
         return "Id: %i. \"%s\" requested \"%s\"." % (self.id, self.commissioner.username, self.offer.name)

@@ -118,12 +118,6 @@ class Commission(models.Model):
     STATE_ACCEPTED = "ACCEPTED"
     STATE_IN_PROGRESS = "IN_PROGRESS"
     STATE_CLOSED = "CLOSED"
-    STATE_TO_HUMAN_READABLE = {
-        STATE_REVIEW: "Review",
-        STATE_ACCEPTED: "Accepted",
-        STATE_IN_PROGRESS: "In Progress",
-        STATE_CLOSED: "Closed",
-    }
     STATE_CHOICES = [
         (STATE_REVIEW, "Review"),
         (STATE_ACCEPTED, "Accepted"),
@@ -166,6 +160,3 @@ class Commission(models.Model):
 
     def get_absolute_url(self):
         return reverse("commission_detail", kwargs={"pk": self.pk})
-
-    def get_state(self):
-        return (self.state, self.STATE_TO_HUMAN_READABLE[self.state])

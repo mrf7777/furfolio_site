@@ -1,0 +1,27 @@
+{% comment "" %}
+Includable commission status badge.
+Expects the following context objects:
+  - state: an enum value of commission state.
+{% endcomment %}
+
+<div class="badge text-reset fs-6
+{% if state == "REVIEW" %}
+    bg-warning
+{% elif state == "ACCEPTED" %}
+    bg-success
+{% elif state == "IN_PROGRESS" %}
+    bg-info
+{% elif state == "CLOSED" %}
+    {# no background color #}
+{% endif %}
+">
+    {% if state == "REVIEW" %}
+    Review
+    {% elif state == "ACCEPTED" %}
+    Accepted
+    {% elif state == "IN_PROGRESS" %}
+    In Progress
+    {% elif state == "CLOSED" %}
+    Closed
+    {% endif %}
+</div>

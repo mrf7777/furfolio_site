@@ -32,6 +32,8 @@ urlpatterns = [
     path('dashboard/creator/', views.CreatorDashboard.as_view(),
          name="creator_dashboard"),
     path('dashboard/buyer/', views.BuyerDashboard.as_view(), name="buyer_dashboard"),
+    path('dashboard/creator/kanban',
+         views.CommissionKanbanBoard.as_view(), name="kanban_board"),
     # commissions
     path('commissions/<pk>', views.Commission.as_view(), name="commission_detail"),
     path('commissions/create/', views.CreateCommission.as_view(),

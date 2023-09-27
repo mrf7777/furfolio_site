@@ -46,6 +46,31 @@ class BuyerDashboard(LoginRequiredMixin, generic.TemplateView):
         return context
 
 
+class CommissionKanbanBoard(LoginRequiredMixin, generic.TemplateView):
+    template_name = "furfolio/dashboards/commission_kanban.html"
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        current_user_pk = self.request.user.pk
+        context = super().get_context_data(**kwargs)
+        context["review_commissions"] = models.Commission.objects.filter(
+            offer__author__pk=current_user_pk,
+            state=models.Commission.STATE_REVIEW,
+        )
+        context["accepted_commissions"] = models.Commission.objects.filter(
+            offer__author__pk=current_user_pk,
+            state=models.Commission.STATE_ACCEPTED
+        )
+        context["in_progress_commissions"] = models.Commission.objects.filter(
+            offer__author__pk=current_user_pk,
+            state=models.Commission.STATE_IN_PROGRESS,
+        )
+        context["closed_commissions"] = models.Commission.objects.filter(
+            offer__author__pk=current_user_pk,
+            state=models.Commission.STATE_CLOSED
+        )
+        return context
+
+
 class OfferList(generic.ListView):
     model = models.Offer
     template_name = "furfolio/offers/offer_list.html"

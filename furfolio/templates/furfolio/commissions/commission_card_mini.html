@@ -41,6 +41,7 @@ request: the request object
 
         {% if commission.state == "IN_PROGRESS" %}
             {% include "furfolio/commissions/state_buttons/state_setters/close.html" with commission=commission request=request csrf_token=csrf_token only %}
+            {% include "furfolio/commissions/state_buttons/state_setters/accept.html" with commission=commission request=request csrf_token=csrf_token only %}
         {% endif %}
 
         {% if commission.state == "CLOSED" %}

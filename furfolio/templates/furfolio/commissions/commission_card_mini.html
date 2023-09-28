@@ -29,35 +29,19 @@ request: the request object
         <h6>Change State</h6>
         <div class="d-flex flex-wrap">
         {% if commission.state == "ACCEPTED" %}
-            <form method="post" action="{% url "update_commission_status" commission.pk %}?next={{ request.get_full_path }}">
-                {% csrf_token %}
-                <input type="hidden" value="REVIEW" name="state">
-                {% include "./state_buttons/review.html" %}
-            </form>
+            {% include "furfolio/commissions/state_buttons/state_setters/review.html" with commission=commission request=request csrf_token=csrf_token only %}
         {% endif %}
 
         {% if commission.state == "REVIEW" or commission.state == "IN_PROGRESS" %}
-            <form method="post" action="{% url "update_commission_status" commission.pk %}?next={{ request.get_full_path }}">
-                {% csrf_token %}
-                <input type="hidden" value="ACCEPTED" name="state">
-                {% include "./state_buttons/accept.html" %}
-            </form>
+            {% include "furfolio/commissions/state_buttons/state_setters/accept.html" with commission=commission request=request csrf_token=csrf_token only %}
         {% endif %}
 
         {% if commission.state == "ACCEPTED" or commission.state == "CLOSED" %}
-            <form method="post" action="{% url "update_commission_status" commission.pk %}?next={{ request.get_full_path }}">
-                {% csrf_token %}
-                <input type="hidden" value="IN_PROGRESS" name="state">
-                {% include "./state_buttons/in_progress.html" %}
-            </form>
+            {% include "furfolio/commissions/state_buttons/state_setters/in_progress.html" with commission=commission request=request csrf_token=csrf_token only %}
         {% endif %}
 
         {% if commission.state != "CLOSED" %}
-            <form method="post" action="{% url "update_commission_status" commission.pk %}?next={{ request.get_full_path }}">
-                {% csrf_token %}
-                <input type="hidden" value="CLOSED" name="state">
-                {% include "./state_buttons/close.html" %}
-            </form>
+            {% include "furfolio/commissions/state_buttons/state_setters/close.html" with commission=commission request=request csrf_token=csrf_token only %}
         {% endif %}
         </div>
     </div>

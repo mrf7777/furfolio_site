@@ -7,6 +7,7 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 from django.urls import reverse_lazy, reverse
+from django.core.exceptions import PermissionDenied
 from .. import models
 from ..forms import CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm, UserSearchForm, UpdateCommissionForm
 
@@ -226,10 +227,16 @@ class UpdateCommission(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateVi
         return self.get_object().offer.author.pk == self.request.user.pk
 
 
-class UpdateCommissionStatus(generic.View):
-    pass
-
+class UpdateCommissionStatus(LoginRequiredMixin, generic.View):
     def post(self, request, pk):
+        commission = models.Commission.objects.filter(pk=pk)[0]
+        # ensure that offer author only has permission to update commission state
+        user = self.request.user
+        if user.pk != commission.offer.author.pk:
+            raise PermissionDenied(
+                "You do not have the permission to change the state of this commission."
+            )
+
         redirect_url = request.GET["next"]
         commission = models.Commission.objects.filter(pk=pk)[0]
         commission.state = request.POST["state"]

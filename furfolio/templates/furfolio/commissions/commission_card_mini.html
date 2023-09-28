@@ -25,24 +25,32 @@ request: the request object
         </div>
     </div>
 
-    <div class="card-footer d-flex flex-wrap">
-        <form method="post" action="{% url "update_commission_status" commission.pk %}?next={{ request.get_full_path }}">
-            {% csrf_token %}
-            <input type="hidden" value="REVIEW" name="state">
-            {% include "./state_buttons/review.html" %}
-        </form>
+    <div class="card-footer">
+        <h6>Change State</h6>
+        <div class="d-flex flex-wrap">
+        {% if commission.state == "ACCEPTED" %}
+            <form method="post" action="{% url "update_commission_status" commission.pk %}?next={{ request.get_full_path }}">
+                {% csrf_token %}
+                <input type="hidden" value="REVIEW" name="state">
+                {% include "./state_buttons/review.html" %}
+            </form>
+        {% endif %}
 
-        <form method="post" action="{% url "update_commission_status" commission.pk %}?next={{ request.get_full_path }}">
-            {% csrf_token %}
-            <input type="hidden" value="ACCEPTED" name="state">
-            {% include "./state_buttons/accept.html" %}
-        </form>
+        {% if commission.state == "REVIEW" or commission.state == "IN_PROGRESS" %}
+            <form method="post" action="{% url "update_commission_status" commission.pk %}?next={{ request.get_full_path }}">
+                {% csrf_token %}
+                <input type="hidden" value="ACCEPTED" name="state">
+                {% include "./state_buttons/accept.html" %}
+            </form>
+        {% endif %}
 
-        <form method="post" action="{% url "update_commission_status" commission.pk %}?next={{ request.get_full_path }}">
-            {% csrf_token %}
-            <input type="hidden" value="IN_PROGRESS" name="state">
-            {% include "./state_buttons/in_progress.html" %}
-        </form>
+        {% if commission.state == "ACCEPTED" or commission.state == "CLOSED" %}
+            <form method="post" action="{% url "update_commission_status" commission.pk %}?next={{ request.get_full_path }}">
+                {% csrf_token %}
+                <input type="hidden" value="IN_PROGRESS" name="state">
+                {% include "./state_buttons/in_progress.html" %}
+            </form>
+        {% endif %}
 
         {% if commission.state != "CLOSED" %}
             <form method="post" action="{% url "update_commission_status" commission.pk %}?next={{ request.get_full_path }}">
@@ -51,6 +59,7 @@ request: the request object
                 {% include "./state_buttons/close.html" %}
             </form>
         {% endif %}
+        </div>
     </div>
 
 </div>

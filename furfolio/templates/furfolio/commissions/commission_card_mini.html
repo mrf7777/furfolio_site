@@ -26,6 +26,9 @@ request: the request object
             <p>
                 {{ commission.initial_request_text }}
             </p>
+            {% if commission.attachment %}
+            <a class="text-decoration-none" href="{{ commission.attachment.url }}" >{{ commission.attachment.name }}</a>
+            {% endif %}
         </div>
     </div>
 

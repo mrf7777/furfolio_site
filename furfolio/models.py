@@ -161,3 +161,38 @@ class Commission(models.Model):
 
     def get_absolute_url(self):
         return reverse("commission_detail", kwargs={"pk": self.pk})
+
+
+# limit commisson message to about 350 words
+COMMISSION_MESSAGE_MAX_LENGTH = math.ceil(
+    AVERAGE_CHARACTERS_PER_WORD * 350)
+
+
+class CommissionMessage(models.Model):
+    commission = models.OneToOneField(
+        Commission,
+        name="commission",
+        on_delete=models.CASCADE,
+        primary_key=True
+    )
+    # if the author is deleted, keep the chat history by preserving these messages
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+    )
+    message = models.TextField(
+        name="message",
+        max_length=COMMISSION_MESSAGE_MAX_LENGTH,
+    )
+    attachment = models.FileField(
+        name="attachment",
+        blank=True,
+    )
+
+    created_date = models.DateTimeField(name="created_date", auto_now_add=True)
+    updated_date = models.DateTimeField(name="updated_date", auto_now=True)
+
+    def been_edited(self) -> bool:
+        # only consider to be edited if change to message happened 10 seconds after being created
+        return abs((self.created_date - self.updated_date).total_seconds()) > 10

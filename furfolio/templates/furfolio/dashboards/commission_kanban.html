@@ -4,12 +4,6 @@
 {% include "furfolio/commissions/state_badge.html" with state="REVIEW" only %}
 {% endblock %}
 
-{% block column_1_attrs %}
-    {% if not review_commissions %}
-        hidden
-    {% endif %}
-{% endblock %}
-
 {% block column_1 %}
     {% for commission in review_commissions %}
         <div class="mb-3">
@@ -17,12 +11,6 @@
         </div>
     {% endfor %}
 {% endblock %}
-
-{% block column_2_attrs %}
-    {% if not accepted_commissions %}
-        hidden
-    {% endif %}
-{% endblock%}
 
 {% block column_2_title %}
 {% include "furfolio/commissions/state_badge.html" with state="ACCEPTED" only %}
@@ -36,12 +24,6 @@
     {% endfor %}
 {% endblock %}
 
-{% block column_3_attrs %}
-    {% if not in_progress_commissions %}
-        hidden
-    {% endif %}
-{% endblock %}
-
 {% block column_3_title %}
 {% include "furfolio/commissions/state_badge.html" with state="IN_PROGRESS" only %}
 {% endblock %}
@@ -52,12 +34,6 @@
             {% include "furfolio/commissions/commission_card_mini.html" with commission=commission request=request csrf_token=csrf_token only %}
         </div>
     {% endfor %}
-{% endblock %}
-
-{% block column_4_attrs %}
-    {% if not closed_commissions %}
-        hidden
-    {% endif %}
 {% endblock %}
 
 {% block column_4_title %}

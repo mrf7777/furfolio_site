@@ -28,20 +28,23 @@ request: the request object
     <div class="card-footer">
         <h6>Change State</h6>
         <div class="d-flex flex-wrap">
-        {% if commission.state == "ACCEPTED" %}
-            {% include "furfolio/commissions/state_buttons/state_setters/review.html" with commission=commission request=request csrf_token=csrf_token only %}
-        {% endif %}
-
-        {% if commission.state == "REVIEW" or commission.state == "IN_PROGRESS" %}
+        {% if commission.state == "REVIEW" %}
             {% include "furfolio/commissions/state_buttons/state_setters/accept.html" with commission=commission request=request csrf_token=csrf_token only %}
-        {% endif %}
-
-        {% if commission.state == "ACCEPTED" or commission.state == "CLOSED" %}
-            {% include "furfolio/commissions/state_buttons/state_setters/in_progress.html" with commission=commission request=request csrf_token=csrf_token only %}
-        {% endif %}
-
-        {% if commission.state != "CLOSED" %}
             {% include "furfolio/commissions/state_buttons/state_setters/close.html" with commission=commission request=request csrf_token=csrf_token only %}
+        {% endif %}
+
+        {% if commission.state == "ACCEPTED" %}
+            {% include "furfolio/commissions/state_buttons/state_setters/in_progress.html" with commission=commission request=request csrf_token=csrf_token only %}
+            {% include "furfolio/commissions/state_buttons/state_setters/review.html" with commission=commission request=request csrf_token=csrf_token only %}
+            {% include "furfolio/commissions/state_buttons/state_setters/close.html" with commission=commission request=request csrf_token=csrf_token only %}
+        {% endif %}
+
+        {% if commission.state == "IN_PROGRESS" %}
+            {% include "furfolio/commissions/state_buttons/state_setters/close.html" with commission=commission request=request csrf_token=csrf_token only %}
+        {% endif %}
+
+        {% if commission.state == "CLOSED" %}
+            {% include "furfolio/commissions/state_buttons/state_setters/in_progress.html" with commission=commission request=request csrf_token=csrf_token only %}
         {% endif %}
         </div>
     </div>

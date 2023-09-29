@@ -3,13 +3,14 @@ Includable message card.
 Expects the following context objects:
   - text: the text
   - attachment_name: (optional) the name of the attachment
-  - attachment_url: the url of the attachment
+  - attachment_url: (optional) the url of the attachment
+  - id: the HTML id of the card.
   - sender: an enum value: "CURRENT_USER" or "NON_CURRENT_USER"
     - "CURRENT_USER": use this to make card styles as if the message is by the signed in user
     - "NON_CURRENT_USER": use this to make card styled as if the message is sent from someone else
 {% endcomment %}
 
-<div class="card {% if sender == "CURRENT_USER" %}bg-success-subtle{% elif sender == "NON_CURRENT_USER" %}{% endif %}">
+<div id="{{ id }}" class="card {% if sender == "CURRENT_USER" %}bg-success-subtle{% elif sender == "NON_CURRENT_USER" %}{% endif %}">
     <div class="card-body">
         <div class="card-text">
             <p>

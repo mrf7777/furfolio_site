@@ -8,17 +8,17 @@
             <div class="col-md-6"></div>
             <div class="col-md-6">
                 {% if message.attachment %}
-                    {% include "./message_card.html" with text=message.message sender="CURRENT_USER" attachment_url=message.attachment.url attachment_name=message.attachment.name only %}
+                    {% include "./message_card.html" with id=message.get_html_id text=message.message sender="CURRENT_USER" attachment_url=message.attachment.url attachment_name=message.attachment.name only %}
                 {% else %}
-                    {% include "./message_card.html" with text=message.message sender="CURRENT_USER" only %}
+                    {% include "./message_card.html" with id=message.get_html_id text=message.message sender="CURRENT_USER" only %}
                 {% endif %}
             </div>
         {% else %}
             <div class="col-md-6">
                 {% if message.attachment %}
-                    {% include "./message_card.html" with text=message.message sender="NON_CURRENT_USER" attachment_url=message.attachment.url attachment_name=message.attachment.name only %}
+                    {% include "./message_card.html" with id=message.get_html_id text=message.message sender="NON_CURRENT_USER" attachment_url=message.attachment.url attachment_name=message.attachment.name only %}
                 {% else %}
-                    {% include "./message_card.html" with text=message.message sender="NON_CURRENT_USER" only %}
+                    {% include "./message_card.html" with id=message.get_html_id text=message.message sender="NON_CURRENT_USER" only %}
                 {% endif %}
             </div>
             <div class="col-md-6"></div>

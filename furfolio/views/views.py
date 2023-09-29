@@ -254,10 +254,6 @@ class CommissionChat(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView
     def get_commission(self):
         return get_object_or_404(models.Commission, pk=self.kwargs["pk"])
 
-    def get_success_url(self) -> str:
-        commission = self.get_commission()
-        return reverse("commission_chat", args=[commission.pk])
-
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         commission = self.get_commission()
         form.instance.commission = commission

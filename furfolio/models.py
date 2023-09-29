@@ -195,3 +195,9 @@ class CommissionMessage(models.Model):
     def been_edited(self) -> bool:
         # only consider to be edited if change to message happened 10 seconds after being created
         return abs((self.created_date - self.updated_date).total_seconds()) > 10
+
+    def get_html_id(self) -> str:
+        return "message_" + str(self.pk)
+
+    def get_absolute_url(self):
+        return reverse("commission_chat", kwargs={"pk": self.commission.pk}) + "#" + self.get_html_id()

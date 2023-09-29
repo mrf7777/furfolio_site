@@ -268,10 +268,6 @@ class CommissionChat(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        if hasattr(self.request, "POST"):
-            context["form"] = CommissionMessageForm(self.request.POST)
-        else:
-            context["form"] = CommissionMessageForm()
         commission = self.get_commission()
         context["commission_messages"] = models.CommissionMessage.objects.filter(
             Q(author=commission.commissioner)

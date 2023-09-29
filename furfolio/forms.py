@@ -89,4 +89,7 @@ class UpdateCommissionForm(CommissionForm):
 class CommissionMessageForm(forms.ModelForm):
     class Meta:
         model = CommissionMessage
-        fields = ["message", "attachment"]
+        fields = ["commission", "message", "attachment"]
+        widgets = {
+            "commission": forms.HiddenInput(),
+        }

@@ -4,4 +4,9 @@
 {% for message in commission_messages %}
 {{ message }}
 {% endfor %}
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" class="btn btn-primary" value="Send">
+</form>
 {% endblock %}

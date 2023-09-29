@@ -2,8 +2,8 @@ from typing import Any
 from django.db.models.query import QuerySet
 from django.db.models import Q
 from django.forms.models import BaseModelForm
-from django.http import HttpResponse
-from django.shortcuts import redirect
+from django.http import HttpRequest, HttpResponse
+from django.shortcuts import redirect, get_object_or_404
 from django.views import generic
 from django.views.generic.base import TemplateResponseMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -247,13 +247,18 @@ class UpdateCommissionStatus(LoginRequiredMixin, generic.View):
 
 
 class CommissionChat(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView):
-    model = models.Commission
+    model = models.CommissionMessage
     form_class = CommissionMessageForm
     template_name = "furfolio/commissions/chat/chat.html"
-    context_object_name = "commission"
+
+    # TODO: https://stackoverflow.com/a/21652227/11370665
+    # override form_valid method and populate hidden field in form
+
+    def get_commission(self):
+        return get_object_or_404(models.Commission, pk=self.kwargs["pk"])
 
     def test_func(self):
-        object = self.get_object()
+        object = self.get_commission()
         if object.offer.author.pk == self.request.user.pk:
             return True
         elif object.commissioner.pk == self.request.user.pk:
@@ -263,7 +268,11 @@ class CommissionChat(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        commission = self.get_object()
+        if hasattr(self.request, "POST"):
+            context["form"] = CommissionMessageForm(self.request.POST)
+        else:
+            context["form"] = CommissionMessageForm()
+        commission = self.get_commission()
         context["commission_messages"] = models.CommissionMessage.objects.filter(
             Q(author=commission.commissioner)
             |

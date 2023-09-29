@@ -1,12 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 {% for message in commission_messages %}
-{{ message }}
+    {% if message.attachment %}
+        {% include "./message_card.html" with text=message.message sender="CURRENT_USER" attachment_url=message.attachment.url attachment_name=message.attachment.name only %}
+    {% else %}
+        {% include "./message_card.html" with text=message.message sender="CURRENT_USER" only %}
+    {% endif %}
 {% endfor %}
-<form method="post">
+
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form }}
     <input type="submit" class="btn btn-primary" value="Send">
 </form>
+
 {% endblock %}

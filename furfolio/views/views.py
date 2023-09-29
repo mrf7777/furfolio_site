@@ -1,9 +1,11 @@
 from typing import Any
 from django.db.models.query import QuerySet
+from django.db.models import Q
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.views import generic
+from django.views.generic.base import TemplateResponseMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 from django.urls import reverse_lazy, reverse
@@ -242,3 +244,28 @@ class UpdateCommissionStatus(LoginRequiredMixin, generic.View):
         commission.state = request.POST["state"]
         commission.save()
         return redirect(redirect_url)
+
+
+class CommissionChat(LoginRequiredMixin, UserPassesTestMixin, generic.DetailView):
+    model = models.Commission
+    template_name = "furfolio/commissions/chat/chat.html"
+    context_object_name = "commission"
+
+    def test_func(self):
+        object = self.get_object()
+        if object.offer.author.pk == self.request.user.pk:
+            return True
+        elif object.commissioner.pk == self.request.user.pk:
+            return True
+        else:
+            return False
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        commission = self.get_object()
+        context["commission_messages"] = models.CommissionMessage.objects.filter(
+            Q(author=commission.commissioner)
+            |
+            Q(author=commission.offer.author)
+        ).order_by("created_date")
+        return context

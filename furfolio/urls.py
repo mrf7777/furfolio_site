@@ -42,6 +42,9 @@ urlpatterns = [
          views.UpdateCommission.as_view(), name="update_commission"),
     path('commissions/<pk>/update/status/',
          views.UpdateCommissionStatus.as_view(), name="update_commission_status"),
+    # commission chat
+    path('commissions/<pk>/chat',
+         views.CommissionChat.as_view(), name="commission_chat"),
     # static pages
     path('legal/terms-of-service',
          pages.TermsOfService.as_view(), name="terms_of_service"),

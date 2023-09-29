@@ -169,11 +169,10 @@ COMMISSION_MESSAGE_MAX_LENGTH = math.ceil(
 
 
 class CommissionMessage(models.Model):
-    commission = models.OneToOneField(
+    commission = models.ForeignKey(
         Commission,
         name="commission",
         on_delete=models.CASCADE,
-        primary_key=True
     )
     # if the author is deleted, keep the chat history by preserving these messages
     author = models.ForeignKey(

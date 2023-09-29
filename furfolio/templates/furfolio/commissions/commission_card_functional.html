@@ -34,30 +34,7 @@ request: the request object
     </div>
 
     <div class="card-footer">
-        <h6>Functions</h6>
-        <div class="mb-1"><a class="text-reset" href="{% url "commission_chat" commission.pk %}">{% include "./chat/chat_button.html" %}</a></div>
-        <h6>Change State</h6>
-        <div class="d-flex flex-wrap">
-        {% if commission.state == "REVIEW" %}
-            <div class="me-1 mb-1">{% include "furfolio/commissions/state_buttons/state_setters/accept.html" with commission=commission request=request csrf_token=csrf_token only %}</div>
-            <div class="me-1 mb-1">{% include "furfolio/commissions/state_buttons/state_setters/close.html" with commission=commission request=request csrf_token=csrf_token only %}</div>
-        {% endif %}
-
-        {% if commission.state == "ACCEPTED" %}
-            <div class="me-1 mb-1">{% include "furfolio/commissions/state_buttons/state_setters/in_progress.html" with commission=commission request=request csrf_token=csrf_token only %}</div>
-            <div class="me-1 mb-1">{% include "furfolio/commissions/state_buttons/state_setters/review.html" with commission=commission request=request csrf_token=csrf_token only %}</div>
-            <div class="me-1 mb-1">{% include "furfolio/commissions/state_buttons/state_setters/close.html" with commission=commission request=request csrf_token=csrf_token only %}</div>
-        {% endif %}
-
-        {% if commission.state == "IN_PROGRESS" %}
-            <div class="me-1 mb-1">{% include "furfolio/commissions/state_buttons/state_setters/close.html" with commission=commission request=request csrf_token=csrf_token only %}</div>
-            <div class="me-1 mb-1">{% include "furfolio/commissions/state_buttons/state_setters/accept.html" with commission=commission request=request csrf_token=csrf_token only %}</div>
-        {% endif %}
-
-        {% if commission.state == "CLOSED" %}
-            <div class="me-1 mb-1">{% include "furfolio/commissions/state_buttons/state_setters/in_progress.html" with commission=commission request=request csrf_token=csrf_token only %}</div>
-        {% endif %}
-        </div>
+        {% include "./commission_functions.html" %}
     </div>
 
 </div>

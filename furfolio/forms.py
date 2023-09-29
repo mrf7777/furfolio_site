@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django import forms
 from django.utils import timezone
 from django.forms.renderers import TemplatesSetting
-from .models import User, Offer, Commission
+from .models import User, Offer, Commission, CommissionMessage
 
 
 class TextSearchForm(forms.Form):
@@ -84,3 +84,9 @@ class UpdateCommissionForm(CommissionForm):
     class Meta(CommissionForm.Meta):
         fields = ["commissioner", "offer",
                   "state", "initial_request_text", "attachment"]
+
+
+class CommissionMessageForm(forms.ModelForm):
+    class Meta:
+        model = CommissionMessage
+        fields = ["message", "attachment"]

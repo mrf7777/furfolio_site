@@ -11,7 +11,7 @@ from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 from django.urls import reverse_lazy, reverse
 from django.core.exceptions import PermissionDenied
 from .. import models
-from ..forms import CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm, UserSearchForm, UpdateCommissionForm
+from ..forms import CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm, UserSearchForm, UpdateCommissionForm, CommissionMessageForm
 
 
 class Home(generic.TemplateView):
@@ -246,8 +246,9 @@ class UpdateCommissionStatus(LoginRequiredMixin, generic.View):
         return redirect(redirect_url)
 
 
-class CommissionChat(LoginRequiredMixin, UserPassesTestMixin, generic.DetailView):
+class CommissionChat(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView):
     model = models.Commission
+    form_class = CommissionMessageForm
     template_name = "furfolio/commissions/chat/chat.html"
     context_object_name = "commission"
 

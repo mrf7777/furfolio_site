@@ -10,7 +10,11 @@ request: the request object
     <div class="card-header">
         <div class="card-title d-flex align-items-center">
             <h5>
-                {% include "furfolio/users/badge.html" with user=commission.commissioner only %} - <a class="text-decoration-none" href="{% url "commission_detail" commission.pk %}">{{ commission.offer.name }}</a>
+                {% include "furfolio/users/badge.html" with user=commission.commissioner only %}
+                wants
+                <a class="text-decoration-none" href="{% url "commission_detail" commission.pk %}">{{ commission.offer.name }}</a>
+                by
+                {% include "furfolio/users/badge.html" with user=commission.offer.author only %}
             </h5>
             <div class="flex-fill"></div>
             <div class="mb-1">

@@ -10,7 +10,7 @@ request: the request object
 
 <div class="card">
     <div class="card-header">
-        <div class="card-title">
+        <div class="card-title d-flex">
             <h6>
                 {% include "furfolio/users/badge.html" with user=commission.commissioner only %}
                 wants
@@ -18,6 +18,8 @@ request: the request object
                 by
                 {% include "furfolio/users/badge.html" with user=commission.offer.author only %}
             </h6>
+            <div class="flex-fill"></div>
+            <a class="text-reset" href="{% url "commission_chat" commission.pk %}">{% include "./chat/chat_button.html" %}</a>
         </div>
     </div>
 

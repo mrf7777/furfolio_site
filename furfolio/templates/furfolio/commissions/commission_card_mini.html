@@ -19,7 +19,6 @@ request: the request object
                 {% include "furfolio/users/badge.html" with user=commission.offer.author only %}
             </h6>
             <div class="flex-fill"></div>
-            <a class="text-reset" href="{% url "commission_chat" commission.pk %}">{% include "./chat/chat_button.html" %}</a>
         </div>
     </div>
 
@@ -35,6 +34,8 @@ request: the request object
     </div>
 
     <div class="card-footer">
+        <h6>Functions</h6>
+        <a class="text-reset" href="{% url "commission_chat" commission.pk %}">{% include "./chat/chat_button.html" %}</a>
         <h6>Change State</h6>
         <div class="d-flex flex-wrap">
         {% if commission.state == "REVIEW" %}

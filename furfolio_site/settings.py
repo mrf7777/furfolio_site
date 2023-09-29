@@ -204,7 +204,6 @@ def make_default_storage():
             "secret_key": os.getenv("STORAGE_SECRET_KEY"),
             "bucket_name": os.getenv("STORAGE_BUCKET_NAME"),
             "region_name": os.getenv("STORAGE_REGION_NAME"),
-            # TODO: consider using CDN endpoint in production instead: https://www.digitalocean.com/community/questions/edge-cdn-path-with-spaces-and-django-storages
             "endpoint_url": os.getenv("STORAGE_ENDPOINT_URL"),
             "object_parameters": {
                 "CacheControl": "max-age=86400"  # cache one day

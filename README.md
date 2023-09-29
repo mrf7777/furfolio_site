@@ -1,7 +1,7 @@
 # Glossary
 | Term         | Definition                                                                                                                                                                 |
 | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| User | An agent that uses the application. |
+| User         | An agent that uses the application.                                                                                                                                        |
 | Creator      | A user role that expresses that the user primarily creates offers and intends to fulfill commissions made from those offers.                                               |
 | Commissioner | In the context of a commission, the one who initiated the commission.                                                                                                      |
 | Commissionee | In the context of a commission, the one who fulfills the request defined by the commission and the customer.                                                               |
@@ -14,6 +14,9 @@
 - Automate commission details gathering (with structured data?).
   - This is also achived agile-like with chat. Consider using chat instead.
 - Facilitate communication between commissioner and commissionee
+
+# Deployment notes
+  - The digital ocean CDN seems to give a 417 error back when trying to upload any file. Using the orign endpoint is a workaround.
 
 # Tasks
 - [ ] Offer CRUD

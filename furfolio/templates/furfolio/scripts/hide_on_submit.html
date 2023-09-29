@@ -6,11 +6,11 @@ Requires some context objects passed in.
 {% endcomment %}
 
 <script>
-    {
-      let form = document.getElementById("{{ form_id }}")
-      form.addEventListener("submit", function() {
+{
+    let form = document.getElementById("{{ form_id }}")
+    form.addEventListener("submit", function() {
         let element_to_hide = document.getElementById("{{ id_to_hide }}")
         element_to_hide.style.display = "none"
-      })
-    }
-    </script>
+    }) 
+}
+</script>

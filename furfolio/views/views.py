@@ -251,9 +251,6 @@ class CommissionChat(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView
     form_class = CommissionMessageForm
     template_name = "furfolio/commissions/chat/chat.html"
 
-    # TODO: https://stackoverflow.com/a/21652227/11370665
-    # override form_valid method and populate hidden field in form
-
     def get_commission(self):
         return get_object_or_404(models.Commission, pk=self.kwargs["pk"])
 
@@ -264,6 +261,7 @@ class CommissionChat(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         commission = self.get_commission()
         form.instance.commission = commission
+        form.instance.author = self.request.user
         return super(CommissionChat, self).form_valid(form)
 
     def test_func(self):
@@ -279,8 +277,6 @@ class CommissionChat(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView
         context = super().get_context_data(**kwargs)
         commission = self.get_commission()
         context["commission_messages"] = models.CommissionMessage.objects.filter(
-            Q(author=commission.commissioner)
-            |
-            Q(author=commission.offer.author)
+            commission__pk=commission.pk
         ).order_by("created_date")
         return context

@@ -12,7 +12,7 @@
 <div>
     {% for commission in commissions_in_review %}
         <div class="mb-3">
-            {% include "furfolio/commissions/commission_card.html" with commission=commission csrf_token=csrf_token request=request only %}
+            {% include "furfolio/commissions/commission_card_mini.html" with commission=commission csrf_token=csrf_token request=request only %}
         </div>
     {% endfor %}
 </div>

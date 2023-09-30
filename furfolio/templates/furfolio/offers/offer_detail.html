@@ -5,18 +5,25 @@
 {% endblock %}
 
 {% block body %}
+
     {% if offer.thumbnail %}
         <div class="d-flex justify-content-center mb-3">
             <img class="rounded border border-2 img-fluid" style="max-height: 40vh" src="{{ offer.thumbnail.url }}">
         </div>
     {% endif %}
+
+    {{ offer.description|linebreaks }}
+
     <div class="mb-3">
         <small>Cutoff date and time: {{ offer.cutoff_date }}</small>
     </div>
+
     {% if request.user.pk == offer.author.pk %}
         <a class="btn btn-primary mb-3" href="{% url "update_offer" offer.pk %}">Edit</a>
     {% endif %}
+
     <div>
         <a class="btn btn-primary" href="{% url "create_commission" %}?offer={{ offer.pk }}&commissioner={{ request.user.pk }}">Request Commission</a>
     </div>
+
 {% endblock %}

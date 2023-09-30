@@ -31,6 +31,17 @@
   - [ ] cool down for all creates (priority)
   - [ ] cool down for all updates
 - [ ] consider other storage and CDN options (low priority)
+- [ ] implement email for production
+- [ ] allow account disabling?
+- [ ] slot management
+  - idea 1: (creator-has-capacity)
+  - commission has a weight
+  - offer defines default weight for commish.
+  - commish weight can be edited by creator
+  - user can set max weight on profile
+  - if at max weight, disable new commissions
+  - idea 2: (per-offer limits)
+  - offer 
 
 # Notes
 ## iteration 1 of offer modeling

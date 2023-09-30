@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.core import validators
@@ -91,6 +92,24 @@ class Offer(models.Model):
         choices=RATING_TO_CHOICES,
         default=RATING_GENERAL,
     )
+    max_active_commissions = models.PositiveIntegerField(
+        name="max_active_commissions",
+        verbose_name="Max Active Commissions",
+        help_text="The maximum number of commissions you are willing to work on for this offer. Commissions in the review state do not count.",
+        validators=[
+            validators.MinValueValidator(1),
+        ],
+        default=3,
+    )
+    max_review_commissions = models.PositiveIntegerField(
+        name="max_review_commissions",
+        verbose_name="Max Commissions in Review",
+        help_text="The maximum number of commissions allowed to be in the review state. Use this to prevent being overloaded with too many commission requests at a time.",
+        validators=[
+            validators.MinValueValidator(1),
+        ],
+        default=5,
+    )
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)
 
@@ -99,6 +118,12 @@ class Offer(models.Model):
 
     def get_absolute_url(self):
         return reverse("offer_detail", kwargs={"pk": self.pk})
+    
+    def get_active_commissions(self):
+        return Commission.objects.filter(offer__pk=self.pk).filter(~Q(state=Commission.STATE_REVIEW))
+    
+    def get_commissions_in_review(self):
+        return Commission.objects.filter(offer__pk=self.pk, state=Commission.STATE_REVIEW)
 
     def is_closed(self):
         if self.forced_closed:
@@ -106,6 +131,16 @@ class Offer(models.Model):
         elif self.cutoff_date < timezone.now():
             return True
         return False
+    
+    def is_full(self):
+        num_commissions_in_review = self.get_commissions_in_review().count()
+        num_active_commissions = self.get_active_commissions().count()
+        if num_active_commissions >= self.max_active_commissions:
+            return True
+        elif num_commissions_in_review >= self.max_review_commissions:
+            return True
+        else:
+            return False
 
 
 # limit initial request text to about 800 words

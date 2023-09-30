@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core import validators
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.safestring import mark_safe
 from datetime import timedelta
 import math
 from . import validators as furfolio_validators
@@ -95,7 +96,7 @@ class Offer(models.Model):
     max_active_commissions = models.PositiveIntegerField(
         name="max_active_commissions",
         verbose_name="Max Active Commissions",
-        help_text="The maximum number of commissions you are willing to work on for this offer. Commissions in the review state do not count.",
+        help_text=mark_safe("The maximum number of commissions you are willing to work on for this offer.<br>This includes commissions that you accept, are in progress, or closed. Commissions in the review state do not count."),
         validators=[
             validators.MinValueValidator(1),
         ],
@@ -104,7 +105,7 @@ class Offer(models.Model):
     max_review_commissions = models.PositiveIntegerField(
         name="max_review_commissions",
         verbose_name="Max Commissions in Review",
-        help_text="The maximum number of commissions allowed to be in the review state. Use this to prevent being overloaded with too many commission requests at a time.",
+        help_text=mark_safe("The maximum number of commissions allowed to be in the review state.<br>Use this to prevent being overloaded with too many commission requests at a time."),
         validators=[
             validators.MinValueValidator(1),
         ],

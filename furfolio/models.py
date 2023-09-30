@@ -78,7 +78,6 @@ class Offer(models.Model):
         default=seven_days_from_now,
         validators=[
             furfolio_validators.validate_datetime_not_in_past,
-            furfolio_validators.validate_datetime_at_least_12_hours,
         ],
     )
     forced_closed = models.BooleanField(

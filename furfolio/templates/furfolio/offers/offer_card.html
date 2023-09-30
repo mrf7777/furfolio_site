@@ -27,6 +27,8 @@ Expects a 'title_is_link':bool object
             {{ offer.description|truncatechars:300 }}
         </p>
         <p class="mb-0">
+            <b>Slots left: {{ offer.get_active_commissions.count }}</b> / <b>{{ offer.max_active_commissions }}</b>
+            <span class="me-2"></span>
             Closes: {{ offer.cutoff_date }}
         </p>
     </div>

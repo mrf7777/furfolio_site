@@ -19,6 +19,7 @@
   - The digital ocean CDN seems to give a 417 error back when trying to upload any file. Using the orign endpoint is a workaround.
 
 # Tasks
+- [ ] limit commissions per offer
 - [ ] resize avatar
 - [ ] prevent deleted usernames from being taken again to prevent impersonation
 - [ ] prevent spam accounts
@@ -34,14 +35,39 @@
 - [ ] implement email for production
 - [ ] allow account disabling?
 - [ ] slot management
+
+## commissions limit ideas
   - idea 1: (creator-has-capacity)
   - commission has a weight
   - offer defines default weight for commish.
   - commish weight can be edited by creator
   - user can set max weight on profile
   - if at max weight, disable new commissions
+    - if an offer default weight plus user current total weight is above or at threshold, disable offer
   - idea 2: (per-offer limits)
-  - offer 
+  - offer has max number of slots
+  - solves the jig-zaw problem of idea 1
+  - idea 3: (hybrid: max slots per offer and max effort per user)
+  - idea 4: (simplest approach)
+  - offer has max number of commissions in non-review state
+    - need a distinction between closed and rejected commissions. rejected should not affect commission count
+  - offer has max number of commissions in review state to give creator creative choice
+  - 
+
+### use-cases for commission limits
+- user does not want to be overworked
+- user may have limited supplies
+- user has limited time before needing to finish commissions
+  - because of upcoming bill the creator needs to pay
+- user wants to balance commissions from their multiple offers
+
+### solutions:
+- supplies, overwork, variety+balance: limit commissions per offer
+  - what commissions count?:
+    - if not regarding commission state, if a bunch of review commissions get sent, it can cap quick
+    - if considering only non-review commissions for offer, allows creator to choose work
+      - a different limit is then needed to limit how many can be in review
+- time pressure: cutoff time (solved)
 
 # Notes
 ## iteration 1 of offer modeling

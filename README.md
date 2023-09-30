@@ -19,40 +19,18 @@
   - The digital ocean CDN seems to give a 417 error back when trying to upload any file. Using the orign endpoint is a workaround.
 
 # Tasks
-- [ ] Offer CRUD
-  - [ ] Fields support
-    - [ ] Price range
-    - [ ] Description
-  - [x] Create
-    - [x] Can create offer
-  - [ ] Read
-    - [x] Card list view of offers
-      - [x] Styled?
-    - [x] Can read offer details on one page
-      - [ ] Styled?
-      - [x] Signed in author sees link to update details
-  - [ ] Update
-    - [x] Author can access an update offer page
-    - [x] Styled?
-  - [x] Delete
-    - [x] Author can click a delete button
-
-- [ ] User CRUD
-  - [ ] Read
-    - [x] User public profile page
-    - [ ] Styled?
-  - [ ] Create
-    - [x] User sign-up
-    - [ ] Styled?
-  - [ ] Update
-    - [ ] Update email
-    - [ ] Update profile picture
-    - [ ] Update user page description
-    - [ ] change password
-    - [ ] Styled edit page?
-  - [ ] Delete
-    - [ ] User can delete account.
-    - [ ] Styled delete?
+- [ ] resize avatar
+- [ ] prevent deleted usernames from being taken again to prevent impersonation
+- [ ] prevent spam accounts
+  - [ ] consider recaptch v3
+  - [ ] consider other approaches and tools
+- [ ] limit thumbnail aspect ratio and size
+- [ ] guard against large uploads
+  - [ ] consider dockerfile with nginx
+- [ ] guard against spam
+  - [ ] cool down for all creates (priority)
+  - [ ] cool down for all updates
+- [ ] consider other storage and CDN options (low priority)
 
 # Notes
 ## iteration 1 of offer modeling

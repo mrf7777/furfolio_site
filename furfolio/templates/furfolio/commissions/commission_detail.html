@@ -25,11 +25,11 @@
 <h5>Date Created</h5>
 <p>{{ commission.created_date }}</p>
 
-{% if request.user.pk == commission.offer.author.pk %}
-    <div class="my-5">
-        {% include "./commission_functions.html" with commission=commission csrf_token=csrf_token request=request %}
-    </div>
+<div class="my-5">
+    {% include "./commission_functions.html" with commission=commission csrf_token=csrf_token request=request %}
+</div>
 
+{% if request.user.pk == commission.offer.author.pk %}
     <a href="{% url "update_commission" commission.pk %}"><button class="btn btn-primary">Edit</button></a>
 {% endif %}
 

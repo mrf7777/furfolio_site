@@ -18,10 +18,9 @@
 
     {{ offer.description|linebreaks }}
 
-    <div class="mb-3">
-        <small>Cutoff date and time: {{ offer.cutoff_date }}</small>
-    </div>
-
+    <p>
+        Closes: {{ offer.cutoff_date }}
+    </p>
 
     {% if request.user.pk == offer.author.pk %}
         <a class="btn btn-primary mb-3" href="{% url "update_offer" offer.pk %}">Edit</a>

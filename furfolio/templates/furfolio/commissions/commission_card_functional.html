@@ -4,6 +4,7 @@ Expects the following objects:
 commission: the commission object to show
 csrf_token: the csrf_token
 request: the request object
+show_status: (bool) set to True if you want to show status badge
 {% endcomment %}
 
 {% load static %}
@@ -19,6 +20,11 @@ request: the request object
                 {% include "furfolio/users/badge.html" with user=commission.offer.author only %}
             </h6>
             <div class="flex-fill"></div>
+            {% if show_status is True %}
+                <div class="mb-1">
+                    {% include "./state_badge_using_commission.html" with commission=commission only %}
+                </div>
+            {% endif %}
         </div>
     </div>
 

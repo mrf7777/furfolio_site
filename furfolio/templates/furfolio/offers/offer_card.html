@@ -23,6 +23,11 @@ Expects a 'title_is_link':bool object
         </div>
     </div>
     <div class="card-body">
-        Cutoff date: {{ offer.cutoff_date }}
+        <p class="card-text">
+            {{ offer.description|truncatechars:300 }}
+        </p>
+        <p class="mb-0">
+            Cutoff date: {{ offer.cutoff_date }}
+        </p>
     </div>
 </div>

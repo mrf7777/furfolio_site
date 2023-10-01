@@ -1,13 +1,10 @@
 from typing import Any
 from django.db.models.query import QuerySet
-from django.db.models import Q
 from django.forms.models import BaseModelForm
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.views import generic
-from django.views.generic.base import TemplateResponseMixin
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 from django.urls import reverse_lazy, reverse
 from django.core.exceptions import PermissionDenied
 from .. import models
@@ -83,10 +80,7 @@ class OfferList(generic.ListView):
     def get_queryset(self) -> QuerySet[Any]:
         # Search something if text query is provided. Otherwise, use most recent.
         if "text_query" in self.request.GET and self.request.GET["text_query"].strip() != "":
-            search_vector = SearchVector("name", weight="A") + SearchVector("description", weight="A")
-            search_query = SearchQuery(self.request.GET["text_query"])
-            search_rank = SearchRank(search_vector, search_query)
-            return models.Offer.objects.annotate(rank=search_rank).filter(rank__gte=0.2).order_by("-rank")
+            return models.Offer.full_text_search_offers(self.request.GET["text_query"])
         else:
             return models.Offer.objects.all().order_by("-created_date")
 
@@ -171,12 +165,9 @@ class UserList(generic.ListView):
     def get_queryset(self) -> QuerySet[Any]:
         # search something if text query is provided
         if "text_query" in self.request.GET and self.request.GET["text_query"].strip() != "":
-            search_vector = SearchVector("username", weight="A")
-            search_query = SearchQuery(self.request.GET["text_query"])
-            search_rank = SearchRank(search_vector, search_query)
-            return models.User.objects.filter(role=models.User.ROLE_CREATOR).annotate(rank=search_rank).filter(rank__gte=0.2).order_by("-rank")
+            return models.User.full_text_search_creators(self.request.GET["text_query"])
         else:
-            return models.User.objects.filter(role=models.User.ROLE_CREATOR).order_by("-date_joined")
+            return models.User.get_creators().order_by("-date_joined")
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

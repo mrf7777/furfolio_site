@@ -1,8 +1,10 @@
+from cgitb import text
 from django.db import models
 from django.db.models import Q
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.indexes import GinIndex
+from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 from django.core import validators
 from django.urls import reverse
 from django.utils import timezone
@@ -39,6 +41,16 @@ class User(AbstractUser):
         indexes = [
             GinIndex(fields=["username",], fastupdate=False, name="user_username_index")
         ]
+
+    def full_text_search_creators(text_query: str):
+        text_query_cleaned = text_query.strip()
+        search_vector = SearchVector("username", weight="A")
+        search_query = SearchQuery(text_query_cleaned)
+        search_rank = SearchRank(search_vector, search_query)
+        return User.objects.filter(role=User.ROLE_CREATOR).annotate(rank=search_rank).filter(rank__gte=0.2).order_by("-rank")
+        
+    def get_creators():
+        return User.objects.filter(role=User.ROLE_CREATOR)
 
     def get_absolute_url(self):
         return reverse("user", kwargs={"username": self.username})
@@ -136,6 +148,13 @@ class Offer(models.Model):
     
     def get_commissions_in_review(self):
         return Commission.objects.filter(offer__pk=self.pk, state=Commission.STATE_REVIEW)
+
+    def full_text_search_offers(text_query: str):
+        text_query_cleaned = text_query.strip()
+        search_vector = SearchVector("name", weight="A") + SearchVector("description", weight="A")
+        search_query = SearchQuery(text_query_cleaned)
+        search_rank = SearchRank(search_vector, search_query)
+        return Offer.objects.annotate(rank=search_rank).filter(rank__gte=0.2).order_by("-rank")
 
     def is_closed(self):
         if self.forced_closed:

@@ -101,8 +101,8 @@ class Offer(models.Model):
     # TODO: what is the value added by this field? Simply keep the review commissions limit and reject requests after offer cutoff date.
     slots = models.PositiveIntegerField(
         name="slots",
-        verbose_name="Max Active Commissions",
-        help_text=mark_safe("The maximum number of commissions you are willing to work on for this offer.<br>This includes commissions that you accept, are in progress, or closed. Commissions in the review state do not count."),
+        verbose_name="Slots",
+        help_text=mark_safe("The maximum number of commissions you are willing to work on for this offer.<br>This is not a hard limit; it is used to communicate how many commissions you are willing to work."),
         validators=[
             validators.MinValueValidator(1),
         ],

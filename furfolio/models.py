@@ -202,6 +202,11 @@ class Commission(models.Model):
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)
 
+    def clean(self) -> None:
+        furfolio_validators.check_commission_meets_offer_max_active_commissions(self, self.offer)
+        furfolio_validators.check_commission_meets_offer_max_review_commissions(self, self.offer)
+        return super().clean()
+
     def __str__(self):
         return "Id: %i. \"%s\" requested \"%s\"." % (self.id, self.commissioner.username, self.offer.name)
 

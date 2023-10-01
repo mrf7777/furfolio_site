@@ -13,11 +13,7 @@ show_status: (bool) set to True if you want to show status badge
     <div class="card-header">
         <div class="card-title d-flex">
             <h6>
-                {% include "furfolio/users/badge.html" with user=commission.commissioner only %}
-                wants
-                <a class="text-decoration-none" href="{% url "commission_detail" commission.pk %}">{{ commission.offer.name }}</a>
-                by
-                {% include "furfolio/users/badge.html" with user=commission.offer.author only %}
+                {% include "./commission_title.html" with commission=commission only %}
             </h6>
             <div class="flex-fill"></div>
             {% if show_status is True %}

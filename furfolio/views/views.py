@@ -189,8 +189,7 @@ class CreateCommission(LoginRequiredMixin, generic.CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["offer"] = models.Offer.objects.filter(
-            pk=self.request.GET["offer"])[0]
+        context["offer"] = get_object_or_404(models.Offer, pk=self.request.GET["offer"])
         return context
 
 
@@ -222,7 +221,7 @@ class UpdateCommission(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateVi
 
 class UpdateCommissionStatus(LoginRequiredMixin, generic.View):
     def post(self, request, pk):
-        commission = models.Commission.objects.filter(pk=pk)[0]
+        commission = get_object_or_404(models.Commission, pk=pk)
         # ensure that offer author only has permission to update commission state
         user = self.request.user
         if user.pk != commission.offer.author.pk:
@@ -231,7 +230,6 @@ class UpdateCommissionStatus(LoginRequiredMixin, generic.View):
             )
 
         redirect_url = request.GET["next"]
-        commission = models.Commission.objects.filter(pk=pk)[0]
         commission.state = request.POST["state"]
         commission.save()
         return redirect(redirect_url)

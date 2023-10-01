@@ -132,7 +132,7 @@ class Offer(models.Model):
         return reverse("offer_detail", kwargs={"pk": self.pk})
     
     def get_active_commissions(self):
-        return Commission.objects.filter(offer__pk=self.pk).filter(~Q(state=Commission.STATE_REVIEW))
+        return Commission.get_active_commissions().filter(offer__pk=self.pk)
     
     def get_commissions_in_review(self):
         return Commission.objects.filter(offer__pk=self.pk, state=Commission.STATE_REVIEW)
@@ -204,7 +204,6 @@ class Commission(models.Model):
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)
 
     def clean(self) -> None:
-        furfolio_validators.check_commission_meets_offer_max_active_commissions(self, self.offer)
         furfolio_validators.check_commission_meets_offer_max_review_commissions(self, self.offer)
         return super().clean()
 
@@ -213,7 +212,19 @@ class Commission(models.Model):
 
     def get_absolute_url(self):
         return reverse("commission_detail", kwargs={"pk": self.pk})
+    
+    def get_active_commissions():
+        query = Q(
+            state=Commission.STATE_ACCEPTED
+        ) | Q(
+            state=Commission.STATE_IN_PROGRESS
+        ) | Q(
+            state=Commission.STATE_CLOSED
+        )
+        return Commission.objects.filter(Q(state=Commission.STATE_ACCEPTED) | Q(state=Commission.STATE_IN_PROGRESS) | Q(state=Commission.STATE_CLOSED))
 
+    def is_active(self):
+        return self.state in {Commission.STATE_ACCEPTED, Commission.STATE_IN_PROGRESS, Commission.STATE_CLOSED}
 
 # limit commisson message to about 350 words
 COMMISSION_MESSAGE_MAX_LENGTH = math.ceil(

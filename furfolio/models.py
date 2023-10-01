@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import Q
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+from django.contrib.postgres.indexes import GinIndex
 from django.core import validators
 from django.urls import reverse
 from django.utils import timezone
@@ -112,6 +113,11 @@ class Offer(models.Model):
     )
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)
+    
+    class Meta:
+        indexes = [
+            GinIndex(fields=["name", "description"], fastupdate=False, name="offer_name_description_index"),
+        ]
 
     def __str__(self):
         return "Id: %i. \"%s\" by %s." % (self.id, self.name, self.author.username)

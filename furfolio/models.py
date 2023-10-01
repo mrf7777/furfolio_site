@@ -169,7 +169,7 @@ class Commission(models.Model):
         (STATE_REVIEW, "Review"),
         (STATE_ACCEPTED, "Accepted"),
         (STATE_IN_PROGRESS, "In Progress"),
-        (STATE_CLOSED, "Closed"),
+        (STATE_CLOSED, "Finished"),
     ]
     commissioner = models.ForeignKey(
         settings.AUTH_USER_MODEL,

@@ -34,6 +34,11 @@ class User(AbstractUser):
         default=ROLE_BUYER,
         help_text="Your role on this platform. This is used to optimize your experience and to let others know how you want to use this website."
     )
+    
+    class Meta:
+        indexes = [
+            GinIndex(fields=["username",], fastupdate=False, name="user_username_index")
+        ]
 
     def get_absolute_url(self):
         return reverse("user", kwargs={"username": self.username})

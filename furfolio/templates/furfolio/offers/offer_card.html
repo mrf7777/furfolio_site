@@ -5,31 +5,36 @@ Expects a 'title_is_link':bool object
 {% endcomment %}
 
 <div class="card">
-    {% if offer.thumbnail %}
-    <img class="card-img-top bg-secondary" style="max-height: 40vh; object-fit: contain; " src="{{ offer.thumbnail.url }}">
-    {% endif %}
-    <div class="card-header d-flex align-items-center">
-        <h5>
-            {% if title_is_link %}
-            <a class="text-decoration-none" href="{% url "offer_detail" offer.pk %}">{{ offer.name }}</a>
-            {% else %}
-            {{ offer.name }}
-            {% endif %}
-        </h5>
-        <div class="flex-fill">
+    <div class="row g-0">
+        {% if offer.thumbnail %}
+            <img class="d-md-none col-md-5 bg-secondary img-fluid rounded-top" style="max-height: 30vh; object-fit: contain;" src="{{ offer.thumbnail.url }}">
+            <img class="d-none d-md-block col-md-5 bg-secondary img-fluid rounded-start" style="max-height: 30vh; object-fit: contain;" src="{{ offer.thumbnail.url }}">
+        {% endif %}
+        <div class="{% if offer.thumbnail %}col-md-7{% endif %}">
+            <div class="card-header d-flex align-items-center">
+                <h5>
+                    {% if title_is_link %}
+                        <a class="text-decoration-none" href="{% url "offer_detail" offer.pk %}">{{ offer.name }}</a>
+                    {% else %}
+                        {{ offer.name }}
+                    {% endif %}
+                </h5>
+                <div class="flex-fill">
+                </div>
+                <div class="text-body-secondary ms-3">
+                    {% include "furfolio/users/badge.html" with user=offer.author only %}
+                </div>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    {{ offer.description|truncatechars:300 }}
+                </p>
+                <p class="mb-0">
+                    <b>Slots left: {{ offer.get_active_commissions.count }}</b> / <b>{{ offer.max_active_commissions }}</b>
+                    <span class="me-2"></span>
+                    Closes: {{ offer.cutoff_date }}
+                </p>
+            </div>
         </div>
-        <div class="text-body-secondary ms-3">
-            {% include "furfolio/users/badge.html" with user=offer.author only %}
-        </div>
-    </div>
-    <div class="card-body">
-        <p class="card-text">
-            {{ offer.description|truncatechars:300 }}
-        </p>
-        <p class="mb-0">
-            <b>Slots left: {{ offer.get_active_commissions.count }}</b> / <b>{{ offer.max_active_commissions }}</b>
-            <span class="me-2"></span>
-            Closes: {{ offer.cutoff_date }}
-        </p>
     </div>
 </div>

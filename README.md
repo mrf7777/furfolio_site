@@ -33,7 +33,8 @@
   - [ ] cool down for all updates
 - [ ] consider other storage and CDN options (low priority)
 - [ ] implement email for production
-- [ ] allow account disabling?
+- [x] allow account disabling?
+  - django already solved this
 - [ ] slot management
 
 ## commissions limit ideas

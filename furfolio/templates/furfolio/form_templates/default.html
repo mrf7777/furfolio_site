@@ -6,7 +6,11 @@
     <div class="mb-4">
         <h4>{{ field.label_tag }}</h4>
         <p>{{ field.help_text }}</p>
-        {{ field }}
+        <div class="row g-0">
+            <div class="col-md-8">
+                {{ field }}
+            </div>
+        </div>
         {% if field.errors %}
             <span class="text-danger">
                 {{ field.errors }}

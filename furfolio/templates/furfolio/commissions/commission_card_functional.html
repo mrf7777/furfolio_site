@@ -36,7 +36,7 @@ show_status: (bool) set to True if you want to show status badge
     </div>
 
     <div class="card-footer">
-        {% include "./commission_functions.html" %}
+        {% include "./commission_functions.html" with commission=commission csrf_token=csrf_token request=request fill=True only %}
     </div>
 
 </div>

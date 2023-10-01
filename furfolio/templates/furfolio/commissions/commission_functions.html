@@ -2,9 +2,10 @@
 Includable comonent that has buttons and text that allow the managment of a
 commission without goint into a full edit page.
 Expects the following objects:
-commission: the commission object to show
-csrf_token: the csrf_token
-request: the request object
+  - commission: the commission object to show
+  - csrf_token: the csrf_token
+  - request: the request object
+  - fill: (bool) if True, will put functions and state buttons as far apart as possible.
 {% endcomment %}
 
 <div class="d-flex flex-wrap">
@@ -12,7 +13,9 @@ request: the request object
         <h6>Functions</h6>
         <div class="mb-1"><a class="text-reset" href="{% url "commission_chat" commission.pk %}">{% include "./chat/chat_button.html" %}</a></div>
     </div>
-    <div class="flex-fill"></div>
+    {% if fill %}
+        <div class="flex-fill"></div>
+    {% endif %}
     {% if request.user.pk == commission.offer.author.pk %}
         <div class="flex-column">
             <div>

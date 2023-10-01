@@ -28,30 +28,7 @@ class CreatorDashboard(LoginRequiredMixin, generic.TemplateView):
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["commissions_in_review"] = models.Commission.objects.filter(
-            offer__author=self.request.user.pk,
-            state=models.Commission.STATE_REVIEW,
-        )
-        return context
-
-
-class BuyerDashboard(LoginRequiredMixin, generic.TemplateView):
-    template_name = "furfolio/dashboards/buyer.html"
-
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-        context["commissions_as_commissioner"] = models.Commission.objects.filter(
-            commissioner=self.request.user.pk,
-        )
-        return context
-
-
-class CommissionKanbanBoard(LoginRequiredMixin, generic.TemplateView):
-    template_name = "furfolio/dashboards/commission_kanban.html"
-
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         current_user_pk = self.request.user.pk
-        context = super().get_context_data(**kwargs)
         context["review_commissions"] = models.Commission.objects.filter(
             offer__author__pk=current_user_pk,
             state=models.Commission.STATE_REVIEW,
@@ -70,6 +47,16 @@ class CommissionKanbanBoard(LoginRequiredMixin, generic.TemplateView):
         ).order_by("-updated_date")
         return context
 
+
+class BuyerDashboard(LoginRequiredMixin, generic.TemplateView):
+    template_name = "furfolio/dashboards/buyer.html"
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["commissions_as_commissioner"] = models.Commission.objects.filter(
+            commissioner=self.request.user.pk,
+        )
+        return context
 
 class OfferList(generic.ListView):
     model = models.Offer

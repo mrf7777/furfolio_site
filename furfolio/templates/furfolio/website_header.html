@@ -33,15 +33,6 @@ Includable website header.
                 </a>
             {% endif %}
             </li>
-            <li class="nav-item">
-            {% if request.user.is_authenticated %}
-                {% if request.user.role == "CREATOR" %}
-                    <a class="nav-link" href="{% url "kanban_board" %}">
-                        Board
-                    </a>
-                {% endif %}
-            {% endif %}
-            </li>
         </ul>
         <ul class="navbar-nav ms-auto">
             <li class="nav-item">

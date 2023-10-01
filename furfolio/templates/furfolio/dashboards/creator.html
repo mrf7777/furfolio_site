@@ -1,28 +1,72 @@
-{% extends "base.html" %}
+{% extends "furfolio/layouts/4_columns.html" %}
+
 {% load static %}
-{% block content %}
 
-<div class="mb-3 d-flex">
-    <a href="{% url "create_offer" %}"><button class="btn btn-primary me-3">Create Offer</button></a>
-    <a href="{% url "kanban_board" %}"><button class="btn btn-primary">Board</button></a>
-</div>
-
-<h4>Commissions in Review</h4>
-<p>New commission requests appear here.</p>
-<div>
-    {% for commission in commissions_in_review %}
-        <div class="mb-3">
-            {% include "furfolio/commissions/commission_card_functional.html" with commission=commission csrf_token=csrf_token request=request show_status=True only %}
-        </div>
-    {% endfor %}
-</div>
-
-<div class="mb-3 d-flex align-items-center">
-    <div class="me-1">You are in creator mode.</div>
+{% block title %}
+<div class="d-flex align-items-center">
+    Creator Dashboard
+    <div class="flex-fill"></div>
     <a class="btn btn-primary" href="{% url "buyer_dashboard" %}">
         <img class="me-1" style="width: 25px;" src="{% static "symbols/chasing-arrows-white.svg" %}">
         Buyer Mode
     </a>
 </div>
+{% endblock %}
 
+{% block body_1 %}
+<h4>Offers</h4>
+<div class="mb-5 d-flex">
+    <a href="{% url "create_offer" %}"><button class="btn btn-primary me-3">Create Offer</button></a>
+</div>
+
+<h4>Commissions</h4>
+<p>Commissions where you are the commission's offer author.</p>
+{% endblock %}
+
+{% block column_1_title %}
+{% include "furfolio/commissions/state_badge.html" with state="REVIEW" only %}
+{% endblock %}
+
+{% block column_1 %}
+    {% for commission in review_commissions %}
+        <div class="mb-3">
+            {% include "furfolio/commissions/commission_card_functional.html" with commission=commission request=request csrf_token=csrf_token only %}
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block column_2_title %}
+{% include "furfolio/commissions/state_badge.html" with state="ACCEPTED" only %}
+{% endblock %}
+
+{% block column_2 %}
+    {% for commission in accepted_commissions %}
+        <div class="mb-3">
+            {% include "furfolio/commissions/commission_card_functional.html" with commission=commission request=request csrf_token=csrf_token only %}
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block column_3_title %}
+{% include "furfolio/commissions/state_badge.html" with state="IN_PROGRESS" only %}
+{% endblock %}
+
+{% block column_3 %}
+    {% for commission in in_progress_commissions %}
+        <div class="mb-3">
+            {% include "furfolio/commissions/commission_card_functional.html" with commission=commission request=request csrf_token=csrf_token only %}
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block column_4_title %}
+{% include "furfolio/commissions/state_badge.html" with state="CLOSED" only %}
+{% endblock %}
+
+{% block column_4 %}
+    {% for commission in closed_commissions %}
+        <div class="mb-3">
+            {% include "furfolio/commissions/commission_card_functional.html" with commission=commission request=request csrf_token=csrf_token only %}
+        </div>
+    {% endfor %}
 {% endblock %}

@@ -99,8 +99,8 @@ class Offer(models.Model):
         default=RATING_GENERAL,
     )
     # TODO: what is the value added by this field? Simply keep the review commissions limit and reject requests after offer cutoff date.
-    max_active_commissions = models.PositiveIntegerField(
-        name="max_active_commissions",
+    slots = models.PositiveIntegerField(
+        name="slots",
         verbose_name="Max Active Commissions",
         help_text=mark_safe("The maximum number of commissions you are willing to work on for this offer.<br>This includes commissions that you accept, are in progress, or closed. Commissions in the review state do not count."),
         validators=[
@@ -147,7 +147,7 @@ class Offer(models.Model):
     def is_full(self):
         num_commissions_in_review = self.get_commissions_in_review().count()
         num_active_commissions = self.get_active_commissions().count()
-        if num_active_commissions >= self.max_active_commissions:
+        if num_active_commissions >= self.slots:
             return True
         elif num_commissions_in_review >= self.max_review_commissions:
             return True

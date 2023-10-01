@@ -13,7 +13,7 @@
     {% endif %}
 
     <p>
-        <b>Slots left: {{ offer.get_active_commissions.count }}</b> / <b>{{ offer.max_active_commissions }}</b>
+        <b>Slots left: {{ offer.get_active_commissions.count }}</b> / <b>{{ offer.slots }}</b>
     </p>
 
     {{ offer.description|linebreaks }}

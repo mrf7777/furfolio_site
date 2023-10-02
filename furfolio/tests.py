@@ -30,7 +30,7 @@ class LimitReviewCommissionsTestCase(TestCase):
         self.offer.full_clean()
         self.offer.save()
 
-    def test_max_review_commissions(self):
+    def test_max_review_commissions_different_buyer(self):
         commission1 = Commission(
             commissioner=self.buyer,
             offer=self.offer,
@@ -40,6 +40,22 @@ class LimitReviewCommissionsTestCase(TestCase):
         commission1.save()
         commission2 = Commission(
             commissioner=self.buyer,
+            offer=self.offer,
+            initial_request_text="This is commission 2.",
+        )
+        with self.assertRaises(ValidationError):
+            commission2.full_clean()
+
+    def text_max_review_commissions_creator_is_buyer(self):
+        commission1 = Commission(
+            commissioner=self.creator,
+            offer=self.offer,
+            initial_request_text="This is commission 1.",
+        )
+        commission1.full_clean()
+        commission1.save()
+        commission2 = Commission(
+            commissioner=self.creator,
             offer=self.offer,
             initial_request_text="This is commission 2.",
         )

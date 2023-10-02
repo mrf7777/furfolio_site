@@ -16,7 +16,7 @@ jobs:
         python-version: ['3.10', '3.11']
 
     services:
-      db:
+      postgres:
         image: postgres
         env:
           POSTGRES_USER: furfolio
@@ -32,7 +32,7 @@ jobs:
     env:
       DEVELOPMENT_MODE: "True"
       DEBUG: "True"
-      DATABASE_HOST: "db"
+      DATABASE_HOST: "postgres"
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}

@@ -178,3 +178,33 @@ class CommissionsTestCase(TestCase):
         )
         self.assertContains(response, self.commission.initial_request_text)
         self.assertContains(response, self.user_buyer.username)
+
+
+class CommissionChatTestCase(TestCase):
+    def setUp(self) -> None:
+        self.user_creator = utils.make_user(
+            "creator", role=models.User.ROLE_CREATOR)
+        self.user_buyer = utils.make_user(
+            "buyer", role=models.User.ROLE_BUYER)
+
+        self.offer = utils.make_offer(self.user_creator)
+        self.commission = utils.make_commission(self.user_buyer, self.offer)
+
+        self.message_buyer = utils.make_commission_message(
+            self.user_buyer, self.commission, "Hi. What is your name?")
+        self.message_creator = utils.make_commission_message(
+            self.user_creator, self.commission, "My name is creator.")
+
+    def test_commission_chat_as_buyer(self):
+        self.client.force_login(self.user_buyer)
+        response = self.client.get(
+            reverse("commission_chat", args=[self.commission.pk]), follow=True)
+        self.assertContains(response, self.message_buyer.message)
+        self.assertContains(response, self.message_creator.message)
+
+    def test_commission_chat_as_creator(self):
+        self.client.force_login(self.user_creator)
+        response = self.client.get(
+            reverse("commission_chat", args=[self.commission.pk]), follow=True)
+        self.assertContains(response, self.message_buyer.message)
+        self.assertContains(response, self.message_creator.message)

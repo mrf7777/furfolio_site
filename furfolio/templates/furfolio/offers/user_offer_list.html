@@ -1,6 +1,10 @@
-{% extends "base.html" %}
+{% extends "furfolio/layouts/title_body.html" %}
 
-{% block content %}
+{% block title %}
+Offers by {% include "furfolio/users/badge.html" with user=user only %}
+{% endblock %}
+
+{% block body %}
     {% for offer in offers %}
     <div class="mb-3">
         {% include "./offer_card.html" with offer=offer only %}

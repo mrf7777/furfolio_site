@@ -137,6 +137,11 @@ class UserOffers(generic.ListView):
     def get_queryset(self) -> QuerySet[Any]:
         username = self.kwargs["username"]
         return models.Offer.objects.filter(author__username=username)
+    
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["user"] = get_object_or_404(models.User, username=self.kwargs["username"])
+        return context
 
 
 class User(generic.DetailView):

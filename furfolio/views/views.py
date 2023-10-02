@@ -191,7 +191,7 @@ class CreateCommission(LoginRequiredMixin, generic.CreateView):
     def get_initial(self):
         initial = super().get_initial()
         initial["offer"] = self.request.GET["offer"]
-        initial["commissioner"] = self.request.GET["commissioner"]
+        initial["commissioner"] = self.request.user.pk
         return initial
 
     def get_context_data(self, **kwargs):

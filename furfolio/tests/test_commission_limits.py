@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Commission, User, Offer
+from ..models import Commission, User, Offer
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 import datetime

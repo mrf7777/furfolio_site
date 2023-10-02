@@ -61,6 +61,7 @@ class BuyerDashboard(LoginRequiredMixin, generic.TemplateView):
         )
         return context
 
+
 class OfferList(generic.ListView):
     model = models.Offer
     template_name = "furfolio/offers/offer_list.html"
@@ -133,14 +134,15 @@ class UserOffers(generic.ListView):
     context_object_name = "offers"
     template_name = "furfolio/offers/user_offer_list.html"
     paginate_by = PAGE_SIZE
-    
+
     def get_queryset(self) -> QuerySet[Any]:
         username = self.kwargs["username"]
         return models.Offer.objects.filter(author__username=username)
-    
+
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["user"] = get_object_or_404(models.User, username=self.kwargs["username"])
+        context["user"] = get_object_or_404(
+            models.User, username=self.kwargs["username"])
         return context
 
 
@@ -201,7 +203,8 @@ class CreateCommission(LoginRequiredMixin, generic.CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["offer"] = get_object_or_404(models.Offer, pk=self.request.GET["offer"])
+        context["offer"] = get_object_or_404(
+            models.Offer, pk=self.request.GET["offer"])
         return context
 
 

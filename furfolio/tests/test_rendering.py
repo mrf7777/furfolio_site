@@ -166,3 +166,15 @@ class CommissionsTestCase(TestCase):
         )
         self.assertContains(response, self.offer.name)
         self.assertContains(response, self.user_creator.username)
+
+    def test_update_commission(self):
+        self.client.force_login(self.user_creator)
+        response = self.client.get(
+            reverse(
+                "update_commission",
+                args=[self.commission.pk]
+            ),
+            follow=True
+        )
+        self.assertContains(response, self.commission.initial_request_text)
+        self.assertContains(response, self.user_buyer.username)

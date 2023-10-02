@@ -117,3 +117,40 @@ class BuyerBashboardTestCase(TestCase):
         self.client.force_login(self.user_buyer)
         response = self.client.get(reverse("dashboard"), follow=True)
         self.assertContains(response, self.commission.initial_request_text)
+
+
+class CommissionsTestCase(TestCase):
+    def setUp(self) -> None:
+        self.user_creator = utils.make_user(
+            "creator", role=models.User.ROLE_CREATOR)
+        self.user_buyer = utils.make_user(
+            "buyer", role=models.User.ROLE_BUYER)
+
+        self.offer = utils.make_offer(self.user_creator)
+        self.commission = utils.make_commission(self.user_buyer, self.offer)
+
+    def test_commission_detail_as_creator(self):
+        self.client.force_login(self.user_creator)
+        response = self.client.get(
+            reverse(
+                "commission_detail",
+                args=[self.commission.pk]
+            ),
+            follow=True
+        )
+        self.assertContains(response, self.commission.initial_request_text)
+        self.assertContains(response, "Chat")
+        self.assertContains(response, "Change State")
+
+    def test_commission_detail_as_buyer(self):
+        self.client.force_login(self.user_buyer)
+        response = self.client.get(
+            reverse(
+                "commission_detail",
+                args=[self.commission.pk]
+            ),
+            follow=True
+        )
+        self.assertContains(response, self.commission.initial_request_text)
+        self.assertContains(response, "Chat")
+        self.assertNotContains(response, "Change State")

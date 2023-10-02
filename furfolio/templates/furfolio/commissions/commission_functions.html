@@ -26,15 +26,12 @@ Expects the following objects:
                 {% if commission.state == "REVIEW" %}
                     <div class="me-1 mb-1">{% include "furfolio/commissions/state_buttons/state_setters/accept.html" with commission=commission request=request csrf_token=csrf_token only %}</div>
                     <div class="me-1 mb-1">{% include "furfolio/commissions/state_buttons/state_setters/reject.html" with commission=commission request=request csrf_token=csrf_token only %}</div>
-                    <div class="mb-3"></div>
-                    <div class="me-1 mb-1" style="font-size: 0.8em">{% include "furfolio/commissions/state_buttons/state_setters/close.html" with commission=commission request=request csrf_token=csrf_token only %}</div>
                 {% endif %}
 
                 {% if commission.state == "ACCEPTED" %}
                     <div class="me-1 mb-1">{% include "furfolio/commissions/state_buttons/state_setters/in_progress.html" with commission=commission request=request csrf_token=csrf_token only %}</div>
                     <div class="mb-3"></div>
                     <div class="me-1 mb-1" style="font-size: 0.8em">{% include "furfolio/commissions/state_buttons/state_setters/review.html" with commission=commission request=request csrf_token=csrf_token only %}</div>
-                    <div class="me-1 mb-1" style="font-size: 0.8em">{% include "furfolio/commissions/state_buttons/state_setters/close.html" with commission=commission request=request csrf_token=csrf_token only %}</div>
                 {% endif %}
 
                 {% if commission.state == "IN_PROGRESS" %}

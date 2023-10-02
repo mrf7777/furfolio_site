@@ -92,7 +92,7 @@ if DEVELOPMENT_MODE is True:
             'NAME': 'furfolio',
             'USER': 'furfolio',
             'PASSWORD': 'admin',
-            'HOST': 'localhost',
+            'HOST': os.getenv("DATABASE_HOST", "localhost"),
             'PORT': '5432',
             'TIME_ZONE': 'America/Chicago'
         }

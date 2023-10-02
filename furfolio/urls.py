@@ -36,7 +36,7 @@ urlpatterns = [
     path('dashboard/buyer/', views.BuyerDashboard.as_view(), name="buyer_dashboard"),
     # commissions
     path('commissions/<pk>', views.Commission.as_view(), name="commission_detail"),
-    path('commissions/create/', views.CreateCommission.as_view(),
+    path('offers/<offer_pk>/commissions/create/', views.CreateCommission.as_view(),
          name="create_commission"),
     path('commissions/<pk>/update/',
          views.UpdateCommission.as_view(), name="update_commission"),

@@ -197,14 +197,14 @@ class CreateCommission(LoginRequiredMixin, generic.CreateView):
     # prefill offer and commissioner for the commission since these are hidden fields
     def get_initial(self):
         initial = super().get_initial()
-        initial["offer"] = self.request.GET["offer"]
+        initial["offer"] = self.kwargs["offer_pk"]
         initial["commissioner"] = self.request.user.pk
         return initial
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["offer"] = get_object_or_404(
-            models.Offer, pk=self.request.GET["offer"])
+            models.Offer, pk=self.kwargs["offer_pk"])
         return context
 
 

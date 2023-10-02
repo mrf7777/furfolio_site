@@ -17,21 +17,7 @@
 </div>
 
 {% if is_paginated %}
-<div class="d-flex justify-content-center">
-    <div class="d-flex justify-content-center align-items-center" role="group">
-        {% if page_obj.has_previous %}
-            <a class="btn btn-primary" href="?{% query_replace request "page" page_obj.previous_page_number %}">
-                <img src="{% static "symbols/left-arrow-white.svg" %}" style="width: 16px;">
-            </a>
-        {% endif %}
-        <div class="mx-3">Page {{ page_obj.number }}</div>
-        {% if page_obj.has_next %}
-            <a class="btn btn-primary" href="?{% query_replace request "page" page_obj.next_page_number %}">
-                <img src="{% static "symbols/right-arrow-white.svg" %}" style="width: 16px;">
-            </a>
-        {% endif %}
-    </div>
-</div>
+{% include "furfolio/components/pagination_buttons.html" with page_obj=page_obj request=request only %}
 {% endif %}
 
 {% endblock %}

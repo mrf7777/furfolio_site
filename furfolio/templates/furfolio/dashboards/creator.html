@@ -29,11 +29,7 @@
 {% endblock %}
 
 {% block column_1 %}
-    {% for commission in review_commissions %}
-        <div class="mb-3">
-            {% include "furfolio/commissions/commission_card_functional.html" with commission=commission request=request csrf_token=csrf_token only %}
-        </div>
-    {% endfor %}
+    {% include "./commission_card_list.html" with commissions=review_commissions request=request csrf_token=csrf_token only %}
 {% endblock %}
 
 {% block column_2_title %}
@@ -41,11 +37,7 @@
 {% endblock %}
 
 {% block column_2 %}
-    {% for commission in accepted_commissions %}
-        <div class="mb-3">
-            {% include "furfolio/commissions/commission_card_functional.html" with commission=commission request=request csrf_token=csrf_token only %}
-        </div>
-    {% endfor %}
+    {% include "./commission_card_list.html" with commissions=accepted_commissions request=request csrf_token=csrf_token only %}
 {% endblock %}
 
 {% block column_3_title %}
@@ -53,11 +45,7 @@
 {% endblock %}
 
 {% block column_3 %}
-    {% for commission in in_progress_commissions %}
-        <div class="mb-3">
-            {% include "furfolio/commissions/commission_card_functional.html" with commission=commission request=request csrf_token=csrf_token only %}
-        </div>
-    {% endfor %}
+    {% include "./commission_card_list.html" with commissions=in_progress_commissions request=request csrf_token=csrf_token only %}
 {% endblock %}
 
 {% block column_4_title %}
@@ -65,9 +53,5 @@
 {% endblock %}
 
 {% block column_4 %}
-    {% for commission in closed_commissions %}
-        <div class="mb-3">
-            {% include "furfolio/commissions/commission_card_functional.html" with commission=commission request=request csrf_token=csrf_token only %}
-        </div>
-    {% endfor %}
+    {% include "./commission_card_list.html" with commissions=closed_commissions request=request csrf_token=csrf_token only %}
 {% endblock %}

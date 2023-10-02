@@ -68,11 +68,14 @@ class OfferList(generic.ListView):
     paginate_by = PAGE_SIZE
 
     def get_queryset(self) -> QuerySet[Any]:
-        # Search something if text query is provided. Otherwise, use most recent.
-        if "text_query" in self.request.GET and self.request.GET["text_query"].strip() != "":
-            return models.Offer.full_text_search_offers(self.request.GET["text_query"])
-        else:
-            return models.Offer.objects.all().order_by("-created_date")
+        search_form = OfferSearchForm(self.request.GET)
+        if search_form.is_valid():
+            text_query = search_form.cleaned_data["text_query"].strip()
+            # Search something if text query is provided. Otherwise, use most recent.
+            if text_query:
+                return models.Offer.full_text_search_offers(text_query)
+            else:
+                return models.Offer.objects.all().order_by("-created_date")
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
@@ -164,11 +167,14 @@ class UserList(generic.ListView):
     paginate_by = PAGE_SIZE
 
     def get_queryset(self) -> QuerySet[Any]:
-        # search something if text query is provided
-        if "text_query" in self.request.GET and self.request.GET["text_query"].strip() != "":
-            return models.User.full_text_search_creators(self.request.GET["text_query"])
-        else:
-            return models.User.get_creators().order_by("-date_joined")
+        search_form = UserSearchForm(self.request.GET)
+        if search_form.is_valid():
+            text_query = search_form.cleaned_data["text_query"].strip()
+            # search something if text query is provided
+            if text_query:
+                return models.User.full_text_search_creators(text_query)
+            else:
+                return models.User.get_creators().order_by("-date_joined")
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

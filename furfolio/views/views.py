@@ -11,6 +11,9 @@ from .. import models
 from ..forms import CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm, UserSearchForm, UpdateCommissionForm, CommissionMessageForm
 
 
+PAGE_SIZE = 5
+
+
 class Home(generic.TemplateView):
     template_name = "furfolio/home.html"
 
@@ -62,7 +65,7 @@ class OfferList(generic.ListView):
     model = models.Offer
     template_name = "furfolio/offers/offer_list.html"
     context_object_name = "offer_list"
-    paginate_by = 5
+    paginate_by = PAGE_SIZE
 
     def get_queryset(self) -> QuerySet[Any]:
         # Search something if text query is provided. Otherwise, use most recent.
@@ -122,6 +125,17 @@ class DeleteOffer(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
         return self.get_object().author.pk == self.request.user.pk
 
 
+class UserOffers(generic.ListView):
+    model = models.Offer
+    context_object_name = "offers"
+    template_name = "furfolio/offers/user_offer_list.html"
+    paginate_by = PAGE_SIZE
+    
+    def get_queryset(self) -> QuerySet[Any]:
+        username = self.kwargs["username"]
+        return models.Offer.objects.filter(author__username=username)
+
+
 class User(generic.DetailView):
     model = models.User
     slug_field = "username"
@@ -147,7 +161,7 @@ class UserList(generic.ListView):
     model = models.User
     context_object_name = "users"
     template_name = "furfolio/users/user_list.html"
-    paginate_by = 5
+    paginate_by = PAGE_SIZE
 
     def get_queryset(self) -> QuerySet[Any]:
         # search something if text query is provided

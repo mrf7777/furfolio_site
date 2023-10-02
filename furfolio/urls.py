@@ -17,6 +17,7 @@ urlpatterns = [
     path('users/<username>/update/',
          views.UpdateUser.as_view(), name="update_user"),
     path('users/', views.UserList.as_view(), name="user_list"),
+    path('users/<username>/offers/', views.UserOffers.as_view(), name="user_offers"),
     # accounts
     path('accounts/signup/', views.SignUp.as_view(), name="signup"),
     path(

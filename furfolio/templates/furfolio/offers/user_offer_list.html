@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% for offer in offers %}
+    <div class="mb-3">
+        {% include "./offer_card.html" with offer=offer only %}
+    </div>
+    {% endfor %}
+{% endblock %}

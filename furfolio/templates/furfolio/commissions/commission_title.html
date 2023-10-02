@@ -2,10 +2,11 @@
 This includable template represents a commission title.
 Expects the following context objects:
   - commission: the commission to make the title for
+  - link_to_offer: if true, the link in the title points to offer
 {% endcomment %}
 
 {% include "furfolio/users/badge.html" with user=commission.commissioner only %}
 wants
-<a class="text-decoration-none" href="{% url "commission_detail" commission.pk %}">{{ commission.offer.name }}</a>
+<a class="text-decoration-none" href="{% if link_to_offer %}{% url "offer_detail" commission.offer.pk %}{% else %}{% url "commission_detail" commission.pk %}{% endif %}">{{ commission.offer.name }}</a>
 by
 {% include "furfolio/users/badge.html" with user=commission.offer.author only %}

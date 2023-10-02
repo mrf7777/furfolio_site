@@ -154,3 +154,15 @@ class CommissionsTestCase(TestCase):
         self.assertContains(response, self.commission.initial_request_text)
         self.assertContains(response, "Chat")
         self.assertNotContains(response, "Change State")
+
+    def test_create_commission(self):
+        self.client.force_login(self.user_buyer)
+        response = self.client.get(
+            reverse(
+                "create_commission",
+                args=[self.offer.pk],
+            ),
+            follow=True,
+        )
+        self.assertContains(response, self.offer.name)
+        self.assertContains(response, self.user_creator.username)

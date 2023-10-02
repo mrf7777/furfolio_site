@@ -22,10 +22,17 @@ jobs:
           POSTGRES_USER: furfolio
           POSTGRES_PASSWORD: admin
           POSTGRES_DB: furfolio
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     env:
       DEVELOPMENT_MODE: "True"
       DEBUG: "True"
+      DATABASE_HOST: "db"
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}

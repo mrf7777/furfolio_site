@@ -34,7 +34,7 @@ jobs:
     env:
       DEVELOPMENT_MODE: "True"
       DEBUG: "True"
-      DATABASE_HOST: "localhost"
+      DATABASE_HOST: "postgres"
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}

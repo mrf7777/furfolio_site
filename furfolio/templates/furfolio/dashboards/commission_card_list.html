@@ -6,8 +6,16 @@ Expects the following context objects:
   - csrf_token: the csrf_token
 {% endcomment %}
 
-{% for commission in commissions %}
-    <div class="mb-3">
-        {% include "furfolio/commissions/commission_card.html" with commission=commission request=request csrf_token=csrf_token only %}
+{% if commissions %}
+    {% for commission in commissions %}
+        <div class="mb-3">
+            {% include "furfolio/commissions/commission_card.html" with commission=commission request=request csrf_token=csrf_token only %}
+        </div>
+    {% endfor %}
+{% else %}
+<div class="d-flex flex-column align-items-center">
+    <div>
+        No commissions.
     </div>
-{% endfor %}
+</div>
+{% endif%}

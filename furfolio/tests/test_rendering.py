@@ -101,3 +101,19 @@ class CreatorDashboardTestCase(TestCase):
         self.client.force_login(self.user_creator)
         response = self.client.get(reverse("dashboard"), follow=True)
         self.assertContains(response, self.commission.initial_request_text)
+
+
+class BuyerBashboardTestCase(TestCase):
+    def setUp(self) -> None:
+        self.user_creator = utils.make_user(
+            "creator", role=models.User.ROLE_CREATOR)
+        self.user_buyer = utils.make_user(
+            "buyer", role=models.User.ROLE_BUYER)
+
+        self.offer = utils.make_offer(self.user_creator)
+        self.commission = utils.make_commission(self.user_buyer, self.offer)
+
+    def test_buyer_dashboard(self):
+        self.client.force_login(self.user_buyer)
+        response = self.client.get(reverse("dashboard"), follow=True)
+        self.assertContains(response, self.commission.initial_request_text)

@@ -16,7 +16,8 @@
 {% block body_1 %}
 <h4>Offers</h4>
 <div class="mb-5 d-flex align-items-center">
-    <a href="{% url "create_offer" %}"><button class="btn btn-primary me-3">Create Offer</button></a>
+    <a href="{% url "user_offers" request.user.username %}"><button class="btn btn-primary me-3">My Offers</button></a>
+    <a href="{% url "create_offer" %}"><button class="btn btn-primary">Create Offer</button></a>
 </div>
 
 <h4>Commissions</h4>

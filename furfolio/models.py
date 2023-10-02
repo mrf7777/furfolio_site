@@ -110,7 +110,6 @@ class Offer(models.Model):
         choices=RATING_TO_CHOICES,
         default=RATING_GENERAL,
     )
-    # TODO: what is the value added by this field? Simply keep the review commissions limit and reject requests after offer cutoff date.
     slots = models.PositiveIntegerField(
         name="slots",
         verbose_name="Slots",

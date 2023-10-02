@@ -8,9 +8,6 @@ import datetime
 
 
 class PagesRenderTestCase(TestCase):
-    def setUp(self) -> None:
-        self.client = Client()
-
     def test_privacy_policy(self):
         response = self.client.get(reverse("privacy_policy"), follow=True)
         self.assertEqual(response.status_code, 200)
@@ -26,7 +23,6 @@ class PagesRenderTestCase(TestCase):
 
 class OffersSignedInTestCase(TestCase):
     def setUp(self) -> None:
-        self.client = Client()
         self.user = models.User(
             username="creator",
             password="admin",
@@ -40,32 +36,37 @@ class OffersSignedInTestCase(TestCase):
         )
         self.offer.full_clean()
         self.offer.save()
-        self.client.login(username="creator", password="admin")
 
     def test_offer_list(self):
+        self.client.force_login(self.user)
         response = self.client.get(reverse("offer_list"), follow=True)
         self.assertContains(response, self.offer.description)
 
     def test_offer_create(self):
+        self.client.force_login(self.user)
         response = self.client.get(reverse("create_offer"), follow=True)
         self.assertEqual(response.status_code, 200)
 
     def test_offer_update(self):
+        self.client.force_login(self.user)
         response = self.client.get(
             reverse("update_offer", args=[self.offer.pk,]), follow=True)
         self.assertEqual(response.status_code, 200)
 
     def test_offer_delete(self):
+        self.client.force_login(self.user)
         response = self.client.get(
             reverse("delete_offer", args=[self.offer.pk,]), follow=True)
         self.assertEqual(response.status_code, 200)
 
     def test_offer_detail(self):
+        self.client.force_login(self.user)
         response = self.client.get(
             reverse("offer_detail", args=[self.offer.pk,]), follow=True)
         self.assertEqual(response.status_code, 200)
 
     def test_user_offers(self):
+        self.client.force_login(self.user)
         response = self.client.get(
             reverse("user_offers", args=[self.user.username,]), follow=True)
         self.assertContains(response, self.offer.name)
@@ -73,7 +74,6 @@ class OffersSignedInTestCase(TestCase):
 
 class UsersSignedInTestCase(TestCase):
     def setUp(self) -> None:
-        self.client = Client()
         self.user = models.User(
             username="creator",
             password="admin",
@@ -87,26 +87,27 @@ class UsersSignedInTestCase(TestCase):
         )
         self.offer.full_clean()
         self.offer.save()
-        self.client.login(username="creator", password="admin")
 
     def test_user_page(self):
+        self.client.force_login(self.user)
         response = self.client.get(
             reverse("user", args=[self.user.username,]), follow=True)
         self.assertContains(response, self.user.username)
 
     def test_user_update(self):
+        self.client.force_login(self.user)
         response = self.client.get(
             reverse("user", args=[self.user.username,]), follow=True)
         self.assertEqual(response.status_code, 200)
 
     def test_user_list(self):
+        self.client.force_login(self.user)
         response = self.client.get(reverse("user_list"), follow=True)
         self.assertContains(response, self.user.username)
 
 
 class CreatorDashboardTestCase(TestCase):
     def setUp(self) -> None:
-        self.client = Client()
         self.user_creator = models.User(
             username="creator",
             password="admin",
@@ -135,8 +136,8 @@ class CreatorDashboardTestCase(TestCase):
         )
         self.commission.full_clean()
         self.commission.save()
-        self.client.force_login(self.user_creator)
 
     def test_creator_dashboard(self):
+        self.client.force_login(self.user_creator)
         response = self.client.get(reverse("dashboard"), follow=True)
         self.assertContains(response, self.commission.initial_request_text)

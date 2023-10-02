@@ -8,6 +8,6 @@ Expects the following context objects:
 
 {% for commission in commissions %}
     <div class="mb-3">
-        {% include "furfolio/commissions/commission_card_functional.html" with commission=commission request=request csrf_token=csrf_token only %}
+        {% include "furfolio/commissions/commission_card.html" with commission=commission request=request csrf_token=csrf_token only %}
     </div>
 {% endfor %}

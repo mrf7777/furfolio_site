@@ -27,7 +27,7 @@ show_status: (bool) set to True if you want to show status badge
     <div class="card-body">
         <div class="card-text">
             <p>
-                {{ commission.initial_request_text }}
+                {{ commission.initial_request_text|truncatechars:400 }}
             </p>
             {% if commission.attachment %}
             <a class="text-decoration-none" href="{{ commission.attachment.url }}" >{{ commission.attachment.name }}</a>

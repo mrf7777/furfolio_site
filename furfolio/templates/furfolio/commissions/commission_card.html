@@ -21,7 +21,7 @@ request: the request object
     <div class="card-body">
         <div class="card-text">
             <p>
-                <b>Details:</b> {{ commission.initial_request_text }}
+                <b>Details:</b> {{ commission.initial_request_text|truncatechars:300 }}
             </p>
             {% if commission.attachment %}
             <p>

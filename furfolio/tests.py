@@ -19,11 +19,13 @@ class LimitReviewCommissionsTestCase(TestCase):
         )
         self.buyer.full_clean()
         self.buyer.save()
+        cutoff_date = timezone.now() + datetime.timedelta(days=7)
+        print(cutoff_date)
         self.offer = Offer(
             author=self.creator,
             name="Offer",
             description="This is a test offer to test review commissions.",
-            cutoff_date=timezone.now()+datetime.timedelta(days=7),
+            cutoff_date=cutoff_date,
             slots=2,
             max_review_commissions=1,
         )

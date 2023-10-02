@@ -50,4 +50,5 @@ jobs:
         python manage.py migrate
     - name: Run Tests
       run: |
-        python manage.py test
+        coverage run manage.py test furfolio
+        coverage report

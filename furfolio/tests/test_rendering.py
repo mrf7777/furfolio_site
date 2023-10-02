@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.urls import reverse
 from django.core.exceptions import ValidationError
 from .. import models
+from . import utils
 import datetime
 
 
@@ -23,19 +24,9 @@ class PagesRenderTestCase(TestCase):
 
 class OffersSignedInTestCase(TestCase):
     def setUp(self) -> None:
-        self.user = models.User(
-            username="creator",
-            password="admin",
-        )
-        self.user.full_clean()
-        self.user.save()
-        self.offer = models.Offer(
-            author=self.user,
-            name="Offer",
-            description="This is an offer created by a user.",
-        )
-        self.offer.full_clean()
-        self.offer.save()
+        self.user = utils.make_user("creator", role=models.User.ROLE_CREATOR)
+        self.offer = utils.make_offer(
+            user=self.user, name="Offer", description="This is an offer created by a user")
 
     def test_offer_list(self):
         self.client.force_login(self.user)
@@ -74,19 +65,9 @@ class OffersSignedInTestCase(TestCase):
 
 class UsersSignedInTestCase(TestCase):
     def setUp(self) -> None:
-        self.user = models.User(
-            username="creator",
-            password="admin",
-        )
-        self.user.full_clean()
-        self.user.save()
-        self.offer = models.Offer(
-            author=self.user,
-            name="Offer",
-            description="This is an offer created by a user.",
-        )
-        self.offer.full_clean()
-        self.offer.save()
+        self.user = utils.make_user("creator", role=models.User.ROLE_CREATOR)
+        self.offer = utils.make_offer(
+            user=self.user, name="Offer", description="This is an offer created by a user")
 
     def test_user_page(self):
         self.client.force_login(self.user)
@@ -108,34 +89,13 @@ class UsersSignedInTestCase(TestCase):
 
 class CreatorDashboardTestCase(TestCase):
     def setUp(self) -> None:
-        self.user_creator = models.User(
-            username="creator",
-            password="admin",
-            role=models.User.ROLE_CREATOR,
-        )
-        self.user_creator.full_clean()
-        self.user_creator.save()
-        self.user_buyer = models.User(
-            username="buyer",
-            password="admin",
-            role=models.User.ROLE_BUYER,
-        )
-        self.user_buyer.full_clean()
-        self.user_buyer.save()
-        self.offer = models.Offer(
-            author=self.user_creator,
-            name="Offer",
-            description="This is an offer created by a user.",
-        )
-        self.offer.full_clean()
-        self.offer.save()
-        self.commission = models.Commission(
-            commissioner=self.user_buyer,
-            offer=self.offer,
-            initial_request_text="I want that offer.",
-        )
-        self.commission.full_clean()
-        self.commission.save()
+        self.user_creator = utils.make_user(
+            "creator", role=models.User.ROLE_CREATOR)
+        self.user_buyer = utils.make_user(
+            "buyer", role=models.User.ROLE_BUYER)
+
+        self.offer = utils.make_offer(self.user_creator)
+        self.commission = utils.make_commission(self.user_buyer, self.offer)
 
     def test_creator_dashboard(self):
         self.client.force_login(self.user_creator)

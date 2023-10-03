@@ -8,7 +8,7 @@ from . import utils
 import datetime
 
 
-class PagesRenderTestCase(TestCase):
+class PagesTestCase(TestCase):
     def test_privacy_policy(self):
         response = self.client.get(reverse("privacy_policy"), follow=True)
         self.assertEqual(response.status_code, 200)
@@ -63,7 +63,7 @@ class OffersSignedInTestCase(TestCase):
         self.assertContains(response, self.offer.name)
 
 
-class UsersSignedInTestCase(TestCase):
+class UsersInTestCase(TestCase):
     def setUp(self) -> None:
         self.user = utils.make_user("creator", role=models.User.ROLE_CREATOR)
         self.offer = utils.make_offer(
@@ -74,6 +74,8 @@ class UsersSignedInTestCase(TestCase):
         response = self.client.get(
             reverse("user", args=[self.user.username,]), follow=True)
         self.assertContains(response, self.user.username)
+        self.assertContains(response, reverse(
+            "user", args=[self.user.username]))
 
     def test_user_update(self):
         self.client.force_login(self.user)
@@ -85,6 +87,8 @@ class UsersSignedInTestCase(TestCase):
         self.client.force_login(self.user)
         response = self.client.get(reverse("user_list"), follow=True)
         self.assertContains(response, self.user.username)
+        self.assertContains(response, reverse(
+            "user", args=[self.user.username]))
 
 
 class CreatorDashboardTestCase(TestCase):
@@ -101,6 +105,7 @@ class CreatorDashboardTestCase(TestCase):
         self.client.force_login(self.user_creator)
         response = self.client.get(reverse("dashboard"), follow=True)
         self.assertContains(response, self.commission.initial_request_text)
+        self.assertContains(response, reverse("buyer_dashboard"))
 
 
 class BuyerBashboardTestCase(TestCase):
@@ -117,6 +122,7 @@ class BuyerBashboardTestCase(TestCase):
         self.client.force_login(self.user_buyer)
         response = self.client.get(reverse("dashboard"), follow=True)
         self.assertContains(response, self.commission.initial_request_text)
+        self.assertContains(response, reverse("creator_dashboard"))
 
 
 class CommissionsTestCase(TestCase):
@@ -141,6 +147,8 @@ class CommissionsTestCase(TestCase):
         self.assertContains(response, self.commission.initial_request_text)
         self.assertContains(response, "Chat")
         self.assertContains(response, "Change State")
+        self.assertContains(response, reverse(
+            "update_commission", args=[self.commission.pk]))
 
     def test_commission_detail_as_buyer(self):
         self.client.force_login(self.user_buyer)
@@ -154,6 +162,8 @@ class CommissionsTestCase(TestCase):
         self.assertContains(response, self.commission.initial_request_text)
         self.assertContains(response, "Chat")
         self.assertNotContains(response, "Change State")
+        self.assertNotContains(response, reverse(
+            "update_commission", args=[self.commission.pk]))
 
     def test_create_commission(self):
         self.client.force_login(self.user_buyer)

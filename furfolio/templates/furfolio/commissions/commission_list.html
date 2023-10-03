@@ -1,6 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
+<h2>
+    Search Commissions
+</h2>
+
+<div class="mb-5">
+    <form method="get">
+    {{ form }}
+    <input type="submit" class="btn btn-primary" value="Search">
+    </form>
+</div>
+
 {% for commission in commissions %}
     <div class="mb-3">
         {% include "./commission_card.html" with commission=commission csrf_token=csrf_token request=request show_status=True only %}

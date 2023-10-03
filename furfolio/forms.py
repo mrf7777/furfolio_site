@@ -37,6 +37,11 @@ class UserSearchForm(TextSearchForm):
     pass
 
 
+class CommissionSearchForm(TextSearchForm):
+    i_am_creator = forms.BooleanField(required=False)
+    i_am_buyer = forms.BooleanField(required=False)
+
+
 class LoginForm(AuthenticationForm):
     pass
 
@@ -50,7 +55,8 @@ class OfferForm(forms.ModelForm):
 
     class Meta:
         model = Offer
-        fields = ["name", "description", "cutoff_date", "thumbnail", "rating", "slots", "max_review_commissions"]
+        fields = ["name", "description", "cutoff_date", "thumbnail",
+                  "rating", "slots", "max_review_commissions"]
         widgets = {
             "thumbnail": forms.ClearableFileInput(),
         }

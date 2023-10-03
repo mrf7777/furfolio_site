@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy, reverse
 from django.core.exceptions import PermissionDenied
 from .. import models
-from ..forms import CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm, UserSearchForm, UpdateCommissionForm, CommissionMessageForm
+from ..forms import CommissionSearchForm, CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm, UserSearchForm, UpdateCommissionForm, CommissionMessageForm
 
 
 PAGE_SIZE = 5
@@ -230,7 +230,24 @@ class Commissions(LoginRequiredMixin, generic.ListView):
     paginate_by = PAGE_SIZE
 
     def get_queryset(self) -> QuerySet[Any]:
-        return models.Commission.get_commissions_with_user(self.request.user).order_by("-updated_date")
+        form = CommissionSearchForm(self.request.GET)
+        if form.is_valid():
+            # TODO: full text search
+            text_query = form.cleaned_data["text_query"].strip()
+            filter_creator = form.cleaned_data["i_am_creator"]
+            filter_buyer = form.cleaned_data["i_am_buyer"]
+            query = models.Commission.get_commissions_with_user(
+                self.request.user)
+            if filter_creator:
+                query = query.filter(offer__author=self.request.user)
+            if filter_buyer:
+                query = query.filter(commissioner=self.request.user)
+            return query.order_by("-updated_date")
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["form"] = CommissionSearchForm(self.request.GET)
+        return context
 
 
 class UpdateCommission(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):

@@ -36,10 +36,11 @@ class User(AbstractUser):
         default=ROLE_BUYER,
         help_text="Your role on this platform. This is used to optimize your experience and to let others know how you want to use this website."
     )
-    
+
     class Meta:
         indexes = [
-            GinIndex(fields=["username",], fastupdate=False, name="user_username_index")
+            GinIndex(fields=["username",], fastupdate=False,
+                     name="user_username_index")
         ]
 
     def full_text_search_creators(text_query: str):
@@ -48,7 +49,7 @@ class User(AbstractUser):
         search_query = SearchQuery(text_query_cleaned)
         search_rank = SearchRank(search_vector, search_query)
         return User.objects.filter(role=User.ROLE_CREATOR).annotate(rank=search_rank).filter(rank__gte=0.2).order_by("-rank")
-        
+
     def get_creators():
         return User.objects.filter(role=User.ROLE_CREATOR)
 
@@ -113,7 +114,8 @@ class Offer(models.Model):
     slots = models.PositiveIntegerField(
         name="slots",
         verbose_name="Slots",
-        help_text=mark_safe("The maximum number of commissions you are willing to work on for this offer.<br>This is not a hard limit; it is used to communicate how many commissions you are willing to work."),
+        help_text=mark_safe(
+            "The maximum number of commissions you are willing to work on for this offer.<br>This is not a hard limit; it is used to communicate how many commissions you are willing to work."),
         validators=[
             validators.MinValueValidator(1),
         ],
@@ -122,7 +124,8 @@ class Offer(models.Model):
     max_review_commissions = models.PositiveIntegerField(
         name="max_review_commissions",
         verbose_name="Max Commissions in Review",
-        help_text=mark_safe("The maximum number of commissions allowed to be in the review state.<br>Use this to prevent being overloaded with too many commission requests at a time."),
+        help_text=mark_safe(
+            "The maximum number of commissions allowed to be in the review state.<br>Use this to prevent being overloaded with too many commission requests at a time."),
         validators=[
             validators.MinValueValidator(1),
         ],
@@ -130,10 +133,11 @@ class Offer(models.Model):
     )
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)
-    
+
     class Meta:
         indexes = [
-            GinIndex(fields=["name", "description"], fastupdate=False, name="offer_name_description_index"),
+            GinIndex(fields=["name", "description"],
+                     fastupdate=False, name="offer_name_description_index"),
         ]
 
     def __str__(self):
@@ -141,16 +145,17 @@ class Offer(models.Model):
 
     def get_absolute_url(self):
         return reverse("offer_detail", kwargs={"pk": self.pk})
-    
+
     def get_active_commissions(self):
         return Commission.get_active_commissions().filter(offer__pk=self.pk)
-    
+
     def get_commissions_in_review(self):
         return Commission.objects.filter(offer__pk=self.pk, state=Commission.STATE_REVIEW)
 
     def full_text_search_offers(text_query: str):
         text_query_cleaned = text_query.strip()
-        search_vector = SearchVector("name", weight="A") + SearchVector("description", weight="A")
+        search_vector = SearchVector(
+            "name", weight="A") + SearchVector("description", weight="A")
         search_query = SearchQuery(text_query_cleaned)
         search_rank = SearchRank(search_vector, search_query)
         return Offer.objects.annotate(rank=search_rank).filter(rank__gte=0.2).order_by("-rank")
@@ -161,7 +166,7 @@ class Offer(models.Model):
         elif self.cutoff_date < timezone.now():
             return True
         return False
-    
+
     def is_full(self):
         num_commissions_in_review = self.get_commissions_in_review().count()
         num_active_commissions = self.get_active_commissions().count()
@@ -224,7 +229,8 @@ class Commission(models.Model):
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)
 
     def clean(self) -> None:
-        furfolio_validators.check_commission_meets_offer_max_review_commissions(self, self.offer)
+        furfolio_validators.check_commission_meets_offer_max_review_commissions(
+            self, self.offer)
         return super().clean()
 
     def __str__(self):
@@ -232,7 +238,7 @@ class Commission(models.Model):
 
     def get_absolute_url(self):
         return reverse("commission_detail", kwargs={"pk": self.pk})
-    
+
     def get_active_commissions():
         query = Q(
             state=Commission.STATE_ACCEPTED
@@ -243,8 +249,12 @@ class Commission(models.Model):
         )
         return Commission.objects.filter(Q(state=Commission.STATE_ACCEPTED) | Q(state=Commission.STATE_IN_PROGRESS) | Q(state=Commission.STATE_CLOSED))
 
+    def get_commissions_with_user(user):
+        return Commission.objects.filter(Q(offer__author=user) | Q(commissioner=user))
+
     def is_active(self):
         return self.state in {Commission.STATE_ACCEPTED, Commission.STATE_IN_PROGRESS, Commission.STATE_CLOSED}
+
 
 # limit commisson message to about 350 words
 COMMISSION_MESSAGE_MAX_LENGTH = math.ceil(

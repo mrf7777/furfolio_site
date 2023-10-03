@@ -229,6 +229,9 @@ class Commissions(LoginRequiredMixin, generic.ListView):
     context_object_name = "commissions"
     paginate_by = PAGE_SIZE
 
+    def get_queryset(self) -> QuerySet[Any]:
+        return models.Commission.get_commissions_with_user(self.request.user).order_by("-updated_date")
+
 
 class UpdateCommission(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = models.Commission

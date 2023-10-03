@@ -7,7 +7,7 @@ Offers by {% include "furfolio/users/badge.html" with user=user only %}
 {% block body %}
     {% for offer in offers %}
     <div class="mb-3">
-        {% include "./offer_card.html" with offer=offer only %}
+        {% include "./offer_card.html" with offer=offer title_is_link=True only %}
     </div>
     {% endfor %}
 

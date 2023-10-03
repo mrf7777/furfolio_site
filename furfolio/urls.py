@@ -42,6 +42,7 @@ urlpatterns = [
          views.UpdateCommission.as_view(), name="update_commission"),
     path('commissions/<pk>/update/status/',
          views.UpdateCommissionStatus.as_view(), name="update_commission_status"),
+    path('commissions/', views.Commissions.as_view(), name="commissions"),
     # commission chat
     path('commissions/<pk>/chat',
          views.CommissionChat.as_view(), name="commission_chat"),

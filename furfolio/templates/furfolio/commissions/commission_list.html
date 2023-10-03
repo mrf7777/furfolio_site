@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% for commission in commissions %}
+    <div class="mb-3">
+        {% include "./commission_card.html" with commission=commission csrf_token=csrf_token request=request show_status=True only %}
+    </div>
+{% endfor %}
+
+{% if is_paginated %}
+    {% include "furfolio/components/pagination_buttons.html" with page_obj=page_obj request=request only %}
+{% endif %}
+{% endblock %}

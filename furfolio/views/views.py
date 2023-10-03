@@ -223,6 +223,13 @@ class Commission(LoginRequiredMixin, UserPassesTestMixin, generic.DetailView):
             return False
 
 
+class Commissions(LoginRequiredMixin, generic.ListView):
+    model = models.Commission
+    template_name = "furfolio/commissions/commission_list.html"
+    context_object_name = "commissions"
+    paginate_by = PAGE_SIZE
+
+
 class UpdateCommission(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = models.Commission
     template_name = "furfolio/commissions/commission_update.html"

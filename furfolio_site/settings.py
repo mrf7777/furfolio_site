@@ -273,5 +273,4 @@ if DEVELOPMENT_MODE is True:
 
 # email
 if DEVELOPMENT_MODE is True:
-    EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-    EMAIL_FILE_PATH = os.path.join(BASE_DIR, "/.email")
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

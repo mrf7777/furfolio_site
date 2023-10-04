@@ -244,7 +244,7 @@ class Commission(models.Model):
 
     def clean(self) -> None:
         furfolio_validators.check_commission_meets_offer_max_review_commissions(
-            self, self.offer)
+            self.offer)
         return super().clean()
 
     def __str__(self):

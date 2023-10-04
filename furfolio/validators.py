@@ -27,7 +27,7 @@ def validate_profile_image_is_right_size(value: ImageFieldFile):
             f"Avatar width and height must be at least {AVATAR_MIN_WIDTH} and {AVATAR_MIN_HEIGHT} pixels respectively")
 
 
-def check_commission_meets_offer_max_review_commissions(commission, offer):
+def check_commission_meets_offer_max_review_commissions(offer):
     num_offer_commissions_in_review_state = models.Commission.objects.filter(
         offer__pk=offer.pk, state=models.Commission.STATE_REVIEW).count()
     if num_offer_commissions_in_review_state >= offer.max_review_commissions:

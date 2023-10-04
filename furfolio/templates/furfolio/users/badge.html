@@ -4,8 +4,13 @@ Expects the following objects:
   - user: the user to make the badge of
 {% endcomment %}
 
-<div class="badge bg-secondary">
-    <a href="{% url "user" user.username %}" class="text-decoration-none text-reset">
-        {{ user.username }}
-    </a>
-</div>
+<a href="{% url "user" user.username %}" class="badge bg-secondary d-flex align-items-center text-decoration-none">
+  {% if user.avatar %}
+    <div class="me-1">
+      {% include "./avatar.html" with url=user.avatar.url only %}
+    </div>
+  {% endif %}
+  <div>
+      {{ user.username }}
+  </div>
+</a>

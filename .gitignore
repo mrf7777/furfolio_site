@@ -160,3 +160,6 @@ cython_debug/
 
 # media for local development on django
 .media/
+
+# email for local development on django
+.email/

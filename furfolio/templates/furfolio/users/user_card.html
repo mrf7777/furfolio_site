@@ -4,12 +4,9 @@ Expects object 'user'
 {% endcomment %}
 
 <div class="card">
-    <h5 class="card-header">
-        {% if user.avatar %}
-            <img class="me-3" src="{{ user.avatar.url }}">
-        {% endif %}
-        <a class="text-decoration-none" href="{% url "user" user.username %}">{{ user.username }}</a>
-    </h5>
+    <div class="card-header">
+        {% include "./badge.html" with user=user show_avatar=True only %}
+    </div>
     <div class="card-body">
         <p class="card-text">Date joined: {{ user.date_joined }}</p>
     </div>

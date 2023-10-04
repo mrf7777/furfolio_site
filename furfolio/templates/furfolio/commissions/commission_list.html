@@ -14,7 +14,7 @@
 
 {% for commission in commissions %}
     <div class="mb-3">
-        {% include "./commission_card.html" with commission=commission csrf_token=csrf_token request=request show_status=True only %}
+        {% include "./commission_card.html" with commission=commission csrf_token=csrf_token request=request show_status=True show_avatars=True only %}
     </div>
 {% endfor %}
 

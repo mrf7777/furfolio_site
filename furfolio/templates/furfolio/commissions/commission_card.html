@@ -5,6 +5,7 @@ commission: the commission object to show
 csrf_token: the csrf_token
 request: the request object
 show_status: (bool) set to True if you want to show status badge
+show_avatars: (bool) if True, shows the avatars of the users in the card
 {% endcomment %}
 
 {% load static %}
@@ -13,7 +14,7 @@ show_status: (bool) set to True if you want to show status badge
     <div class="card-header">
         <div class="card-title d-flex">
             <h6>
-                {% include "./commission_title.html" with commission=commission only %}
+                {% include "./commission_title.html" with commission=commission show_avatars=show_avatars only %}
             </h6>
             <div class="flex-fill"></div>
             {% if show_status is True %}

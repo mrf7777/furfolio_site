@@ -1,7 +1,7 @@
 {% extends "furfolio/layouts/title_body.html" %}
 
 {% block title %}
-{{ offer.name }}
+{{ offer.name }} by {% include "furfolio/users/badge.html" with user=offer.author show_avatar=True only %}
 {% endblock %}
 
 {% block body %}

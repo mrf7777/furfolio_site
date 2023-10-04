@@ -14,7 +14,7 @@
 
 {% for user in users %}
     <div class="mb-3">
-        {% include "./user_card.html" with user=user only %}
+        {% include "./user_card.html" with user=user show_avatar=True only %}
     </div>
 {% endfor %}
 

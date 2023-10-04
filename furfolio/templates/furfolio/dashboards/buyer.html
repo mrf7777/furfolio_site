@@ -2,7 +2,14 @@
 {% load static %}
 
 {% block title %}
-Your Commissions
+<div class="d-flex align-items-center">
+    Your Commissions
+    <div class="flex-fill"></div>
+    <a class="btn btn-primary" href="{% url "creator_dashboard" %}">
+        <img class="me-1" style="width: 25px;" src="{% static "symbols/chasing-arrows-white.svg" %}">
+        Creator Mode
+    </a>
+</div>
 {% endblock %}
 
 {% block body %}
@@ -15,11 +22,4 @@ Your Commissions
     {% endfor %}
 </div>
 
-<div class="mb-3 d-flex align-items-center">
-    <div class="me-1">You are in buyer mode.</div>
-    <a class="btn btn-primary" href="{% url "creator_dashboard" %}">
-        <img class="me-1" style="width: 25px;" src="{% static "symbols/chasing-arrows-white.svg" %}">
-        Creator Mode
-    </a>
-</div>
 {% endblock %}

@@ -1,5 +1,7 @@
 from typing import Any
+from functools import reduce
 from django.db.models.query import QuerySet
+from django.db.models import Q
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import redirect, get_object_or_404
@@ -236,17 +238,45 @@ class Commissions(LoginRequiredMixin, generic.ListView):
             text_query = form.cleaned_data["text_query"].strip()
             filter_creator = form.cleaned_data["as_creator"]
             filter_buyer = form.cleaned_data["as_buyer"]
+            filter_review = form.cleaned_data["review"]
+            filter_accepted = form.cleaned_data["accepted"]
+            filter_in_progress = form.cleaned_data["in_progress"]
+            filter_closed = form.cleaned_data["finished"]
+            filter_rejected = form.cleaned_data["rejected"]
             query = models.Commission.get_commissions_with_user(
                 self.request.user)
             if filter_creator:
                 query = query.filter(offer__author=self.request.user)
             if filter_buyer:
                 query = query.filter(commissioner=self.request.user)
+            # build filter for commission states
+            state_queries = []
+            if filter_review:
+                state_queries.append(Q(state=models.Commission.STATE_REVIEW))
+            if filter_accepted:
+                state_queries.append(Q(state=models.Commission.STATE_ACCEPTED))
+            if filter_in_progress:
+                state_queries.append(
+                    Q(state=models.Commission.STATE_IN_PROGRESS))
+            if filter_closed:
+                state_queries.append(Q(state=models.Commission.STATE_CLOSED))
+            if filter_rejected:
+                state_queries.append(Q(state=models.Commission.STATE_REJECTED))
+            state_query = reduce(lambda q1, q2: q1 | q2, state_queries, Q())
+            query = query.filter(state_query)
+            print(state_query)
+            print(query)
             return query.order_by("-updated_date")
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["form"] = CommissionSearchForm(self.request.GET)
+        search_form = None
+        # https://stackoverflow.com/a/43096716
+        if self.request.GET & CommissionSearchForm.base_fields.keys():
+            search_form = CommissionSearchForm(self.request.GET)
+        else:
+            search_form = CommissionSearchForm()
+        context["form"] = search_form
         return context
 
 
@@ -274,6 +304,8 @@ class UpdateCommissionStatus(LoginRequiredMixin, generic.View):
         redirect_url = request.GET["next"]
         commission.state = request.POST["state"]
         commission.save()
+        print(redirect_url)
+        print(redirect(redirect_url))
         return redirect(redirect_url)
 
 

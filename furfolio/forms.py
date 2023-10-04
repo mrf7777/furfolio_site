@@ -40,6 +40,11 @@ class UserSearchForm(TextSearchForm):
 class CommissionSearchForm(TextSearchForm):
     as_creator = forms.BooleanField(required=False)
     as_buyer = forms.BooleanField(required=False)
+    review = forms.BooleanField(required=False, initial=True)
+    accepted = forms.BooleanField(required=False, initial=True)
+    in_progress = forms.BooleanField(required=False, initial=True)
+    finished = forms.BooleanField(required=False, initial=True)
+    rejected = forms.BooleanField(required=False, initial=False)
 
 
 class LoginForm(AuthenticationForm):

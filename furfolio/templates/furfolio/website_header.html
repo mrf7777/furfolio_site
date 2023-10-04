@@ -56,7 +56,7 @@ Includable website header.
             <li class="nav-item">
                 {% block login_link %}
                     {% if request.user.is_authenticated == False %}
-                        <a class="nav-link" href="{% url "login" %}?next={{ request.get_full_path }}">
+                        <a class="nav-link" href="{% url "login" %}?next={{ request.get_full_path|urlencode }}">
                             Login
                         </a>
                     {% endif %}

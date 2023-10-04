@@ -28,7 +28,6 @@ class User(AbstractUser):
         name="avatar",
         blank=True,
         help_text="Avatars are optional. Your avatar must be 64 by 64 pixels.",
-        validators=[furfolio_validators.validate_profile_image_is_right_size,],
     )
     role = models.CharField(
         max_length=7,

@@ -20,6 +20,8 @@
 
 # Tasks
 - [ ] limit commissions per offer
+  - [x] limit buyer commissions in review status
+  - [ ] consider making an exception for commissions by creator
 - [ ] resize avatar
 - [ ] prevent deleted usernames from being taken again to prevent impersonation
 - [ ] prevent spam accounts

@@ -55,7 +55,16 @@ class User(AbstractUser):
             if (image.width, image.height) != User.AVATAR_SIZE_PIXELS:
                 image.thumbnail(User.AVATAR_SIZE_PIXELS,
                                 resample=Image.LANCZOS, reducing_gap=3.0)
-                image.save(self.avatar.path, format="PNG")
+                new_image = Image.new(
+                    "RGB",
+                    User.AVATAR_SIZE_PIXELS
+                )
+                new_image.paste(
+                    image,
+                    ((User.AVATAR_SIZE_PIXELS[0] - image.size[0]) // 2,
+                     (User.AVATAR_SIZE_PIXELS[1] - image.size[1]) // 2),
+                )
+                new_image.save(self.avatar.path, format="PNG")
 
     def full_text_search_creators(text_query: str):
         text_query_cleaned = text_query.strip()

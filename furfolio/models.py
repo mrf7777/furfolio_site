@@ -92,7 +92,7 @@ class Offer(models.Model):
     ]
     ASPECT_RATIO_MIN = (1, 3)
     ASPECT_RATIO_MAX = (4, 1)
-    THUMBNAIL_MAX_DIMENTIONS = (500, 500)
+    THUMBNAIL_MAX_DIMENTIONS = (600, 350)
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(

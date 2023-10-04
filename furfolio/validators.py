@@ -29,9 +29,9 @@ def validate_profile_image_is_right_size(value: ImageFieldFile):
 
 def validate_offer_thumbnail_aspect_ratio(value: ImageFieldFile):
     ASPECT_RATIO_MIN_NUMBER = models.Offer.ASPECT_RATIO_MIN[0] / \
-        models.Offer.ASPECT_RATIO_MIN[0]
+        models.Offer.ASPECT_RATIO_MIN[1]
     ASPECT_RATIO_MAX_NUMBER = models.Offer.ASPECT_RATIO_MAX[0] / \
-        models.Offer.ASPECT_RATIO_MAX[0]
+        models.Offer.ASPECT_RATIO_MAX[1]
     thumbnail_aspect_ratio_number = value.width / value.height
     if thumbnail_aspect_ratio_number < ASPECT_RATIO_MIN_NUMBER:
         raise ValidationError(

@@ -92,6 +92,7 @@ class Offer(models.Model):
     ]
     ASPECT_RATIO_MIN = (1, 3)
     ASPECT_RATIO_MAX = (4, 1)
+    THUMBNAIL_MAX_DIMENTIONS = (500, 500)
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(
@@ -163,6 +164,15 @@ class Offer(models.Model):
 
     def __str__(self):
         return "Id: %i. \"%s\" by %s." % (self.id, self.name, self.author.username)
+
+    def save(self, *args, **kwargs) -> None:
+        super(Offer, self).save(*args, **kwargs)
+        if self.thumbnail:
+            image = Image.open(self.thumbnail.path)
+            if image.width > Offer.THUMBNAIL_MAX_DIMENTIONS[0] or image.height > Offer.THUMBNAIL_MAX_DIMENTIONS[1]:
+                image.thumbnail(Offer.THUMBNAIL_MAX_DIMENTIONS,
+                                resample=Image.LANCZOS, reducing_gap=3.0)
+                image.save(self.thumbnail.path, format="PNG")
 
     def get_absolute_url(self):
         return reverse("offer_detail", kwargs={"pk": self.pk})

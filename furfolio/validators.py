@@ -27,6 +27,20 @@ def validate_profile_image_is_right_size(value: ImageFieldFile):
             f"Avatar width and height must be at least {AVATAR_MIN_WIDTH} and {AVATAR_MIN_HEIGHT} pixels respectively")
 
 
+def validate_offer_thumbnail_aspect_ratio(value: ImageFieldFile):
+    ASPECT_RATIO_MIN_NUMBER = models.Offer.ASPECT_RATIO_MIN[0] / \
+        models.Offer.ASPECT_RATIO_MIN[0]
+    ASPECT_RATIO_MAX_NUMBER = models.Offer.ASPECT_RATIO_MAX[0] / \
+        models.Offer.ASPECT_RATIO_MAX[0]
+    thumbnail_aspect_ratio_number = value.width / value.height
+    if thumbnail_aspect_ratio_number < ASPECT_RATIO_MIN_NUMBER:
+        raise ValidationError(
+            f"The aspect ratio of the image is too small. Try an image that has less height.")
+    if thumbnail_aspect_ratio_number > ASPECT_RATIO_MAX_NUMBER:
+        raise ValidationError(
+            f"The aspect ratio of the image is too large. Try an image that has less width.")
+
+
 def check_commission_meets_offer_max_review_commissions(offer):
     num_offer_commissions_in_review_state = models.Commission.objects.filter(
         offer__pk=offer.pk, state=models.Commission.STATE_REVIEW).count()

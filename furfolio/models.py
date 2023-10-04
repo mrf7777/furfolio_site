@@ -90,6 +90,8 @@ class Offer(models.Model):
         (RATING_MATURE, "Mature"),
         (RATING_ADULT, "Adult"),
     ]
+    ASPECT_RATIO_MIN = (1, 3)
+    ASPECT_RATIO_MAX = (4, 1)
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(
@@ -118,7 +120,12 @@ class Offer(models.Model):
         help_text="Indicates that the offer is closed, regardless if the cutoff date has passed or not.",
         default=False,
     )
-    thumbnail = models.ImageField(name="thumbnail", blank=True, null=True)
+    thumbnail = models.ImageField(
+        name="thumbnail",
+        blank=True,
+        null=True,
+        validators=[furfolio_validators.validate_offer_thumbnail_aspect_ratio]
+    )
     rating = models.CharField(
         name="rating",
         max_length=3,

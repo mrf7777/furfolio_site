@@ -1,5 +1,7 @@
 from PIL import Image
 import PIL.ImageFile
+from io import BytesIO
+from pathlib import Path
 from django.db import models
 from django.db.models import Q
 from django.conf import settings
@@ -7,6 +9,7 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.indexes import GinIndex
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 from django.core import validators
+from django.core.files import File
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.safestring import mark_safe
@@ -40,6 +43,44 @@ def remove_transparency(im, bg_colour=(255, 255, 255)):
         return im
 
 
+def image_resize(image, width, height, transparency_remove=True, fit_in_center=False):
+    """
+    https://blog.soards.me/posts/resize-image-on-save-in-django-before-sending-to-amazon-s3/
+    """
+
+    # Open the image using Pillow
+    img = Image.open(image)
+    img = img.convert("RGBA")
+    # check if either the width or height is greater than the max
+    if img.width > width or img.height > height:
+        output_size = (width, height)
+        # Create a new resized “thumbnail” version of the image with Pillow
+        img.thumbnail(output_size)
+        if fit_in_center:
+            new_image = Image.new(
+                "RGBA",
+                (width, height),
+                (255, 255, 255),
+            )
+            new_image.paste(
+                img,
+                ((width - img.width) // 2,
+                 (height - img.height) // 2),
+            )
+            img = new_image
+        if transparency_remove:
+            img = remove_transparency(img)
+        # Find the file name of the image
+        img_filename = Path(image.file.name).name
+        # Save the resized image into the buffer, noting the correct file type
+        buffer = BytesIO()
+        img.save(buffer, format="PNG")
+        # Wrap the buffer in File object
+        file_object = File(buffer)
+        # Save the new resized file as usual, which will save to S3 using django-storages
+        image.save(img_filename, file_object)
+
+
 class User(AbstractUser):
     ROLE_BUYER = "BUYER"
     ROLE_CREATOR = "CREATOR"
@@ -69,22 +110,8 @@ class User(AbstractUser):
 
     def save(self, *args, **kwargs) -> None:
         if self.avatar:
-            image = Image.open(self.avatar.path)
-            if (image.width, image.height) != User.AVATAR_SIZE_PIXELS:
-                image.thumbnail(User.AVATAR_SIZE_PIXELS,
-                                resample=Image.BICUBIC, reducing_gap=10)
-                new_image = Image.new(
-                    "RGBA",
-                    User.AVATAR_SIZE_PIXELS,
-                    (255, 255, 255)
-                )
-                new_image.paste(
-                    image,
-                    ((User.AVATAR_SIZE_PIXELS[0] - image.size[0]) // 2,
-                     (User.AVATAR_SIZE_PIXELS[1] - image.size[1]) // 2),
-                )
-                new_image = remove_transparency(new_image)
-                new_image.save(self.avatar.path, format="PNG", optimize=True)
+            image_resize(
+                self.avatar, User.AVATAR_SIZE_PIXELS[0], User.AVATAR_SIZE_PIXELS[1], transparency_remove=True, fit_in_center=True)
         super(User, self).save(*args, **kwargs)
 
     def full_text_search_creators(text_query: str):
@@ -197,11 +224,8 @@ class Offer(models.Model):
 
     def save(self, *args, **kwargs) -> None:
         if self.thumbnail:
-            image = Image.open(self.thumbnail.path)
-            if image.width > Offer.THUMBNAIL_MAX_DIMENTIONS[0] or image.height > Offer.THUMBNAIL_MAX_DIMENTIONS[1]:
-                image.thumbnail(Offer.THUMBNAIL_MAX_DIMENTIONS,
-                                resample=Image.LANCZOS, reducing_gap=3.0)
-                image.save(self.thumbnail.path, format="PNG")
+            image_resize(
+                self.thumbnail, Offer.THUMBNAIL_MAX_DIMENTIONS[0], Offer.THUMBNAIL_MAX_DIMENTIONS[1])
         super(Offer, self).save(*args, **kwargs)
 
     def get_absolute_url(self):

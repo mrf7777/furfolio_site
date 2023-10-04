@@ -2,16 +2,18 @@
 {{ hidden_field }}
 {% endfor %}
 
-{% for field in form.visible_fields %}
-    <div class="row">
-        <div class="col-auto">
-            {{ field.label_tag }}
+<div class="mb-3">
+    {% for field in form.visible_fields %}
+        <div class="mb-1 row g-2 d-flex align-items-center">
+            <div class="col-sm-2">
+                {{ field.label_tag }}
+            </div>
+            <div class="col-sm-10">
+                {{ field }}
+            </div>
         </div>
-        <div class="col">
-            {{ field }}
-        </div>
-    </div>
-{% endfor %}
+    {% endfor %}
+</div>
 
 {% if errors %}
 <div class="text-danger">

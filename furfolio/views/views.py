@@ -234,8 +234,8 @@ class Commissions(LoginRequiredMixin, generic.ListView):
         if form.is_valid():
             # TODO: full text search
             text_query = form.cleaned_data["text_query"].strip()
-            filter_creator = form.cleaned_data["i_am_creator"]
-            filter_buyer = form.cleaned_data["i_am_buyer"]
+            filter_creator = form.cleaned_data["as_creator"]
+            filter_buyer = form.cleaned_data["as_buyer"]
             query = models.Commission.get_commissions_with_user(
                 self.request.user)
             if filter_creator:

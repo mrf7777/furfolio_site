@@ -38,8 +38,8 @@ class UserSearchForm(TextSearchForm):
 
 
 class CommissionSearchForm(TextSearchForm):
-    i_am_creator = forms.BooleanField(required=False)
-    i_am_buyer = forms.BooleanField(required=False)
+    as_creator = forms.BooleanField(required=False)
+    as_buyer = forms.BooleanField(required=False)
 
 
 class LoginForm(AuthenticationForm):

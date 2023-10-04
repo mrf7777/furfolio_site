@@ -1,4 +1,5 @@
-from cgitb import text
+from PIL import Image
+import PIL.ImageFile
 from django.db import models
 from django.db.models import Q
 from django.conf import settings
@@ -14,6 +15,9 @@ import math
 from . import validators as furfolio_validators
 
 
+PIL.ImageFile.LOAD_TRUNCATED_IMAGES = True
+
+
 AVERAGE_CHARACTERS_PER_WORD = 4.7
 
 
@@ -24,10 +28,12 @@ class User(AbstractUser):
         (ROLE_BUYER, "Buyer"),
         (ROLE_CREATOR, "Creator"),
     ]
+    AVATAR_SIZE_PIXELS = (64, 64)
     avatar = models.ImageField(
         name="avatar",
         blank=True,
         help_text="Avatars are optional. Your avatar must be 64 by 64 pixels.",
+        validators=[furfolio_validators.validate_profile_image_is_right_size]
     )
     role = models.CharField(
         max_length=7,
@@ -41,6 +47,15 @@ class User(AbstractUser):
             GinIndex(fields=["username",], fastupdate=False,
                      name="user_username_index")
         ]
+
+    def save(self, *args, **kwargs) -> None:
+        super(User, self).save(*args, **kwargs)
+        if self.avatar:
+            image = Image.open(self.avatar.path)
+            if (image.width, image.height) != User.AVATAR_SIZE_PIXELS:
+                image.thumbnail(User.AVATAR_SIZE_PIXELS,
+                                resample=Image.LANCZOS, reducing_gap=3.0)
+                image.save(self.avatar.path, format="PNG")
 
     def full_text_search_creators(text_query: str):
         text_query_cleaned = text_query.strip()

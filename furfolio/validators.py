@@ -20,9 +20,11 @@ def validate_datetime_at_least_12_hours(value: datetime):
 
 
 def validate_profile_image_is_right_size(value: ImageFieldFile):
-    AVATAR_WIDTH_HEIGHT = 64
-    if value.height != AVATAR_WIDTH_HEIGHT or value.width != AVATAR_WIDTH_HEIGHT:
-        raise ValidationError("Avatar must be 64 by 64 pixels.")
+    AVATAR_MIN_WIDTH = models.User.AVATAR_SIZE_PIXELS[0]
+    AVATAR_MIN_HEIGHT = models.User.AVATAR_SIZE_PIXELS[1]
+    if value.height < AVATAR_MIN_HEIGHT or value.width < AVATAR_MIN_WIDTH:
+        raise ValidationError(
+            f"Avatar width and height must be at least {AVATAR_MIN_WIDTH} and {AVATAR_MIN_HEIGHT} pixels respectively")
 
 
 def check_commission_meets_offer_max_review_commissions(commission, offer):

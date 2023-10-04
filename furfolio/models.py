@@ -68,7 +68,6 @@ class User(AbstractUser):
         ]
 
     def save(self, *args, **kwargs) -> None:
-        super(User, self).save(*args, **kwargs)
         if self.avatar:
             image = Image.open(self.avatar.path)
             if (image.width, image.height) != User.AVATAR_SIZE_PIXELS:
@@ -86,6 +85,7 @@ class User(AbstractUser):
                 )
                 new_image = remove_transparency(new_image)
                 new_image.save(self.avatar.path, format="PNG", optimize=True)
+        super(User, self).save(*args, **kwargs)
 
     def full_text_search_creators(text_query: str):
         text_query_cleaned = text_query.strip()
@@ -196,13 +196,13 @@ class Offer(models.Model):
         return "Id: %i. \"%s\" by %s." % (self.id, self.name, self.author.username)
 
     def save(self, *args, **kwargs) -> None:
-        super(Offer, self).save(*args, **kwargs)
         if self.thumbnail:
             image = Image.open(self.thumbnail.path)
             if image.width > Offer.THUMBNAIL_MAX_DIMENTIONS[0] or image.height > Offer.THUMBNAIL_MAX_DIMENTIONS[1]:
                 image.thumbnail(Offer.THUMBNAIL_MAX_DIMENTIONS,
                                 resample=Image.LANCZOS, reducing_gap=3.0)
                 image.save(self.thumbnail.path, format="PNG")
+        super(Offer, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse("offer_detail", kwargs={"pk": self.pk})

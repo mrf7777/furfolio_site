@@ -1,0 +1,4 @@
+Your commission "{{ commission.offer.name }}", by "{{ commission.offer.author.username }}", has moved into the "{{ commission.state }}" state.
+
+Commission: "{{ commission.offer.name }}" at {{ commission.get_absolute_url }}
+Creator: "{{ commission.offer.author.username }}" at {{ commission.offer.author.get_absolute_url }}

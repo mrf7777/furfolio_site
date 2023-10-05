@@ -2,6 +2,7 @@ from PIL import Image
 import PIL.ImageFile
 from io import BytesIO
 from pathlib import Path
+from model_utils import FieldTracker
 from django.db import models
 from django.db.models import Q
 from django.conf import settings
@@ -16,6 +17,7 @@ from django.utils.safestring import mark_safe
 from datetime import timedelta
 import math
 from . import validators as furfolio_validators
+from .email import send_commission_state_changed_email
 
 
 PIL.ImageFile.LOAD_TRUNCATED_IMAGES = True
@@ -310,8 +312,15 @@ class Commission(models.Model):
         default=STATE_REVIEW,
     )
 
+    tracker = FieldTracker()
+
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)
+
+    def save(self, *args, **kwargs) -> None:
+        if self.tracker.has_changed("state"):
+            send_commission_state_changed_email(self)
+        super().save(*args, **kwargs)
 
     def clean(self) -> None:
         furfolio_validators.check_commission_meets_offer_max_review_commissions(

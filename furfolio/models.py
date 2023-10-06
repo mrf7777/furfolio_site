@@ -319,7 +319,7 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)
 
     def save(self, *args, **kwargs) -> None:
-        if self.tracker.previous("state") is not None and self.tracker.has_changed("state"):
+        if self.tracker.previous("state") is not None and self.tracker.has_changed("state") and not self.is_self_managed():
             send_commission_state_changed_email(self)
         super().save(*args, **kwargs)
 

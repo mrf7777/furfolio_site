@@ -19,4 +19,4 @@ def send_commission_state_changed_email(new_commission: 'models.Commission'):
         [new_commission.commissioner.email]
     )
     email.attach_alternative(html_content, "text/html")
-    email.send()
+    email.send(fail_silently=False)

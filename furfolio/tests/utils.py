@@ -1,11 +1,12 @@
 from .. import models
 
 
-def make_user(username, password="admin", role=models.User.ROLE_BUYER):
+def make_user(username, password="admin", role=models.User.ROLE_BUYER, email="test@furfolio.net"):
     user = models.User(
         username=username,
         password=password,
-        role=role
+        role=role,
+        email=email
     )
     user.full_clean()
     user.save()

@@ -17,6 +17,7 @@ from django.utils.safestring import mark_safe
 from datetime import timedelta
 import math
 from . import validators as furfolio_validators
+from . import mixins
 from .email import send_commission_state_changed_email
 
 
@@ -83,7 +84,7 @@ def image_resize(image, width, height, transparency_remove=True, fit_in_center=F
         image.save(img_filename, file_object)
 
 
-class User(AbstractUser):
+class User(mixins.GetFullUrlMixin, AbstractUser):
     ROLE_BUYER = "BUYER"
     ROLE_CREATOR = "CREATOR"
     ROLE_CHOICES = [
@@ -140,7 +141,7 @@ OFFER_DESCRIPTION_MAX_LENGTH = math.ceil(AVERAGE_CHARACTERS_PER_WORD * 1000)
 OFFER_DESCRIPTION_MIN_LENGTH = math.floor(AVERAGE_CHARACTERS_PER_WORD * 4)
 
 
-class Offer(models.Model):
+class Offer(mixins.GetFullUrlMixin, models.Model):
     RATING_GENERAL = "GEN"
     RATING_MATURE = "MAT"
     RATING_ADULT = "ADL"
@@ -270,7 +271,7 @@ COMMISSION_INITIAL_REQUEST_TEXT_MAX_LENGTH = math.ceil(
     AVERAGE_CHARACTERS_PER_WORD * 800)
 
 
-class Commission(models.Model):
+class Commission(mixins.GetFullUrlMixin, models.Model):
     STATE_REVIEW = "REVIEW"
     STATE_ACCEPTED = "ACCEPTED"
     STATE_IN_PROGRESS = "IN_PROGRESS"
@@ -355,7 +356,7 @@ COMMISSION_MESSAGE_MAX_LENGTH = math.ceil(
     AVERAGE_CHARACTERS_PER_WORD * 350)
 
 
-class CommissionMessage(models.Model):
+class CommissionMessage(mixins.GetFullUrlMixin, models.Model):
     commission = models.ForeignKey(
         Commission,
         name="commission",

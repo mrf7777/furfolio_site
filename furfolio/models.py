@@ -319,9 +319,12 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)
 
     def save(self, *args, **kwargs) -> None:
-        if self.tracker.previous("state") is not None and self.tracker.has_changed("state") and not self.is_self_managed():
+        if self.should_notify_state_change():
             send_commission_state_changed_email(self)
         super().save(*args, **kwargs)
+        
+    def should_notify_state_change(self) -> bool:
+        return self.tracker.previous("state") is not None and self.tracker.has_changed("state") and not self.is_self_managed()
 
     def clean(self) -> None:
         furfolio_validators.check_commission_meets_offer_max_review_commissions(

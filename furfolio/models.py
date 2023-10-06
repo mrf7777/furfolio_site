@@ -324,7 +324,11 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
         super().save(*args, **kwargs)
         
     def should_notify_state_change(self) -> bool:
-        return self.tracker.previous("state") is not None and self.tracker.has_changed("state") and not self.is_self_managed()
+        return (
+            self.tracker.previous("state") is not None
+            and self.tracker.has_changed("state")
+            and not self.is_self_managed()
+        )
 
     def clean(self) -> None:
         furfolio_validators.check_commission_meets_offer_max_review_commissions(

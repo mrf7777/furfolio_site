@@ -33,6 +33,11 @@ DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 ALLOWED_HOSTS = os.getenv(
     "DJ_ALLOWED_HOSTS", "127.0.0.1,localhost,0.0.0.0").split(",")
 
+if DEVELOPMENT_MODE:
+    DOMAIN_AND_SCHEME = "http://{}:8000".format(ALLOWED_HOSTS[0])
+else:
+    DOMAIN_AND_SCHEME = "https://{}".format(ALLOWED_HOSTS[0])
+
 
 # Application definition
 

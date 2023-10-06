@@ -342,13 +342,16 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
         ) | Q(
             state=Commission.STATE_CLOSED
         )
-        return Commission.objects.filter(Q(state=Commission.STATE_ACCEPTED) | Q(state=Commission.STATE_IN_PROGRESS) | Q(state=Commission.STATE_CLOSED))
+        return Commission.objects.filter(query)
 
     def get_commissions_with_user(user):
         return Commission.objects.filter(Q(offer__author=user) | Q(commissioner=user))
 
     def is_active(self):
         return self.state in {Commission.STATE_ACCEPTED, Commission.STATE_IN_PROGRESS, Commission.STATE_CLOSED}
+    
+    def is_self_managed(self):
+        return self.commissioner.pk == self.offer.author.pk
 
 
 # limit commisson message to about 350 words

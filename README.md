@@ -22,12 +22,12 @@
 - [ ] limit commissions per offer
   - [x] limit buyer commissions in review status
   - [ ] consider making an exception for commissions by creator
-- [ ] resize avatar
+- [x] resize avatar
 - [ ] prevent deleted usernames from being taken again to prevent impersonation
 - [ ] prevent spam accounts
   - [ ] consider recaptch v3
   - [ ] consider other approaches and tools
-- [ ] limit thumbnail aspect ratio and size
+- [x] limit thumbnail aspect ratio and size
 - [ ] guard against large uploads
   - [ ] consider dockerfile with nginx
 - [ ] guard against spam
@@ -37,7 +37,6 @@
 - [ ] implement email for production
 - [x] allow account disabling?
   - django already solved this
-- [ ] slot management
 
 ## commissions limit ideas
   - idea 1: (creator-has-capacity)

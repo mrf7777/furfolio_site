@@ -332,7 +332,7 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
 
     def clean(self) -> None:
         furfolio_validators.check_commission_meets_offer_max_review_commissions(
-            self.offer)
+            self)
         return super().clean()
 
     def __str__(self):

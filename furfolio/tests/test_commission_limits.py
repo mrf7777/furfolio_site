@@ -4,8 +4,6 @@ from django.utils import timezone
 from django.core.exceptions import ValidationError
 import datetime
 
-# Create your tests here.
-
 
 class LimitReviewCommissionsTestCase(TestCase):
     def setUp(self):
@@ -20,7 +18,6 @@ class LimitReviewCommissionsTestCase(TestCase):
         self.buyer.full_clean()
         self.buyer.save()
         cutoff_date = timezone.now() + datetime.timedelta(days=7)
-        print(cutoff_date)
         self.offer = Offer(
             author=self.creator,
             name="Offer",
@@ -48,7 +45,7 @@ class LimitReviewCommissionsTestCase(TestCase):
         with self.assertRaises(ValidationError):
             commission2.full_clean()
 
-    def text_max_review_commissions_creator_is_buyer(self):
+    def test_max_review_commissions_creator_is_buyer(self):
         commission1 = Commission(
             commissioner=self.creator,
             offer=self.offer,
@@ -61,5 +58,6 @@ class LimitReviewCommissionsTestCase(TestCase):
             offer=self.offer,
             initial_request_text="This is commission 2.",
         )
-        with self.assertRaises(ValidationError):
-            commission2.full_clean()
+        commission2.full_clean()
+        commission2.save()
+        self.assertEqual(Commission.objects.all().count(), 2)

@@ -2,7 +2,6 @@ from datetime import datetime, timedelta
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.db.models.fields.files import ImageFieldFile
-from django.db.models.query import Q
 from . import models
 
 
@@ -41,9 +40,10 @@ def validate_offer_thumbnail_aspect_ratio(value: ImageFieldFile):
             f"The aspect ratio of the image is too large. Try an image that has less width.")
 
 
-def check_commission_meets_offer_max_review_commissions(offer):
-    num_offer_commissions_in_review_state = models.Commission.objects.filter(
-        offer__pk=offer.pk, state=models.Commission.STATE_REVIEW).count()
-    if num_offer_commissions_in_review_state >= offer.max_review_commissions:
-        raise ValidationError(
-            "Commission is not valid because the offer has max number of commissions in review state.")
+def check_commission_meets_offer_max_review_commissions(commission: 'models.Commission'):
+    if not commission.is_self_managed():
+        num_offer_commissions_in_review_state = models.Commission.objects.filter(
+            offer__pk=commission.offer.pk, state=models.Commission.STATE_REVIEW).count()
+        if num_offer_commissions_in_review_state >= commission.offer.max_review_commissions:
+            raise ValidationError(
+                "Commission is not valid because the offer has max number of commissions in review state.")

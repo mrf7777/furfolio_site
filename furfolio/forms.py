@@ -39,10 +39,10 @@ class UserSearchForm(TextSearchForm):
 
 class CommissionSearchForm(TextSearchForm):
     self_managed = forms.BooleanField(required=False, initial=False)
-    review = forms.BooleanField(required=False, initial=True)
-    accepted = forms.BooleanField(required=False, initial=True)
-    in_progress = forms.BooleanField(required=False, initial=True)
-    finished = forms.BooleanField(required=False, initial=True)
+    review = forms.BooleanField(required=False, initial=False)
+    accepted = forms.BooleanField(required=False, initial=False)
+    in_progress = forms.BooleanField(required=False, initial=False)
+    finished = forms.BooleanField(required=False, initial=False)
     rejected = forms.BooleanField(required=False, initial=False)
 
 

@@ -1,10 +1,9 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.forms import EmailField
-from django.core.exceptions import ValidationError
 from django import forms
-from django.utils import timezone
 from django.forms.renderers import TemplatesSetting
 from .models import User, Offer, Commission, CommissionMessage
+from . import form_fields
 
 
 class TextSearchForm(forms.Form):
@@ -37,7 +36,9 @@ class UserSearchForm(TextSearchForm):
     pass
 
 
-class CommissionSearchForm(TextSearchForm):
+class CommissionSearchForm(forms.Form):
+    template_name = "furfolio/form_templates/grid.html"
+    sort = form_fields.SortField()
     self_managed = forms.BooleanField(required=False, initial=False)
     review = forms.BooleanField(required=False, initial=False)
     accepted = forms.BooleanField(required=False, initial=False)

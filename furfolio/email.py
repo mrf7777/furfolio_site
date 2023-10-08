@@ -25,7 +25,7 @@ def send_email(
         text_content,
         settings.DEFAULT_FROM_EMAIL,
         [to_address,],
-        reply_to=[settings.DEFAULT_FROM_EMAIL,],
+        reply_to=[settings.REPLY_EMAIL,],
     )
     email.attach_alternative(html_content, "text/html")
     return email.send()

@@ -288,3 +288,4 @@ else:
     EMAIL_USE_TLS = True
     EMAIL_TIMEOUT = 10  # in seconds
     DEFAULT_FROM_EMAIL = os.getenv("EMAIL_FROM_ADDRESS")
+    REPLY_EMAIL = os.getenv("EMAIL_REPLY_ADDRESS")

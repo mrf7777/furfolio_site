@@ -279,6 +279,7 @@ if DEVELOPMENT_MODE is True:
 # email
 if DEVELOPMENT_MODE is True:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+    REPLY_EMAIL = "reply@furfolio.net"
 else:
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
     EMAIL_HOST = os.getenv("EMAIL_HOST")

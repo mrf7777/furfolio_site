@@ -1,6 +1,7 @@
 from typing import Any
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
+from django.conf import settings
 from . import models
 
 
@@ -9,9 +10,7 @@ def send_email(
     html_template_path: str,
     context: dict[str, Any],
     subject: str,
-    from_address: str,
     to_address: str,
-    reply_to: str = None,
     ) -> int:
     text_content = render_to_string(
         text_template_path,
@@ -24,9 +23,9 @@ def send_email(
     email = EmailMultiAlternatives(
         subject,
         text_content,
-        from_address,
+        settings.DEFAULT_FROM_EMAIL,
         [to_address,],
-        reply_to=[reply_to,],
+        reply_to=[settings.DEFAULT_FROM_EMAIL,],
     )
     email.attach_alternative(html_content, "text/html")
     return email.send()
@@ -38,7 +37,5 @@ def send_commission_state_changed_email(new_commission: 'models.Commission'):
         "furfolio/email/commissions/commission_state_changed.html",
         {"commission": new_commission},
         "Commission state changed",
-        "admin@furfolio.net",
         new_commission.commissioner.email,
-        "no-reply@furfolio.net",
     )

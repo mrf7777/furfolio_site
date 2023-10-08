@@ -241,8 +241,7 @@ class Commissions(LoginRequiredMixin, generic.ListView):
         if form.is_valid():
             # TODO: full text search
             text_query = form.cleaned_data["text_query"].strip()
-            filter_creator = form.cleaned_data["as_creator"]
-            filter_buyer = form.cleaned_data["as_buyer"]
+            filter_self_managed = form.cleaned_data["self_managed"]
             filter_review = form.cleaned_data["review"]
             filter_accepted = form.cleaned_data["accepted"]
             filter_in_progress = form.cleaned_data["in_progress"]
@@ -250,10 +249,11 @@ class Commissions(LoginRequiredMixin, generic.ListView):
             filter_rejected = form.cleaned_data["rejected"]
             query = models.Commission.get_commissions_with_user(
                 self.request.user)
-            if filter_creator:
-                query = query.filter(offer__author=self.request.user)
-            if filter_buyer:
-                query = query.filter(commissioner=self.request.user)
+            if filter_self_managed:
+                query = query.filter(
+                    offer__author=self.request.user,
+                    commissioner=self.request.user
+                )
             # build filter for commission states
             state_queries = []
             if filter_review:

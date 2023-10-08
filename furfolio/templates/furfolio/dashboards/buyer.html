@@ -15,11 +15,15 @@
 {% block body %}
 
 <div>
-    {% for commission in commissions_as_commissioner %}
+    {% for commission in commissions %}
         <div class="mb-3">
             {% include "furfolio/commissions/commission_card.html" with commission=commission csrf_token=csrf_token request=request show_status=True only %}
         </div>
     {% endfor %}
 </div>
+
+{% if is_paginated %}
+    {% include "furfolio/components/pagination_buttons.html" with page_obj=page_obj request=request only %}
+{% endif %}
 
 {% endblock %}

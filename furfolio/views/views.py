@@ -53,15 +53,20 @@ class CreatorDashboard(LoginRequiredMixin, generic.TemplateView):
         return context
 
 
-class BuyerDashboard(LoginRequiredMixin, generic.TemplateView):
+class BuyerDashboard(LoginRequiredMixin, generic.ListView):
     template_name = "furfolio/dashboards/buyer.html"
+    context_object_name = "commissions"
+    model = models.Commission
+    paginate_by = PAGE_SIZE
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["commissions_as_commissioner"] = models.Commission.objects.filter(
-            commissioner=self.request.user.pk,
-        )
         return context
+    
+    def get_queryset(self) -> QuerySet[Any]:
+        return models.Commission.objects.filter(
+            commissioner=self.request.user.pk,
+        ).order_by("-updated_date")
 
 
 class OfferList(generic.ListView):

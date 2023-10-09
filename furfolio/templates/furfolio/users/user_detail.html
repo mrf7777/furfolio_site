@@ -2,7 +2,7 @@
 
 {% block title %}
 <div class="d-flex">
-    {% if user.avatar %}<img class="me-3" src="{{ user.avatar.url }}">{% endif %}{{ user.username }}
+    <img class="me-3" src="{% include "./avatar_image_url.txt" with user=user only %}">{{ user.username }}
 
     <div class="flex-fill"></div>
 

@@ -1,0 +1,9 @@
+{% load static %}
+{% spaceless %}
+{% comment "" %}
+Includable url which points to user avatar or default.
+Expects the following context objects:
+  - user: the user
+{% endcomment %}
+{% if user.avatar %}{{ user.avatar.url }}{% else %}{% static "default-avatar.png" %}{% endif %}
+{% endspaceless %}

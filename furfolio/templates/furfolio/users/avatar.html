@@ -1,7 +1,7 @@
 {% comment "" %}
 Includable avatar element.
 Expects the following context objects:
-  - url: the url to the avatar image
+  - user: the user to show the avatar of
 {% endcomment %}
 
-<img src="{{ url }}" width="32" height="32" class="rounded p-0">
+<img src="{% include "./avatar_image_url.txt" with user=user only %}" width="32" height="32" class="rounded p-0">

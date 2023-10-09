@@ -39,3 +39,13 @@ def send_commission_state_changed_email(new_commission: 'models.Commission'):
         "Commission state changed",
         new_commission.commissioner.email,
     )
+
+
+def send_new_commission_message_email(commission_message: 'models.CommissionMessage'):
+    send_email(
+        "furfolio/email/commission_messages/new_commission_message.txt",
+        "furfolio/email/commission_messages/new_commission_message.html",
+        {"message": commission_message},
+        "You got a message",
+        commission_message.get_receiving_user().email,
+    )

@@ -22,7 +22,7 @@ from furfolio import form_fields
 from . import validators as furfolio_validators
 from . import mixins
 from . import form_fields
-from .email import send_commission_state_changed_email
+from .email import send_commission_state_changed_email, send_new_commission_message_email
 
 
 PIL.ImageFile.LOAD_TRUNCATED_IMAGES = True
@@ -438,9 +438,22 @@ class CommissionMessage(mixins.GetFullUrlMixin, models.Model):
         name="attachment",
         blank=True,
     )
+    
+    tracker = FieldTracker()
 
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)
+
+    def save(self, *args, **kwargs) -> None:
+        if self.should_notify_new_message():
+            send_new_commission_message_email(self)
+        return super().save(*args, **kwargs)
+    
+    def should_notify_new_message(self):
+        return (
+            self.tracker.previous("pk") is None
+            and not self.commission.is_self_managed()
+        )
 
     def been_edited(self) -> bool:
         # only consider to be edited if change to message happened 10 seconds after being created
@@ -448,6 +461,18 @@ class CommissionMessage(mixins.GetFullUrlMixin, models.Model):
 
     def get_html_id(self) -> str:
         return "message_" + str(self.pk)
+
+    def get_receiving_user(self) -> User | None:
+        """
+        Returns the user that is the recipient of this message.
+        Because a chat always has two users, it returns the user
+        that did NOT send this message.
+        """
+        if self.author is not None:
+            if self.author.pk == self.commission.commissioner.pk:
+                return self.commission.offer.author
+            else:
+                return self.commission.commissioner
 
     def get_absolute_url(self):
         return reverse("commission_chat", kwargs={"pk": self.commission.pk}) + "#" + self.get_html_id()

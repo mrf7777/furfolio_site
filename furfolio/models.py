@@ -244,13 +244,22 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
     def get_commissions_in_review(self):
         return Commission.objects.filter(offer__pk=self.pk, state=Commission.STATE_REVIEW)
 
-    def full_text_search_offers(text_query: str):
+    def full_text_search_offers(text_query: str, sort: str):
+        query = Offer.objects
         text_query_cleaned = text_query.strip()
         search_vector = SearchVector(
             "name", weight="A") + SearchVector("description", weight="A")
         search_query = SearchQuery(text_query_cleaned)
         search_rank = SearchRank(search_vector, search_query)
-        return Offer.objects.annotate(rank=search_rank).filter(rank__gte=0.2).order_by("-rank")
+        query = query.annotate(rank=search_rank).filter(rank__gte=0.2)
+        match sort:
+            case form_fields.SortField.CHOICE_RELEVANCE:
+                query = query.order_by("-rank")
+            case form_fields.SortField.CHOICE_CREATED_DATE:
+                query = query.order_by("-created_date")
+            case _:
+                query = query.order_by("-created_date")
+        return query
 
     def is_closed(self):
         if self.forced_closed:

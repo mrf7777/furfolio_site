@@ -75,7 +75,7 @@ class OfferFormUpdate(OfferForm):
 
 
 class OfferSearchForm(TextSearchForm):
-    pass
+    sort = form_fields.SortField()
 
 
 class CommissionForm(forms.ModelForm):

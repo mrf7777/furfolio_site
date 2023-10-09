@@ -5,10 +5,10 @@
 <div class="mb-3">
     {% for field in form.visible_fields %}
         <div class="mb-1 row g-2 d-flex align-items-center">
-            <div class="col-sm-2">
+            <div class="col-md-2">
                 {{ field.label_tag }}
             </div>
-            <div class="col-sm-10">
+            <div class="col-md-6">
                 {{ field }}
             </div>
         </div>

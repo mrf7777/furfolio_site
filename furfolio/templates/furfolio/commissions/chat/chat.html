@@ -26,6 +26,17 @@
     </div>
 {% endfor %}
 
+{% if commission_messages %}
+    <div class="row mb-3">
+        <div class="col-md-6">
+            {% include "furfolio/users/badge.html" with user=other_user show_avatar=True only %}
+        </div>
+        <div class="col-md-6">
+            {% include "furfolio/users/badge.html" with user=request.user show_avatar=True only %}
+        </div>
+    </div>
+{% endif %}
+
 <form method="post" id="chat-form" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form }}

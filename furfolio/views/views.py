@@ -8,6 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy, reverse
 from django.core.exceptions import PermissionDenied
 from .. import models
+from .. import utils
 from ..forms import CommissionSearchForm, CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm, UserSearchForm, UpdateCommissionForm, CommissionMessageForm
 
 
@@ -319,4 +320,5 @@ class CommissionChat(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView
         context["commission_messages"] = models.CommissionMessage.objects.filter(
             commission__pk=commission.pk
         ).order_by("created_date")
+        context["other_user"] = utils.get_other_user_in_commission(self.request.user, commission)
         return context

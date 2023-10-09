@@ -78,12 +78,10 @@ class OfferList(generic.ListView):
         search_form = OfferSearchForm(self.request.GET)
         if search_form.is_valid():
             text_query = search_form.cleaned_data["text_query"].strip()
+            author = search_form.cleaned_data["author"].strip()
             sort = search_form.cleaned_data["sort"]
-            # Search something if text query is provided. Otherwise, use most recent.
-            if text_query:
-                return models.Offer.full_text_search_offers(text_query, sort)
-            else:
-                return models.Offer.objects.all().order_by("-created_date")
+            return models.Offer.full_text_search_offers(text_query, author, sort)
+
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

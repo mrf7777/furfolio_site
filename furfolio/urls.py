@@ -12,8 +12,6 @@ urlpatterns = [
     path('offers/<pk>/update/', views.UpdateOffer.as_view(), name="update_offer"),
     path('offers/<pk>/delete/', views.DeleteOffer.as_view(), name="delete_offer"),
     path('offers/<pk>/', views.Offer.as_view(), name="offer_detail"),
-    path('users/<username>/offers/',
-         views.UserOffers.as_view(), name="user_offers"),
     # users
     path('users/<username>/', views.User.as_view(), name="user"),
     path('users/<username>/update/',

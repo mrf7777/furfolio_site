@@ -56,13 +56,6 @@ class OffersSignedInTestCase(TestCase):
             reverse("offer_detail", args=[self.offer.pk,]), follow=True)
         self.assertEqual(response.status_code, 200)
 
-    def test_user_offers(self):
-        self.client.force_login(self.user)
-        response = self.client.get(
-            reverse("user_offers", args=[self.user.username,]), follow=True)
-        self.assertContains(response, self.offer.name)
-        self.assertContains(response, reverse("user", args=[self.user.username]))
-
 
 class UsersInTestCase(TestCase):
     def setUp(self) -> None:
@@ -77,7 +70,6 @@ class UsersInTestCase(TestCase):
         self.assertContains(response, self.user.username)
         self.assertContains(response, reverse(
             "user", args=[self.user.username]))
-        self.assertContains(response, reverse("user_offers", args=[self.user.username]))
 
     def test_user_update(self):
         self.client.force_login(self.user)

@@ -1,7 +1,7 @@
 {% extends "furfolio/layouts/title_body.html" %}
 
 {% block title %}
-<div class="d-flex">
+<div class="d-flex align-items-center">
     <img class="me-3" src="{% include "./avatar_image_url.txt" with user=user only %}">{{ user.username }}
 
     <div class="flex-fill"></div>
@@ -15,4 +15,5 @@
 {% endblock %}
 
 {% block body %}
+<a class="btn btn-primary" href="{% url "user_offers" user.username %}">Offers</a>
 {% endblock %}

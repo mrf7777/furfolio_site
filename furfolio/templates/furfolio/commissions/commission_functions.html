@@ -10,7 +10,6 @@ Expects the following objects:
 
 <div class="d-flex flex-wrap">
     <div class="flex-column me-5">
-        <h6>Functions</h6>
         <div class="mb-1"><a class="text-reset" href="{% url "commission_chat" commission.pk %}">{% include "./chat/chat_button.html" %}</a></div>
     </div>
     {% if fill %}
@@ -18,10 +17,6 @@ Expects the following objects:
     {% endif %}
     {% if request.user.pk == commission.offer.author.pk %}
         <div class="flex-column">
-            <div>
-                <h6>Change State</h6>
-            </div>
-
             <div>
                 {% if commission.state == "REVIEW" %}
                     <div class="me-1 mb-1">{% include "furfolio/commissions/state_buttons/state_setters/accept.html" with commission=commission request=request csrf_token=csrf_token only %}</div>
@@ -41,7 +36,7 @@ Expects the following objects:
                 {% endif %}
 
                 {% if commission.state == "CLOSED" %}
-                    <div class="me-1 mb-1">{% include "furfolio/commissions/state_buttons/state_setters/in_progress.html" with commission=commission request=request csrf_token=csrf_token only %}</div>
+                    <div class="me-1 mb-1" style="font-size: 0.8em">{% include "furfolio/commissions/state_buttons/state_setters/in_progress.html" with commission=commission request=request csrf_token=csrf_token only %}</div>
                 {% endif %}
             </div>
         </div>

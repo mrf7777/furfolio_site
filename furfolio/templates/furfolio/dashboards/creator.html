@@ -21,11 +21,13 @@
 </div>
 
 <h4>Commissions</h4>
-<p><a href="{% url "commissions" %}" class="text-decoration-none">See all</a></p>
+<p><a href="{% url "commissions" %}" class="text-decoration-none btn btn-primary">See all</a></p>
 {% endblock %}
 
 {% block column_1_title %}
-{% include "furfolio/commissions/state_badge.html" with state="REVIEW" only %}
+<a class="text-reset" href="{% url "commissions" %}?review=on">
+    {% include "furfolio/commissions/state_badge.html" with state="REVIEW" only %}
+</a>
 {% endblock %}
 
 {% block column_1 %}
@@ -33,7 +35,9 @@
 {% endblock %}
 
 {% block column_2_title %}
-{% include "furfolio/commissions/state_badge.html" with state="ACCEPTED" only %}
+<a class="text-reset" href="{% url "commissions" %}?accepted=on">
+    {% include "furfolio/commissions/state_badge.html" with state="ACCEPTED" only %}
+</a>
 {% endblock %}
 
 {% block column_2 %}
@@ -41,7 +45,9 @@
 {% endblock %}
 
 {% block column_3_title %}
-{% include "furfolio/commissions/state_badge.html" with state="IN_PROGRESS" only %}
+<a class="text-reset" href="{% url "commissions" %}?in_progress=on">
+    {% include "furfolio/commissions/state_badge.html" with state="IN_PROGRESS" only %}
+</a>
 {% endblock %}
 
 {% block column_3 %}
@@ -49,7 +55,9 @@
 {% endblock %}
 
 {% block column_4_title %}
-{% include "furfolio/commissions/state_badge.html" with state="CLOSED" only %}
+<a class="text-reset" href="{% url "commissions" %}?finished=on">
+    {% include "furfolio/commissions/state_badge.html" with state="CLOSED" only %}
+</a>
 {% endblock %}
 
 {% block column_4 %}

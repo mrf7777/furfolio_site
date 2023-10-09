@@ -460,8 +460,8 @@ class CommissionMessage(mixins.GetFullUrlMixin, models.Model):
     
     def should_notify_new_message(self):
         return (
-            self.tracker.previous("pk") is None
-            and not self.commission.is_self_managed()
+            self.tracker.previous("pk") is None         # if message is newly created
+            and not self.commission.is_self_managed()   # and commission is not self managed
         )
 
     def been_edited(self) -> bool:

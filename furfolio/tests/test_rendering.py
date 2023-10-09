@@ -61,6 +61,7 @@ class OffersSignedInTestCase(TestCase):
         response = self.client.get(
             reverse("user_offers", args=[self.user.username,]), follow=True)
         self.assertContains(response, self.offer.name)
+        self.assertContains(response, reverse("user", args=[self.user.username]))
 
 
 class UsersInTestCase(TestCase):
@@ -76,6 +77,7 @@ class UsersInTestCase(TestCase):
         self.assertContains(response, self.user.username)
         self.assertContains(response, reverse(
             "user", args=[self.user.username]))
+        self.assertContains(response, reverse("user_offers", args=[self.user.username]))
 
     def test_user_update(self):
         self.client.force_login(self.user)

@@ -4,30 +4,31 @@ Expects an offer object.
 Expects a 'title_is_link':bool object
 {% endcomment %}
 
-<div class="card">
-    <div class="row g-0">
-        {% if offer.thumbnail %}
-            <img class="d-md-none col-md-5 bg-secondary-subtle img-fluid rounded-top" style="max-height: 30vh; object-fit: contain;" src="{{ offer.thumbnail.url }}">
-        {% endif %}
-        <div class="{% if offer.thumbnail %}col-md-7{% endif %}">
+<div class="row">
+    <div class="col-md-7">
+        <div class="card" style="height: 100%;">
+            {% if offer.thumbnail %}
+                <img class="card-img-top d-md-none" style="max-height: 30vh; object-fit: contain;" src="{{ offer.thumbnail.url }}">
+            {% endif %}
             <div class="card-header d-flex align-items-center">
                 <h5>
                     {% if title_is_link %}
-                        <a class="text-decoration-none" href="{% url "offer_detail" offer.pk %}">{{ offer.name }}</a>
+                    <a class="text-decoration-none" href={% url "offer_detail" offer.pk %}>{{ offer.name }}</a>
                     {% else %}
-                        {{ offer.name }}
+                    {{ offer.name }}
                     {% endif %}
                 </h5>
-                <div class="flex-fill">
-                </div>
+                <div class="flex-fill"></div>
                 <div class="text-body-secondary ms-3">
                     {% include "furfolio/users/badge.html" with user=offer.author show_avatar=True only %}
                 </div>
             </div>
-            <div class="card-body">
+
+            <div class="card-body d-flex flex-column">
                 <p class="card-text">
                     {{ offer.description|truncatechars:300 }}
                 </p>
+                <div class="flex-fill"></div>
                 <p class="mb-0">
                     <b>Slots left: {{ offer.get_active_commissions.count }}</b> / <b>{{ offer.slots }}</b>
                     <span class="me-2"></span>
@@ -35,8 +36,11 @@ Expects a 'title_is_link':bool object
                 </p>
             </div>
         </div>
+    </div>
+
+    <div class="col-md-5 d-none d-md-block">
         {% if offer.thumbnail %}
-            <img class="d-none d-md-block col-md-5 bg-secondary-subtle img-fluid rounded-end" style="max-height: 30vh; object-fit: contain;" src="{{ offer.thumbnail.url }}">
+        <img class="border border-secondary-subtle rounded" style="max-height: 30vh; max-width: 100%;" src="{{ offer.thumbnail.url }}">
         {% endif %}
     </div>
 </div>

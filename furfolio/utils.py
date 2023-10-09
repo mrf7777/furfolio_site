@@ -11,5 +11,3 @@ def get_other_user_in_commission(user: 'models.User', commission: 'models.Commis
         return commission.offer.author
     elif user.pk == commission.offer.author.pk:
         return commission.commissioner
-    else:
-        return None

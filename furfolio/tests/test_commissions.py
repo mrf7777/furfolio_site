@@ -1,7 +1,10 @@
+from ctypes import util
 from django.test import TestCase
 from ..models import Commission, User, Offer
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from . import utils
+from .. import utils as furfolio_utils
 import datetime
 
 
@@ -61,3 +64,22 @@ class LimitReviewCommissionsTestCase(TestCase):
         commission2.full_clean()
         commission2.save()
         self.assertEqual(Commission.objects.all().count(), 2)
+
+
+class GetOtherUserInCommissionTestCase(TestCase):
+    def setUp(self):
+        self.creator = utils.make_user("creator", role=User.ROLE_CREATOR)
+        self.buyer = utils.make_user("buyer", role=User.ROLE_BUYER)
+        self.offer = utils.make_offer(self.creator)
+        self.commission = utils.make_commission(self.buyer, self.offer)
+        self.commission_self_managed = utils.make_commission(self.creator, self.offer)
+        
+    def test_commission_get_other_user(self):
+        other_user = furfolio_utils.get_other_user_in_commission(self.creator, self.commission)
+        self.assertEqual(other_user, self.buyer)
+        other_user_2 = furfolio_utils.get_other_user_in_commission(self.buyer, self.commission)
+        self.assertEqual(other_user_2, self.creator)
+    
+    def test_self_managed_commission_get_other_user(self):
+        other_user = furfolio_utils.get_other_user_in_commission(self.creator, self.commission_self_managed)
+        self.assertEqual(other_user, self.creator)

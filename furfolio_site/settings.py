@@ -275,6 +275,8 @@ PWA_APP_SPLASH_SCREEN = [
 if DEVELOPMENT_MODE is True:
     CSRF_TRUSTED_ORIGINS = ['https://*.127.0.0.1', 'http://*.127.0.0.1',
                             'https://*.localhost', 'http://*.localhost',]
+else:
+    CSRF_TRUSTED_ORIGINS = ["https://*.{}".format(ALLOWED_HOSTS[0]),]
 
 # email
 if DEVELOPMENT_MODE is True:

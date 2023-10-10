@@ -10,7 +10,7 @@ Expects the following context objects:
     - "NON_CURRENT_USER": use this to make card styled as if the message is sent from someone else
 {% endcomment %}
 
-<div id="{{ id }}" class="card {% if sender == "CURRENT_USER" %}bg-success-subtle{% elif sender == "NON_CURRENT_USER" %}{% endif %}">
+<div id="{{ id }}" class="card {% if sender == "CURRENT_USER" %}bg-success{% elif sender == "NON_CURRENT_USER" %}{% endif %}">
     <div class="card-body">
         <div class="card-text">
             <p>

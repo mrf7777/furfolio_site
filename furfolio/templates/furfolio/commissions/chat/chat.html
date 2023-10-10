@@ -27,11 +27,21 @@
 {% endfor %}
 
 {% if commission_messages %}
-    <div class="row mb-3">
+    <div class="row mb-3 d-none d-md-flex">
         <div class="col-md-6">
             {% include "furfolio/users/badge.html" with user=other_user show_avatar=True only %}
         </div>
         <div class="col-md-6">
+            {% include "furfolio/users/badge.html" with user=request.user show_avatar=True only %}
+        </div>
+    </div>
+
+    <div class="d-flex d-md-none">
+        <div class="p-3 border border-secondary-subtle rounded">
+            {% include "furfolio/users/badge.html" with user=other_user show_avatar=True only %}
+        </div>
+        <div class="flex-fill"></div>
+        <div class="p-3 bg-success border border-secondary-subtle rounded">
             {% include "furfolio/users/badge.html" with user=request.user show_avatar=True only %}
         </div>
     </div>

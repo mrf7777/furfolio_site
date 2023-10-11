@@ -13,13 +13,13 @@
     {% endif %}
 
     <p>
-        <b>Slots left: {{ offer.get_active_commissions.count }}</b> / <b>{{ offer.slots }}</b>
+        <b>Slots: {{ offer.get_active_commissions.count }}</b> / <b>{{ offer.slots }}</b>
     </p>
 
     {{ offer.description|linebreaks }}
 
     <p>
-        Closes: {{ offer.cutoff_date }}
+        Closes in <b>{{ offer.cutoff_date|timeuntil }}</b> ({{ offer.cutoff_date }})
     </p>
 
     {% if request.user.pk == offer.author.pk %}

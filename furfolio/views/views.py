@@ -12,7 +12,7 @@ from .. import utils
 from ..forms import CommissionSearchForm, CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm, UserSearchForm, UpdateCommissionForm, CommissionMessageForm
 
 
-PAGE_SIZE = 5
+PAGE_SIZE = 10
 
 
 class Home(generic.TemplateView):

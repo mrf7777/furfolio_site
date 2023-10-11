@@ -235,6 +235,9 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
                 self.thumbnail, Offer.THUMBNAIL_MAX_DIMENTIONS[0], Offer.THUMBNAIL_MAX_DIMENTIONS[1])
         super(Offer, self).save(*args, **kwargs)
 
+    def clean(self):
+        furfolio_validators.check_user_is_not_spamming_offers(self.author)
+
     def get_absolute_url(self):
         return reverse("offer_detail", kwargs={"pk": self.pk})
 

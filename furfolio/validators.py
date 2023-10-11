@@ -47,3 +47,16 @@ def check_commission_meets_offer_max_review_commissions(commission: 'models.Comm
         if num_offer_commissions_in_review_state >= commission.offer.max_review_commissions:
             raise ValidationError(
                 "Commission is not valid because the offer has max number of commissions in review state.")
+
+
+def check_user_is_not_spamming_offers(user: 'models.User'):
+    OFFER_CREATION_COOLDOWN = 60
+    latest_offer_by_user = models.Offer.objects.latest("created_date")
+    current_time = timezone.now()
+    difference_in_seconds = (
+        current_time - latest_offer_by_user.created_date
+    ).total_seconds()
+    if difference_in_seconds < OFFER_CREATION_COOLDOWN:
+        raise ValidationError(
+            "Offer is too recent. Please wait before trying again."
+        )

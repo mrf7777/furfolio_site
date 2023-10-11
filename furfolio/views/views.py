@@ -61,7 +61,7 @@ class BuyerDashboard(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         return context
-    
+
     def get_queryset(self) -> QuerySet[Any]:
         return models.Commission.objects.filter(
             commissioner=self.request.user.pk,
@@ -81,7 +81,6 @@ class OfferList(generic.ListView):
             author = search_form.cleaned_data["author"].strip()
             sort = search_form.cleaned_data["sort"]
             return models.Offer.full_text_search_offers(text_query, author, sort)
-
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
@@ -106,10 +105,10 @@ class CreateOffer(LoginRequiredMixin, generic.CreateView):
     form_class = OfferForm
     template_name = "furfolio/offers/offer_form.html"
 
-    # https://koenwoortman.com/python-django-set-current-user-create-view/
-    def form_valid(self, form: BaseModelForm) -> HttpResponse:
-        form.instance.author_id = self.request.user.id
-        return super().form_valid(form)
+    def get_initial(self) -> dict[str, Any]:
+        initial = super().get_initial()
+        initial["author"] = self.request.user
+        return initial
 
 
 class UpdateOffer(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
@@ -318,5 +317,6 @@ class CommissionChat(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView
         context["commission_messages"] = models.CommissionMessage.objects.filter(
             commission__pk=commission.pk
         ).order_by("created_date")
-        context["other_user"] = utils.get_other_user_in_commission(self.request.user, commission)
+        context["other_user"] = utils.get_other_user_in_commission(
+            self.request.user, commission)
         return context

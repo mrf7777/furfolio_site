@@ -60,10 +60,11 @@ class OfferForm(forms.ModelForm):
 
     class Meta:
         model = Offer
-        fields = ["name", "description", "cutoff_date", "thumbnail",
+        fields = ["author", "name", "description", "cutoff_date", "thumbnail",
                   "rating", "slots", "max_review_commissions"]
         widgets = {
             "thumbnail": forms.ClearableFileInput(),
+            "author": forms.HiddenInput(),
         }
 
 

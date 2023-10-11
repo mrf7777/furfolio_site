@@ -1,0 +1,36 @@
+{% for hidden_field in form.hidden_fields %}
+{{ hidden_field }}
+{% endfor %}
+
+<div class="mb-3">
+    {% for field in form.visible_fields %}
+        <div class="mb-1 row g-2 d-flex align-items-center">
+            <div class="col-md-2">
+                {# use state badges for state filters #}
+                {% if field.name == "review" %}
+                {% include "furfolio/commissions/state_badge.html" with state="REVIEW" only %}
+                {% elif field.name == "accepted" %}
+                {% include "furfolio/commissions/state_badge.html" with state="ACCEPTED" only %}
+                {% elif field.name == "in_progress" %}
+                {% include "furfolio/commissions/state_badge.html" with state="IN_PROGRESS" only %}
+                {% elif field.name == "finished" %}
+                {% include "furfolio/commissions/state_badge.html" with state="CLOSED" only %}
+                {% elif field.name == "rejected" %}
+                {% include "furfolio/commissions/state_badge.html" with state="REJECTED" only %}
+                {% else %}
+                {{ field.label_tag }}
+                {% endif %}
+            </div>
+            <div class="col-md-6">
+                {{ field }}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% if errors %}
+<div class="text-danger">
+    <strong>Errors:</strong>
+    {{ errors }}
+</div>
+{% endif %}

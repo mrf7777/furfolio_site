@@ -37,7 +37,7 @@ class UserSearchForm(TextSearchForm):
 
 
 class CommissionSearchForm(forms.Form):
-    template_name = "furfolio/form_templates/grid.html"
+    template_name = "furfolio/form_templates/commission_search.html"
     sort = form_fields.SortField()
     self_managed = forms.BooleanField(required=False, initial=False)
     review = forms.BooleanField(required=False, initial=False)

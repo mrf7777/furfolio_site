@@ -4,15 +4,17 @@ Expects the following context objects:
   - state: an enum value of commission state.
 {% endcomment %}
 
-<div class="badge text-reset fs-6
+<div class="badge fs-6
 {% if state == "REVIEW" %}
-    bg-warning
+    bg-warning text-dark
 {% elif state == "ACCEPTED" %}
-    bg-success
+    bg-success text-dark
 {% elif state == "IN_PROGRESS" %}
-    bg-info
+    bg-info text-dark
 {% elif state == "CLOSED" %}
-    {# no background color #}
+    {# no background color #} text-reset
+{% elif state == "REJECTED" %}
+    bg-danger text-light
 {% endif %}
 ">
     {% if state == "REVIEW" %}
@@ -23,5 +25,7 @@ Expects the following context objects:
     In Progress
     {% elif state == "CLOSED" %}
     Finished
+    {% elif state == "REJECTED" %}
+    Rejected
     {% endif %}
 </div>

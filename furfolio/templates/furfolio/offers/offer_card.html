@@ -29,11 +29,15 @@ Expects a 'title_is_link':bool object
                     {{ offer.description|truncatechars:300 }}
                 </p>
                 <div class="flex-fill"></div>
-                <p class="mb-0">
-                    <b>Slots left: {{ offer.get_active_commissions.count }}</b> / <b>{{ offer.slots }}</b>
-                    <span class="me-2"></span>
-                    Closes: {{ offer.cutoff_date }}
-                </p>
+                <div class="d-flex">
+                    <div class="me-2">
+                        <b>Slots: {{ offer.get_active_commissions.count }}</b> / <b>{{ offer.slots }}</b>
+                    </div>
+                    <div class="flex-fill"></div>
+                    <div>
+                        Closes in <b>{{ offer.cutoff_date|timeuntil }}</b>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

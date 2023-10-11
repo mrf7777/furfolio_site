@@ -266,6 +266,9 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
                     query = query.order_by("-created_date")
             case form_fields.SortField.CHOICE_CREATED_DATE:
                 query = query.order_by("-created_date")
+            case form_fields.SortField.CHOICE_UPDATED_DATE:
+                print("updated date")
+                query = query.order_by("-updated_date")
             case _:
                 query = query.order_by("-created_date")
         return query
@@ -344,7 +347,7 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
         if self.should_notify_state_change():
             send_commission_state_changed_email(self)
         super().save(*args, **kwargs)
-        
+
     def should_notify_state_change(self) -> bool:
         return (
             self.tracker.previous("state") is not None
@@ -397,7 +400,7 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
             state_queries.append(Q(state=Commission.STATE_CLOSED))
         if rejected:
             state_queries.append(Q(state=Commission.STATE_REJECTED))
-        ## state filters should be OR'ed together
+        # state filters should be OR'ed together
         state_query = reduce(lambda q1, q2: q1 | q2, state_queries, Q())
         query = query.filter(state_query)
         # sort
@@ -407,9 +410,11 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
                 query = query.order_by("-updated_date")
             case form_fields.SortField.CHOICE_CREATED_DATE:
                 query = query.order_by("-created_date")
+            case form_fields.SortField.CHOICE_UPDATED_DATE:
+                query = query.order_by("-updated_date")
             case _:
                 query = query.order_by("-updated_date")
-                
+
         return query
 
     def get_commissions_with_user(user):
@@ -417,7 +422,7 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
 
     def is_active(self):
         return self.state in {Commission.STATE_ACCEPTED, Commission.STATE_IN_PROGRESS, Commission.STATE_CLOSED}
-    
+
     def is_self_managed(self):
         return self.commissioner.pk == self.offer.author.pk
 
@@ -447,7 +452,7 @@ class CommissionMessage(mixins.GetFullUrlMixin, models.Model):
         name="attachment",
         blank=True,
     )
-    
+
     tracker = FieldTracker()
 
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
@@ -457,10 +462,11 @@ class CommissionMessage(mixins.GetFullUrlMixin, models.Model):
         if self.should_notify_new_message():
             send_new_commission_message_email(self)
         return super().save(*args, **kwargs)
-    
+
     def should_notify_new_message(self):
         return (
-            self.tracker.previous("pk") is None         # if message is newly created
+            # if message is newly created
+            self.tracker.previous("pk") is None
             and not self.commission.is_self_managed()   # and commission is not self managed
         )
 

@@ -2,6 +2,12 @@
 {{ hidden_field }}
 {% endfor %}
 
+{% if form.errors %}
+<div class="text-danger mb-3">
+    <h3>Please fix the errors below.</h3>
+</div>
+{% endif %}
+
 {% for field in form.visible_fields %}
     <div class="mb-4">
         <h4>{{ field.label_tag }}</h4>

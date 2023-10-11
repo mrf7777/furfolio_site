@@ -9,12 +9,16 @@ Expects the following objects:
 {% endcomment %}
 
 <div class="d-flex flex-wrap">
-    <div class="flex-column me-5">
-        <div class="mb-1"><a class="text-reset" href="{% url "commission_chat" commission.pk %}">{% include "./chat/chat_button.html" %}</a></div>
-    </div>
+    {% if not commission.is_self_managed %}
+        <div class="flex-column me-5">
+            <div class="mb-1"><a class="text-reset" href="{% url "commission_chat" commission.pk %}">{% include "./chat/chat_button.html" %}</a></div>
+        </div>
+    {% endif %}
+
     {% if fill %}
         <div class="flex-fill"></div>
     {% endif %}
+
     {% if request.user.pk == commission.offer.author.pk %}
         <div class="flex-column">
             <div>

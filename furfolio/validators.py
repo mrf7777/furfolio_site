@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from django.utils import timezone
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.db.models.fields.files import ImageFieldFile
 from . import models
 
@@ -51,12 +51,16 @@ def check_commission_meets_offer_max_review_commissions(commission: 'models.Comm
 
 def check_user_is_not_spamming_offers(user: 'models.User'):
     OFFER_CREATION_COOLDOWN = 60
-    latest_offer_by_user = models.Offer.objects.latest("created_date")
-    current_time = timezone.now()
-    difference_in_seconds = (
-        current_time - latest_offer_by_user.created_date
-    ).total_seconds()
-    if difference_in_seconds < OFFER_CREATION_COOLDOWN:
-        raise ValidationError(
-            "Offer is too recent. Please wait before trying again."
-        )
+    try:
+        latest_offer_by_user = models.Offer.objects.filter(
+            author=user).latest("created_date")
+        current_time = timezone.now()
+        difference_in_seconds = (
+            current_time - latest_offer_by_user.created_date
+        ).total_seconds()
+        if difference_in_seconds < OFFER_CREATION_COOLDOWN:
+            raise ValidationError(
+                "Offer is too recent. Please wait before trying again."
+            )
+    except ObjectDoesNotExist:
+        pass

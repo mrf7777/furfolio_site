@@ -31,7 +31,7 @@
   --bs-gray-900: #212529;
   --bs-primary: hsl(6, 90%, 47%);
   --bs-secondary: hsl(213, 15%, 50%);
-  --bs-success: hsl(128, 73%, 73%);
+  --bs-success: hsl(128, 100%, 84%);
   --bs-info: hsl(180, 85%, 68%);
   --bs-warning: #ffc107;
   --bs-danger: hsl(357, 100%, 59%);
@@ -39,7 +39,7 @@
   --bs-dark: hsl(213, 64%, 11%);
   --bs-primary-rgb: 228, 34, 12;
   --bs-secondary-rgb: 108, 126, 147;
-  --bs-success-rgb: 136, 236, 149;
+  --bs-success-rgb: 173, 255, 184;
   --bs-info-rgb: 104, 243, 243;
   --bs-warning-rgb: 255, 193, 7;
   --bs-danger-rgb: 255, 46, 56;
@@ -47,7 +47,7 @@
   --bs-dark-rgb: 10, 26, 46;
   --bs-primary-text-emphasis: #5b0e05;
   --bs-secondary-text-emphasis: #2b323b;
-  --bs-success-text-emphasis: #365e3c;
+  --bs-success-text-emphasis: #45664a;
   --bs-info-text-emphasis: #2a6161;
   --bs-warning-text-emphasis: #664d03;
   --bs-danger-text-emphasis: #661216;
@@ -55,7 +55,7 @@
   --bs-dark-text-emphasis: #495057;
   --bs-primary-bg-subtle: #fad3ce;
   --bs-secondary-bg-subtle: #e2e5e9;
-  --bs-success-bg-subtle: #e7fbea;
+  --bs-success-bg-subtle: #effff1;
   --bs-info-bg-subtle: #e1fdfd;
   --bs-warning-bg-subtle: #fff3cd;
   --bs-danger-bg-subtle: #ffd5d7;
@@ -63,7 +63,7 @@
   --bs-dark-bg-subtle: #ced4da;
   --bs-primary-border-subtle: #f4a79e;
   --bs-secondary-border-subtle: #c4cbd4;
-  --bs-success-border-subtle: #cff7d5;
+  --bs-success-border-subtle: #deffe3;
   --bs-info-border-subtle: #c3fafa;
   --bs-warning-border-subtle: #ffe69c;
   --bs-danger-border-subtle: #ffabaf;
@@ -119,8 +119,8 @@
   --bs-focus-ring-width: 0.25rem;
   --bs-focus-ring-opacity: 0.25;
   --bs-focus-ring-color: rgba(228, 34, 12, 0.25);
-  --bs-form-valid-color: hsl(128, 73%, 73%);
-  --bs-form-valid-border-color: hsl(128, 73%, 73%);
+  --bs-form-valid-color: hsl(128, 100%, 84%);
+  --bs-form-valid-border-color: hsl(128, 100%, 84%);
   --bs-form-invalid-color: hsl(357, 100%, 59%);
   --bs-form-invalid-border-color: hsl(357, 100%, 59%);
 }
@@ -143,7 +143,7 @@
   --bs-tertiary-bg-rgb: 43, 48, 53;
   --bs-primary-text-emphasis: #ef7a6d;
   --bs-secondary-text-emphasis: #a7b2be;
-  --bs-success-text-emphasis: #b8f4bf;
+  --bs-success-text-emphasis: #ceffd4;
   --bs-info-text-emphasis: #a4f8f8;
   --bs-warning-text-emphasis: #ffda6a;
   --bs-danger-text-emphasis: #ff8288;
@@ -151,7 +151,7 @@
   --bs-dark-text-emphasis: #dee2e6;
   --bs-primary-bg-subtle: #2e0702;
   --bs-secondary-bg-subtle: #16191d;
-  --bs-success-bg-subtle: #1b2f1e;
+  --bs-success-bg-subtle: #233325;
   --bs-info-bg-subtle: #153131;
   --bs-warning-bg-subtle: #332701;
   --bs-danger-bg-subtle: #33090b;
@@ -159,7 +159,7 @@
   --bs-dark-bg-subtle: #1a1d20;
   --bs-primary-border-subtle: #891407;
   --bs-secondary-border-subtle: #414c58;
-  --bs-success-border-subtle: #528e59;
+  --bs-success-border-subtle: #68996e;
   --bs-info-border-subtle: #3e9292;
   --bs-warning-border-subtle: #997404;
   --bs-danger-border-subtle: #991c22;
@@ -1958,13 +1958,13 @@ progress {
 
 .table-success {
   --bs-table-color: #000;
-  --bs-table-bg: #e7fbea;
-  --bs-table-border-color: #b9c9bb;
-  --bs-table-striped-bg: #dbeede;
+  --bs-table-bg: #effff1;
+  --bs-table-border-color: #bfccc1;
+  --bs-table-striped-bg: #e3f2e5;
   --bs-table-striped-color: #000;
-  --bs-table-active-bg: #d0e2d3;
+  --bs-table-active-bg: #d7e6d9;
   --bs-table-active-color: #000;
-  --bs-table-hover-bg: #d6e8d8;
+  --bs-table-hover-bg: #ddecdf;
   --bs-table-hover-color: #000;
   color: var(--bs-table-color);
   border-color: var(--bs-table-border-color);
@@ -2739,7 +2739,7 @@ textarea.form-control-lg {
 .was-validated .form-control:valid, .form-control.is-valid {
   border-color: var(--bs-form-valid-border-color);
   padding-right: calc(1.5em + 0.75rem);
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='hsl%28128, 73%, 73%%29' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='hsl%28128, 100%, 84%%29' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
   background-repeat: no-repeat;
   background-position: right calc(0.375em + 0.1875rem) center;
   background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
@@ -2758,7 +2758,7 @@ textarea.form-control-lg {
   border-color: var(--bs-form-valid-border-color);
 }
 .was-validated .form-select:valid:not([multiple]):not([size]), .was-validated .form-select:valid:not([multiple])[size="1"], .form-select.is-valid:not([multiple]):not([size]), .form-select.is-valid:not([multiple])[size="1"] {
-  --bs-form-select-bg-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='hsl%28128, 73%, 73%%29' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+  --bs-form-select-bg-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='hsl%28128, 100%, 84%%29' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
   padding-right: 4.125rem;
   background-position: right 0.75rem center, center right 2.25rem;
   background-size: 16px 12px, calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
@@ -2999,19 +2999,19 @@ textarea.form-control-lg {
 
 .btn-success {
   --bs-btn-color: #000;
-  --bs-btn-bg: hsl(128, 73%, 73%);
-  --bs-btn-border-color: hsl(128, 73%, 73%);
+  --bs-btn-bg: hsl(128, 100%, 84%);
+  --bs-btn-border-color: hsl(128, 100%, 84%);
   --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: #9aefa5;
-  --bs-btn-hover-border-color: #94eea0;
-  --bs-btn-focus-shadow-rgb: 116, 201, 127;
+  --bs-btn-hover-bg: #b9ffc3;
+  --bs-btn-hover-border-color: #b5ffbf;
+  --bs-btn-focus-shadow-rgb: 147, 217, 156;
   --bs-btn-active-color: #000;
-  --bs-btn-active-bg: #a0f0aa;
-  --bs-btn-active-border-color: #94eea0;
+  --bs-btn-active-bg: #bdffc6;
+  --bs-btn-active-border-color: #b5ffbf;
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   --bs-btn-disabled-color: #000;
-  --bs-btn-disabled-bg: hsl(128, 73%, 73%);
-  --bs-btn-disabled-border-color: hsl(128, 73%, 73%);
+  --bs-btn-disabled-bg: hsl(128, 100%, 84%);
+  --bs-btn-disabled-border-color: hsl(128, 100%, 84%);
 }
 
 .btn-info {
@@ -3134,19 +3134,19 @@ textarea.form-control-lg {
 }
 
 .btn-outline-success {
-  --bs-btn-color: hsl(128, 73%, 73%);
-  --bs-btn-border-color: hsl(128, 73%, 73%);
+  --bs-btn-color: hsl(128, 100%, 84%);
+  --bs-btn-border-color: hsl(128, 100%, 84%);
   --bs-btn-hover-color: #000;
-  --bs-btn-hover-bg: hsl(128, 73%, 73%);
-  --bs-btn-hover-border-color: hsl(128, 73%, 73%);
-  --bs-btn-focus-shadow-rgb: 136, 236, 149;
+  --bs-btn-hover-bg: hsl(128, 100%, 84%);
+  --bs-btn-hover-border-color: hsl(128, 100%, 84%);
+  --bs-btn-focus-shadow-rgb: 173, 255, 184;
   --bs-btn-active-color: #000;
-  --bs-btn-active-bg: hsl(128, 73%, 73%);
-  --bs-btn-active-border-color: hsl(128, 73%, 73%);
+  --bs-btn-active-bg: hsl(128, 100%, 84%);
+  --bs-btn-active-border-color: hsl(128, 100%, 84%);
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: hsl(128, 73%, 73%);
+  --bs-btn-disabled-color: hsl(128, 100%, 84%);
   --bs-btn-disabled-bg: transparent;
-  --bs-btn-disabled-border-color: hsl(128, 73%, 73%);
+  --bs-btn-disabled-border-color: hsl(128, 100%, 84%);
   --bs-gradient: none;
 }
 
@@ -6820,8 +6820,8 @@ textarea.form-control-lg {
   text-decoration-color: RGBA(var(--bs-success-rgb), var(--bs-link-underline-opacity, 1)) !important;
 }
 .link-success:hover, .link-success:focus {
-  color: RGBA(160, 240, 170, var(--bs-link-opacity, 1)) !important;
-  text-decoration-color: RGBA(160, 240, 170, var(--bs-link-underline-opacity, 1)) !important;
+  color: RGBA(189, 255, 198, var(--bs-link-opacity, 1)) !important;
+  text-decoration-color: RGBA(189, 255, 198, var(--bs-link-underline-opacity, 1)) !important;
 }
 
 .link-info {

@@ -80,7 +80,8 @@ class OfferList(generic.ListView):
             text_query = search_form.cleaned_data["text_query"].strip()
             author = search_form.cleaned_data["author"].strip()
             sort = search_form.cleaned_data["sort"]
-            return models.Offer.full_text_search_offers(text_query, author, sort)
+            closed_offers = search_form.cleaned_data["closed_offers"]
+            return models.Offer.full_text_search_offers(text_query, author, sort, closed_offers)
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

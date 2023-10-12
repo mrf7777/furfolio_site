@@ -78,6 +78,7 @@ class OfferFormUpdate(OfferForm):
 class OfferSearchForm(TextSearchForm):
     author = forms.CharField(max_length=300, required=False)
     sort = form_fields.SortField()
+    closed_offers = forms.BooleanField(required=False, initial=False)
 
 
 class CommissionForm(forms.ModelForm):

@@ -255,7 +255,7 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
     def get_commissions_in_review(self):
         return Commission.objects.filter(offer__pk=self.pk, state=Commission.STATE_REVIEW)
 
-    def full_text_search_offers(text_query: str, author: str, sort: str):
+    def full_text_search_offers(text_query: str, author: str, sort: str, closed_offers: bool):
         query = Offer.objects
         text_query_cleaned = text_query.strip()
         author_cleaned = author.strip()
@@ -269,13 +269,13 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
             print("query:", query)
             query = query.filter(author__username=author_cleaned)
             print("query:", query)
-        # remove closed offers
-        current_datetime = timezone.now()
-        query = query.filter(
-            cutoff_date__gt=current_datetime
-        ).filter(
-            forced_closed=False
-        )
+        if not closed_offers:
+            current_datetime = timezone.now()
+            query = query.filter(
+                cutoff_date__gt=current_datetime
+            ).filter(
+                forced_closed=False
+            )
         match sort:
             case form_fields.SortField.CHOICE_RELEVANCE:
                 if text_query_cleaned:

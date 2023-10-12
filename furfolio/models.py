@@ -261,6 +261,13 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
             print("query:", query)
             query = query.filter(author__username=author_cleaned)
             print("query:", query)
+        # remove closed offers
+        current_datetime = timezone.now()
+        query = query.filter(
+            cutoff_date__gt=current_datetime
+        ).filter(
+            forced_closed=False
+        )
         match sort:
             case form_fields.SortField.CHOICE_RELEVANCE:
                 if text_query_cleaned:

@@ -1,10 +1,27 @@
 {% extends "furfolio/layouts/title_body.html" %}
 
+{% load static %}
+
 {% block title %}
 Create Commission for <a class="text-decoration-none" href="{% url "offer_detail" offer.pk %}">{{ offer.name }}</a> by {% include "furfolio/users/badge.html" with user=offer.author only %}
 {% endblock %}
 
 {% block body %}
+
+{% if request.user == offer.author %}
+<div class="card bg-warning mb-3">
+    <div class="card-body card-text">
+        <p>
+            This will make a self-managed commission because you are requesting a commission of an offer that you made.
+            You will not be able to access chat functionallity for this commission, but you are able to modify the initial requirements.
+        </p>
+        <div>
+            Self-managed commissions will have this symbol: <img class="ms-2" src={% static "symbols/rotating-gear-black.svg" %}>
+        </div>
+    </div>
+</div>
+{% endif %}
+
 <form enctype="multipart/form-data" method="post" id="form">
     {% csrf_token %}
     {{ form }}

@@ -283,7 +283,9 @@ class CommissionChat(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView
 
     def test_func(self):
         object = self.get_commission()
-        if object.offer.author.pk == self.request.user.pk:
+        if object.is_self_managed():
+            return False
+        elif object.offer.author.pk == self.request.user.pk:
             return True
         elif object.commissioner.pk == self.request.user.pk:
             return True

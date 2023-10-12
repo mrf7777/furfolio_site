@@ -11,6 +11,11 @@ Expects the following context objects:
 <div class="d-flex justify-content-center">
     <div class="d-flex justify-content-center align-items-center" role="group">
         {% if page_obj.has_previous %}
+        <a class="me-5 text-decoration-none" href="?{% query_replace request "page" 1 %}">
+            Start
+        </a>
+        {% endif %}
+        {% if page_obj.has_previous %}
             <a class="btn btn-primary" href="?{% query_replace request "page" page_obj.previous_page_number %}">
                 <img src="{% static "symbols/left-arrow-white.svg" %}" style="width: 1em;">
             </a>

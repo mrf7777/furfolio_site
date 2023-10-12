@@ -34,9 +34,13 @@ Expects a 'title_is_link':bool object
                         <b>Slots: {{ offer.get_active_commissions.count }}</b> / <b>{{ offer.slots }}</b>
                     </div>
                     <div class="flex-fill"></div>
-                    <div>
-                        Closes in <b>{{ offer.cutoff_date|timeuntil }}</b>
-                    </div>
+                    {% if not offer.is_closed %}
+                        <div>
+                            Closes in <b>{{ offer.cutoff_date|timeuntil }}</b>
+                        </div>
+                    {% else %}
+                        <b class="text-danger fs-5">Closed</b>
+                    {% endif %}
                 </div>
             </div>
         </div>

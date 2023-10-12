@@ -133,23 +133,6 @@ class DeleteOffer(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
         return self.get_object().author.pk == self.request.user.pk
 
 
-class UserOffers(generic.ListView):
-    model = models.Offer
-    context_object_name = "offers"
-    template_name = "furfolio/offers/user_offer_list.html"
-    paginate_by = PAGE_SIZE
-
-    def get_queryset(self) -> QuerySet[Any]:
-        username = self.kwargs["username"]
-        return models.Offer.objects.filter(author__username=username)
-
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-        context["user"] = get_object_or_404(
-            models.User, username=self.kwargs["username"])
-        return context
-
-
 class User(generic.DetailView):
     model = models.User
     slug_field = "username"
@@ -181,11 +164,7 @@ class UserList(generic.ListView):
         search_form = UserSearchForm(self.request.GET)
         if search_form.is_valid():
             text_query = search_form.cleaned_data["text_query"].strip()
-            # search something if text query is provided
-            if text_query:
-                return models.User.full_text_search_creators(text_query)
-            else:
-                return models.User.get_creators().order_by("-date_joined")
+            return models.User.full_text_search_creators(text_query)
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

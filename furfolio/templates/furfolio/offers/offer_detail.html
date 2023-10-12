@@ -22,6 +22,10 @@
         <p>
             <b>Forced closed</b>
         </p>
+    {% elif offer.is_closed %}
+        <p>
+            <b>Closed</b>
+        </p>
     {% else %}
         <p>
             Closes in <b>{{ offer.cutoff_date|timeuntil }}</b> ({{ offer.cutoff_date }})

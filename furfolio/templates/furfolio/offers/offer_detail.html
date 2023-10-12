@@ -18,16 +18,25 @@
 
     {{ offer.description|linebreaks }}
 
-    <p>
-        Closes in <b>{{ offer.cutoff_date|timeuntil }}</b> ({{ offer.cutoff_date }})
-    </p>
+    {% if offer.forced_closed %}
+        <p>
+            <b>Forced closed</b>
+        </p>
+    {% else %}
+        <p>
+            Closes in <b>{{ offer.cutoff_date|timeuntil }}</b> ({{ offer.cutoff_date }})
+        </p>
+    {% endif %}
 
     {% if request.user.pk == offer.author.pk %}
         <a class="btn btn-primary mb-3" href="{% url "update_offer" offer.pk %}">Edit</a>
     {% endif %}
 
-    <div>
-        <a class="btn btn-primary" href="{% url "create_commission" offer.pk %}">Request Commission</a>
-    </div>
+    {# only allow link to create commission if user is offer author or offer is open #}
+    {% if request.user == offer.author or not offer.is_closed %}
+        <div>
+            <a class="btn btn-primary" href="{% url "create_commission" offer.pk %}">Request Commission</a>
+        </div>
+    {% endif %}
 
 {% endblock %}

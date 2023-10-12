@@ -157,11 +157,9 @@ OFFER_DESCRIPTION_MIN_LENGTH = math.floor(AVERAGE_CHARACTERS_PER_WORD * 4)
 
 class Offer(mixins.GetFullUrlMixin, models.Model):
     RATING_GENERAL = "GEN"
-    RATING_MATURE = "MAT"
     RATING_ADULT = "ADL"
     RATING_TO_CHOICES = [
         (RATING_GENERAL, "General"),
-        (RATING_MATURE, "Mature"),
         (RATING_ADULT, "Adult"),
     ]
     ASPECT_RATIO_MIN = (1, 3)

@@ -6,6 +6,8 @@ Expects the following context objects:
   - show_avatars: (bool) if true, shows the avatars of the users in the title
 {% endcomment %}
 
+{% load static %}
+
 {# if between two different users #}
 {% if not commission.is_self_managed %}
   {% include "furfolio/users/badge.html" with user=commission.commissioner show_avatar=show_avatars only %}
@@ -15,6 +17,7 @@ Expects the following context objects:
   {% include "furfolio/users/badge.html" with user=commission.offer.author show_avatar=show_avatars only %}
 {# if self-managed #}
 {% else %}
-  Self managed 
+  <img class="me-1" style="width: 2em;" title="Self-managed" src="{% static "symbols/rotating-gear-black.svg" %}">
+  Self managed
   <a class="text-decoration-none" href="{% if link_to_offer %}{% url "offer_detail" commission.offer.pk %}{% else %}{% url "commission_detail" commission.pk %}{% endif %}">{{ commission.offer.name }}</a>
 {% endif %}

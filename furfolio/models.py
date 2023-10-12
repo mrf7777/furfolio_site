@@ -376,6 +376,8 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
     def clean(self) -> None:
         furfolio_validators.check_commission_meets_offer_max_review_commissions(
             self)
+        furfolio_validators.check_commission_is_not_created_on_closed_offer(
+            self)
         return super().clean()
 
     def __str__(self):

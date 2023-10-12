@@ -64,3 +64,14 @@ def check_user_is_not_spamming_offers(user: 'models.User'):
             )
     except ObjectDoesNotExist:
         pass
+
+
+def check_commission_is_not_created_on_closed_offer(commission: 'models.Commission'):
+    # self-managed commissions are exempt and can be created on closed offers
+    if commission.is_self_managed():
+        return
+
+    if commission.offer.is_closed():
+        raise ValidationError(
+            "Commission cannot be created on a closed offer unless you are the offer author."
+        )

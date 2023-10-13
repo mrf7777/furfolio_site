@@ -1,5 +1,7 @@
 {% extends "furfolio/layouts/title_body.html" %}
 
+{% load static %}
+
 {% block title %}
 Edit offer "{{ offer.name }}"
 {% endblock %}
@@ -7,7 +9,7 @@ Edit offer "{{ offer.name }}"
 {% block body %}
 
 <div class="d-flex justify-content-end">
-    <a href="{% url "delete_offer" offer.pk %}"><button class="btn btn-danger">Delete</button></a>
+    <a class="btn btn-danger text-light d-flex align-items-center" href="{% url "delete_offer" offer.pk %}"><img class="me-1" src="{% static "symbols/trash-white.svg" %}" style="width: 2em;">Delete</a>
 </div>
 
 <form enctype="multipart/form-data" method="post" id="form">

@@ -1,5 +1,7 @@
 {% extends "furfolio/layouts/title_body.html" %}
 
+{% load static %}
+
 {% block title %}
 {{ offer.name }} by {% include "furfolio/users/badge.html" with user=offer.author show_avatar=True only %}
 {% endblock %}
@@ -38,7 +40,7 @@
 
     <div>
         {% if should_show_create_commission_button %}
-            <a class="btn btn-primary" href="{% url "create_commission" offer.pk %}">Request Commission</a>
+            <a class="btn btn-primary d-inline-flex align-items-center" href="{% url "create_commission" offer.pk %}"><img class="me-2" src="{% static "symbols/plus-white.svg" %}" style="width: 1em;"> Request Commission</a>
         {% elif offer.is_closed %}
             <b>This offer is not accepting commissions because it is closed.</b>
         {% elif offer.has_max_review_commissions %}

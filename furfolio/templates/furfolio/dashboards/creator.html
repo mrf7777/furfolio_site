@@ -17,7 +17,7 @@
 <h4>Offers</h4>
 <div class="mb-5 d-flex align-items-center">
     <a href="{% url "offer_list" %}?author={{ request.user.username }}&sort=created_date"><button class="btn btn-primary me-3">My Offers</button></a>
-    <a href="{% url "create_offer" %}"><button class="btn btn-primary">Create Offer</button></a>
+    <a class="btn btn-primary d-inline-flex" href="{% url "create_offer" %}"><img class="me-2" src="{% static "symbols/plus-white.svg" %}" style="width: 1em;">Create Offer</a>
 </div>
 
 <h4>Commissions</h4>

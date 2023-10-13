@@ -11,6 +11,13 @@ def validate_datetime_not_in_past(value: datetime):
         raise ValidationError("Provided date-time must not be in the past.")
 
 
+def validate_datetime_is_not_over_year_into_future(value: datetime):
+    current_datetime = timezone.now()
+    year_into_future = current_datetime + timedelta(days=365)
+    if value > year_into_future:
+        raise ValidationError("Provided date-time must not be over a year into the future.")
+
+
 def validate_datetime_at_least_12_hours(value: datetime):
     future_12_hours = timezone.now() + timedelta(hours=12)
     if value < future_12_hours:

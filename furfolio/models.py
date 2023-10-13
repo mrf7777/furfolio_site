@@ -186,6 +186,7 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         default=seven_days_from_now,
         validators=[
             furfolio_validators.validate_datetime_not_in_past,
+            furfolio_validators.validate_datetime_is_not_over_year_into_future,
         ],
     )
     forced_closed = models.BooleanField(

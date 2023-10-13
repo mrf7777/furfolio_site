@@ -41,12 +41,13 @@ def validate_offer_thumbnail_aspect_ratio(value: ImageFieldFile):
 
 
 def check_commission_meets_offer_max_review_commissions(commission: 'models.Commission'):
-    if not commission.is_self_managed():
-        num_offer_commissions_in_review_state = models.Commission.objects.filter(
-            offer__pk=commission.offer.pk, state=models.Commission.STATE_REVIEW).count()
-        if num_offer_commissions_in_review_state >= commission.offer.max_review_commissions:
-            raise ValidationError(
-                "Commission is not valid because the offer has max number of commissions in review state.")
+    if commission.is_self_managed():
+        return
+    
+    num_offer_commissions_in_review_state = models.Offer.get_commissions_in_review(commission.offer).count()
+    if num_offer_commissions_in_review_state >= commission.offer.max_review_commissions:
+        raise ValidationError(
+            "Commission is not valid because the offer has max number of commissions in review state.")
 
 
 def check_user_is_not_spamming_offers(user: 'models.User'):

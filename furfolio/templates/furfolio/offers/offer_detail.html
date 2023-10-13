@@ -36,11 +36,16 @@
         <a class="btn btn-primary mb-3" href="{% url "update_offer" offer.pk %}">Edit</a>
     {% endif %}
 
-    {# only allow link to create commission if user is offer author or offer is open #}
-    {% if request.user == offer.author or not offer.is_closed %}
-        <div>
+    <div>
+        {% if should_show_create_commission_button %}
             <a class="btn btn-primary" href="{% url "create_commission" offer.pk %}">Request Commission</a>
-        </div>
-    {% endif %}
+        {% elif offer.is_closed %}
+            <b>This offer is not accepting commissions because it is closed.</b>
+        {% elif offer.has_max_review_commissions %}
+            <b>This offer is not accepting commissions right now because it has the maximum number of commissions in review. Please try again later.</b>
+        {% else %}
+            <b>This offer is not accepting commissions at this time.</b>
+        {% endif %}
+    </div>
 
 {% endblock %}

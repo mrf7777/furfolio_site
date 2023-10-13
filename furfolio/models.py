@@ -219,7 +219,7 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         name="max_review_commissions",
         verbose_name="Max Commissions in Review",
         help_text=mark_safe(
-            "The maximum number of commissions allowed to be in the review state.<br>Use this to prevent being overloaded with too many commission requests at a time."),
+            "The maximum number of commissions allowed to be in the review state.<br>Use this to prevent being overloaded with too many commission requests at a time for this offer."),
         validators=[
             validators.MinValueValidator(1),
         ],
@@ -298,15 +298,9 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
             return True
         return False
 
-    def is_full(self):
+    def has_max_review_commissions(self) -> bool:
         num_commissions_in_review = self.get_commissions_in_review().count()
-        num_active_commissions = self.get_active_commissions().count()
-        if num_active_commissions >= self.slots:
-            return True
-        elif num_commissions_in_review >= self.max_review_commissions:
-            return True
-        else:
-            return False
+        return num_commissions_in_review >= self.max_review_commissions
 
 
 # limit initial request text to about 800 words

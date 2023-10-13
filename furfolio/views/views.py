@@ -32,23 +32,35 @@ class CreatorDashboard(LoginRequiredMixin, generic.TemplateView):
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
+        
         current_user_pk = self.request.user.pk
-        context["review_commissions"] = models.Commission.objects.filter(
+        review_commissions = models.Commission.objects.filter(
             offer__author__pk=current_user_pk,
             state=models.Commission.STATE_REVIEW,
         ).order_by("-updated_date")
-        context["accepted_commissions"] = models.Commission.objects.filter(
+        accepted_commissions = models.Commission.objects.filter(
             offer__author__pk=current_user_pk,
             state=models.Commission.STATE_ACCEPTED
         ).order_by("-updated_date")
-        context["in_progress_commissions"] = models.Commission.objects.filter(
+        in_progress_commissions = models.Commission.objects.filter(
             offer__author__pk=current_user_pk,
             state=models.Commission.STATE_IN_PROGRESS,
         ).order_by("-updated_date")
-        context["closed_commissions"] = models.Commission.objects.filter(
+        closed_commissions = models.Commission.objects.filter(
             offer__author__pk=current_user_pk,
             state=models.Commission.STATE_CLOSED
         ).order_by("-updated_date")
+        
+        context["review_commissions_total_count"] = review_commissions.count()
+        context["accepted_commissions_total_count"] = accepted_commissions.count()
+        context["in_progress_commissions_total_count"] = in_progress_commissions.count()
+        context["closed_commissions_total_count"] = closed_commissions.count()
+        
+        context["review_commissions"] = review_commissions
+        context["accepted_commissions"] = accepted_commissions
+        context["in_progress_commissions"] = in_progress_commissions
+        context["closed_commissions"] = closed_commissions
+        
         return context
 
 

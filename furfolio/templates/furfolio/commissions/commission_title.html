@@ -4,18 +4,23 @@ Expects the following context objects:
   - commission: the commission to make the title for
   - link_to_offer: if true, the link in the title points to offer instead of the commission
   - show_avatars: (bool) if true, shows the avatars of the users in the title
+  - hide_buyer: (bool) if True, and is not self-manged, hide the buyer
+  - hide_creator: (bool) if True, and is not self-managed, hide the creator
 {% endcomment %}
 
 {% load static %}
 
 {# if between two different users #}
 {% if not commission.is_self_managed %}
-  {% include "furfolio/users/badge.html" with user=commission.commissioner show_avatar=show_avatars only %}
-  wants
+  {% if not hide_buyer %}
+    {% include "furfolio/users/badge.html" with user=commission.commissioner show_avatar=show_avatars only %}
+    wants
+  {% endif %}
   <a class="text-decoration-none" href="{% if link_to_offer %}{% url "offer_detail" commission.offer.pk %}{% else %}{% url "commission_detail" commission.pk %}{% endif %}">{{ commission.offer.name }}</a>
-  by
-  {% include "furfolio/users/badge.html" with user=commission.offer.author show_avatar=show_avatars only %}
-{# if self-managed #}
+  {% if not hide_creator %}
+    by
+    {% include "furfolio/users/badge.html" with user=commission.offer.author show_avatar=show_avatars only %}
+  {% endif %}
 {% else %}
   <img class="me-1" style="width: 2em;" title="Self-managed" src="{% static "symbols/rotating-gear-black.svg" %}">
   Self managed

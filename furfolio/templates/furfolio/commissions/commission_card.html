@@ -6,6 +6,8 @@ csrf_token: the csrf_token
 request: the request object
 show_status: (bool) set to True if you want to show status badge
 show_avatars: (bool) if True, shows the avatars of the users in the card
+hide_buyer: (bool) if True, and is not self-manged, hide the buyer
+hide_creator: (bool) if True, and is not self-managed, hide the creator
 {% endcomment %}
 
 {% load static %}
@@ -14,7 +16,7 @@ show_avatars: (bool) if True, shows the avatars of the users in the card
     <div class="card-header">
         <div class="card-title d-flex">
             <h6>
-                {% include "./commission_title.html" with commission=commission show_avatars=show_avatars only %}
+                {% include "./commission_title.html" with commission=commission show_avatars=show_avatars hide_buyer=hide_buyer hide_creator=hide_creator only %}
             </h6>
             <div class="flex-fill"></div>
             {% if show_status is True %}

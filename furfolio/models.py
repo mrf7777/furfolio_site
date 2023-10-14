@@ -360,6 +360,10 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
         if self.should_notify_state_change():
             send_commission_state_changed_email(self)
         super().save(*args, **kwargs)
+        
+    def friendly_state(self) -> str:
+        COMMISSION_STATE_TO_FRIENDLY = dict(self.__class__.STATE_CHOICES)
+        return COMMISSION_STATE_TO_FRIENDLY[self.state]
 
     def should_notify_state_change(self) -> bool:
         return (

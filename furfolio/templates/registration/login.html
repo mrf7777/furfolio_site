@@ -6,12 +6,14 @@ Login
 
 {% block body %}
 
-<form method="post" action="{% url 'login' %}{% if next %}?next={{ next }}{% endif %}">
+<form class="mb-3" method="post" action="{% url 'login' %}{% if next %}?next={{ next }}{% endif %}">
     {% csrf_token %}
     {{ form }}
     
     <input class="btn btn-primary mt-3" type="submit" value="login">
     <input type="hidden" name="next" value="{% if next %}{{ next }}{% else %}{% url 'home' %}{% endif %}">
 </form>
+
+<a class="text-decoration-none" href="{% url "password_reset" %}">Forgot password?</a>
 
 {% endblock %}

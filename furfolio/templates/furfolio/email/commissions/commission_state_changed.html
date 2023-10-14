@@ -1,3 +1,3 @@
 Your commission <b>{{ commission.offer.name }}</b>, by "{{ commission.offer.author.username }}", has moved into the <b>{{ commission.friendly_state }}</b> state.
 
-You can go to your commission here: <a href="commission.get_full_url">{{ commission.get_full_url }}</a>
+You can go to your commission here: <a href="{{ commission.get_full_url }}">{{ commission.get_full_url }}</a>

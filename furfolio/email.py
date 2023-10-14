@@ -5,6 +5,12 @@ from django.conf import settings
 from . import models
 
 
+def truncate_string(s: str, max_length: int) -> str:
+    trailing_string = ".."
+    truncated = (s[:max_length - len(trailing_string)] + "..") if len(s) > max_length else s
+    return truncated
+
+
 def send_email(
     text_template_path: str, 
     html_template_path: str,
@@ -36,16 +42,19 @@ def send_commission_state_changed_email(new_commission: 'models.Commission'):
         "furfolio/email/commissions/commission_state_changed.txt",
         "furfolio/email/commissions/commission_state_changed.html",
         {"commission": new_commission},
-        "Commission state changed",
+        f"Commission State Changed | {new_commission.offer.name}",
         new_commission.commissioner.email,
     )
 
 
 def send_new_commission_message_email(commission_message: 'models.CommissionMessage'):
+    truncated_message = truncate_string(commission_message.message, 40)
+    subject = f"You Got a Message | {truncated_message}"
     send_email(
         "furfolio/email/commission_messages/new_commission_message.txt",
         "furfolio/email/commission_messages/new_commission_message.html",
         {"message": commission_message},
-        "You got a message",
+        subject,
         commission_message.get_receiving_user().email,
     )
+    

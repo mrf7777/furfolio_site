@@ -482,9 +482,9 @@ class CommissionMessage(mixins.GetFullUrlMixin, models.Model):
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)
 
     def save(self, *args, **kwargs) -> None:
+        super().save(*args, **kwargs)
         if self.should_notify_new_message():
             send_new_commission_message_email(self)
-        return super().save(*args, **kwargs)
 
     def clean(self) -> None:
         furfolio_validators.check_user_is_not_spamming_commission_messages(self.author)

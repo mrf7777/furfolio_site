@@ -83,3 +83,19 @@ def check_commission_is_not_created_on_closed_offer(commission: 'models.Commissi
         raise ValidationError(
             "Commission cannot be created on a closed offer unless you are the offer author."
         )
+
+
+def check_user_is_not_spamming_commissions(user: 'models.User'):
+    COMMISSION_CREATION_COOLDOWN = 30
+    try:
+        latest_commission_by_user = models.Commission.objects.filter(commissioner=user).latest("created_date")
+        current_time = timezone.now()
+        difference_in_seconds = (
+            current_time - latest_commission_by_user.created_date
+        ).total_seconds()
+        if difference_in_seconds < COMMISSION_CREATION_COOLDOWN:
+            raise ValidationError(
+                "Commission is too recent. Please wait before trying again."
+            )
+    except ObjectDoesNotExist:
+        pass

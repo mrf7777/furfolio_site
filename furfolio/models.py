@@ -373,6 +373,10 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
             self)
         furfolio_validators.check_commission_is_not_created_on_closed_offer(
             self)
+        if not self.is_self_managed():
+            furfolio_validators.check_user_is_not_spamming_commissions(
+                self.commissioner
+            )
         return super().clean()
 
     def __str__(self):

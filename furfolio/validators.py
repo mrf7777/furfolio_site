@@ -99,3 +99,19 @@ def check_user_is_not_spamming_commissions(user: 'models.User'):
             )
     except ObjectDoesNotExist:
         pass
+    
+    
+def check_user_is_not_spamming_commission_messages(user: 'models.User'):
+    COMMISSION_MESSAGE_CREATION_COOLDOWN = 7
+    try:
+        latest_commission_message_by_user = models.CommissionMessage.objects.filter(author=user).latest("created_date")
+        current_time = timezone.now()
+        difference_in_seconds = (
+            current_time - latest_commission_message_by_user.created_date
+        ).total_seconds()
+        if difference_in_seconds < COMMISSION_MESSAGE_CREATION_COOLDOWN:
+            raise ValidationError(
+                "Message is too recent. Please wait before trying again."
+            )
+    except ObjectDoesNotExist:
+        pass

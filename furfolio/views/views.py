@@ -304,11 +304,12 @@ class CommissionChat(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView
     def get_commission(self):
         return get_object_or_404(models.Commission, pk=self.kwargs["pk"])
 
-    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+    def get_initial(self) -> dict[str, Any]:
         commission = self.get_commission()
-        form.instance.commission = commission
-        form.instance.author = self.request.user
-        return super(CommissionChat, self).form_valid(form)
+        initial = super().get_initial()
+        initial["commission"] = commission
+        initial["author"] = self.request.user
+        return initial
 
     def test_func(self):
         object = self.get_commission()

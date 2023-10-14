@@ -482,6 +482,10 @@ class CommissionMessage(mixins.GetFullUrlMixin, models.Model):
             send_new_commission_message_email(self)
         return super().save(*args, **kwargs)
 
+    def clean(self) -> None:
+        furfolio_validators.check_user_is_not_spamming_commission_messages(self.author)
+        return super().clean()
+
     def should_notify_new_message(self):
         return (
             # if message is newly created

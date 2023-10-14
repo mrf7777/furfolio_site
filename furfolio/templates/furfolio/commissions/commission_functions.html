@@ -14,15 +14,16 @@ Expects the following objects:
         <div class="flex-column me-0">
             <div class="mb-1"><a class="text-reset" href="{% url "commission_chat" commission.pk %}">{% include "./chat/chat_button.html" %}</a></div>
         </div>
+        {% if some_space_between_functions %}
+            <div class="me-5"></div>
+        {% endif %}
     {% endif %}
 
     {% if fill %}
         <div class="flex-fill"></div>
     {% endif %}
 
-    {% if some_space_between_functions %}
-        <div class="me-5"></div>
-    {% endif %}
+    
 
     {% if request.user.pk == commission.offer.author.pk %}
         <div class="flex-column">

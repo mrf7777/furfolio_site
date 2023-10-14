@@ -6,6 +6,7 @@ Expects the following objects:
   - csrf_token: the csrf_token
   - request: the request object
   - fill: (bool) if True, will put functions and state buttons as far apart as possible.
+  - some_space_between_functions: (bool) if True, will force add margin between commission functions
 {% endcomment %}
 
 <div class="d-flex flex-wrap">
@@ -17,6 +18,10 @@ Expects the following objects:
 
     {% if fill %}
         <div class="flex-fill"></div>
+    {% endif %}
+
+    {% if some_space_between_functions %}
+        <div class="me-5"></div>
     {% endif %}
 
     {% if request.user.pk == commission.offer.author.pk %}

@@ -39,6 +39,81 @@
 - [x] allow account disabling?
   - django already solved this
 
+# Legal documents on website
+
+## Terms of Service
+
+### When is ToS accepted and how is it enforced
+- account creation
+- public use
+
+### What happens when ToS is modified
+- notify users via email
+
+### Account creation
+- content rating and age
+- fabrication and fraud
+- after banned account creation
+- warnings
+- bans
+- avatar policy
+
+### User created content
+- service abuse
+- spam
+- links to 3rd party sites
+- rating
+  - definition of general
+  - definition of adult
+  - if unsure, use adult rating
+- offer content
+  - must be about a service, product, performance, or other item created and delivered by a creator.
+    - anything else is not allowed
+  - citations must be present
+    - must abide by copyright law
+  - duplicate offers only allowed if at most one offer is not closed
+  - AI is prohibited
+  - prohibited:
+    - blogging
+    - questions
+    - updates
+    - journalism
+    - violation of copyright
+      - Content that is not yours
+
+### User conduct
+- expected of users and non-user visitors
+- regarding user-to-user interaction
+- spam
+  - overloading with file uploads
+  - bots
+- abuse
+  - threats
+  - harassment
+  - stalking
+
+### Limited Liability
+- we are not responsible
+  - but we do provide mitigation tools
+
+### Enforcement
+- community moderation and reporting
+- user content
+- user interaction
+- staff perform actions to address reports
+
+## Privacy Policy
+
+### What happens when Privacy Policy is updated?
+- email users
+
+### handling of PII such as username and email address
+- we do not distribute
+
+### Cookies
+- we use cookies for
+  - the capture of your timezone settings on the device you use our site
+
 # Convention space ideas.
 - QR Code for artists to print for their table to show URL for query for their offers.
 - QR Code for vending space which has URL for query for offers at the convention.
@@ -46,3 +121,12 @@
 - Let people request commissions before vendors open via QR Code.
   - Let creators make offers that will publish in the future. (needs new field)
     - Let offers that are to-be-open still Publish but be closed for requests so that users can read about the offer beforehand.
+
+# Offer price range
+
+## iteration 1: use two fields for start and end.
+- easy to implement regardless of database
+- django supports out of the box the use of non-range types
+- make min and max price mandatory
+- cons:
+  - manual implementation of interval intersection

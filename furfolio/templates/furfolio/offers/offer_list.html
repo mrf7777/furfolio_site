@@ -14,7 +14,9 @@
 </div>
 
 {% if is_paginated %}
-{% include "furfolio/components/pagination_buttons.html" with page_obj=page_obj request=request only %}
+<div class="d-flex justify-content-center">
+    {% include "furfolio/components/pagination_buttons.html" with page_obj=page_obj page_range=page_range request=request only %}
+</div>
 {% endif %}
 
 {% endblock %}

@@ -1,9 +1,10 @@
-from typing import Any
+from typing import Any, List
 from django.db.models.query import QuerySet
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.views import generic
+from django.core.paginator import Page
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy, reverse
 from django.core.exceptions import PermissionDenied
@@ -13,6 +14,15 @@ from ..forms import CommissionSearchForm, CustomUserCreationForm, OfferForm, Com
 
 
 PAGE_SIZE = 10
+
+
+def get_page_range_items(page: Page) -> List[str]:
+    """
+    Given the page object, which you should get from the context, this
+    will return a list of page items, including ellipsis, that you
+    can then display in a template.
+    """
+    return list(page.paginator.get_elided_page_range(page.number))
 
 
 class Home(generic.TemplateView):
@@ -98,6 +108,7 @@ class OfferList(generic.ListView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["search_form"] = OfferSearchForm(self.request.GET)
+        context["page_range"] = get_page_range_items(context["page_obj"])
         return context
 
 
@@ -198,6 +209,7 @@ class UserList(generic.ListView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["search_form"] = UserSearchForm(self.request.GET)
+        context["page_range"] = get_page_range_items(context["page_obj"])
         return context
 
 
@@ -264,6 +276,7 @@ class Commissions(LoginRequiredMixin, generic.ListView):
         else:
             search_form = CommissionSearchForm()
         context["form"] = search_form
+        context["page_range"] = get_page_range_items(context["page_obj"])
         return context
 
 

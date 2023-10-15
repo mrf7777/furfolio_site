@@ -2,29 +2,41 @@
 Includable template that presents pagination buttons and text.
 Expects the following context objects:
   - page_obj: you should get this if you are doing django pagination
+  - page_range: should be the output of the method 'get_elided_page_range' from the paginator object. You can get this in your view and pass it through.
   - request: the request object. this is needed to make the links with the correct query params
 {% endcomment %}
 
 {% load static %}
 {% load query_replace %}
 
-<div class="d-flex justify-content-center">
-    <div class="d-flex justify-content-center align-items-center" role="group">
-        {% if page_obj.has_previous %}
-        <a class="me-5 text-decoration-none" href="?{% query_replace request "page" 1 %}">
-            Start
-        </a>
-        {% endif %}
-        {% if page_obj.has_previous %}
-            <a class="btn btn-primary" href="?{% query_replace request "page" page_obj.previous_page_number %}">
-                <img src="{% static "symbols/left-arrow-white.svg" %}" style="width: 1em;">
+<ul class="pagination fw-bold">
+    {% if page_obj.has_previous %}
+        <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
+            <a class="page-link border-primary" href="?{% query_replace request "page" page_obj.previous_page_number %}">
+                Previous
             </a>
+        </li>
+    {% endif %}
+    {% for i in page_range %}
+        {% if page_obj.number == i %}
+            <li class="active page-item">
+                <span class="page-link border-primary">{{ i }}</span>
+            </li>
+        {% elif i == paginator.ELLIPSIS %}
+            <li class="page-item">
+                <span class="page-link border-primary">{{ paginator.ELLIPSIS }}</span>
+            </li>
+        {% else %}
+            <li class="page-item">
+                <a class="page-link border-primary" href="?{% query_replace request "page" i %}">{{ i }}</a>
+            </li>
         {% endif %}
-        <div class="mx-3">Page {{ page_obj.number }}</div>
-        {% if page_obj.has_next %}
-            <a class="btn btn-primary" href="?{% query_replace request "page" page_obj.next_page_number %}">
-                <img src="{% static "symbols/right-arrow-white.svg" %}" style="width: 1em;">
+    {% endfor %}
+    {% if page_obj.has_next %}
+        <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
+            <a class="page-link border-primary" href="?{% query_replace request "page" page_obj.next_page_number %}">
+                Next
             </a>
-        {% endif %}
-    </div>
-</div>
+        </li>
+    {% endif %}
+</ul>

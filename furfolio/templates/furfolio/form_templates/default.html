@@ -8,6 +8,13 @@
 </div>
 {% endif %}
 
+{% if errors %}
+<div class="text-danger">
+    <strong>Errors:</strong>
+    {{ errors }}
+</div>
+{% endif %}
+
 {% for field in form.visible_fields %}
     <div class="mb-4">
         <h4>{{ field.label_tag }}</h4>
@@ -24,10 +31,3 @@
         {% endif %}
     </div>
 {% endfor %}
-
-{% if errors %}
-<div class="text-danger">
-    <strong>Errors:</strong>
-    {{ errors }}
-</div>
-{% endif %}

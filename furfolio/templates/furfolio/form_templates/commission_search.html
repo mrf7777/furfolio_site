@@ -2,6 +2,13 @@
 {{ hidden_field }}
 {% endfor %}
 
+{% if errors %}
+<div class="text-danger">
+    <strong>Errors:</strong>
+    {{ errors }}
+</div>
+{% endif %}
+
 <div class="mb-3">
     {% for field in form.visible_fields %}
         <div class="mb-2 row g-2 d-flex align-items-center">
@@ -33,10 +40,3 @@
         </div>
     </div>
 </div>
-
-{% if errors %}
-<div class="text-danger">
-    <strong>Errors:</strong>
-    {{ errors }}
-</div>
-{% endif %}

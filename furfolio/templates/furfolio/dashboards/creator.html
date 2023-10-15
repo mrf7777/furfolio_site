@@ -28,7 +28,7 @@
 <a class="text-decoration-none" href="{% url "commissions" %}?review=on">
     {% include "furfolio/commissions/state_badge.html" with state="REVIEW" only %}
 </a>
-<span class="fs-5">{{ review_commissions_total_count }}</span>
+<span class="fs-5">{{ review_commissions.count }} of {{ review_commissions_total_count }}</span>
 {% endblock %}
 
 {% block column_1 %}
@@ -39,7 +39,7 @@
 <a class="text-decoration-none" href="{% url "commissions" %}?accepted=on">
     {% include "furfolio/commissions/state_badge.html" with state="ACCEPTED" only %}
 </a>
-<span class="fs-5">{{ accepted_commissions_total_count }}</span>
+<span class="fs-5">{{ accepted_commissions.count }} of {{ accepted_commissions_total_count }}</span>
 {% endblock %}
 
 {% block column_2 %}
@@ -50,7 +50,7 @@
 <a class="text-decoration-none" href="{% url "commissions" %}?in_progress=on">
     {% include "furfolio/commissions/state_badge.html" with state="IN_PROGRESS" only %}
 </a>
-<span class="fs-5">{{ in_progress_commissions_total_count }}</span>
+<span class="fs-5">{{ in_progress_commissions.count }} of {{ in_progress_commissions_total_count }}</span>
 {% endblock %}
 
 {% block column_3 %}
@@ -61,7 +61,7 @@
 <a class="text-decoration-none text-reset" href="{% url "commissions" %}?finished=on">
     {% include "furfolio/commissions/state_badge.html" with state="CLOSED" only %}
 </a>
-<span class="fs-5">{{ closed_commissions_total_count }}</span>
+<span class="fs-5">{{ closed_commissions.count }} of {{ closed_commissions_total_count }}</span>
 {% endblock %}
 
 {% block column_4 %}

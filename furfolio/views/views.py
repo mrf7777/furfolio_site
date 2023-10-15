@@ -40,7 +40,7 @@ class DashboardRedirector(LoginRequiredMixin, generic.RedirectView):
 class CreatorDashboard(LoginRequiredMixin, generic.TemplateView):
     template_name = "furfolio/dashboards/creator.html"
     
-    MAX_COMMISSIONS_PER_COLUMN = 20
+    MAX_COMMISSIONS_PER_COLUMN = 15
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

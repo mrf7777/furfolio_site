@@ -39,6 +39,8 @@ class DashboardRedirector(LoginRequiredMixin, generic.RedirectView):
 
 class CreatorDashboard(LoginRequiredMixin, generic.TemplateView):
     template_name = "furfolio/dashboards/creator.html"
+    
+    MAX_COMMISSIONS_PER_COLUMN = 20
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
@@ -61,15 +63,25 @@ class CreatorDashboard(LoginRequiredMixin, generic.TemplateView):
             state=models.Commission.STATE_CLOSED
         ).order_by("-updated_date")
         
-        context["review_commissions_total_count"] = review_commissions.count()
-        context["accepted_commissions_total_count"] = accepted_commissions.count()
-        context["in_progress_commissions_total_count"] = in_progress_commissions.count()
-        context["closed_commissions_total_count"] = closed_commissions.count()
+        review_commissions_total_count = review_commissions.count()
+        accepted_commissions_total_count = accepted_commissions.count()
+        in_progress_commissions_total_count = in_progress_commissions.count()
+        closed_commissions_total_count = closed_commissions.count()
+        context["review_commissions_total_count"] = review_commissions_total_count
+        context["accepted_commissions_total_count"] = accepted_commissions_total_count
+        context["in_progress_commissions_total_count"] = in_progress_commissions_total_count
+        context["closed_commissions_total_count"] = closed_commissions_total_count
         
-        context["review_commissions"] = review_commissions
-        context["accepted_commissions"] = accepted_commissions
-        context["in_progress_commissions"] = in_progress_commissions
-        context["closed_commissions"] = closed_commissions
+        max_commissions_per_column = self.__class__.MAX_COMMISSIONS_PER_COLUMN
+        context["review_commissions"] = review_commissions[:max_commissions_per_column]
+        context["accepted_commissions"] = accepted_commissions[:max_commissions_per_column]
+        context["in_progress_commissions"] = in_progress_commissions[:max_commissions_per_column]
+        context["closed_commissions"] = closed_commissions[:max_commissions_per_column]
+        
+        context["review_commissions_overflow"] = review_commissions_total_count > max_commissions_per_column
+        context["accepted_commissions_overflow"] = accepted_commissions_total_count > max_commissions_per_column
+        context["in_progress_commissions_overflow"] = in_progress_commissions_total_count > max_commissions_per_column
+        context["closed_commissions_overflow"] = closed_commissions_total_count > max_commissions_per_column
         
         return context
 

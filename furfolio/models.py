@@ -117,6 +117,8 @@ class User(mixins.GetFullUrlMixin, AbstractUser):
         default=False,
     )
 
+    tracker = FieldTracker()
+
     class Meta:
         indexes = [
             GinIndex(fields=["username",], fastupdate=False,
@@ -124,7 +126,7 @@ class User(mixins.GetFullUrlMixin, AbstractUser):
         ]
 
     def save(self, *args, **kwargs) -> None:
-        if self.avatar:
+        if self.avatar and self.tracker.has_changed("avatar"):
             image_resize(
                 self.avatar, User.AVATAR_SIZE_PIXELS[0], User.AVATAR_SIZE_PIXELS[1], transparency_remove=True, fit_in_center=True)
         super(User, self).save(*args, **kwargs)
@@ -263,6 +265,9 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         choices=CURRENCY_CHOICES,
         default=CURRENCY_USD,
     )
+
+    tracker = FieldTracker()
+
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)
 
@@ -276,7 +281,7 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         return "Id: %i. \"%s\" by %s." % (self.id, self.name, self.author.username)
 
     def save(self, *args, **kwargs) -> None:
-        if self.thumbnail:
+        if self.thumbnail and self.tracker.has_changed("thumbnail"):
             image_resize(
                 self.thumbnail, Offer.THUMBNAIL_MAX_DIMENTIONS[0], Offer.THUMBNAIL_MAX_DIMENTIONS[1])
         super(Offer, self).save(*args, **kwargs)

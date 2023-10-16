@@ -29,18 +29,23 @@ Expects a 'title_is_link':bool object
                     {{ offer.description|truncatechars:300 }}
                 </p>
                 <div class="flex-fill"></div>
-                <div class="d-flex">
-                    <div class="me-2">
-                        <b>Slots: {{ offer.get_active_commissions.count }}</b> / <b>{{ offer.slots }}</b>
-                    </div>
-                    <div class="flex-fill"></div>
-                    {% if not offer.is_closed %}
+                <div class="d-flex align-items-end">
+                    <div class="d-flex flex-column">
+                        <div class="mb-1">
+                            Slots: <b>{{ offer.get_active_commissions.count }}</b> / <b>{{ offer.slots }}</b>
+                        </div>
+                        {% if not offer.is_closed %}
                         <div>
                             Closes in <b>{{ offer.cutoff_date|timeuntil }}</b>
                         </div>
-                    {% else %}
-                        <b class="text-danger fs-5">Closed</b>
-                    {% endif %}
+                        {% else %}
+                            <b class="text-danger fs-5">Closed</b>
+                        {% endif %}
+                    </div>
+                    <div class="flex-fill"></div>
+                    <div>
+                        <b>{{ offer.get_currency_symbol }} {{ offer.min_price }}</b> - <b>{{ offer.max_price }}</b> {{ offer.get_iso_4217_currency_code }}
+                    </div>
                 </div>
             </div>
         </div>

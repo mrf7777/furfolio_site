@@ -165,6 +165,7 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         (RATING_ADULT, "Adult"),
     ]
     
+    # https://en.wikipedia.org/wiki/ISO_4217#Active_codes_(List_One)
     EURO_SYMBOL = "\u20AC"
     CURRENCY_USD = "USD"
     CURRENCY_EUR = "EUR"
@@ -340,6 +341,13 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
                 return "$"
             case self.__class__.CURRENCY_EUR:
                 return self.__class__.EURO_SYMBOL
+            
+    def get_iso_4217_currency_code(self) -> str:
+        match self.currency:
+            case self.__class__.CURRENCY_USD:
+                return "USD"
+            case self.__class__.CURRENCY_EUR:
+                return "EUR"
 
 
 # limit initial request text to about 800 words

@@ -276,6 +276,7 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
 
     def clean(self):
         furfolio_validators.check_user_is_not_spamming_offers(self.author)
+        furfolio_validators.validate_price_min_is_less_than_max(self.min_price, self.max_price)
 
     def get_absolute_url(self):
         return reverse("offer_detail", kwargs={"pk": self.pk})

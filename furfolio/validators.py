@@ -47,6 +47,14 @@ def validate_offer_thumbnail_aspect_ratio(value: ImageFieldFile):
             f"The aspect ratio of the image is too large. Try an image that has less width.")
 
 
+def validate_price_min_is_less_than_max(min_price: int, max_price: int):
+    if max_price <= min_price:
+        example_valid_max_price = min_price + 1
+        raise ValidationError(
+            "Maximum price must be greater than the minimum price. Maybe try a maximum price of " + str(example_valid_max_price) + "."
+        )
+
+
 def check_commission_meets_offer_max_review_commissions(commission: 'models.Commission'):
     if commission.is_self_managed():
         return

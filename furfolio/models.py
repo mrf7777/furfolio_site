@@ -165,13 +165,13 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         (RATING_ADULT, "Adult"),
     ]
     
+    EURO_SYMBOL = "\u20AC"
     CURRENCY_USD = "USD"
     CURRENCY_EUR = "EUR"
     CURRENCY_CHOICES = [
-        (CURRENCY_USD, "United States Dollar (USD)"),
-        (CURRENCY_EUR, "Euro (EUR)"),
+        (CURRENCY_USD, "$ United States Dollar (USD)"),
+        (CURRENCY_EUR, EURO_SYMBOL + " Euro (EUR)"),
     ]
-    EURO_SYMBOL = "\u20AC"
     
     ASPECT_RATIO_MIN = (1, 3)
     ASPECT_RATIO_MAX = (4, 1)

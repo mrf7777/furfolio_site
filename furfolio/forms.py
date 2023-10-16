@@ -61,7 +61,7 @@ class OfferForm(forms.ModelForm):
     class Meta:
         model = Offer
         fields = ["author", "name", "description", "cutoff_date", "thumbnail",
-                  "rating", "slots", "max_review_commissions"]
+                  "rating", "slots", "max_review_commissions", "min_price", "max_price", "currency"]
         widgets = {
             "thumbnail": forms.ClearableFileInput(),
             "author": forms.HiddenInput(),
@@ -72,7 +72,9 @@ class OfferFormUpdate(OfferForm):
     class Meta(OfferForm.Meta):
         model = Offer
         fields = ["name", "description",
-                  "forced_closed", "cutoff_date", "thumbnail", "rating", "slots", "max_review_commissions"]
+                  "forced_closed", "cutoff_date", "thumbnail",
+                  "rating", "slots", "max_review_commissions",
+                  "min_price", "max_price", "currency"]
 
 
 class OfferSearchForm(TextSearchForm):

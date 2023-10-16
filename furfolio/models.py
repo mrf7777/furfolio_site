@@ -1,4 +1,6 @@
 from functools import reduce
+from locale import currency
+from tabnanny import verbose
 from PIL import Image
 import PIL.ImageFile
 from io import BytesIO
@@ -162,6 +164,15 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         (RATING_GENERAL, "General"),
         (RATING_ADULT, "Adult"),
     ]
+    
+    CURRENCY_USD = "USD"
+    CURRENCY_EUR = "EUR"
+    CURRENCY_CHOICES = [
+        (CURRENCY_USD, "United States Dollar (USD)"),
+        (CURRENCY_EUR, "Euro (EUR)"),
+    ]
+    EURO_SYMBOL = "\u20AC"
+    
     ASPECT_RATIO_MIN = (1, 3)
     ASPECT_RATIO_MAX = (4, 1)
     THUMBNAIL_MAX_DIMENTIONS = (600, 350)
@@ -225,6 +236,24 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
             validators.MinValueValidator(1),
         ],
         default=5,
+    )
+    min_price = models.PositiveIntegerField(
+        name="min_price",
+        verbose_name="Minimum Price",
+        help_text="The minimum price for commissions of this offer.",
+        default=0,
+    )
+    max_price = models.PositiveIntegerField(
+        name="max_price",
+        verbose_name="Maximum Price",
+        help_text="The maximum price for commissions of this offer.",
+        default=5,
+    )
+    currency = models.CharField(
+        name="currency",
+        max_length=3,
+        choices=CURRENCY_CHOICES,
+        default=CURRENCY_USD,
     )
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)
@@ -302,6 +331,13 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
     def has_max_review_commissions(self) -> bool:
         num_commissions_in_review = self.get_commissions_in_review().count()
         return num_commissions_in_review >= self.max_review_commissions
+    
+    def get_currency_symbol(self) -> str:
+        match self.currency:
+            case self.__class__.CURRENCY_USD:
+                return "$"
+            case self.__class__.CURRENCY_EUR:
+                return self.__class__.EURO_SYMBOL
 
 
 # limit initial request text to about 800 words

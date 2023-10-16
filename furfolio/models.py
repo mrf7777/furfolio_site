@@ -248,6 +248,7 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         verbose_name="Maximum Price",
         help_text="The maximum price for commissions of this offer.",
         default=5,
+        validators=[validators.MinValueValidator(1),]
     )
     currency = models.CharField(
         name="currency",

@@ -112,11 +112,11 @@ class User(mixins.GetFullUrlMixin, AbstractUser):
     )
     consent_to_adult_content = models.BooleanField(
         name="consent_to_adult_content",
-        verbose_name="Consent to See Adult Content",
+        verbose_name="Consent to see adult content",
         help_text="Indicate if you would like to see adult content on this website. If not indicated, you will not see adult content.",
         default=False,
     )
-
+    
     class Meta:
         indexes = [
             GinIndex(fields=["username",], fastupdate=False,

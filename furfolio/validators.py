@@ -140,3 +140,8 @@ def check_file_field_has_max_size(file_field: FileField, max_file_size: int):
 def validate_avatar_has_max_size(value: FileField):
     MAX_AVATAR_FILE_SIZE = 5 * 1024 * 1024  # 5 MiB
     check_file_field_has_max_size(value, MAX_AVATAR_FILE_SIZE)
+
+
+def validate_offer_thumbnail_has_max_size(value: FileField):
+    MAX_OFFER_THUMBNAIL_FILE_SIZE = 25 * 1024 * 1024    # 25 MiB
+    check_file_field_has_max_size(value, MAX_OFFER_THUMBNAIL_FILE_SIZE)

@@ -222,7 +222,10 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         name="thumbnail",
         blank=True,
         null=True,
-        validators=[furfolio_validators.validate_offer_thumbnail_aspect_ratio]
+        validators=[
+            furfolio_validators.validate_offer_thumbnail_aspect_ratio,
+            furfolio_validators.validate_offer_thumbnail_has_max_size,
+        ]
     )
     rating = models.CharField(
         name="rating",

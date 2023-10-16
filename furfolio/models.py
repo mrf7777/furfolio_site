@@ -300,7 +300,7 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
     def get_commissions_in_review(self):
         return Commission.objects.filter(offer__pk=self.pk, state=Commission.STATE_REVIEW)
 
-    def full_text_search_offers(text_query: str, author: str, sort: str, closed_offers: bool):
+    def full_text_search_offers(text_query: str, author: str, sort: str, closed_offers: bool, consent_to_adult_content: bool):
         query = Offer.objects
         text_query_cleaned = text_query.strip()
         author_cleaned = author.strip()
@@ -321,6 +321,8 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
             ).filter(
                 forced_closed=False
             )
+        if not consent_to_adult_content:
+            query = query.filter(rating=Offer.RATING_GENERAL)
         match sort:
             case form_fields.SortField.CHOICE_RELEVANCE:
                 if text_query_cleaned:

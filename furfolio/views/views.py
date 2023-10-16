@@ -39,12 +39,12 @@ class DashboardRedirector(LoginRequiredMixin, generic.RedirectView):
 
 class CreatorDashboard(LoginRequiredMixin, generic.TemplateView):
     template_name = "furfolio/dashboards/creator.html"
-    
+
     MAX_COMMISSIONS_PER_COLUMN = 15
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        
+
         current_user_pk = self.request.user.pk
         review_commissions = models.Commission.objects.filter(
             offer__author__pk=current_user_pk,
@@ -62,7 +62,7 @@ class CreatorDashboard(LoginRequiredMixin, generic.TemplateView):
             offer__author__pk=current_user_pk,
             state=models.Commission.STATE_CLOSED
         ).order_by("-updated_date")
-        
+
         review_commissions_total_count = review_commissions.count()
         accepted_commissions_total_count = accepted_commissions.count()
         in_progress_commissions_total_count = in_progress_commissions.count()
@@ -71,18 +71,18 @@ class CreatorDashboard(LoginRequiredMixin, generic.TemplateView):
         context["accepted_commissions_total_count"] = accepted_commissions_total_count
         context["in_progress_commissions_total_count"] = in_progress_commissions_total_count
         context["closed_commissions_total_count"] = closed_commissions_total_count
-        
+
         max_commissions_per_column = self.__class__.MAX_COMMISSIONS_PER_COLUMN
         context["review_commissions"] = review_commissions[:max_commissions_per_column]
         context["accepted_commissions"] = accepted_commissions[:max_commissions_per_column]
         context["in_progress_commissions"] = in_progress_commissions[:max_commissions_per_column]
         context["closed_commissions"] = closed_commissions[:max_commissions_per_column]
-        
+
         context["review_commissions_overflow"] = review_commissions_total_count > max_commissions_per_column
         context["accepted_commissions_overflow"] = accepted_commissions_total_count > max_commissions_per_column
         context["in_progress_commissions_overflow"] = in_progress_commissions_total_count > max_commissions_per_column
         context["closed_commissions_overflow"] = closed_commissions_total_count > max_commissions_per_column
-        
+
         return context
 
 
@@ -110,12 +110,15 @@ class OfferList(generic.ListView):
 
     def get_queryset(self) -> QuerySet[Any]:
         search_form = OfferSearchForm(self.request.GET)
+        consent_to_adult_content = getattr(
+            self.request.user, "consent_to_adult_content", False
+        )
         if search_form.is_valid():
             text_query = search_form.cleaned_data["text_query"].strip()
             author = search_form.cleaned_data["author"].strip()
             sort = search_form.cleaned_data["sort"]
             closed_offers = search_form.cleaned_data["closed_offers"]
-            return models.Offer.full_text_search_offers(text_query, author, sort, closed_offers)
+            return models.Offer.full_text_search_offers(text_query, author, sort, closed_offers, consent_to_adult_content)
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
@@ -128,12 +131,12 @@ class Offer(generic.DetailView):
     model = models.Offer
     context_object_name = "offer"
     template_name = "furfolio/offers/offer_detail.html"
-    
+
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["should_show_create_commission_button"] = self.should_show_create_commission_button()
         return context
-        
+
     def should_show_create_commission_button(self) -> bool:
         offer = self.get_object()
         if self.request.user == offer.author:

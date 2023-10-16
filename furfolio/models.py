@@ -110,6 +110,12 @@ class User(mixins.GetFullUrlMixin, AbstractUser):
         default=ROLE_BUYER,
         help_text="Your role on this platform. This is used to optimize your experience and to let others know how you want to use this website."
     )
+    consent_to_adult_content = models.BooleanField(
+        name="consent_to_adult_content",
+        verbose_name="Consent to See Adult Content",
+        help_text="Indicate if you would like to see adult content on this website. If not indicated, you will not see adult content.",
+        default=False,
+    )
 
     class Meta:
         indexes = [

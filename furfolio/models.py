@@ -116,7 +116,7 @@ class User(mixins.GetFullUrlMixin, AbstractUser):
         help_text="Indicate if you would like to see adult content on this website. If not indicated, you will not see adult content.",
         default=False,
     )
-    
+
     class Meta:
         indexes = [
             GinIndex(fields=["username",], fastupdate=False,
@@ -170,7 +170,7 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         (RATING_GENERAL, "General"),
         (RATING_ADULT, "Adult"),
     ]
-    
+
     # https://en.wikipedia.org/wiki/ISO_4217#Active_codes_(List_One)
     EURO_SYMBOL = "\u20AC"
     CURRENCY_USD = "USD"
@@ -179,7 +179,7 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         (CURRENCY_USD, "$ United States Dollar (USD)"),
         (CURRENCY_EUR, EURO_SYMBOL + " Euro (EUR)"),
     ]
-    
+
     ASPECT_RATIO_MIN = (1, 3)
     ASPECT_RATIO_MAX = (4, 1)
     THUMBNAIL_MAX_DIMENTIONS = (600, 350)
@@ -283,7 +283,8 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
 
     def clean(self):
         furfolio_validators.check_user_is_not_spamming_offers(self.author)
-        furfolio_validators.validate_price_min_is_less_than_max(self.min_price, self.max_price)
+        furfolio_validators.validate_price_min_is_less_than_max(
+            self.min_price, self.max_price)
 
     def get_absolute_url(self):
         return reverse("offer_detail", kwargs={"pk": self.pk})
@@ -340,14 +341,14 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
     def has_max_review_commissions(self) -> bool:
         num_commissions_in_review = self.get_commissions_in_review().count()
         return num_commissions_in_review >= self.max_review_commissions
-    
+
     def get_currency_symbol(self) -> str:
         match self.currency:
             case self.__class__.CURRENCY_USD:
                 return "$"
             case self.__class__.CURRENCY_EUR:
                 return self.__class__.EURO_SYMBOL
-            
+
     def get_iso_4217_currency_code(self) -> str:
         match self.currency:
             case self.__class__.CURRENCY_USD:
@@ -412,7 +413,7 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
         if self.should_notify_state_change():
             send_commission_state_changed_email(self)
         super().save(*args, **kwargs)
-        
+
     def friendly_state(self) -> str:
         COMMISSION_STATE_TO_FRIENDLY = dict(self.__class__.STATE_CHOICES)
         return COMMISSION_STATE_TO_FRIENDLY[self.state]
@@ -539,7 +540,8 @@ class CommissionMessage(mixins.GetFullUrlMixin, models.Model):
             send_new_commission_message_email(self)
 
     def clean(self) -> None:
-        furfolio_validators.check_user_is_not_spamming_commission_messages(self.author)
+        furfolio_validators.check_user_is_not_spamming_commission_messages(
+            self.author)
         return super().clean()
 
     def should_notify_new_message(self):

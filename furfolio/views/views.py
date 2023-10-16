@@ -127,10 +127,23 @@ class OfferList(generic.ListView):
         return context
 
 
-class Offer(generic.DetailView):
+class Offer(UserPassesTestMixin, generic.DetailView):
     model = models.Offer
     context_object_name = "offer"
     template_name = "furfolio/offers/offer_detail.html"
+
+    def test_func(self) -> bool | None:
+        consent_to_adult_content = getattr(
+            self.request.user, "consent_to_adult_content", False
+        )
+        match self.get_object().rating:
+            case models.Offer.RATING_GENERAL:
+                return True
+            case models.Offer.RATING_ADULT:
+                consent_to_adult_content = getattr(
+                    self.request.user, "consent_to_adult_content", False
+                )
+                return consent_to_adult_content
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

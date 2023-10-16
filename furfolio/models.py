@@ -113,7 +113,8 @@ class User(mixins.GetFullUrlMixin, AbstractUser):
     consent_to_adult_content = models.BooleanField(
         name="consent_to_adult_content",
         verbose_name="Consent to see adult content",
-        help_text="Indicate if you would like to see adult content on this website. If not indicated, you will not see adult content.",
+        help_text=mark_safe(
+            "Indicate if you would like to see adult content on this website. If not indicated, you will not see adult content.<br> If you consent, you agree that you are legally allowed to view \"adult\" content."),
         default=False,
     )
 

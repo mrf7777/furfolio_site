@@ -15,7 +15,10 @@
     {% endif %}
 
     <p>
-        <b>Slots: {{ offer.get_active_commissions.count }}</b> / <b>{{ offer.slots }}</b>
+        Slots: <b>{{ offer.get_active_commissions.count }}</b> / <b>{{ offer.slots }}</b>
+    </p>
+    <p>
+        Price: <b>{{ offer.get_currency_symbol }} {{ offer.min_price }}</b> - <b>{{ offer.max_price }}</b> {{ offer.get_iso_4217_currency_code }}
     </p>
 
     {{ offer.description|linebreaks }}

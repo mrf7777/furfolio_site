@@ -297,6 +297,8 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         furfolio_validators.check_user_is_not_spamming_offers(self.author)
         furfolio_validators.validate_price_min_is_less_than_max(
             self.min_price, self.max_price)
+        furfolio_validators.check_user_will_not_go_over_max_active_offers(
+            self)
 
     def get_absolute_url(self):
         return reverse("offer_detail", kwargs={"pk": self.pk})
@@ -369,6 +371,10 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
                 return "USD"
             case self.__class__.CURRENCY_EUR:
                 return "EUR"
+
+    def get_active_offers():
+        current_time = timezone.now()
+        return Offer.objects.filter(cutoff_date__gte=current_time, forced_closed=False)
 
 
 # limit initial request text to about 800 words

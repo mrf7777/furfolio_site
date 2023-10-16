@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from django.utils import timezone
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
-from django.db.models.fields.files import ImageFieldFile
+from django.db.models.fields.files import ImageFieldFile, FileField
 from . import models
 
 
@@ -15,7 +15,8 @@ def validate_datetime_is_not_over_year_into_future(value: datetime):
     current_datetime = timezone.now()
     year_into_future = current_datetime + timedelta(days=365)
     if value > year_into_future:
-        raise ValidationError("Provided date-time must not be over a year into the future.")
+        raise ValidationError(
+            "Provided date-time must not be over a year into the future.")
 
 
 def validate_datetime_at_least_12_hours(value: datetime):
@@ -51,15 +52,17 @@ def validate_price_min_is_less_than_max(min_price: int, max_price: int):
     if max_price <= min_price:
         example_valid_max_price = min_price + 1
         raise ValidationError(
-            "Maximum price must be greater than the minimum price. Maybe try a maximum price of " + str(example_valid_max_price) + "."
+            "Maximum price must be greater than the minimum price. Maybe try a maximum price of " +
+            str(example_valid_max_price) + "."
         )
 
 
 def check_commission_meets_offer_max_review_commissions(commission: 'models.Commission'):
     if commission.is_self_managed():
         return
-    
-    num_offer_commissions_in_review_state = models.Offer.get_commissions_in_review(commission.offer).count()
+
+    num_offer_commissions_in_review_state = models.Offer.get_commissions_in_review(
+        commission.offer).count()
     if num_offer_commissions_in_review_state >= commission.offer.max_review_commissions:
         raise ValidationError(
             "Commission is not valid because the offer has max number of commissions in review state.")
@@ -96,7 +99,8 @@ def check_commission_is_not_created_on_closed_offer(commission: 'models.Commissi
 def check_user_is_not_spamming_commissions(user: 'models.User'):
     COMMISSION_CREATION_COOLDOWN = 30
     try:
-        latest_commission_by_user = models.Commission.objects.filter(commissioner=user).latest("created_date")
+        latest_commission_by_user = models.Commission.objects.filter(
+            commissioner=user).latest("created_date")
         current_time = timezone.now()
         difference_in_seconds = (
             current_time - latest_commission_by_user.created_date
@@ -107,12 +111,13 @@ def check_user_is_not_spamming_commissions(user: 'models.User'):
             )
     except ObjectDoesNotExist:
         pass
-    
-    
+
+
 def check_user_is_not_spamming_commission_messages(user: 'models.User'):
     COMMISSION_MESSAGE_CREATION_COOLDOWN = 7
     try:
-        latest_commission_message_by_user = models.CommissionMessage.objects.filter(author=user).latest("created_date")
+        latest_commission_message_by_user = models.CommissionMessage.objects.filter(
+            author=user).latest("created_date")
         current_time = timezone.now()
         difference_in_seconds = (
             current_time - latest_commission_message_by_user.created_date
@@ -123,3 +128,15 @@ def check_user_is_not_spamming_commission_messages(user: 'models.User'):
             )
     except ObjectDoesNotExist:
         pass
+
+
+def check_file_field_has_max_size(file_field: FileField, max_file_size: int):
+    if file_field.size > max_file_size:
+        raise ValidationError(
+            "File size is too large."
+        )
+
+
+def validate_avatar_has_max_size(value: FileField):
+    MAX_AVATAR_FILE_SIZE = 5 * 1024 * 1024  # 5 MiB
+    check_file_field_has_max_size(value, MAX_AVATAR_FILE_SIZE)

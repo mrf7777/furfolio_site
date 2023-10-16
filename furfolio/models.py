@@ -410,6 +410,9 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
         name="attachment",
         help_text="Optional file that is part of this request.",
         blank=True,
+        validators=[
+            furfolio_validators.validate_commission_attachment_has_max_size,
+        ]
     )
     state = models.CharField(
         name="state",

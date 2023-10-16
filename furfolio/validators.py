@@ -150,3 +150,9 @@ def validate_offer_thumbnail_has_max_size(value: FileField):
 def validate_commission_attachment_has_max_size(value: FileField):
     MAX_COMMISSION_ATTACHMENT_FILE_SIZE = 25 * 1024 * 1024  # 25 MiB
     check_file_field_has_max_size(value, MAX_COMMISSION_ATTACHMENT_FILE_SIZE)
+
+
+def validate_commission_message_attachment_has_max_size(value: FileField):
+    MAX_COMMISSION_MESSAGE_ATTACHMENT_FILE_SIZE = 10 * 1024 * 1024  # 10 MiB
+    check_file_field_has_max_size(
+        value, MAX_COMMISSION_MESSAGE_ATTACHMENT_FILE_SIZE)

@@ -544,6 +544,9 @@ class CommissionMessage(mixins.GetFullUrlMixin, models.Model):
     attachment = models.FileField(
         name="attachment",
         blank=True,
+        validators=[
+            furfolio_validators.validate_commission_message_attachment_has_max_size,
+        ]
     )
 
     tracker = FieldTracker()

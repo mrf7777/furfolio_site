@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy, reverse
 from django.core.exceptions import PermissionDenied
 from .. import models
+from .. import mixins
 from .. import utils
 from ..forms import CommissionSearchForm, CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm, UserSearchForm, UpdateCommissionForm, CommissionMessageForm
 
@@ -102,7 +103,7 @@ class BuyerDashboard(LoginRequiredMixin, generic.ListView):
         ).order_by("-updated_date")
 
 
-class OfferList(generic.ListView):
+class OfferList(mixins.GetAdultConsentMixin, generic.ListView):
     model = models.Offer
     template_name = "furfolio/offers/offer_list.html"
     context_object_name = "offer_list"
@@ -110,9 +111,7 @@ class OfferList(generic.ListView):
 
     def get_queryset(self) -> QuerySet[Any]:
         search_form = OfferSearchForm(self.request.GET)
-        consent_to_adult_content = getattr(
-            self.request.user, "consent_to_adult_content", False
-        )
+        consent_to_adult_content = self.does_user_consent_to_adult_content()
         if search_form.is_valid():
             text_query = search_form.cleaned_data["text_query"].strip()
             author = search_form.cleaned_data["author"].strip()
@@ -127,23 +126,17 @@ class OfferList(generic.ListView):
         return context
 
 
-class Offer(UserPassesTestMixin, generic.DetailView):
+class Offer(mixins.GetAdultConsentMixin, UserPassesTestMixin, generic.DetailView):
     model = models.Offer
     context_object_name = "offer"
     template_name = "furfolio/offers/offer_detail.html"
 
     def test_func(self) -> bool | None:
-        consent_to_adult_content = getattr(
-            self.request.user, "consent_to_adult_content", False
-        )
         match self.get_object().rating:
             case models.Offer.RATING_GENERAL:
                 return True
             case models.Offer.RATING_ADULT:
-                consent_to_adult_content = getattr(
-                    self.request.user, "consent_to_adult_content", False
-                )
-                return consent_to_adult_content
+                return self.does_user_consent_to_adult_content()
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

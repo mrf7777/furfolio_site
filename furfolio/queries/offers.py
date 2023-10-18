@@ -1,9 +1,18 @@
 from django.utils import timezone
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
+from django.db.models import Q
 
 
 from .. import models
 from .. import form_fields
+
+
+def get_relevant_offers_for_user(user: 'models.User'):
+    return models.OfferDescriptiveStrForCreator.objects.filter(
+        Q(commission__state=models.Commission.STATE_REVIEW)
+        | Q(commission__state=models.Commission.STATE_ACCEPTED)
+        | Q(commission__state=models.Commission.STATE_IN_PROGRESS)
+    ).distinct().filter(author=user)
 
 
 def get_active_offers_for_user(user: 'models.User'):

@@ -50,8 +50,8 @@ class CreatorDashboard(LoginRequiredMixin, generic.FormView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
 
-        relevant_offers_to_show_on_board = models.OfferDescriptiveStrForCreator.get_offers_with_commission_in_review_accepted_or_in_progress_state(
-        ).filter(author=self.request.user)
+        relevant_offers_to_show_on_board = offer_queries.get_relevant_offers_for_user(
+            self.request.user)
         offer_form = OfferSelectForm(
             queryset=relevant_offers_to_show_on_board, data=self.request.GET)
         offer_form.full_clean()

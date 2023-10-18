@@ -324,13 +324,6 @@ class OfferDescriptiveStrForCreator(Offer):
             string = string + " (Closed)"
         return string
 
-    def get_offers_with_commission_in_review_accepted_or_in_progress_state():
-        return OfferDescriptiveStrForCreator.objects.filter(
-            Q(commission__state=Commission.STATE_REVIEW)
-            | Q(commission__state=Commission.STATE_ACCEPTED)
-            | Q(commission__state=Commission.STATE_IN_PROGRESS)
-        ).distinct()
-
 
 # limit initial request text to about 800 words
 COMMISSION_INITIAL_REQUEST_TEXT_MAX_LENGTH = math.ceil(

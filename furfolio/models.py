@@ -1,6 +1,3 @@
-from functools import reduce
-from locale import currency
-from tabnanny import verbose
 from PIL import Image
 import PIL.ImageFile
 from io import BytesIO

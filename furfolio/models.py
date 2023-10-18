@@ -464,47 +464,6 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
     def get_absolute_url(self):
         return reverse("commission_detail", kwargs={"pk": self.pk})
 
-    def search_commissions(current_user: User, sort: str, self_managed: bool, review: bool, accepted: bool, in_progress: bool, closed: bool, rejected: bool):
-        # get commissions where current user is either buyer or creator
-        query = Commission.get_commissions_with_user(
-            current_user
-        )
-        # filter self managed
-        if self_managed:
-            query = query.filter(
-                offer__author=current_user,
-                commissioner=current_user
-            )
-        # build filter for commission states
-        state_queries = []
-        if review:
-            state_queries.append(Q(state=Commission.STATE_REVIEW))
-        if accepted:
-            state_queries.append(Q(state=Commission.STATE_ACCEPTED))
-        if in_progress:
-            state_queries.append(
-                Q(state=Commission.STATE_IN_PROGRESS))
-        if closed:
-            state_queries.append(Q(state=Commission.STATE_CLOSED))
-        if rejected:
-            state_queries.append(Q(state=Commission.STATE_REJECTED))
-        # state filters should be OR'ed together
-        state_query = reduce(lambda q1, q2: q1 | q2, state_queries, Q())
-        query = query.filter(state_query)
-        # sort
-        print("sort:", sort)
-        match sort:
-            case form_fields.SortField.CHOICE_RELEVANCE:
-                query = query.order_by("-updated_date")
-            case form_fields.SortField.CHOICE_CREATED_DATE:
-                query = query.order_by("-created_date")
-            case form_fields.SortField.CHOICE_UPDATED_DATE:
-                query = query.order_by("-updated_date")
-            case _:
-                query = query.order_by("-updated_date")
-
-        return query
-
     def get_commissions_with_user(user):
         return Commission.objects.filter(Q(offer__author=user) | Q(commissioner=user))
 

@@ -12,6 +12,7 @@ from .. import models
 from .. import mixins
 from .. import utils
 from ..queries import users as user_queries
+from ..queries import commissions as commission_queries
 from ..forms import CommissionSearchForm, CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm, UserSearchForm, UpdateCommissionForm, CommissionMessageForm, OfferSelectForm
 
 
@@ -300,7 +301,7 @@ class Commissions(LoginRequiredMixin, generic.ListView):
     def get_queryset(self) -> QuerySet[Any]:
         form = CommissionSearchForm(self.request.GET)
         if form.is_valid():
-            return models.Commission.search_commissions(
+            return commission_queries.search_commissions(
                 current_user=self.request.user,
                 sort=form.cleaned_data["sort"],
                 self_managed=form.cleaned_data["self_managed"],

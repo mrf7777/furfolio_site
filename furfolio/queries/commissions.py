@@ -8,6 +8,15 @@ from .. import models
 from .. import form_fields
 
 
+def get_commissions_for_user_as_commissioner(
+        user: 'models.User',
+        order_by: str = "-updated_date",
+) -> 'Manager[models.Commission]':
+    return models.Commission.objects.filter(
+        commissioner=user,
+    ).order_by(order_by)
+
+
 def get_commissions_for_user_as_offer_author(
         user: 'models.User',
         commission_states: [str],

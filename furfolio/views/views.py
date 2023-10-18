@@ -107,9 +107,7 @@ class BuyerDashboard(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self) -> QuerySet[Any]:
-        return models.Commission.objects.filter(
-            commissioner=self.request.user.pk,
-        ).order_by("-updated_date")
+        return commission_queries.get_commissions_for_user_as_commissioner(self.request.user)
 
 
 class OfferList(mixins.GetAdultConsentMixin, generic.ListView):

@@ -116,7 +116,8 @@ class CommissionMessageForm(forms.ModelForm):
 class OfferSelectForm(forms.Form):
     template_name = "furfolio/form_templates/grid.html"
 
-    offer = forms.ModelChoiceField(queryset=None, required=False)
+    offer = forms.ModelChoiceField(
+        queryset=None, required=False, empty_label="[Show All]")
 
     def __init__(self, queryset=None, *args, **kwargs):
         super().__init__(*args, **kwargs)

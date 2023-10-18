@@ -24,6 +24,7 @@ from furfolio import form_fields
 from . import validators as furfolio_validators
 from . import mixins
 from . import form_fields
+from .queries import commissions as commission_queries
 from .email import send_commission_state_changed_email, send_new_commission_message_email
 
 
@@ -284,7 +285,7 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         return reverse("offer_detail", kwargs={"pk": self.pk})
 
     def get_active_commissions(self):
-        return Commission.get_active_commissions().filter(offer__pk=self.pk)
+        return commission_queries.get_active_commissions_of_offer(self)
 
     def get_commissions_in_review(self):
         return Commission.objects.filter(offer__pk=self.pk, state=Commission.STATE_REVIEW)
@@ -462,16 +463,6 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
 
     def get_absolute_url(self):
         return reverse("commission_detail", kwargs={"pk": self.pk})
-
-    def get_active_commissions():
-        query = Q(
-            state=Commission.STATE_ACCEPTED
-        ) | Q(
-            state=Commission.STATE_IN_PROGRESS
-        ) | Q(
-            state=Commission.STATE_CLOSED
-        )
-        return Commission.objects.filter(query)
 
     def search_commissions(current_user: User, sort: str, self_managed: bool, review: bool, accepted: bool, in_progress: bool, closed: bool, rejected: bool):
         # get commissions where current user is either buyer or creator

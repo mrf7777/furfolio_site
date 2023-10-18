@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.db.models.fields.files import ImageFieldFile, FileField
 from . import models
+from .queries import commissions as commission_queries
 
 
 def validate_datetime_not_in_past(value: datetime):
@@ -61,8 +62,7 @@ def check_commission_meets_offer_max_review_commissions(commission: 'models.Comm
     if commission.is_self_managed():
         return
 
-    num_offer_commissions_in_review_state = models.Offer.get_commissions_in_review(
-        commission.offer).count()
+    num_offer_commissions_in_review_state = commission.offer.get_commissions_in_review().count()
     if num_offer_commissions_in_review_state >= commission.offer.max_review_commissions:
         raise ValidationError(
             "Commission is not valid because the offer has max number of commissions in review state.")

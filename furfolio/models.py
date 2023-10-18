@@ -285,7 +285,7 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         return commission_queries.get_active_commissions_of_offer(self)
 
     def get_commissions_in_review(self):
-        return Commission.objects.filter(offer__pk=self.pk, state=Commission.STATE_REVIEW)
+        return commission_queries.get_commissions_in_review(self)
 
     def is_closed(self):
         if self.forced_closed:

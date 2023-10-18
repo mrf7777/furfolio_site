@@ -10,6 +10,10 @@ def get_active_commissions_of_offer(offer: 'models.Offer'):
     return get_active_commissions().filter(offer=offer)
 
 
+def get_commissions_in_review(offer: 'models.Offer'):
+    return models.Commission.objects.filter(offer=offer, state=models.Commission.STATE_REVIEW)
+
+
 def get_active_commissions():
     query = Q(
         state=models.Commission.STATE_ACCEPTED

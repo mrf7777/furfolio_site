@@ -287,44 +287,6 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
     def get_commissions_in_review(self):
         return Commission.objects.filter(offer__pk=self.pk, state=Commission.STATE_REVIEW)
 
-    def full_text_search_offers(text_query: str, author: str, sort: str, closed_offers: bool, consent_to_adult_content: bool):
-        query = Offer.objects
-        text_query_cleaned = text_query.strip()
-        author_cleaned = author.strip()
-        if text_query_cleaned:
-            search_vector = SearchVector(
-                "name", weight="A") + SearchVector("description", weight="A")
-            search_query = SearchQuery(text_query_cleaned)
-            search_rank = SearchRank(search_vector, search_query)
-            query = query.annotate(rank=search_rank).filter(rank__gte=0.2)
-        if author_cleaned:
-            print("query:", query)
-            query = query.filter(author__username=author_cleaned)
-            print("query:", query)
-        if not closed_offers:
-            current_datetime = timezone.now()
-            query = query.filter(
-                cutoff_date__gt=current_datetime
-            ).filter(
-                forced_closed=False
-            )
-        if not consent_to_adult_content:
-            query = query.filter(rating=Offer.RATING_GENERAL)
-        match sort:
-            case form_fields.SortField.CHOICE_RELEVANCE:
-                if text_query_cleaned:
-                    query = query.order_by("-rank")
-                else:
-                    query = query.order_by("-created_date")
-            case form_fields.SortField.CHOICE_CREATED_DATE:
-                query = query.order_by("-created_date")
-            case form_fields.SortField.CHOICE_UPDATED_DATE:
-                print("updated date")
-                query = query.order_by("-updated_date")
-            case _:
-                query = query.order_by("-created_date")
-        return query
-
     def is_closed(self):
         if self.forced_closed:
             return True

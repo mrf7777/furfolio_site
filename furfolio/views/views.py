@@ -13,6 +13,7 @@ from .. import mixins
 from .. import utils
 from ..queries import users as user_queries
 from ..queries import commissions as commission_queries
+from ..queries import offers as offer_queries
 from ..forms import CommissionSearchForm, CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm, UserSearchForm, UpdateCommissionForm, CommissionMessageForm, OfferSelectForm
 
 
@@ -141,7 +142,7 @@ class OfferList(mixins.GetAdultConsentMixin, generic.ListView):
             author = search_form.cleaned_data["author"].strip()
             sort = search_form.cleaned_data["sort"]
             closed_offers = search_form.cleaned_data["closed_offers"]
-            return models.Offer.full_text_search_offers(text_query, author, sort, closed_offers, consent_to_adult_content)
+            return offer_queries.full_text_search_offers(text_query, author, sort, closed_offers, consent_to_adult_content)
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

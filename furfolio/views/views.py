@@ -255,8 +255,8 @@ class CreateCommission(LoginRequiredMixin, generic.CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["offer"] = get_object_or_404(
-            models.Offer, pk=self.kwargs["offer_pk"])
+        context["offer"] = offer_queries.get_offer_by_pk(
+            self.kwargs["offer_pk"])
         return context
 
 

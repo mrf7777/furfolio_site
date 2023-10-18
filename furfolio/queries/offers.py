@@ -1,10 +1,15 @@
 from django.utils import timezone
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 from django.db.models import Q
-
+from django.shortcuts import get_object_or_404
 
 from .. import models
 from .. import form_fields
+
+
+def get_offer_by_pk(pk) -> 'models.Offer':
+    return get_object_or_404(
+        models.Offer, pk=pk)
 
 
 def get_relevant_offers_for_user(user: 'models.User'):

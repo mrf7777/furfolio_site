@@ -22,6 +22,7 @@ from . import validators as furfolio_validators
 from . import mixins
 from . import form_fields
 from .queries import commissions as commission_queries
+from .queries import offers as offer_queries
 from .email import send_commission_state_changed_email, send_new_commission_message_email
 
 
@@ -311,10 +312,6 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
                 return "USD"
             case self.__class__.CURRENCY_EUR:
                 return "EUR"
-
-    def get_active_offers():
-        current_time = timezone.now()
-        return Offer.objects.filter(cutoff_date__gte=current_time, forced_closed=False)
 
 
 class OfferDescriptiveStrForCreator(Offer):

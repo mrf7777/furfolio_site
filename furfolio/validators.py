@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.db.models.fields.files import ImageFieldFile, FileField
 from . import models
 from .queries import commissions as commission_queries
+from .queries import offers as offer_queries
 
 
 def validate_datetime_not_in_past(value: datetime):
@@ -165,7 +166,8 @@ def check_user_will_not_go_over_max_active_offers(offer: 'models.Offer'):
         return
 
     # offer is active, so ensure it is under the limit
-    active_offers_by_author = models.Offer.get_active_offers().filter(author=offer.author)
+    active_offers_by_author = offer_queries.get_active_offers_for_user(
+        offer.author)
     if active_offers_by_author.count() >= MAX_ACTIVE_OFFERS_PER_USER:
         raise ValidationError(
             f"Cannot save offer because the number of active offers is at its maximum limit (which is {MAX_ACTIVE_OFFERS_PER_USER}). Consider force-closing an active offer or waiting for an offer to pass its cutoff date."

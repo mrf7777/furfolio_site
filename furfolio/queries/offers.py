@@ -6,6 +6,15 @@ from .. import models
 from .. import form_fields
 
 
+def get_active_offers_for_user(user: 'models.User'):
+    current_time = timezone.now()
+    return models.Offer.objects.filter(
+        cutoff_date__gte=current_time,
+        forced_closed=False,
+        author=user,
+    )
+
+
 def full_text_search_offers(text_query: str, author: str, sort: str, closed_offers: bool, consent_to_adult_content: bool):
     query = models.Offer.objects
     text_query_cleaned = text_query.strip()

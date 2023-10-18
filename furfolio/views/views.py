@@ -14,6 +14,7 @@ from .. import utils
 from ..queries import users as user_queries
 from ..queries import commissions as commission_queries
 from ..queries import offers as offer_queries
+from ..queries import commission_messages as commission_messages_queries
 from ..forms import CommissionSearchForm, CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm, UserSearchForm, UpdateCommissionForm, CommissionMessageForm, OfferSelectForm
 
 
@@ -366,9 +367,8 @@ class CommissionChat(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         commission = self.get_commission()
-        context["commission_messages"] = models.CommissionMessage.objects.filter(
-            commission__pk=commission.pk
-        ).order_by("created_date")
+        context["commission_messages"] = commission_messages_queries.get_commission_messages_for_commission(
+            commission)
         context["other_user"] = utils.get_other_user_in_commission(
             self.request.user, commission)
         return context

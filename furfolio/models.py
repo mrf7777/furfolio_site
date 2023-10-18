@@ -376,6 +376,13 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         current_time = timezone.now()
         return Offer.objects.filter(cutoff_date__gte=current_time, forced_closed=False)
 
+    def get_offers_with_commission_in_review_accepted_or_in_progress_state():
+        return Offer.objects.filter(
+            Q(commission__state=Commission.STATE_REVIEW)
+            | Q(commission__state=Commission.STATE_ACCEPTED)
+            | Q(commission__state=Commission.STATE_IN_PROGRESS)
+        ).distinct()
+
 
 # limit initial request text to about 800 words
 COMMISSION_INITIAL_REQUEST_TEXT_MAX_LENGTH = math.ceil(

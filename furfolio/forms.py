@@ -23,7 +23,8 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = UserCreationForm.Meta.fields + ("email", "role", "avatar", "consent_to_adult_content")
+        fields = UserCreationForm.Meta.fields + \
+            ("email", "role", "avatar", "consent_to_adult_content")
 
 
 class UpdateUserForm(forms.ModelForm):
@@ -110,3 +111,16 @@ class CommissionMessageForm(forms.ModelForm):
             "commission": forms.HiddenInput(),
             "author": forms.HiddenInput(),
         }
+
+
+class OfferSelectForm(forms.Form):
+    template_name = "furfolio/form_templates/grid.html"
+
+    offer = forms.ModelChoiceField(queryset=None, required=False)
+
+    def __init__(self, queryset=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["offer"].queryset = queryset
+
+    def set_queryset(self, queryset):
+        self.fields["offer"].queryset = queryset

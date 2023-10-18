@@ -11,7 +11,7 @@ from django.core.exceptions import PermissionDenied
 from .. import models
 from .. import mixins
 from .. import utils
-from ..forms import CommissionSearchForm, CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm, UserSearchForm, UpdateCommissionForm, CommissionMessageForm
+from ..forms import CommissionSearchForm, CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm, UserSearchForm, UpdateCommissionForm, CommissionMessageForm, OfferSelectForm
 
 
 PAGE_SIZE = 10
@@ -38,13 +38,22 @@ class DashboardRedirector(LoginRequiredMixin, generic.RedirectView):
             return reverse("creator_dashboard")
 
 
-class CreatorDashboard(LoginRequiredMixin, generic.TemplateView):
+class CreatorDashboard(LoginRequiredMixin, generic.FormView):
     template_name = "furfolio/dashboards/creator.html"
+    form_class = OfferSelectForm
 
     MAX_COMMISSIONS_PER_COLUMN = 15
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
+
+        relevant_offers_to_show_on_board = models.Offer.get_offers_with_commission_in_review_accepted_or_in_progress_state(
+        ).filter(author=self.request.user)
+        print(list(relevant_offers_to_show_on_board))
+        offer_form = OfferSelectForm(
+            queryset=relevant_offers_to_show_on_board, data=self.request.GET)
+        offer_form.full_clean()
+        context["offer_select_form"] = offer_form
 
         current_user_pk = self.request.user.pk
         review_commissions = models.Commission.objects.filter(
@@ -63,6 +72,20 @@ class CreatorDashboard(LoginRequiredMixin, generic.TemplateView):
             offer__author__pk=current_user_pk,
             state=models.Commission.STATE_CLOSED
         ).order_by("-updated_date")
+        if offer_form.cleaned_data["offer"] is not None:
+            selected_offer = offer_form.cleaned_data["offer"]
+            review_commissions = review_commissions.filter(
+                offer=selected_offer
+            )
+            accepted_commissions = accepted_commissions.filter(
+                offer=selected_offer
+            )
+            in_progress_commissions = in_progress_commissions.filter(
+                offer=selected_offer
+            )
+            closed_commissions = closed_commissions.filter(
+                offer=selected_offer
+            )
 
         review_commissions_total_count = review_commissions.count()
         accepted_commissions_total_count = accepted_commissions.count()

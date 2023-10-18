@@ -382,7 +382,6 @@ class OfferDescriptiveStrForCreator(Offer):
         proxy = True
 
     def __str__(self):
-        print("inside new __str__ method.")
         string = f"{self.name}"
         if self.is_closed():
             string = string + " (Closed)"

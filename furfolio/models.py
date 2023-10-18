@@ -376,8 +376,20 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         current_time = timezone.now()
         return Offer.objects.filter(cutoff_date__gte=current_time, forced_closed=False)
 
+
+class OfferDescriptiveStrForCreator(Offer):
+    class Meta:
+        proxy = True
+
+    def __str__(self):
+        print("inside new __str__ method.")
+        string = f"{self.name}"
+        if self.is_closed():
+            string = string + " (Closed)"
+        return string
+
     def get_offers_with_commission_in_review_accepted_or_in_progress_state():
-        return Offer.objects.filter(
+        return OfferDescriptiveStrForCreator.objects.filter(
             Q(commission__state=Commission.STATE_REVIEW)
             | Q(commission__state=Commission.STATE_ACCEPTED)
             | Q(commission__state=Commission.STATE_IN_PROGRESS)

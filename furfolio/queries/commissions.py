@@ -3,9 +3,14 @@ from functools import reduce
 from typing import Any
 from django.db.models import Q
 from django.db.models import Manager
+from django.shortcuts import get_object_or_404
 
 from .. import models
 from .. import form_fields
+
+
+def get_commission_by_pk(pk) -> 'models.Commission':
+    return get_object_or_404(models.Commission, pk=pk)
 
 
 def get_commissions_for_user_as_commissioner(

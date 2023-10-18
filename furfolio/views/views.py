@@ -343,7 +343,7 @@ class CommissionChat(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView
     template_name = "furfolio/commissions/chat/chat.html"
 
     def get_commission(self):
-        return get_object_or_404(models.Commission, pk=self.kwargs["pk"])
+        return commission_queries.get_commission_by_pk(self.kwargs["pk"])
 
     def get_initial(self) -> dict[str, Any]:
         commission = self.get_commission()

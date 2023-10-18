@@ -57,37 +57,21 @@ class CreatorDashboard(LoginRequiredMixin, generic.FormView):
         offer_form.full_clean()
         context["offer_select_form"] = offer_form
 
-        current_user_pk = self.request.user.pk
-        review_commissions = models.Commission.objects.filter(
-            offer__author__pk=current_user_pk,
-            state=models.Commission.STATE_REVIEW,
-        ).order_by("-updated_date")
-        accepted_commissions = models.Commission.objects.filter(
-            offer__author__pk=current_user_pk,
-            state=models.Commission.STATE_ACCEPTED
-        ).order_by("-updated_date")
-        in_progress_commissions = models.Commission.objects.filter(
-            offer__author__pk=current_user_pk,
-            state=models.Commission.STATE_IN_PROGRESS,
-        ).order_by("-updated_date")
-        closed_commissions = models.Commission.objects.filter(
-            offer__author__pk=current_user_pk,
-            state=models.Commission.STATE_CLOSED
-        ).order_by("-updated_date")
-        if offer_form.cleaned_data["offer"] is not None:
-            selected_offer = offer_form.cleaned_data["offer"]
-            review_commissions = review_commissions.filter(
-                offer=selected_offer
-            )
-            accepted_commissions = accepted_commissions.filter(
-                offer=selected_offer
-            )
-            in_progress_commissions = in_progress_commissions.filter(
-                offer=selected_offer
-            )
-            closed_commissions = closed_commissions.filter(
-                offer=selected_offer
-            )
+        commissions = commission_queries.get_commissions_for_user_as_offer_author(
+            self.request.user,
+            [
+                models.Commission.STATE_REVIEW,
+                models.Commission.STATE_ACCEPTED,
+                models.Commission.STATE_IN_PROGRESS,
+                models.Commission.STATE_CLOSED,
+            ],
+            offer_form.cleaned_data["offer"],
+        )
+
+        review_commissions = commissions[models.Commission.STATE_REVIEW]
+        accepted_commissions = commissions[models.Commission.STATE_ACCEPTED]
+        in_progress_commissions = commissions[models.Commission.STATE_IN_PROGRESS]
+        closed_commissions = commissions[models.Commission.STATE_CLOSED]
 
         review_commissions_total_count = review_commissions.count()
         accepted_commissions_total_count = accepted_commissions.count()

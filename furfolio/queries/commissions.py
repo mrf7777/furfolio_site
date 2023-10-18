@@ -1,9 +1,38 @@
 
 from functools import reduce
+from typing import Any
 from django.db.models import Q
+from django.db.models import Manager
 
 from .. import models
 from .. import form_fields
+
+
+def get_commissions_for_user_as_offer_author(
+        user: 'models.User',
+        commission_states: [str],
+        offer: Any | None = None,
+        order_by: str = "-updated_date"
+) -> 'dict[str, Manager[models.Commission]]':
+    """
+    Given a user and a set of commissions states, return
+    a dictionary that maps from commission states to query sets
+    that hold the commissions of that state for the user.
+    An offer can be provided, if so, it will only return commissions
+    from that offer.
+    """
+
+    querysets = dict()
+    for state in commission_states:
+        query = models.Commission.objects.filter(
+            offer__author=user,
+            state=state,
+        )
+        if offer is not None:
+            query = query.filter(offer=offer)
+        query = query.order_by(order_by)
+        querysets[state] = query
+    return querysets
 
 
 def get_active_commissions_of_offer(offer: 'models.Offer'):

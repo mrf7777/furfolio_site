@@ -135,9 +135,6 @@ class User(mixins.GetFullUrlMixin, AbstractUser):
                 self.avatar, User.AVATAR_SIZE_PIXELS[0], User.AVATAR_SIZE_PIXELS[1], transparency_remove=True, fit_in_center=True)
         super(User, self).save(*args, **kwargs)
 
-    def get_creators():
-        return User.objects.filter(role=User.ROLE_CREATOR)
-
     def get_absolute_url(self):
         return reverse("user", kwargs={"username": self.username})
 

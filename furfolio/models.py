@@ -135,23 +135,6 @@ class User(mixins.GetFullUrlMixin, AbstractUser):
                 self.avatar, User.AVATAR_SIZE_PIXELS[0], User.AVATAR_SIZE_PIXELS[1], transparency_remove=True, fit_in_center=True)
         super(User, self).save(*args, **kwargs)
 
-    def full_text_search_creators(text_query: str):
-        text_query_cleaned = text_query.strip()
-        query = User.objects
-        if text_query_cleaned:
-            search_vector = SearchVector("username", weight="A")
-            search_query = SearchQuery(text_query_cleaned)
-            search_rank = SearchRank(search_vector, search_query)
-            query = User.objects.annotate(
-                rank=search_rank
-            ).filter(rank__gte=0.2)
-        query = query.filter(role=User.ROLE_CREATOR).filter(is_active=True)
-        if text_query_cleaned:
-            query = query.order_by("-rank")
-        else:
-            query = query.order_by("-date_joined")
-        return query
-
     def get_creators():
         return User.objects.filter(role=User.ROLE_CREATOR)
 

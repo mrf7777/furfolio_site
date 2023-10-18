@@ -11,6 +11,7 @@ from django.core.exceptions import PermissionDenied
 from .. import models
 from .. import mixins
 from .. import utils
+from ..queries import users as user_queries
 from ..forms import CommissionSearchForm, CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm, UserSearchForm, UpdateCommissionForm, CommissionMessageForm, OfferSelectForm
 
 
@@ -247,7 +248,7 @@ class UserList(generic.ListView):
         search_form = UserSearchForm(self.request.GET)
         if search_form.is_valid():
             text_query = search_form.cleaned_data["text_query"].strip()
-            return models.User.full_text_search_creators(text_query)
+            return user_queries.full_text_search_creators(text_query)
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

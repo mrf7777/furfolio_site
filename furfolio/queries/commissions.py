@@ -21,11 +21,13 @@ def get_active_commissions():
     return models.Commission.objects.filter(query)
 
 
+def get_commissions_with_user(user: 'models.User'):
+    return models.Commission.objects.filter(Q(offer__author=user) | Q(commissioner=user))
+
+
 def search_commissions(current_user: 'models.User', sort: str, self_managed: bool, review: bool, accepted: bool, in_progress: bool, closed: bool, rejected: bool):
     # get commissions where current user is either buyer or creator
-    query = models.Commission.get_commissions_with_user(
-        current_user
-    )
+    query = get_commissions_with_user(current_user)
     # filter self managed
     if self_managed:
         query = query.filter(

@@ -464,9 +464,6 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
     def get_absolute_url(self):
         return reverse("commission_detail", kwargs={"pk": self.pk})
 
-    def get_commissions_with_user(user):
-        return Commission.objects.filter(Q(offer__author=user) | Q(commissioner=user))
-
     def is_active(self):
         return self.state in {Commission.STATE_ACCEPTED, Commission.STATE_IN_PROGRESS, Commission.STATE_CLOSED}
 

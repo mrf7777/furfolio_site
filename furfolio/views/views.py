@@ -333,8 +333,6 @@ class UpdateCommissionStatus(LoginRequiredMixin, generic.View):
         redirect_url = request.GET["next"]
         commission.state = request.POST["state"]
         commission.save()
-        print(redirect_url)
-        print(redirect(redirect_url))
         return redirect(redirect_url)
 
 

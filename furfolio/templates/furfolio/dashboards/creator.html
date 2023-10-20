@@ -14,14 +14,16 @@
 {% endblock %}
 
 {% block body_1 %}
-<h4>Offers</h4>
-<div class="mb-5 d-flex align-items-center">
-    <a href="{% url "offer_list" %}?author={{ request.user.username }}&sort=created_date"><button class="btn btn-primary me-3">My Offers</button></a>
-    <a class="btn btn-primary d-inline-flex" href="{% url "create_offer" %}"><img class="me-2" src="{% static "symbols/plus-white.svg" %}" style="width: 1em;">Create Offer</a>
+<div class="mb-2 d-flex align-items-center">
+    <div class="me-1">Offers</div>
+    <a href="{% url "offer_list" %}?author={{ request.user.username }}&sort=created_date"><button class="btn btn-primary me-3">View</button></a>
+    <a class="btn btn-primary d-inline-flex" href="{% url "create_offer" %}"><img class="me-2" src="{% static "symbols/plus-white.svg" %}" style="width: 1em;">Create</a>
 </div>
 
-<h4>Commissions</h4>
-<p><a href="{% url "commissions" %}" class="text-decoration-none btn btn-primary">See all</a></p>
+<div class="mb-2 d-flex align-items-center">
+    <div class="me-1">Commissions</div>
+    <a href="{% url "commissions" %}" class="text-decoration-none btn btn-primary">See all</a>
+</div>
 
 <form method="get">
     {{ offer_select_form }}

@@ -7,9 +7,12 @@
     <div class="flex-fill"></div>
 
     {% if user.pk == request.user.pk %}
-        <div class="d-flex justify-content-end">
-            <a href="{% url "update_user" user.username %}"><button class="btn btn-primary">Settings</button></a>
-        </div>
+        <a href="{% url "update_user" user.username %}"><button class="btn btn-primary">Settings</button></a>
+    {% else %}
+        <form method="post" action="{% url "follow_user" user.username %}?next={{ request.get_full_path|urlencode }}">
+            {% csrf_token %}
+            <button class="btn btn-primary">Follow</button>
+        </form>
     {% endif %}
 </div>
 {% endblock %}

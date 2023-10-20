@@ -386,3 +386,6 @@ class MakeUserFollowUser(LoginRequiredMixin, generic.View):
             followed=user_to_follow,
             should_follow=True
         )
+
+        redirect_url = request.GET["next"]
+        return redirect(redirect_url)

@@ -15,6 +15,7 @@ from ..queries import users as user_queries
 from ..queries import commissions as commission_queries
 from ..queries import offers as offer_queries
 from ..queries import commission_messages as commission_messages_queries
+from ..queries import user_following_user as user_following_user_queries
 from ..forms import CommissionSearchForm, CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm, UserSearchForm, UpdateCommissionForm, CommissionMessageForm, OfferSelectForm
 
 
@@ -370,3 +371,18 @@ class CommissionChat(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView
         context["other_user"] = utils.get_other_user_in_commission(
             self.request.user, commission)
         return context
+
+
+class MakeUserFollowUser(LoginRequiredMixin, generic.View):
+    def post(self, request, username):
+        user_to_follow = get_object_or_404(models.User, username=username)
+        if user_to_follow == request.user:
+            raise PermissionDenied(
+                "You can not follow yourself."
+            )
+
+        user_following_user_queries.make_user_follow_or_unfollow_user(
+            follower=request.user,
+            followed=user_to_follow,
+            should_follow=True
+        )

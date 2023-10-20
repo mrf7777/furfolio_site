@@ -17,6 +17,9 @@ urlpatterns = [
     path('users/<username>/update/',
          views.UpdateUser.as_view(), name="update_user"),
     path('users/', views.UserList.as_view(), name="user_list"),
+    # user following
+    path('users/<username>/follow',
+         views.MakeUserFollowUser.as_view(), name="follow_user"),
     # accounts
     path('accounts/signup/', views.SignUp.as_view(), name="signup"),
     path(
@@ -27,10 +30,14 @@ urlpatterns = [
         name="login"
     ),
     path('accounts/logout/', auth_views.LogoutView.as_view(), name="logout"),
-    path('accounts/password_reset', auth_views.PasswordResetView.as_view(), name="password_reset"),
-    path('accounts/password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),
-    path('accounts/reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
-    path('accounts/reset/done/', auth_views.PasswordResetCompleteView.as_view(), name="password_reset_complete"),
+    path('accounts/password_reset',
+         auth_views.PasswordResetView.as_view(), name="password_reset"),
+    path('accounts/password_reset/done/',
+         auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),
+    path('accounts/reset/<uidb64>/<token>/',
+         auth_views.PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
+    path('accounts/reset/done/', auth_views.PasswordResetCompleteView.as_view(),
+         name="password_reset_complete"),
     # dashboards
     path('dashboard/', views.DashboardRedirector.as_view(), name="dashboard"),
     path('dashboard/creator/', views.CreatorDashboard.as_view(),

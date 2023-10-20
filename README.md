@@ -130,3 +130,27 @@
 - make min and max price mandatory
 - cons:
   - manual implementation of interval intersection
+
+# repatitive/reoccuring offers ideas
+- use-cases:
+  - a creator has a service that they open regurally
+  - a creator usually provides only one or two services
+- solutions:
+  - template
+    - reduces boilerplate
+    - allows creator to draft an offer quicker
+    - what about customization of cutoff time, thumbnail, etc.
+      - do not store cutoff time and thumbnail in template
+    - typing in cutoff time is time intensive
+      - an offer template can store a duration rather than a cutoff time
+    - should all fields be optional?
+      - If yes, I like that since the creator does not have to 
+      - If no, what if the creator does not want 
+
+# buyer engagement
+- buyer engagement encurages creators to engage too
+- what would increse buyer engagement?
+  - notified when creator creates offer
+    - implement a "follow" system where users can follow creators
+  - notified when offer has slots and is about to close ("about to" is different for different creators)
+    - implement a "follow offer" system where users can track offers

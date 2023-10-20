@@ -9,10 +9,14 @@
     {% if user.pk == request.user.pk %}
         <a href="{% url "update_user" user.username %}"><button class="btn btn-primary">Settings</button></a>
     {% else %}
-        <form method="post" action="{% url "follow_user" user.username %}?next={{ request.get_full_path|urlencode }}">
-            {% csrf_token %}
-            <button class="btn btn-primary">Follow</button>
-        </form>
+        {% if is_user_followed %}
+            You are already following.
+        {% else %}
+            <form method="post" action="{% url "follow_user" user.username %}?next={{ request.get_full_path|urlencode }}">
+                {% csrf_token %}
+                <button class="btn btn-primary">Follow</button>
+            </form>
+        {% endif %}
     {% endif %}
 </div>
 {% endblock %}

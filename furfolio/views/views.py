@@ -210,6 +210,20 @@ class User(generic.DetailView):
     context_object_name = "user"
     template_name = "furfolio/users/user_detail.html"
 
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+
+        user_to_follow = get_object_or_404(
+            models.User,
+            username=self.kwargs["username"],
+        )
+        context["is_user_followed"] = user_following_user_queries.does_user_follow_user(
+            self.request.user,
+            user_to_follow,
+        )
+
+        return context
+
 
 class UpdateUser(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = models.User

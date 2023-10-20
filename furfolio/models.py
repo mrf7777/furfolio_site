@@ -138,6 +138,16 @@ class User(mixins.GetFullUrlMixin, AbstractUser):
         return reverse("user", kwargs={"username": self.username})
 
 
+class UserFollowingUser(models.Model):
+    follower = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="follower")
+    followed = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="followed")
+
+    def __str__(self):
+        return f"{self.follower.username} is following {self.followed.username}"
+
+
 def seven_days_from_now():
     return timezone.now() + timedelta(days=7)
 

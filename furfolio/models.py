@@ -23,7 +23,7 @@ from . import mixins
 from . import form_fields
 from .queries import commissions as commission_queries
 from .queries import offers as offer_queries
-from .email import send_commission_state_changed_email, send_new_commission_message_email
+from .email import send_commission_state_changed_email, send_new_commission_message_email, send_new_offer_email
 
 
 PIL.ImageFile.LOAD_TRUNCATED_IMAGES = True
@@ -280,7 +280,14 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         if self.thumbnail and self.tracker.has_changed("thumbnail"):
             image_resize(
                 self.thumbnail, Offer.THUMBNAIL_MAX_DIMENTIONS[0], Offer.THUMBNAIL_MAX_DIMENTIONS[1])
+
+        # determine who to email if offer is created
+        if self.tracker.previous("pk") is None:
+            self.send_email_about_created_offer()
         super(Offer, self).save(*args, **kwargs)
+
+    def send_email_about_created_offer(self):
+        send_new_offer_email()
 
     def clean(self):
         furfolio_validators.check_user_is_not_spamming_offers(self.author)

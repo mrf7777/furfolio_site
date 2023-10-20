@@ -7,20 +7,21 @@ from . import models
 
 def truncate_string(s: str, max_length: int) -> str:
     trailing_string = ".."
-    truncated = (s[:max_length - len(trailing_string)] + "..") if len(s) > max_length else s
+    truncated = (s[:max_length - len(trailing_string)] +
+                 "..") if len(s) > max_length else s
     return truncated
 
 
 def send_email(
-    text_template_path: str, 
+    text_template_path: str,
     html_template_path: str,
     context: dict[str, Any],
     subject: str,
     to_address: str,
-    ) -> int:
+) -> int:
     text_content = render_to_string(
         text_template_path,
-        context=context,        
+        context=context,
     )
     html_content = render_to_string(
         html_template_path,
@@ -57,4 +58,7 @@ def send_new_commission_message_email(commission_message: 'models.CommissionMess
         subject,
         commission_message.get_receiving_user().email,
     )
-    
+
+
+def send_new_offer_email():
+    pass

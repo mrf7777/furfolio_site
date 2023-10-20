@@ -18,8 +18,10 @@ urlpatterns = [
          views.UpdateUser.as_view(), name="update_user"),
     path('users/', views.UserList.as_view(), name="user_list"),
     # user following
-    path('users/<username>/follow',
+    path('users/<username>/follow/',
          views.MakeUserFollowUser.as_view(), name="follow_user"),
+    path('users/<username>/unfollow/',
+         views.MakeUserUnfollowUser.as_view(), name="unfollow_user"),
     # accounts
     path('accounts/signup/', views.SignUp.as_view(), name="signup"),
     path(

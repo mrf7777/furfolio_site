@@ -10,7 +10,10 @@
         <a href="{% url "update_user" user.username %}"><button class="btn btn-primary">Settings</button></a>
     {% else %}
         {% if is_user_followed %}
-            You are already following.
+            <form method="post" action="{% url "unfollow_user" user.username %}?next={{ request.get_full_path|urlencode }}">
+                {% csrf_token %}
+                <button class="btn btn-primary">Unfollow</button>
+            </form>
         {% else %}
             <form method="post" action="{% url "follow_user" user.username %}?next={{ request.get_full_path|urlencode }}">
                 {% csrf_token %}

@@ -403,3 +403,21 @@ class MakeUserFollowUser(LoginRequiredMixin, generic.View):
 
         redirect_url = request.GET["next"]
         return redirect(redirect_url)
+
+
+class MakeUserUnfollowUser(LoginRequiredMixin, generic.View):
+    def post(self, request, username):
+        user_to_unfollow = get_object_or_404(models.User, username=username)
+        if user_to_unfollow == request.user:
+            raise PermissionDenied(
+                "You can not unfollow yourself."
+            )
+
+        user_following_user_queries.make_user_follow_or_unfollow_user(
+            follower=request.user,
+            followed=user_to_unfollow,
+            should_follow=False
+        )
+
+        redirect_url = request.GET["next"]
+        return redirect(redirect_url)

@@ -8,7 +8,6 @@ from django.db.models import Q
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.indexes import GinIndex
-from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 from django.core import validators
 from django.core.files import File
 from django.urls import reverse
@@ -17,12 +16,10 @@ from django.utils.safestring import mark_safe
 from datetime import timedelta
 import math
 
-from furfolio import form_fields
 from . import validators as furfolio_validators
 from . import mixins
-from . import form_fields
 from .queries import commissions as commission_queries
-from .queries import offers as offer_queries
+from .queries import users as user_queries
 from .email import send_commission_state_changed_email, send_new_commission_message_email, send_new_offer_email
 
 
@@ -133,6 +130,9 @@ class User(mixins.GetFullUrlMixin, AbstractUser):
             image_resize(
                 self.avatar, User.AVATAR_SIZE_PIXELS[0], User.AVATAR_SIZE_PIXELS[1], transparency_remove=True, fit_in_center=True)
         super(User, self).save(*args, **kwargs)
+    
+    def get_following_users(self):
+        return user_queries.get_users_following_user(self)
 
     def get_absolute_url(self):
         return reverse("user", kwargs={"username": self.username})

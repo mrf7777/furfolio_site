@@ -1,6 +1,6 @@
 
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
-
+from django.db.models import Manager
 
 from .. import models
 
@@ -21,3 +21,6 @@ def full_text_search_creators(text_query: str):
     else:
         query = query.order_by("-date_joined")
     return query
+
+def get_users_following_user(user: 'models.User') -> 'Manager[models.User]':
+    return models.UserFollowingUser.objects.filter(followed=user).order_by("follower__name")

@@ -1,13 +1,16 @@
 {% extends "furfolio/layouts/title_body.html" %}
 
 {% block title %}
-<div class="d-flex align-items-center">
+<div class="d-flex flex-wrap align-items-center">
     <img class="me-3" src="{% include "./avatar_image_url.txt" with user=user only %}">{{ user.username }}
 
     <div class="flex-fill"></div>
 
     {% if user.pk == request.user.pk %}
-        <a href="{% url "update_user" user.username %}"><button class="btn btn-primary">Settings</button></a>
+        <div>
+            <a class="btn btn-primary me-1" href="{% url "followed_list" user.username %}">Followed</a>
+            <a class="btn btn-primary" href="{% url "update_user" user.username %}">Settings</a>
+        </div>
     {% else %}
         {% if is_user_followed %}
             <form method="post" action="{% url "unfollow_user" user.username %}?next={{ request.get_full_path|urlencode }}">

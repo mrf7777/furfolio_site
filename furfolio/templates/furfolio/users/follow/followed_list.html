@@ -1,0 +1,19 @@
+{% extends "furfolio/layouts/title_body.html" %}
+
+{% block title %}
+<div class="d-flex align-items-center">
+    {% if followed_users %}
+        <span class="me-2">{% include "furfolio/users/badge.html" with user=user show_avatar=True only %}</span> is following:
+    {% else %}
+        <span class="me-2">{% include "furfolio/users/badge.html" with user=user show_avatar=True only %}</span> is following no one.
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block body %}
+{% if followed_users %}
+    {% for followed_user in followed_users %}
+        {% include "furfolio/users/user_card.html" with user=followed_user only %}
+    {% endfor %}
+{% endif %}
+{% endblock %}

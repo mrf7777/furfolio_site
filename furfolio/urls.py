@@ -22,6 +22,7 @@ urlpatterns = [
          views.MakeUserFollowUser.as_view(), name="follow_user"),
     path('users/<username>/unfollow/',
          views.MakeUserUnfollowUser.as_view(), name="unfollow_user"),
+    path('users/<username>/followed/', views.FollowedList.as_view(), name="followed_list"),
     # accounts
     path('accounts/signup/', views.SignUp.as_view(), name="signup"),
     path(

@@ -133,6 +133,9 @@ class User(mixins.GetFullUrlMixin, AbstractUser):
     
     def get_following_users(self):
         return user_queries.get_users_following_user(self)
+    
+    def get_followed_users(self):
+        return user_queries.get_followed_users(self)
 
     def get_absolute_url(self):
         return reverse("user", kwargs={"username": self.username})

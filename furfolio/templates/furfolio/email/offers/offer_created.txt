@@ -1,0 +1,3 @@
+"{{ offer.author.username }}" has published a new offer: "{{ offer.name }}"
+
+You can find and commission the offer here: {{ offer.get_full_url }}

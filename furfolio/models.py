@@ -281,13 +281,11 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
             image_resize(
                 self.thumbnail, Offer.THUMBNAIL_MAX_DIMENTIONS[0], Offer.THUMBNAIL_MAX_DIMENTIONS[1])
 
+        super(Offer, self).save(*args, **kwargs)
+        
         # determine who to email if offer is created
         if self.tracker.previous("pk") is None:
-            self.send_email_about_created_offer()
-        super(Offer, self).save(*args, **kwargs)
-
-    def send_email_about_created_offer(self):
-        send_new_offer_email()
+            send_new_offer_email(self)
 
     def clean(self):
         furfolio_validators.check_user_is_not_spamming_offers(self.author)

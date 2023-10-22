@@ -2,6 +2,8 @@ from typing import Any
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.conf import settings
+from django.db.models import Manager
+
 from . import models
 
 
@@ -60,5 +62,16 @@ def send_new_commission_message_email(commission_message: 'models.CommissionMess
     )
 
 
-def send_new_offer_email():
-    pass
+def send_new_offer_email(new_offer: 'models.Offer'):
+    truncated_offer_title = truncate_string(new_offer.name, 23)
+    author_username = truncate_string(new_offer.author.username, 20)
+    subject = f"{author_username} Made an Offer | {truncated_offer_title}"
+    # TODO: see if there is an efficient bulk email
+    for user in new_offer.author.get_following_users():
+        send_email(
+            "furfolio/email/offers/offer_created.txt",
+            "furfolio/email/offers/offer_created.html",
+            {"offer": new_offer},
+            subject,
+            user.email,
+        )

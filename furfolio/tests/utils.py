@@ -13,6 +13,11 @@ def make_user(username, password="admin", role=models.User.ROLE_BUYER, email="te
     return user
 
 
+def make_user_follow_user(follower, followed):
+    record = models.UserFollowingUser(follower=follower, followed=followed)
+    record.full_clean()
+    record.save()
+
 def make_offer(user, name: str = "Offer", description: str = "This is an offer made by a user.", slots=3, max_review_commissions=2, forced_closed=False):
     offer = models.Offer(
         author=user,

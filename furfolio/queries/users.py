@@ -23,7 +23,6 @@ def full_text_search_creators(text_query: str):
     return query
 
 def get_users_following_user(user: 'models.User') -> 'Manager[models.User]':
-    # TODO: This does not work
-    query = models.User.objects.filter(followed__followed=user).order_by("username").distinct()
+    query = models.User.objects.filter(follower__followed=user).order_by("username").distinct()
     print("get users following user query:", query)
     return query

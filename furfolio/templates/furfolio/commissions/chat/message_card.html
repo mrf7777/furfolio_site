@@ -14,7 +14,7 @@ Expects the following context objects:
     <div class="card-body">
         <div class="card-text">
             <p>
-                {{ text }}
+                {{ text|urlize }}
             </p>
             {% if attachment_name and attachment_url %}
                 <a href="{{ attachment_url }}">{{ attachment_name }}</a>

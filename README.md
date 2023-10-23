@@ -146,6 +146,9 @@
     - should all fields be optional?
       - If yes, I like that since the creator does not have to 
       - If no, what if the creator does not want 
+- What about offers that have the same name? How to distinguish?
+  - What we have: cutoff date, created date,
+  - can simply add time till closing. simple.
 
 # buyer engagement
 - buyer engagement encurages creators to engage too
@@ -154,3 +157,31 @@
     - implement a "follow" system where users can follow creators
   - notified when offer has slots and is about to close ("about to" is different for different creators)
     - implement a "follow offer" system where users can track offers
+
+# public events
+- commissions can be at a high during an in-person convention
+- creators congregate at a convention
+  - they are marketed together as the convention published the dealers and artists
+- having a landing page for a public event would help engagement with the platform
+- another search vector to find offers faster
+- CRUD
+  - Create
+    - Who has the authority to publish an event?
+    - Maybe just let the event organizer contact an admin and then verify the contact.
+  - Read
+    - Have an event page with ongoing events.
+  - Update
+    - Contact an admin
+  - Delete
+    - Ideally, should never happen. Events should simply "expire".
+- How can a creator make offers to associate with an event?
+  - Make event organizer provide a list of legitimate furfolio users who can add offers to the event.
+
+# monetization ideas
+
+## subscription
+- provide lax limits and extra features
+  - up active offer limit
+  - up max in review per offer limit
+  - up max number of offer templates
+  - ability to associate offers to certain events

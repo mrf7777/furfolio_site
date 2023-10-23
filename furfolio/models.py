@@ -177,7 +177,9 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         (CURRENCY_USD, "$ United States Dollar (USD)"),
         (CURRENCY_EUR, EURO_SYMBOL + " Euro (EUR)"),
     ]
-
+    
+    HIGHEST_PRICE = 1_000_000_000
+    
     ASPECT_RATIO_MIN = (1, 3)
     ASPECT_RATIO_MAX = (4, 1)
     THUMBNAIL_MAX_DIMENTIONS = (600, 350)
@@ -250,13 +252,19 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         verbose_name="Minimum Price",
         help_text="The minimum price for commissions of this offer.",
         default=0,
+        validators=[
+            validators.MaxValueValidator(HIGHEST_PRICE-1)
+        ]
     )
     max_price = models.PositiveIntegerField(
         name="max_price",
         verbose_name="Maximum Price",
         help_text="The maximum price for commissions of this offer.",
         default=5,
-        validators=[validators.MinValueValidator(1),]
+        validators=[
+            validators.MinValueValidator(1),
+            validators.MaxValueValidator(HIGHEST_PRICE)
+        ]
     )
     currency = models.CharField(
         name="currency",

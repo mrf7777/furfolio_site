@@ -1,3 +1,4 @@
+from token import MINUS
 from django.utils import timezone
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 from django.db.models import Q
@@ -29,7 +30,15 @@ def get_active_offers_for_user(user: 'models.User'):
     )
 
 
-def full_text_search_offers(text_query: str, author: str, sort: str, closed_offers: bool, consent_to_adult_content: bool):
+def full_text_search_offers(
+    text_query: str,
+    author: str,
+    sort: str,
+    closed_offers: bool,
+    consent_to_adult_content: bool,
+    price_min: int = None,
+    price_max: int = None,
+):
     query = models.Offer.objects
     text_query_cleaned = text_query.strip()
     author_cleaned = author.strip()
@@ -52,6 +61,13 @@ def full_text_search_offers(text_query: str, author: str, sort: str, closed_offe
         )
     if not consent_to_adult_content:
         query = query.filter(rating=models.Offer.RATING_GENERAL)
+        
+    # filter based on price
+    price_min = price_min if price_min else 0
+    price_max = price_max if price_max else models.Offer.HIGHEST_PRICE
+    ## use range overlap formula: https://stackoverflow.com/a/3269471
+    query = query.filter(min_price__lte=price_max, max_price__gte=price_min)
+
     match sort:
         case form_fields.SortField.CHOICE_RELEVANCE:
             if text_query_cleaned:

@@ -1,3 +1,4 @@
+from typing import Any
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.forms import EmailField
 from django import forms
@@ -82,6 +83,8 @@ class OfferSearchForm(TextSearchForm):
     author = forms.CharField(max_length=300, required=False)
     sort = form_fields.SortField()
     closed_offers = forms.BooleanField(required=False, initial=False)
+    price_min = forms.IntegerField(min_value=0, initial=0, required=False)
+    price_max = forms.IntegerField(min_value=1, initial=1, required=False)
 
 
 class CommissionForm(forms.ModelForm):

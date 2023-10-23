@@ -18,7 +18,8 @@ def make_user_follow_user(follower, followed):
     record.full_clean()
     record.save()
 
-def make_offer(user, name: str = "Offer", description: str = "This is an offer made by a user.", slots=3, max_review_commissions=2, forced_closed=False):
+
+def make_offer(user, name: str = "Offer", description: str = "This is an offer made by a user.", slots=3, max_review_commissions=2, forced_closed=False, max_commissions_per_user=1):
     offer = models.Offer(
         author=user,
         name=name,
@@ -26,6 +27,7 @@ def make_offer(user, name: str = "Offer", description: str = "This is an offer m
         slots=slots,
         max_review_commissions=max_review_commissions,
         forced_closed=forced_closed,
+        max_commissions_per_user=max_commissions_per_user,
     )
     offer.full_clean()
     offer.save()

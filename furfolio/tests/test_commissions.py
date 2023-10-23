@@ -72,14 +72,36 @@ class GetOtherUserInCommissionTestCase(TestCase):
         self.buyer = utils.make_user("buyer", role=User.ROLE_BUYER)
         self.offer = utils.make_offer(self.creator)
         self.commission = utils.make_commission(self.buyer, self.offer)
-        self.commission_self_managed = utils.make_commission(self.creator, self.offer)
-        
+        self.commission_self_managed = utils.make_commission(
+            self.creator, self.offer)
+
     def test_commission_get_other_user(self):
-        other_user = furfolio_utils.get_other_user_in_commission(self.creator, self.commission)
+        other_user = furfolio_utils.get_other_user_in_commission(
+            self.creator, self.commission)
         self.assertEqual(other_user, self.buyer)
-        other_user_2 = furfolio_utils.get_other_user_in_commission(self.buyer, self.commission)
+        other_user_2 = furfolio_utils.get_other_user_in_commission(
+            self.buyer, self.commission)
         self.assertEqual(other_user_2, self.creator)
-    
+
     def test_self_managed_commission_get_other_user(self):
-        other_user = furfolio_utils.get_other_user_in_commission(self.creator, self.commission_self_managed)
+        other_user = furfolio_utils.get_other_user_in_commission(
+            self.creator, self.commission_self_managed)
         self.assertEqual(other_user, self.creator)
+
+
+class MaxCommissionLimitPerUserTestCase(TestCase):
+    def setUp(self) -> None:
+        self.creator = utils.make_user(
+            "creator", role=User.ROLE_CREATOR, email="creator@test.com")
+        self.buyer = utils.make_user(
+            "buyer", role=User.ROLE_BUYER, email="buyer@test.com")
+        self.offer = utils.make_offer(self.creator, max_commissions_per_user=1)
+
+    def test_commission_limit_for_buyer(self):
+        utils.make_commission(self.buyer, self.offer)
+        with self.assertRaises(ValidationError):
+            utils.make_commission(self.buyer, self.offer)
+
+    def test_commission_limit_does_not_apply_to_self_managed(self):
+        utils.make_commission(self.creator, self.offer)
+        utils.make_commission(self.creator, self.offer)

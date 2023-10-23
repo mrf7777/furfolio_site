@@ -164,14 +164,7 @@ class Offer(mixins.GetAdultConsentMixin, UserPassesTestMixin, generic.DetailView
 
     def should_show_create_commission_button(self) -> bool:
         offer = self.get_object()
-        if self.request.user == offer.author:
-            return True
-        elif offer.is_closed():
-            return False
-        elif offer.has_max_review_commissions():
-            return False
-        else:
-            return True
+        return self.request.user.can_commission_offer(offer)
 
 
 class SignUp(generic.CreateView):
@@ -271,15 +264,16 @@ class FollowedList(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
     model = models.UserFollowingUser
     context_object_name = "followed_users"
     template_name = "furfolio/users/follow/followed_list.html"
-    
+
     def get_queryset(self) -> QuerySet[Any]:
         return self.request.user.get_followed_users()
-    
+
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["user"] = get_object_or_404(models.User, username=self.kwargs["username"])
+        context["user"] = get_object_or_404(
+            models.User, username=self.kwargs["username"])
         return context
-        
+
     def test_func(self) -> bool | None:
         return self.request.user == get_object_or_404(models.User, username=self.kwargs["username"])
 

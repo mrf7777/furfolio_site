@@ -149,6 +149,18 @@ class User(mixins.GetFullUrlMixin, AbstractUser):
     def get_absolute_url(self):
         return reverse("user", kwargs={"username": self.username})
 
+    def can_commission_offer(self, offer: 'Offer'):
+        if self == offer.author:
+            return True
+        elif offer.is_closed():
+            return False
+        elif offer.has_max_review_commissions():
+            return False
+        elif commission_queries.get_commissions_for_commissioner_and_offer(self, offer).count() >= offer.max_commissions_per_user:
+            return False
+        else:
+            return True
+
 
 class UserFollowingUser(models.Model):
     follower = models.ForeignKey(

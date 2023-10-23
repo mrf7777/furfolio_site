@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 from django.utils import timezone
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.db.models.fields.files import ImageFieldFile, FileField
+from django.utils.safestring import mark_safe
 from . import models
 from .queries import commissions as commission_queries
 from .queries import offers as offer_queries
@@ -67,6 +68,33 @@ def check_commission_meets_offer_max_review_commissions(commission: 'models.Comm
     if num_offer_commissions_in_review_state >= commission.offer.max_review_commissions:
         raise ValidationError(
             "Commission is not valid because the offer has max number of commissions in review state.")
+
+
+def check_user_is_within_commission_limit_for_offer(commission: 'models.Commission'):
+    # self-managed commissions are exempt from this check
+    if commission.is_self_managed():
+        return
+
+    num_commissions_for_commissioner_and_offer = commission_queries.get_commissions_for_commissioner_and_offer(
+        commission.commissioner,
+        commission.offer
+    ).count()
+    if num_commissions_for_commissioner_and_offer >= commission.offer.max_commissions_per_user:
+        raise ValidationError(
+            "Commission cannot be created since you would excede the limit configured for this offer."
+        )
+
+
+def validate_max_commissions_per_user_is_lte_to_max_review_commissions(offer: 'models.Offer'):
+    if offer.max_commissions_per_user > offer.max_review_commissions:
+        raise ValidationError(
+            mark_safe(
+                f"""
+                Maximum Commissions per User cannot be greater than Maximum Commissions in Review.<br>
+                Try setting Maximum Commissions per User to {offer.max_review_commissions}.
+                """
+            )
+        )
 
 
 def check_user_is_not_spamming_offers(user: 'models.User'):

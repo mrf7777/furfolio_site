@@ -22,6 +22,16 @@ def get_commissions_for_user_as_commissioner(
     ).order_by(order_by)
 
 
+def get_commissions_for_commissioner_and_offer(
+        commissioner: 'models.User',
+        offer: 'models.Offer',
+) -> 'Manager[models.Commission]':
+    return models.Commission.objects.filter(
+        commissioner=commissioner,
+        offer=offer,
+    )
+
+
 def get_commissions_for_user_as_offer_author(
         user: 'models.User',
         commission_states: [str],

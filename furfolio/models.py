@@ -88,7 +88,7 @@ def image_resize(image, width, height, transparency_remove=True, fit_in_center=F
 
 class User(mixins.GetFullUrlMixin, AbstractUser):
     MAX_PROFILE_LENGTH = math.ceil(AVERAGE_CHARACTERS_PER_WORD * 1000)
-    
+
     ROLE_BUYER = "BUYER"
     ROLE_CREATOR = "CREATOR"
     ROLE_CHOICES = [
@@ -139,10 +139,10 @@ class User(mixins.GetFullUrlMixin, AbstractUser):
             image_resize(
                 self.avatar, User.AVATAR_SIZE_PIXELS[0], User.AVATAR_SIZE_PIXELS[1], transparency_remove=True, fit_in_center=True)
         super(User, self).save(*args, **kwargs)
-    
+
     def get_following_users(self):
         return user_queries.get_users_following_user(self)
-    
+
     def get_followed_users(self):
         return user_queries.get_followed_users(self)
 
@@ -186,9 +186,9 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         (CURRENCY_USD, "$ United States Dollar (USD)"),
         (CURRENCY_EUR, EURO_SYMBOL + " Euro (EUR)"),
     ]
-    
+
     HIGHEST_PRICE = 1_000_000_000
-    
+
     ASPECT_RATIO_MIN = (1, 3)
     ASPECT_RATIO_MAX = (4, 1)
     THUMBNAIL_MAX_DIMENTIONS = (600, 350)
@@ -281,6 +281,15 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         choices=CURRENCY_CHOICES,
         default=CURRENCY_USD,
     )
+    max_commissions_per_user = models.PositiveIntegerField(
+        name="max_commissions_per_user",
+        verbose_name="Maximum Commissions per User",
+        help_text="Limits how many commissions a user can make on this offer. Self-managed commissions are not limited.",
+        default=1,
+        validators=[
+            validators.MinValueValidator(1),
+        ],
+    )
 
     tracker = FieldTracker()
 
@@ -302,7 +311,7 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
                 self.thumbnail, Offer.THUMBNAIL_MAX_DIMENTIONS[0], Offer.THUMBNAIL_MAX_DIMENTIONS[1])
 
         super(Offer, self).save(*args, **kwargs)
-        
+
         # determine who to email if offer is created
         if self.tracker.previous("pk") is None:
             send_new_offer_email(self)
@@ -312,6 +321,8 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         furfolio_validators.validate_price_min_is_less_than_max(
             self.min_price, self.max_price)
         furfolio_validators.check_user_will_not_go_over_max_active_offers(
+            self)
+        furfolio_validators.validate_max_commissions_per_user_is_lte_to_max_review_commissions(
             self)
 
     def get_absolute_url(self):
@@ -435,6 +446,8 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
         furfolio_validators.check_commission_meets_offer_max_review_commissions(
             self)
         furfolio_validators.check_commission_is_not_created_on_closed_offer(
+            self)
+        furfolio_validators.check_user_is_within_commission_limit_for_offer(
             self)
         if not self.is_self_managed():
             furfolio_validators.check_user_is_not_spamming_commissions(

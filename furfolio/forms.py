@@ -31,7 +31,8 @@ class CustomUserCreationForm(UserCreationForm):
 class UpdateUserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ["profile", "role", "email", "avatar", "consent_to_adult_content"]
+        fields = ["profile", "role", "email",
+                  "avatar", "consent_to_adult_content"]
 
 
 class UserSearchForm(TextSearchForm):
@@ -85,6 +86,15 @@ class OfferSearchForm(TextSearchForm):
     closed_offers = forms.BooleanField(required=False, initial=False)
     price_min = forms.IntegerField(min_value=0, initial=0, required=False)
     price_max = forms.IntegerField(min_value=1, initial=1, required=False)
+
+    def clean(self) -> dict[str, Any]:
+        # swap the min in max if they are out of order
+        price_min = self.cleaned_data["price_min"]
+        price_max = self.cleaned_data["price_max"]
+        if price_min is not None and price_max is not None:
+            if price_min > price_max:
+                self.cleaned_data["price_min"] = price_max
+                self.cleaned_data["price_max"] = price_min
 
 
 class CommissionForm(forms.ModelForm):

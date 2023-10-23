@@ -8,7 +8,7 @@ Expects a 'title_is_link':bool object
     <div class="col-md-7">
         <div class="card" style="height: 100%;">
             {% if offer.thumbnail %}
-                <img class="card-img-top d-md-none" style="max-height: 30vh; object-fit: contain;" src="{{ offer.thumbnail.url }}">
+                <img class="card-img-top d-md-none" style="max-height: 30vh; object-fit: contain;" src="{{ offer.thumbnail.url }}" loading="lazy">
             {% endif %}
             <div class="card-header d-flex align-items-center">
                 <h5>
@@ -53,7 +53,7 @@ Expects a 'title_is_link':bool object
 
     <div class="col-md-5 d-none d-md-block">
         {% if offer.thumbnail %}
-        <img class="border border-secondary-subtle rounded" style="max-height: 30vh; max-width: 100%;" src="{{ offer.thumbnail.url }}">
+        <img class="border border-secondary-subtle rounded" style="max-height: 30vh; max-width: 100%;" src="{{ offer.thumbnail.url }}" loading="lazy">
         {% endif %}
     </div>
 </div>

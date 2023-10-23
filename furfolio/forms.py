@@ -31,7 +31,7 @@ class CustomUserCreationForm(UserCreationForm):
 class UpdateUserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ["role", "email", "avatar", "consent_to_adult_content"]
+        fields = ["profile", "role", "email", "avatar", "consent_to_adult_content"]
 
 
 class UserSearchForm(TextSearchForm):

@@ -87,6 +87,8 @@ def image_resize(image, width, height, transparency_remove=True, fit_in_center=F
 
 
 class User(mixins.GetFullUrlMixin, AbstractUser):
+    MAX_PROFILE_LENGTH = math.ceil(AVERAGE_CHARACTERS_PER_WORD * 1000)
+    
     ROLE_BUYER = "BUYER"
     ROLE_CREATOR = "CREATOR"
     ROLE_CHOICES = [
@@ -115,6 +117,13 @@ class User(mixins.GetFullUrlMixin, AbstractUser):
         help_text=mark_safe(
             "Indicate if you would like to see adult content on this website. If not indicated, you will not see adult content.<br> If you consent, you agree that you are legally allowed to view \"adult\" content."),
         default=False,
+    )
+    profile = models.TextField(
+        name="profile",
+        verbose_name="Profile Description",
+        max_length=MAX_PROFILE_LENGTH,
+        blank=True,
+        help_text="This will display on you profile page. Use this to describe yourself."
     )
 
     tracker = FieldTracker()

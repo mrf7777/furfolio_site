@@ -28,5 +28,8 @@
 {% endblock %}
 
 {% block body %}
-<a class="btn btn-primary" href="{% url "offer_list" %}?author={{ user.username }}&sort=created_date">Offers</a>
+<a class="btn btn-primary mb-3" href="{% url "offer_list" %}?author={{ user.username }}&sort=created_date">Offers</a>
+<p>
+    {{ user.profile|linebreaks|urlize }}
+</p>
 {% endblock %}

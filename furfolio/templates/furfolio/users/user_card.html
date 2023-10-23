@@ -8,6 +8,12 @@ Expects object 'user'
         {% include "./badge.html" with user=user show_avatar=True only %}
     </div>
     <div class="card-body">
-        <p class="card-text">Date joined: {{ user.date_joined }}</p>
+        
+        <div class="card-text">
+            <p>
+                {{ user.profile|truncatechars:400 }}
+            </p>
+            Date joined: {{ user.date_joined }}
+        </div>
     </div>
 </div>

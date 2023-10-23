@@ -106,6 +106,7 @@ class BuyerDashboard(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
+        context["page_range"] = get_page_range_items(context["page_obj"])
         return context
 
     def get_queryset(self) -> QuerySet[Any]:

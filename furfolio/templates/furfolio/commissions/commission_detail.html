@@ -12,7 +12,7 @@
 
 <div class="mb-3">
     <h5>Initial Requirements</h5>
-    <p>{{ commission.initial_request_text|linebreaks }}</p>
+    <p>{{ commission.initial_request_text|linebreaks|urlize }}</p>
 </div>
 
 {% if commission.attachment %}

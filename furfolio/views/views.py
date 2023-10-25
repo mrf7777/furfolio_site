@@ -97,9 +97,12 @@ class CreatorDashboard(LoginRequiredMixin, generic.FormView):
         context["closed_commissions_overflow"] = closed_commissions_total_count > max_commissions_per_column
 
         # construct urls to commission searches for each column so that the user can "see all"
+        selected_offer = offer_form.cleaned_data["offer"]
+
         review_commissions_query = commission_queries.CommissionsSearchQuery(
             current_user=self.request.user,
             review=True,
+            offer=selected_offer.pk if selected_offer else None,
         )
         review_commissions_query_url = \
             reverse("commissions") \
@@ -110,6 +113,7 @@ class CreatorDashboard(LoginRequiredMixin, generic.FormView):
         accepted_commissions_query = commission_queries.CommissionsSearchQuery(
             current_user=self.request.user,
             accepted=True,
+            offer=selected_offer.pk if selected_offer else None,
         )
         accepted_commissions_query_url = \
             reverse("commissions") \
@@ -120,6 +124,7 @@ class CreatorDashboard(LoginRequiredMixin, generic.FormView):
         in_progress_commissions_query = commission_queries.CommissionsSearchQuery(
             current_user=self.request.user,
             in_progress=True,
+            offer=selected_offer.pk if selected_offer else None,
         )
         in_progress_commissions_query_url = \
             reverse("commissions") \
@@ -130,6 +135,7 @@ class CreatorDashboard(LoginRequiredMixin, generic.FormView):
         closed_commissions_query = commission_queries.CommissionsSearchQuery(
             current_user=self.request.user,
             closed=True,
+            offer=selected_offer.pk if selected_offer else None,
         )
         closed_commissions_query_url = \
             reverse("commissions") \

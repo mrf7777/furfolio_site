@@ -93,6 +93,7 @@ class CommissionsSearchQuery:
         in_progress: bool = False,
         closed: bool = False,
         rejected: bool = False,
+        offer: int = None,
     ):
         self.current_user = current_user
         self.sort = sort
@@ -102,6 +103,7 @@ class CommissionsSearchQuery:
         self.in_progress = in_progress
         self.closed = closed
         self.rejected = rejected
+        self.offer = offer
 
     def commission_search_string_to_query(search_string: str, current_user: 'models.User') -> 'CommissionsSearchQuery':
         query = CommissionsSearchQuery(current_user)
@@ -139,6 +141,11 @@ class CommissionsSearchQuery:
                             query.closed = True
                         case "rejected":
                             query.rejected = True
+                case "offer":
+                    try:
+                        query.offer = int(suffix)
+                    except ValueError:
+                        pass
 
         return query
 
@@ -161,6 +168,8 @@ class CommissionsSearchQuery:
             string += "state:finished "
         if self.rejected:
             string += "state:rejected "
+        if self.offer is not None:
+            string += f"offer:{self.offer}"
 
         return string.strip()
 
@@ -179,6 +188,9 @@ def search_commissions(search_query: CommissionsSearchQuery):
             offer__author=search_query.current_user,
             commissioner=search_query.current_user
         )
+    # filter offer
+    if search_query.offer is not None:
+        query = query.filter(offer__pk=search_query.offer)
     # build filter for commission states
     state_queries = []
     if search_query.review:

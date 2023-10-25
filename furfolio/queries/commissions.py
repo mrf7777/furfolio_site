@@ -82,34 +82,60 @@ def get_commissions_with_user(user: 'models.User'):
     return models.Commission.objects.filter(Q(offer__author=user) | Q(commissioner=user))
 
 
-def search_commissions(current_user: 'models.User', sort: str, self_managed: bool, review: bool, accepted: bool, in_progress: bool, closed: bool, rejected: bool):
+class CommissionsSearchQuery:
+    def __init__(
+        self,
+        current_user: 'models.User',
+        sort: str = "",
+        self_managed: bool = None,
+        review: bool = False,
+        accepted: bool = False,
+        in_progress: bool = False,
+        closed: bool = False,
+        rejected: bool = False,
+    ):
+        self.current_user = current_user
+        self.sort = sort
+        self.self_managed = self_managed
+        self.review = review
+        self.accepted = accepted
+        self.in_progress = in_progress
+        self.closed = closed
+        self.rejected = rejected
+
+
+def search_commissions(search_query: CommissionsSearchQuery):
     # get commissions where current user is either buyer or creator
-    query = get_commissions_with_user(current_user)
+    query = get_commissions_with_user(search_query.current_user)
     # filter self managed
-    if self_managed:
+    if search_query.self_managed is True:
         query = query.filter(
-            offer__author=current_user,
-            commissioner=current_user
+            offer__author=search_query.current_user,
+            commissioner=search_query.current_user
+        )
+    elif search_query.self_managed is False:
+        query = query.exclude(
+            offer__author=search_query.current_user,
+            commissioner=search_query.current_user
         )
     # build filter for commission states
     state_queries = []
-    if review:
+    if search_query.review:
         state_queries.append(Q(state=models.Commission.STATE_REVIEW))
-    if accepted:
+    if search_query.accepted:
         state_queries.append(Q(state=models.Commission.STATE_ACCEPTED))
-    if in_progress:
+    if search_query.in_progress:
         state_queries.append(
             Q(state=models.Commission.STATE_IN_PROGRESS))
-    if closed:
+    if search_query.closed:
         state_queries.append(Q(state=models.Commission.STATE_CLOSED))
-    if rejected:
+    if search_query.rejected:
         state_queries.append(Q(state=models.Commission.STATE_REJECTED))
     # state filters should be OR'ed together
     state_query = reduce(lambda q1, q2: q1 | q2, state_queries, Q())
     query = query.filter(state_query)
     # sort
-    print("sort:", sort)
-    match sort:
+    match search_query.sort:
         case form_fields.SortField.CHOICE_RELEVANCE:
             query = query.order_by("-updated_date")
         case form_fields.SortField.CHOICE_CREATED_DATE:

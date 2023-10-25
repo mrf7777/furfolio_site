@@ -85,7 +85,6 @@ def get_commissions_with_user(user: 'models.User'):
 class CommissionsSearchQuery:
     def __init__(
         self,
-        current_user: 'models.User',
         sort: str = "",
         self_managed: bool = None,
         review: bool = False,
@@ -95,7 +94,6 @@ class CommissionsSearchQuery:
         rejected: bool = False,
         offer: int = None,
     ):
-        self.current_user = current_user
         self.sort = sort
         self.self_managed = self_managed
         self.review = review
@@ -105,8 +103,8 @@ class CommissionsSearchQuery:
         self.rejected = rejected
         self.offer = offer
 
-    def commission_search_string_to_query(search_string: str, current_user: 'models.User') -> 'CommissionsSearchQuery':
-        query = CommissionsSearchQuery(current_user)
+    def commission_search_string_to_query(search_string: str) -> 'CommissionsSearchQuery':
+        query = CommissionsSearchQuery()
 
         # search string example: "offer:34 sort:created_date state:accepted state:in_progress"
         # token examples: "sort:created_date", "offer:43", "commissioner:test"
@@ -174,19 +172,19 @@ class CommissionsSearchQuery:
         return string.strip()
 
 
-def search_commissions(search_query: CommissionsSearchQuery):
+def search_commissions(search_query: CommissionsSearchQuery, current_user: 'models.User'):
     # get commissions where current user is either buyer or creator
-    query = get_commissions_with_user(search_query.current_user)
+    query = get_commissions_with_user(current_user)
     # filter self managed
     if search_query.self_managed is True:
         query = query.filter(
-            offer__author=search_query.current_user,
-            commissioner=search_query.current_user
+            offer__author=current_user,
+            commissioner=current_user
         )
     elif search_query.self_managed is False:
         query = query.exclude(
-            offer__author=search_query.current_user,
-            commissioner=search_query.current_user
+            offer__author=current_user,
+            commissioner=current_user
         )
     # filter offer
     if search_query.offer is not None:

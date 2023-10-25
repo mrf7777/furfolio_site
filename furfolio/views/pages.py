@@ -28,14 +28,12 @@ class CommissionSearchHelp(generic.TemplateView):
             CommissionSearchHelpScenario(
                 "All commissions in review",
                 commission_queries.CommissionsSearchQuery(
-                    current_user=None,
                     review=True,
                 )
             ),
             CommissionSearchHelpScenario(
                 "In progress commissions from offer with id 1234",
                 commission_queries.CommissionsSearchQuery(
-                    current_user=None,
                     in_progress=True,
                     offer=1234
                 )
@@ -43,14 +41,12 @@ class CommissionSearchHelp(generic.TemplateView):
             CommissionSearchHelpScenario(
                 "Self-managed commissions",
                 commission_queries.CommissionsSearchQuery(
-                    current_user=None,
                     self_managed=True,
                 )
             ),
             CommissionSearchHelpScenario(
                 "Accepted or finished commissions",
                 commission_queries.CommissionsSearchQuery(
-                    current_user=None,
                     accepted=True,
                     closed=True,
                 )
@@ -58,7 +54,6 @@ class CommissionSearchHelp(generic.TemplateView):
             CommissionSearchHelpScenario(
                 "Commissions from other users, from a specific offer, that are rejected",
                 commission_queries.CommissionsSearchQuery(
-                    current_user=None,
                     self_managed=False,
                     offer=4321,
                     rejected=True,

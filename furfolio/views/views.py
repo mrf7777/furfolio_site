@@ -100,7 +100,6 @@ class CreatorDashboard(LoginRequiredMixin, generic.FormView):
         selected_offer = offer_form.cleaned_data["offer"]
 
         review_commissions_query = commission_queries.CommissionsSearchQuery(
-            current_user=self.request.user,
             review=True,
             offer=selected_offer.pk if selected_offer else None,
         )
@@ -111,7 +110,6 @@ class CreatorDashboard(LoginRequiredMixin, generic.FormView):
         context["see_review_commissions_url"] = review_commissions_query_url
 
         accepted_commissions_query = commission_queries.CommissionsSearchQuery(
-            current_user=self.request.user,
             accepted=True,
             offer=selected_offer.pk if selected_offer else None,
         )
@@ -122,7 +120,6 @@ class CreatorDashboard(LoginRequiredMixin, generic.FormView):
         context["see_accepted_commissions_url"] = accepted_commissions_query_url
 
         in_progress_commissions_query = commission_queries.CommissionsSearchQuery(
-            current_user=self.request.user,
             in_progress=True,
             offer=selected_offer.pk if selected_offer else None,
         )
@@ -133,7 +130,6 @@ class CreatorDashboard(LoginRequiredMixin, generic.FormView):
         context["see_in_progress_commissions_url"] = in_progress_commissions_query_url
 
         closed_commissions_query = commission_queries.CommissionsSearchQuery(
-            current_user=self.request.user,
             closed=True,
             offer=selected_offer.pk if selected_offer else None,
         )
@@ -373,8 +369,8 @@ class Commissions(LoginRequiredMixin, generic.ListView):
             return commission_queries.search_commissions(
                 commission_queries.CommissionsSearchQuery.commission_search_string_to_query(
                     form.cleaned_data["search"],
-                    current_user=self.request.user
-                )
+                ),
+                current_user=self.request.user
             )
         else:
             return models.Commission.objects.none()

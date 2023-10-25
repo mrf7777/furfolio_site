@@ -40,14 +40,8 @@ class UserSearchForm(TextSearchForm):
 
 
 class CommissionSearchForm(forms.Form):
-    template_name = "furfolio/form_templates/commission_search.html"
-    sort = form_fields.SortField()
-    self_managed = forms.BooleanField(required=False, initial=False)
-    review = forms.BooleanField(required=False, initial=False)
-    accepted = forms.BooleanField(required=False, initial=False)
-    in_progress = forms.BooleanField(required=False, initial=False)
-    finished = forms.BooleanField(required=False, initial=False)
-    rejected = forms.BooleanField(required=False, initial=False)
+    template_name = "furfolio/form_templates/grid.html"
+    search = forms.CharField(max_length=300, required=False)
 
 
 class LoginForm(AuthenticationForm):

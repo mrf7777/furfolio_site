@@ -323,17 +323,13 @@ class Commissions(LoginRequiredMixin, generic.ListView):
         form = CommissionSearchForm(self.request.GET)
         if form.is_valid():
             return commission_queries.search_commissions(
-                commission_queries.CommissionsSearchQuery(
-                    current_user=self.request.user,
-                    sort=form.cleaned_data["sort"],
-                    self_managed=form.cleaned_data["self_managed"],
-                    review=form.cleaned_data["review"],
-                    accepted=form.cleaned_data["accepted"],
-                    in_progress=form.cleaned_data["in_progress"],
-                    closed=form.cleaned_data["finished"],
-                    rejected=form.cleaned_data["rejected"],
+                commission_queries.commission_search_string_to_query(
+                    form.cleaned_data["search"],
+                    current_user=self.request.user
                 )
             )
+        else:
+            return models.Commission.objects.none()
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

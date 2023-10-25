@@ -22,7 +22,8 @@ urlpatterns = [
          views.MakeUserFollowUser.as_view(), name="follow_user"),
     path('users/<username>/unfollow/',
          views.MakeUserUnfollowUser.as_view(), name="unfollow_user"),
-    path('users/<username>/followed/', views.FollowedList.as_view(), name="followed_list"),
+    path('users/<username>/followed/',
+         views.FollowedList.as_view(), name="followed_list"),
     # accounts
     path('accounts/signup/', views.SignUp.as_view(), name="signup"),
     path(
@@ -59,8 +60,10 @@ urlpatterns = [
     path('commissions/<pk>/chat',
          views.CommissionChat.as_view(), name="commission_chat"),
     # static pages
-    path('legal/terms-of-service',
+    path('legal/terms-of-service/',
          pages.TermsOfService.as_view(), name="terms_of_service"),
-    path('legal/privacy-policy',
+    path('legal/privacy-policy/',
          pages.PrivacyPolicy.as_view(), name="privacy_policy"),
+    path('help/commission-search/', pages.CommissionSearchHelp.as_view(),
+         name="commission_search_help")
 ]

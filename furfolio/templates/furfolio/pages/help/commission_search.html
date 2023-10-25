@@ -1,0 +1,42 @@
+{% extends "furfolio/layouts/title_body.html" %}
+
+{% block title %}
+Searching Commissions
+{% endblock %}
+
+{% block body %}
+<h4>
+Cheat Sheet
+</h4>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Scenario</th>
+            <th scope="col">Search</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td scope="row">All commissions in review</td>
+            <td><code>state:review</code></td>
+        </tr>
+        <tr>
+            <td scope="row">In progress commissions from offer with id 1234</td>
+            <td><code>state:in_progress offer:1234</code></td>
+        </tr>
+        <tr>
+            <td scope="row">Self-managed commissions</td>
+            <td><code>self_managed:true</code></td>
+        </tr>
+        <tr>
+            <td scope="row">Commissions that are accepted or finished</td>
+            <td><code>state:accepted state:finished</code></td>
+        </tr>
+        <tr>
+            <td scope="row">Commissions from other users, from a specific offer, that are rejected</td>
+            <td><code>self_managed:false offer:4321 state:rejected</code></td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

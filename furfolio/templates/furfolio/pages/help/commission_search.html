@@ -17,26 +17,12 @@ Cheat Sheet
         </tr>
     </thead>
     <tbody class="table-group-divider">
-        <tr>
-            <td scope="row">All commissions in review</td>
-            <td><code>state:review</code></td>
-        </tr>
-        <tr>
-            <td scope="row">In progress commissions from offer with id 1234</td>
-            <td><code>state:in_progress offer:1234</code></td>
-        </tr>
-        <tr>
-            <td scope="row">Self-managed commissions</td>
-            <td><code>self_managed:true</code></td>
-        </tr>
-        <tr>
-            <td scope="row">Commissions that are accepted or finished</td>
-            <td><code>state:accepted state:finished</code></td>
-        </tr>
-        <tr>
-            <td scope="row">Commissions from other users, from a specific offer, that are rejected</td>
-            <td><code>self_managed:false offer:4321 state:rejected</code></td>
-        </tr>
+        {% for commission_scenario in commission_search_scenarios %}
+            <tr>
+                <td scope="row">{{ commission_scenario.scenario }}</td>
+                <td><code>{{ commission_scenario.commission_query.to_search_string }}</code></td>
+            </tr>
+        {% endfor %}
     </tbody>
 </table>
 {% endblock %}

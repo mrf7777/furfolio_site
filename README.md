@@ -185,3 +185,34 @@
   - up max in review per offer limit
   - up max number of offer templates
   - ability to associate offers to certain events
+
+# search design
+- there are many things a user, based on role, would want to search with
+- buyer
+  - offers
+    - text
+    - price min and max
+    - user
+    - date created
+- creator
+  - offers
+    - active
+  - commissions
+    - state
+    - offer
+    - sort
+    - filter
+
+## commission search design
+- single search bar
+  - examples
+    - search for commissions from offer
+      - offer:22
+    - search rejected commissions of offer
+      - offer:31 state:rejected
+    - search for in progress or accepted commissions
+      - state:in_progress state:accepted
+    - search for all commissions sorted by created date in desending order
+      - sort:created_date order:desending
+    - search for commissions where user "test" is the commissioner
+      - commissioner:test

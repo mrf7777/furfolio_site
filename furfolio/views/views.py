@@ -7,6 +7,7 @@ from django.views import generic
 from django.core.paginator import Page
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy, reverse
+from django.utils.http import urlencode
 from django.core.exceptions import PermissionDenied
 from .. import models
 from .. import mixins
@@ -94,6 +95,47 @@ class CreatorDashboard(LoginRequiredMixin, generic.FormView):
         context["accepted_commissions_overflow"] = accepted_commissions_total_count > max_commissions_per_column
         context["in_progress_commissions_overflow"] = in_progress_commissions_total_count > max_commissions_per_column
         context["closed_commissions_overflow"] = closed_commissions_total_count > max_commissions_per_column
+
+        # construct urls to commission searches for each column so that the user can "see all"
+        review_commissions_query = commission_queries.CommissionsSearchQuery(
+            current_user=self.request.user,
+            review=True,
+        )
+        review_commissions_query_url = \
+            reverse("commissions") \
+            + "?" \
+            + urlencode({"search": review_commissions_query.to_search_string()})
+        context["see_review_commissions_url"] = review_commissions_query_url
+
+        accepted_commissions_query = commission_queries.CommissionsSearchQuery(
+            current_user=self.request.user,
+            accepted=True,
+        )
+        accepted_commissions_query_url = \
+            reverse("commissions") \
+            + "?" \
+            + urlencode({"search": accepted_commissions_query.to_search_string()})
+        context["see_accepted_commissions_url"] = accepted_commissions_query_url
+
+        in_progress_commissions_query = commission_queries.CommissionsSearchQuery(
+            current_user=self.request.user,
+            in_progress=True,
+        )
+        in_progress_commissions_query_url = \
+            reverse("commissions") \
+            + "?" \
+            + urlencode({"search": in_progress_commissions_query.to_search_string()})
+        context["see_in_progress_commissions_url"] = in_progress_commissions_query_url
+
+        closed_commissions_query = commission_queries.CommissionsSearchQuery(
+            current_user=self.request.user,
+            closed=True,
+        )
+        closed_commissions_query_url = \
+            reverse("commissions") \
+            + "?" \
+            + urlencode({"search": closed_commissions_query.to_search_string()})
+        context["see_closed_commissions_url"] = closed_commissions_query_url
 
         return context
 
@@ -323,7 +365,7 @@ class Commissions(LoginRequiredMixin, generic.ListView):
         form = CommissionSearchForm(self.request.GET)
         if form.is_valid():
             return commission_queries.search_commissions(
-                commission_queries.commission_search_string_to_query(
+                commission_queries.CommissionsSearchQuery.commission_search_string_to_query(
                     form.cleaned_data["search"],
                     current_user=self.request.user
                 )

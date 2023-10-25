@@ -103,6 +103,67 @@ class CommissionsSearchQuery:
         self.closed = closed
         self.rejected = rejected
 
+    def commission_search_string_to_query(search_string: str, current_user: 'models.User') -> 'CommissionsSearchQuery':
+        query = CommissionsSearchQuery(current_user)
+
+        # search string example: "offer:34 sort:created_date state:accepted state:in_progress"
+        # token examples: "sort:created_date", "offer:43", "commissioner:test"
+        # the left of the colon is called the prefix
+        # the right of the colon is called the suffix
+        tokens = search_string.strip().split()
+
+        for token in tokens:
+            # tokens must have exactly one colon
+            if token.count(":") != 1:
+                continue
+
+            prefix, suffix = token.split(":")
+            match prefix.lower():
+                case "sort":
+                    query.sort = suffix
+                case "self_managed":
+                    match suffix.lower():
+                        case "true":
+                            query.self_managed = True
+                        case "false":
+                            query.self_managed = False
+                case "state":
+                    match suffix.lower():
+                        case "review":
+                            query.review = True
+                        case "accepted":
+                            query.accepted = True
+                        case "in_progress":
+                            query.in_progress = True
+                        case "finished":
+                            query.closed = True
+                        case "rejected":
+                            query.rejected = True
+
+        return query
+
+    def to_search_string(self) -> str:
+        string = ""
+        if self.sort:
+            string += f"sort:{self.sort} "
+        if self.self_managed is not None:
+            if self.self_managed is True:
+                string += f"self_managed:true "
+            else:
+                string += f"self_managed:false "
+        if self.review:
+            string += "state:review "
+        if self.accepted:
+            string += "state:accepted "
+        if self.in_progress:
+            string += "state:in_progress "
+        if self.closed:
+            string += "state:finished "
+        if self.rejected:
+            string += "state:rejected "
+
+        return string.strip()
+
 
 def search_commissions(search_query: CommissionsSearchQuery):
     # get commissions where current user is either buyer or creator
@@ -144,45 +205,5 @@ def search_commissions(search_query: CommissionsSearchQuery):
             query = query.order_by("-updated_date")
         case _:
             query = query.order_by("-updated_date")
-
-    return query
-
-
-def commission_search_string_to_query(search_string: str, current_user: 'models.User') -> CommissionsSearchQuery:
-    query = CommissionsSearchQuery(current_user)
-
-    # search string example: "offer:34 sort:created_date state:accepted state:in_progress"
-    # token examples: "sort:created_date", "offer:43", "commissioner:test"
-    # the left of the colon is called the prefix
-    # the right of the colon is called the suffix
-    tokens = search_string.strip().split()
-
-    for token in tokens:
-        # tokens must have exactly one colon
-        if token.count(":") != 1:
-            continue
-
-        prefix, suffix = token.split(":")
-        match prefix.lower():
-            case "sort":
-                query.sort = suffix
-            case "self_managed":
-                match suffix.lower():
-                    case "true":
-                        query.self_managed = True
-                    case "false":
-                        query.self_managed = False
-            case "state":
-                match suffix.lower():
-                    case "review":
-                        query.review = True
-                    case "accepted":
-                        query.accepted = True
-                    case "in_progress":
-                        query.in_progress = True
-                    case "finished":
-                        query.closed = True
-                    case "rejected":
-                        query.rejected = True
 
     return query

@@ -31,13 +31,13 @@
 {% endblock %}
 
 {% block column_1_title %}
-<a class="text-decoration-none" href="{% url "commissions" %}?review=on">
+<a class="text-decoration-none" href="{{ see_review_commissions_url }}">
     {% include "furfolio/commissions/state_badge.html" with state="REVIEW" only %}
 </a>
 <span class="fs-5">
     {{ review_commissions.count }}
     of
-    <a class="text-decoration-none" href="{% url "commissions" %}?review=on">{{ review_commissions_total_count }}</a>
+    <a class="text-decoration-none" href="{{ see_review_commissions_url }}">{{ review_commissions_total_count }}</a>
 </span>
 {% endblock %}
 
@@ -46,13 +46,13 @@
 {% endblock %}
 
 {% block column_2_title %}
-<a class="text-decoration-none" href="{% url "commissions" %}?accepted=on">
+<a class="text-decoration-none" href="{{ see_accepted_commissions_url }}">
     {% include "furfolio/commissions/state_badge.html" with state="ACCEPTED" only %}
 </a>
 <span class="fs-5">
     {{ accepted_commissions.count }}
     of
-    <a class="text-decoration-none" href="{% url "commissions" %}?accepted=on">{{ accepted_commissions_total_count }}</a>
+    <a class="text-decoration-none" href="{{ see_accepted_commissions_url }}">{{ accepted_commissions_total_count }}</a>
 </span>
 {% endblock %}
 
@@ -61,13 +61,13 @@
 {% endblock %}
 
 {% block column_3_title %}
-<a class="text-decoration-none" href="{% url "commissions" %}?in_progress=on">
+<a class="text-decoration-none" href="{{ see_in_progress_commissions_url }}">
     {% include "furfolio/commissions/state_badge.html" with state="IN_PROGRESS" only %}
 </a>
 <span class="fs-5">
     {{ in_progress_commissions.count }}
     of
-    <a class="text-decoration-none" href="{% url "commissions" %}?in_progress=on">{{ in_progress_commissions_total_count }}</a>
+    <a class="text-decoration-none" href="{{ see_in_progress_commissions_url }}">{{ in_progress_commissions_total_count }}</a>
 </span>
 {% endblock %}
 
@@ -76,13 +76,13 @@
 {% endblock %}
 
 {% block column_4_title %}
-<a class="text-decoration-none text-reset" href="{% url "commissions" %}?finished=on">
+<a class="text-decoration-none text-reset" href="{{ see_closed_commissions_url }}">
     {% include "furfolio/commissions/state_badge.html" with state="CLOSED" only %}
 </a>
 <span class="fs-5">
     {{ closed_commissions.count }}
     of
-    <a class="text-decoration-none" href="{% url "commissions" %}?finished=on">{{ closed_commissions_total_count }}</a>
+    <a class="text-decoration-none" href="{{ see_closed_commissions_url }}">{{ closed_commissions_total_count }}</a>
 </span>
 {% endblock %}
 

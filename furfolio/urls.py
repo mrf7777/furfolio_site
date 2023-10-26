@@ -64,6 +64,8 @@ urlpatterns = [
          pages.TermsOfService.as_view(), name="terms_of_service"),
     path('legal/privacy-policy/',
          pages.PrivacyPolicy.as_view(), name="privacy_policy"),
+    # help pages
+    path('help/', pages.Help.as_view(), name="help"),
     path('help/commission-search/', pages.CommissionSearchHelp.as_view(),
-         name="commission_search_help")
+         name="commission_search_help"),
 ]

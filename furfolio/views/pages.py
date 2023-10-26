@@ -12,6 +12,10 @@ class PrivacyPolicy(generic.TemplateView):
     template_name = "furfolio/pages/privacy_policy.html"
 
 
+class Help(generic.TemplateView):
+    template_name = "furfolio/pages/help/help.html"
+
+
 class CommissionSearchHelpScenario:
     def __init__(self, scenario: str, commission_query: commission_queries.CommissionsSearchQuery):
         self.scenario = scenario

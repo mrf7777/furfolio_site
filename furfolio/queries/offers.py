@@ -61,11 +61,11 @@ def full_text_search_offers(
         )
     if not consent_to_adult_content:
         query = query.filter(rating=models.Offer.RATING_GENERAL)
-        
+
     # filter based on price
     price_min = price_min if price_min else 0
     price_max = price_max if price_max else models.Offer.HIGHEST_PRICE
-    ## use range overlap formula: https://stackoverflow.com/a/3269471
+    # use range overlap formula: https://stackoverflow.com/a/3269471
     query = query.filter(min_price__lte=price_max, max_price__gte=price_min)
 
     match sort:

@@ -34,10 +34,11 @@ class EmailCommissionsTestCase(TestCase):
         commission_full_url = self.commission.get_full_url()
         self.assertEqual(len(mail.outbox), 1)
         self.assertTrue(commission_full_url in mail.outbox[0].body)
-        
+
     def test_self_managed_commission_does_not_send_email(self):
-        managed_commission = utils.make_commission(self.user_creator, self.offer)
+        managed_commission = utils.make_commission(
+            self.user_creator, self.offer)
         managed_commission.state = models.Commission.STATE_IN_PROGRESS
         managed_commission.save()
-        
+
         self.assertEqual(len(mail.outbox), 0)

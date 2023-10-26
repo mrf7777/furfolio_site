@@ -127,7 +127,8 @@ class CommissionsTestCase(TestCase):
             "buyer", role=models.User.ROLE_BUYER)
 
         self.offer = utils.make_offer(self.user_creator)
-        self.commission = utils.make_commission(self.user_buyer, self.offer, state=models.Commission.STATE_REVIEW)
+        self.commission = utils.make_commission(
+            self.user_buyer, self.offer, state=models.Commission.STATE_REVIEW)
 
     def test_commission_detail_as_creator(self):
         self.client.force_login(self.user_creator)
@@ -139,8 +140,10 @@ class CommissionsTestCase(TestCase):
             follow=True
         )
         self.assertContains(response, self.commission.initial_request_text)
-        self.assertContains(response, reverse("commission_chat", args=[self.commission.pk]))
-        self.assertContains(response, reverse("update_commission_status", args=[self.commission.pk]))
+        self.assertContains(response, reverse(
+            "commission_chat", args=[self.commission.pk]))
+        self.assertContains(response, reverse(
+            "update_commission_status", args=[self.commission.pk]))
         self.assertContains(response, reverse(
             "update_commission", args=[self.commission.pk]))
 
@@ -154,8 +157,10 @@ class CommissionsTestCase(TestCase):
             follow=True
         )
         self.assertContains(response, self.commission.initial_request_text)
-        self.assertContains(response, reverse("commission_chat", args=[self.commission.pk]))
-        self.assertNotContains(response, reverse("update_commission_status", args=[self.commission.pk]))
+        self.assertContains(response, reverse(
+            "commission_chat", args=[self.commission.pk]))
+        self.assertNotContains(response, reverse(
+            "update_commission_status", args=[self.commission.pk]))
         self.assertNotContains(response, reverse(
             "update_commission", args=[self.commission.pk]))
 

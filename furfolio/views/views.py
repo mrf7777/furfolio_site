@@ -205,6 +205,17 @@ class Offer(mixins.GetAdultConsentMixin, UserPassesTestMixin, generic.DetailView
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["should_show_create_commission_button"] = self.should_show_create_commission_button()
+
+        offer = self.get_object()
+        commissions_of_offer_query = commission_queries.CommissionsSearchQuery(
+            offer=offer.pk
+        )
+        commissions_of_offer_url = \
+            reverse("commissions") \
+            + "?" \
+            + urlencode({"search": commissions_of_offer_query.to_search_string()})
+        context["see_commissions_url"] = commissions_of_offer_url
+
         return context
 
     def should_show_create_commission_button(self) -> bool:

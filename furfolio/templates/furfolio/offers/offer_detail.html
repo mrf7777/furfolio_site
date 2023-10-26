@@ -38,7 +38,12 @@
     {% endif %}
 
     {% if request.user.pk == offer.author.pk %}
-        <a class="btn btn-primary mb-3" href="{% url "update_offer" offer.pk %}">Edit</a>
+        <div>
+            <a class="btn btn-primary mb-3" href="{% url "update_offer" offer.pk %}">Edit</a>
+        </div>
+        <div>
+            <a class="btn btn-primary mb-3" href="{{ see_commissions_url }}">Commissions</a>
+        </div>
     {% endif %}
 
     <div>

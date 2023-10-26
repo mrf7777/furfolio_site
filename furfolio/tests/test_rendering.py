@@ -26,7 +26,9 @@ class OffersSignedInTestCase(TestCase):
     def setUp(self) -> None:
         self.user = utils.make_user("creator", role=models.User.ROLE_CREATOR)
         self.offer = utils.make_offer(
-            user=self.user, name="Offer", description="This is an offer created by a user")
+            user=self.user,
+            name="Offer",
+            description="This is an offer created by a user")
 
     def test_offer_list(self):
         self.client.force_login(self.user)
@@ -61,7 +63,9 @@ class UsersInTestCase(TestCase):
     def setUp(self) -> None:
         self.user = utils.make_user("creator", role=models.User.ROLE_CREATOR)
         self.offer = utils.make_offer(
-            user=self.user, name="Offer", description="This is an offer created by a user")
+            user=self.user,
+            name="Offer",
+            description="This is an offer created by a user")
 
     def test_user_page(self):
         self.client.force_login(self.user)

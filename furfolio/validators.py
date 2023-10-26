@@ -56,11 +56,12 @@ def validate_price_min_is_less_than_max(min_price: int, max_price: int):
         example_valid_max_price = min_price + 1
         raise ValidationError(
             "Maximum price must be greater than the minimum price. Maybe try a maximum price of " +
-            str(example_valid_max_price) + "."
-        )
+            str(example_valid_max_price) +
+            ".")
 
 
-def check_commission_meets_offer_max_review_commissions(commission: 'models.Commission'):
+def check_commission_meets_offer_max_review_commissions(
+        commission: 'models.Commission'):
     if commission.is_self_managed():
         return
 
@@ -70,22 +71,22 @@ def check_commission_meets_offer_max_review_commissions(commission: 'models.Comm
             "Commission is not valid because the offer has max number of commissions in review state.")
 
 
-def check_user_is_within_commission_limit_for_offer(commission: 'models.Commission'):
+def check_user_is_within_commission_limit_for_offer(
+        commission: 'models.Commission'):
     # self-managed commissions are exempt from this check
     if commission.is_self_managed():
         return
 
     num_commissions_for_commissioner_and_offer = commission_queries.get_commissions_for_commissioner_and_offer(
-        commission.commissioner,
-        commission.offer
-    ).count()
+        commission.commissioner, commission.offer).count()
     if num_commissions_for_commissioner_and_offer >= commission.offer.max_commissions_per_user:
         raise ValidationError(
             "Commission cannot be created since you would excede the limit configured for this offer."
         )
 
 
-def validate_max_commissions_per_user_is_lte_to_max_review_commissions(offer: 'models.Offer'):
+def validate_max_commissions_per_user_is_lte_to_max_review_commissions(
+        offer: 'models.Offer'):
     if offer.max_commissions_per_user > offer.max_review_commissions:
         raise ValidationError(
             mark_safe(
@@ -114,7 +115,8 @@ def check_user_is_not_spamming_offers(user: 'models.User'):
         pass
 
 
-def check_commission_is_not_created_on_closed_offer(commission: 'models.Commission'):
+def check_commission_is_not_created_on_closed_offer(
+        commission: 'models.Commission'):
     # self-managed commissions are exempt and can be created on closed offers
     if commission.is_self_managed():
         return

@@ -50,7 +50,8 @@ def send_commission_state_changed_email(new_commission: 'models.Commission'):
     )
 
 
-def send_new_commission_message_email(commission_message: 'models.CommissionMessage'):
+def send_new_commission_message_email(
+        commission_message: 'models.CommissionMessage'):
     truncated_message = truncate_string(commission_message.message, 40)
     subject = f"You Got a Message | {truncated_message}"
     send_email(

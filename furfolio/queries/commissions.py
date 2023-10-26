@@ -64,7 +64,8 @@ def get_active_commissions_of_offer(offer: 'models.Offer'):
 
 
 def get_commissions_in_review_for_offer(offer: 'models.Offer'):
-    return models.Commission.objects.filter(offer=offer, state=models.Commission.STATE_REVIEW)
+    return models.Commission.objects.filter(
+        offer=offer, state=models.Commission.STATE_REVIEW)
 
 
 def get_active_commissions():
@@ -79,7 +80,8 @@ def get_active_commissions():
 
 
 def get_commissions_with_user(user: 'models.User'):
-    return models.Commission.objects.filter(Q(offer__author=user) | Q(commissioner=user))
+    return models.Commission.objects.filter(
+        Q(offer__author=user) | Q(commissioner=user))
 
 
 class CommissionsSearchQuery:
@@ -103,7 +105,8 @@ class CommissionsSearchQuery:
         self.rejected = rejected
         self.offer = offer
 
-    def commission_search_string_to_query(search_string: str) -> 'CommissionsSearchQuery':
+    def commission_search_string_to_query(
+            search_string: str) -> 'CommissionsSearchQuery':
         query = CommissionsSearchQuery()
 
         # search string example: "offer:34 sort:created_date state:accepted state:in_progress"
@@ -172,7 +175,8 @@ class CommissionsSearchQuery:
         return string.strip()
 
 
-def search_commissions(search_query: CommissionsSearchQuery, current_user: 'models.User'):
+def search_commissions(search_query: CommissionsSearchQuery,
+                       current_user: 'models.User'):
     # get commissions where current user is either buyer or creator
     query = get_commissions_with_user(current_user)
     # filter self managed

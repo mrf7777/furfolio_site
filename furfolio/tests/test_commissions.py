@@ -11,13 +11,17 @@ import datetime
 class LimitReviewCommissionsTestCase(TestCase):
     def setUp(self):
         self.creator = User(
-            username="creator", email="creator@test.com", role=User.ROLE_CREATOR, password="2"
-        )
+            username="creator",
+            email="creator@test.com",
+            role=User.ROLE_CREATOR,
+            password="2")
         self.creator.full_clean()
         self.creator.save()
         self.buyer = User(
-            username="buyer", email="buyer@test.com", role=User.ROLE_BUYER, password="2"
-        )
+            username="buyer",
+            email="buyer@test.com",
+            role=User.ROLE_BUYER,
+            password="2")
         self.buyer.full_clean()
         self.buyer.save()
         cutoff_date = timezone.now() + datetime.timedelta(days=7)

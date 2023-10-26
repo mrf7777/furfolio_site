@@ -21,7 +21,8 @@ class WhatIsFurfolio(generic.TemplateView):
 
 
 class CommissionSearchHelpScenario:
-    def __init__(self, scenario: str, commission_query: commission_queries.CommissionsSearchQuery):
+    def __init__(self, scenario: str,
+                 commission_query: commission_queries.CommissionsSearchQuery):
         self.scenario = scenario
         self.commission_query = commission_query
 

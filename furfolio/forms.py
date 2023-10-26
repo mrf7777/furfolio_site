@@ -57,8 +57,19 @@ class OfferForm(forms.ModelForm):
 
     class Meta:
         model = Offer
-        fields = ["author", "name", "description", "cutoff_date", "thumbnail", "max_commissions_per_user",
-                  "rating", "slots", "max_review_commissions", "min_price", "max_price", "currency"]
+        fields = [
+            "author",
+            "name",
+            "description",
+            "cutoff_date",
+            "thumbnail",
+            "max_commissions_per_user",
+            "rating",
+            "slots",
+            "max_review_commissions",
+            "min_price",
+            "max_price",
+            "currency"]
         widgets = {
             "thumbnail": forms.ClearableFileInput(),
             "author": forms.HiddenInput(),

@@ -96,7 +96,8 @@ class CreatorDashboard(LoginRequiredMixin, generic.FormView):
         context["in_progress_commissions_overflow"] = in_progress_commissions_total_count > max_commissions_per_column
         context["closed_commissions_overflow"] = closed_commissions_total_count > max_commissions_per_column
 
-        # construct urls to commission searches for each column so that the user can "see all"
+        # construct urls to commission searches for each column so that the
+        # user can "see all"
         selected_offer = offer_form.cleaned_data["offer"]
 
         review_commissions_query = commission_queries.CommissionsSearchQuery(
@@ -123,10 +124,8 @@ class CreatorDashboard(LoginRequiredMixin, generic.FormView):
             in_progress=True,
             offer=selected_offer.pk if selected_offer else None,
         )
-        in_progress_commissions_query_url = \
-            reverse("commissions") \
-            + "?" \
-            + urlencode({"search": in_progress_commissions_query.to_search_string()})
+        in_progress_commissions_query_url = reverse("commissions") + "?" + urlencode(
+            {"search": in_progress_commissions_query.to_search_string()})
         context["see_in_progress_commissions_url"] = in_progress_commissions_query_url
 
         closed_commissions_query = commission_queries.CommissionsSearchQuery(
@@ -154,7 +153,8 @@ class BuyerDashboard(LoginRequiredMixin, generic.ListView):
         return context
 
     def get_queryset(self) -> QuerySet[Any]:
-        return commission_queries.get_commissions_for_user_as_commissioner(self.request.user)
+        return commission_queries.get_commissions_for_user_as_commissioner(
+            self.request.user)
 
 
 class OfferList(mixins.GetAdultConsentMixin, generic.ListView):
@@ -190,7 +190,8 @@ class OfferList(mixins.GetAdultConsentMixin, generic.ListView):
         return context
 
 
-class Offer(mixins.GetAdultConsentMixin, UserPassesTestMixin, generic.DetailView):
+class Offer(mixins.GetAdultConsentMixin,
+            UserPassesTestMixin, generic.DetailView):
     model = models.Offer
     context_object_name = "offer"
     template_name = "furfolio/offers/offer_detail.html"
@@ -210,10 +211,8 @@ class Offer(mixins.GetAdultConsentMixin, UserPassesTestMixin, generic.DetailView
         commissions_of_offer_query = commission_queries.CommissionsSearchQuery(
             offer=offer.pk
         )
-        commissions_of_offer_url = \
-            reverse("commissions") \
-            + "?" \
-            + urlencode({"search": commissions_of_offer_query.to_search_string()})
+        commissions_of_offer_url = reverse("commissions") + "?" + urlencode(
+            {"search": commissions_of_offer_query.to_search_string()})
         context["see_commissions_url"] = commissions_of_offer_url
 
         return context
@@ -277,9 +276,7 @@ class User(generic.DetailView):
             username=self.kwargs["username"],
         )
         context["is_user_followed"] = user_following_user_queries.does_user_follow_user(
-            self.request.user,
-            user_to_follow,
-        )
+            self.request.user, user_to_follow, )
 
         return context
 
@@ -331,7 +328,8 @@ class FollowedList(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
         return context
 
     def test_func(self) -> bool | None:
-        return self.request.user == get_object_or_404(models.User, username=self.kwargs["username"])
+        return self.request.user == get_object_or_404(
+            models.User, username=self.kwargs["username"])
 
 
 class CreateCommission(LoginRequiredMixin, generic.CreateView):
@@ -339,7 +337,8 @@ class CreateCommission(LoginRequiredMixin, generic.CreateView):
     template_name = "furfolio/commissions/commission_create.html"
     form_class = CommissionForm
 
-    # prefill offer and commissioner for the commission since these are hidden fields
+    # prefill offer and commissioner for the commission since these are hidden
+    # fields
     def get_initial(self):
         initial = super().get_initial()
         initial["offer"] = self.kwargs["offer_pk"]
@@ -379,10 +378,7 @@ class Commissions(LoginRequiredMixin, generic.ListView):
         if form.is_valid():
             return commission_queries.search_commissions(
                 commission_queries.CommissionsSearchQuery.commission_search_string_to_query(
-                    form.cleaned_data["search"],
-                ),
-                current_user=self.request.user
-            )
+                    form.cleaned_data["search"], ), current_user=self.request.user)
         else:
             return models.Commission.objects.none()
 
@@ -399,7 +395,8 @@ class Commissions(LoginRequiredMixin, generic.ListView):
         return context
 
 
-class UpdateCommission(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
+class UpdateCommission(
+        LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = models.Commission
     template_name = "furfolio/commissions/commission_update.html"
     form_class = UpdateCommissionForm
@@ -413,7 +410,8 @@ class UpdateCommission(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateVi
 class UpdateCommissionStatus(LoginRequiredMixin, generic.View):
     def post(self, request, pk):
         commission = get_object_or_404(models.Commission, pk=pk)
-        # ensure that offer author only has permission to update commission state
+        # ensure that offer author only has permission to update commission
+        # state
         user = self.request.user
         if user.pk != commission.offer.author.pk:
             raise PermissionDenied(
@@ -426,7 +424,8 @@ class UpdateCommissionStatus(LoginRequiredMixin, generic.View):
         return redirect(redirect_url)
 
 
-class CommissionChat(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView):
+class CommissionChat(LoginRequiredMixin,
+                     UserPassesTestMixin, generic.CreateView):
     model = models.CommissionMessage
     form_class = CommissionMessageForm
     template_name = "furfolio/commissions/chat/chat.html"

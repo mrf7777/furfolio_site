@@ -31,10 +31,13 @@ AVERAGE_CHARACTERS_PER_WORD = 4.7
 
 def remove_transparency(im, bg_colour=(255, 255, 255)):
 
-    # Only process if image has transparency (http://stackoverflow.com/a/1963146)
-    if im.mode in ('RGBA', 'LA') or (im.mode == 'P' and 'transparency' in im.info):
+    # Only process if image has transparency
+    # (http://stackoverflow.com/a/1963146)
+    if im.mode in ('RGBA', 'LA') or (
+            im.mode == 'P' and 'transparency' in im.info):
 
-        # Need to convert to RGBA if LA format due to a bug in PIL (http://stackoverflow.com/a/1963146)
+        # Need to convert to RGBA if LA format due to a bug in PIL
+        # (http://stackoverflow.com/a/1963146)
         alpha = im.convert('RGBA').split()[-1]
 
         # Create a new background image of our matt color.
@@ -48,7 +51,8 @@ def remove_transparency(im, bg_colour=(255, 255, 255)):
         return im
 
 
-def image_resize(image, width, height, transparency_remove=True, fit_in_center=False):
+def image_resize(image, width, height, transparency_remove=True,
+                 fit_in_center=False):
     """
     https://blog.soards.me/posts/resize-image-on-save-in-django-before-sending-to-amazon-s3/
     """
@@ -82,7 +86,8 @@ def image_resize(image, width, height, transparency_remove=True, fit_in_center=F
         img.save(buffer, format="PNG")
         # Wrap the buffer in File object
         file_object = File(buffer)
-        # Save the new resized file as usual, which will save to S3 using django-storages
+        # Save the new resized file as usual, which will save to S3 using
+        # django-storages
         image.save(img_filename, file_object)
 
 
@@ -137,7 +142,11 @@ class User(mixins.GetFullUrlMixin, AbstractUser):
     def save(self, *args, **kwargs) -> None:
         if self.avatar and self.tracker.has_changed("avatar"):
             image_resize(
-                self.avatar, User.AVATAR_SIZE_PIXELS[0], User.AVATAR_SIZE_PIXELS[1], transparency_remove=True, fit_in_center=True)
+                self.avatar,
+                User.AVATAR_SIZE_PIXELS[0],
+                User.AVATAR_SIZE_PIXELS[1],
+                transparency_remove=True,
+                fit_in_center=True)
         super(User, self).save(*args, **kwargs)
 
     def get_following_users(self):
@@ -274,7 +283,7 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         help_text="The minimum price for commissions of this offer.",
         default=0,
         validators=[
-            validators.MaxValueValidator(HIGHEST_PRICE-1)
+            validators.MaxValueValidator(HIGHEST_PRICE - 1)
         ]
     )
     max_price = models.PositiveIntegerField(
@@ -315,12 +324,15 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         ]
 
     def __str__(self):
-        return "Id: %i. \"%s\" by %s." % (self.id, self.name, self.author.username)
+        return "Id: %i. \"%s\" by %s." % (
+            self.id, self.name, self.author.username)
 
     def save(self, *args, **kwargs) -> None:
         if self.thumbnail and self.tracker.has_changed("thumbnail"):
             image_resize(
-                self.thumbnail, Offer.THUMBNAIL_MAX_DIMENTIONS[0], Offer.THUMBNAIL_MAX_DIMENTIONS[1])
+                self.thumbnail,
+                Offer.THUMBNAIL_MAX_DIMENTIONS[0],
+                Offer.THUMBNAIL_MAX_DIMENTIONS[1])
 
         super(Offer, self).save(*args, **kwargs)
 
@@ -468,13 +480,17 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
         return super().clean()
 
     def __str__(self):
-        return "Id: %i. \"%s\" requested \"%s\"." % (self.id, self.commissioner.username, self.offer.name)
+        return "Id: %i. \"%s\" requested \"%s\"." % (
+            self.id, self.commissioner.username, self.offer.name)
 
     def get_absolute_url(self):
         return reverse("commission_detail", kwargs={"pk": self.pk})
 
     def is_active(self):
-        return self.state in {Commission.STATE_ACCEPTED, Commission.STATE_IN_PROGRESS, Commission.STATE_CLOSED}
+        return self.state in {
+            Commission.STATE_ACCEPTED,
+            Commission.STATE_IN_PROGRESS,
+            Commission.STATE_CLOSED}
 
     def is_self_managed(self):
         return self.commissioner.pk == self.offer.author.pk
@@ -491,7 +507,8 @@ class CommissionMessage(mixins.GetFullUrlMixin, models.Model):
         name="commission",
         on_delete=models.CASCADE,
     )
-    # if the author is deleted, keep the chat history by preserving these messages
+    # if the author is deleted, keep the chat history by preserving these
+    # messages
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
@@ -532,8 +549,11 @@ class CommissionMessage(mixins.GetFullUrlMixin, models.Model):
         )
 
     def been_edited(self) -> bool:
-        # only consider to be edited if change to message happened 10 seconds after being created
-        return abs((self.created_date - self.updated_date).total_seconds()) > 10
+        # only consider to be edited if change to message happened 10 seconds
+        # after being created
+        return abs(
+            (self.created_date -
+             self.updated_date).total_seconds()) > 10
 
     def get_html_id(self) -> str:
         return "message_" + str(self.pk)
@@ -551,4 +571,5 @@ class CommissionMessage(mixins.GetFullUrlMixin, models.Model):
                 return self.commission.commissioner
 
     def get_absolute_url(self):
-        return reverse("commission_chat", kwargs={"pk": self.commission.pk}) + "#" + self.get_html_id()
+        return reverse("commission_chat", kwargs={
+                       "pk": self.commission.pk}) + "#" + self.get_html_id()

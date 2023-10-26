@@ -5,14 +5,16 @@ from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 from .. import models
 
 
-def does_user_follow_user(follower: 'models.User', followed: 'models.User') -> bool:
+def does_user_follow_user(follower: 'models.User',
+                          followed: 'models.User') -> bool:
     return models.UserFollowingUser.objects.filter(
         follower=follower,
         followed=followed
     ).exists()
 
 
-def make_user_follow_or_unfollow_user(follower: 'models.User', followed: 'models.User', should_follow: bool):
+def make_user_follow_or_unfollow_user(
+        follower: 'models.User', followed: 'models.User', should_follow: bool):
     if should_follow:
         # attempt to create a following record
         _, _ = models.UserFollowingUser.objects.get_or_create(

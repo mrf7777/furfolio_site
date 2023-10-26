@@ -9,8 +9,14 @@ urlpatterns = [
     # offers
     path('offers/', views.OfferList.as_view(), name="offer_list"),
     path('offers/create/', views.CreateOffer.as_view(), name="create_offer"),
-    path('offers/<pk>/update/', views.UpdateOffer.as_view(), name="update_offer"),
-    path('offers/<pk>/delete/', views.DeleteOffer.as_view(), name="delete_offer"),
+    path(
+        'offers/<pk>/update/',
+        views.UpdateOffer.as_view(),
+        name="update_offer"),
+    path(
+        'offers/<pk>/delete/',
+        views.DeleteOffer.as_view(),
+        name="delete_offer"),
     path('offers/<pk>/', views.Offer.as_view(), name="offer_detail"),
     # users
     path('users/<username>/', views.User.as_view(), name="user"),
@@ -46,9 +52,15 @@ urlpatterns = [
     path('dashboard/', views.DashboardRedirector.as_view(), name="dashboard"),
     path('dashboard/creator/', views.CreatorDashboard.as_view(),
          name="creator_dashboard"),
-    path('dashboard/buyer/', views.BuyerDashboard.as_view(), name="buyer_dashboard"),
+    path(
+        'dashboard/buyer/',
+        views.BuyerDashboard.as_view(),
+        name="buyer_dashboard"),
     # commissions
-    path('commissions/<pk>', views.Commission.as_view(), name="commission_detail"),
+    path(
+        'commissions/<pk>',
+        views.Commission.as_view(),
+        name="commission_detail"),
     path('offers/<offer_pk>/commissions/create/', views.CreateCommission.as_view(),
          name="create_commission"),
     path('commissions/<pk>/update/',

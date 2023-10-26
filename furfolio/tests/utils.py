@@ -1,7 +1,8 @@
 from .. import models
 
 
-def make_user(username, password="admin", role=models.User.ROLE_BUYER, email="test@furfolio.net"):
+def make_user(username, password="admin",
+              role=models.User.ROLE_BUYER, email="test@furfolio.net"):
     user = models.User(
         username=username,
         password=password,
@@ -19,7 +20,14 @@ def make_user_follow_user(follower, followed):
     record.save()
 
 
-def make_offer(user, name: str = "Offer", description: str = "This is an offer made by a user.", slots=3, max_review_commissions=2, forced_closed=False, max_commissions_per_user=1):
+def make_offer(
+        user,
+        name: str = "Offer",
+        description: str = "This is an offer made by a user.",
+        slots=3,
+        max_review_commissions=2,
+        forced_closed=False,
+        max_commissions_per_user=1):
     offer = models.Offer(
         author=user,
         name=name,
@@ -34,7 +42,8 @@ def make_offer(user, name: str = "Offer", description: str = "This is an offer m
     return offer
 
 
-def make_commission(commissioner, offer, request_text="I want a commission.", state=models.Commission.STATE_REVIEW):
+def make_commission(commissioner, offer, request_text="I want a commission.",
+                    state=models.Commission.STATE_REVIEW):
     commission = models.Commission(
         commissioner=commissioner,
         offer=offer,

@@ -66,6 +66,8 @@ urlpatterns = [
          pages.PrivacyPolicy.as_view(), name="privacy_policy"),
     # help pages
     path('help/', pages.Help.as_view(), name="help"),
+    path('help/what-is-furfolio/',
+         pages.WhatIsFurfolio.as_view(), name="what_is_furfolio"),
     path('help/commission-search/', pages.CommissionSearchHelp.as_view(),
          name="commission_search_help"),
 ]

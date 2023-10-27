@@ -42,3 +42,17 @@ class EmailCommissionsTestCase(TestCase):
         managed_commission.save()
 
         self.assertEqual(len(mail.outbox), 0)
+
+
+class EmailOffersTestCase(TestCase):
+    def setUp(self):
+        self.user_creator = utils.make_user(
+            "creator", role=models.User.ROLE_CREATOR)
+        self.user_buyer = utils.make_user(
+            "buyer", role=models.User.ROLE_BUYER)
+        utils.make_user_follow_user(self.user_buyer, self.user_creator)
+        
+    def test_create_offer_sends_email_to_follower(self):
+        utils.make_offer(self.user_creator)
+        
+        self.assertEqual(len(mail.outbox), 1)

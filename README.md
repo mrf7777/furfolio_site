@@ -94,7 +94,7 @@
 
 ### Limited Liability
 - we are not responsible
-  - but we do provide mitigation tools
+  - for disputes between you and others
 
 ### Enforcement
 - community moderation and reporting

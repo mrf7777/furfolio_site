@@ -5,7 +5,6 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404
 
 from .. import models
-from .. import form_fields
 
 
 def get_offer_by_pk(pk) -> 'models.Offer':
@@ -79,14 +78,14 @@ def full_text_search_offers(search_query: OfferSearchQuery):
     query = query.filter(min_price__lte=price_max, max_price__gte=price_min)
 
     match search_query.sort:
-        case form_fields.SortField.CHOICE_RELEVANCE:
+        case models.Offer.SORT_RELEVANCE:
             if text_query_cleaned:
                 query = query.order_by("-rank")
             else:
                 query = query.order_by("-created_date")
-        case form_fields.SortField.CHOICE_CREATED_DATE:
+        case models.Offer.SORT_CREATED_DATE:
             query = query.order_by("-created_date")
-        case form_fields.SortField.CHOICE_UPDATED_DATE:
+        case models.Offer.SORT_UPDATED_DATE:
             print("updated date")
             query = query.order_by("-updated_date")
         case _:

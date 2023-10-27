@@ -4,7 +4,6 @@ from django.forms import EmailField
 from django import forms
 from django.forms.renderers import TemplatesSetting
 from .models import User, Offer, Commission, CommissionMessage
-from . import form_fields
 
 
 class TextSearchForm(forms.Form):
@@ -88,7 +87,7 @@ class OfferFormUpdate(OfferForm):
 
 class OfferSearchForm(TextSearchForm):
     author = forms.CharField(max_length=300, required=False)
-    sort = form_fields.SortField()
+    sort = forms.ChoiceField(choices=Offer.SORT_CHOICES, required=False, initial=Offer.SORT_CREATED_DATE)
     closed_offers = forms.BooleanField(required=False, initial=False)
     price_min = forms.IntegerField(min_value=0, initial=0, required=False)
     price_max = forms.IntegerField(min_value=1, initial=1, required=False)

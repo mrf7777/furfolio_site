@@ -6,7 +6,6 @@ from django.db.models import Manager
 from django.shortcuts import get_object_or_404
 
 from .. import models
-from .. import form_fields
 
 
 def get_commission_by_pk(pk) -> 'models.Commission':
@@ -211,11 +210,9 @@ def search_commissions(search_query: CommissionsSearchQuery,
     query = query.filter(state_query)
     # sort
     match search_query.sort:
-        case form_fields.SortField.CHOICE_RELEVANCE:
-            query = query.order_by("-updated_date")
-        case form_fields.SortField.CHOICE_CREATED_DATE:
+        case models.Commission.SORT_CREATED_DATE:
             query = query.order_by("-created_date")
-        case form_fields.SortField.CHOICE_UPDATED_DATE:
+        case models.Commission.SORT_UPDATED_DATE:
             query = query.order_by("-updated_date")
         case _:
             query = query.order_by("-updated_date")

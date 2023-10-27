@@ -5,7 +5,6 @@ from django.db.models import Manager
 from django.shortcuts import get_object_or_404
 
 from .. import models
-from .. import form_fields
 
 
 def get_commission_messages_for_commission(

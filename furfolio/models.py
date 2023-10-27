@@ -213,6 +213,16 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
     ASPECT_RATIO_MIN = (1, 3)
     ASPECT_RATIO_MAX = (4, 1)
     THUMBNAIL_MAX_DIMENTIONS = (600, 350)
+
+    SORT_RELEVANCE = "relevance"
+    SORT_CREATED_DATE = "created_date"
+    SORT_UPDATED_DATE = "updated_date"
+    SORT_CHOICES = [
+        (SORT_RELEVANCE, "Relevance"),
+        (SORT_CREATED_DATE, "Created Date"),
+        (SORT_UPDATED_DATE, "Updated Date"),
+    ]
+
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(
@@ -413,6 +423,14 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
         (STATE_CLOSED, "Finished"),
         (STATE_REJECTED, "Rejected"),
     ]
+
+    SORT_CREATED_DATE = "created_date"
+    SORT_UPDATED_DATE = "updated_date"
+    SORT_CHOICES = [
+        (SORT_CREATED_DATE, "Created Date"),
+        (SORT_UPDATED_DATE, "Updated Date"),
+    ]
+
     commissioner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         name="commissioner",

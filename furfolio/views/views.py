@@ -71,7 +71,6 @@ class CreatorDashboard(LoginRequiredMixin, generic.FormView):
             selected_offer,
         )
 
-
         review_commissions = commissions[models.Commission.STATE_REVIEW]
         accepted_commissions = commissions[models.Commission.STATE_ACCEPTED]
         in_progress_commissions = commissions[models.Commission.STATE_IN_PROGRESS]

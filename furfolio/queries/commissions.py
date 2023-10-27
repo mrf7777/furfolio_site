@@ -86,7 +86,9 @@ def get_commissions_with_user(user: 'models.User'):
 class CommissionsSearchQuery:
     def __init__(
         self,
-        sort: str | None = None,    # TODO: without circular import, use constant defined in Commission model
+        # TODO: without circular import, use constant defined in Commission
+        # model
+        sort: str | None = None,
         self_managed: bool | None = None,
         review: bool = False,
         accepted: bool = False,
@@ -94,7 +96,8 @@ class CommissionsSearchQuery:
         closed: bool = False,
         rejected: bool = False,
         offer: int | None = None,
-        order: str | None = None,   # TODO: define an order class at the query package level to handle this
+        order: str | None = None,
+        # TODO: define an order class at the query package level to handle this
         commissioner: str = "",
         creator: str = "",
     ):

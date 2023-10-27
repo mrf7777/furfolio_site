@@ -43,7 +43,8 @@ class OfferSearchQuery:
         self.text_query = text_query
         self.sort = sort
         self.author = author
-        self.closed_offers = closed_offers and True # convert (None | bool) to bool
+        # convert (None | bool) to bool
+        self.closed_offers = closed_offers and True
         self.consent_to_adult_content = consent_to_adult_content
         self.price_min = price_min
         self.price_max = price_max

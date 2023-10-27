@@ -14,6 +14,8 @@ class EmailCommissionsTestCase(TestCase):
         self.offer = utils.make_offer(self.user_creator)
         self.commission = utils.make_commission(
             self.user_buyer, self.offer, state=models.Commission.STATE_REVIEW)
+        
+        mail.outbox = []
 
     def test_send_email_on_commission_state_change(self):
         self.commission.state = models.Commission.STATE_REJECTED
@@ -32,6 +34,7 @@ class EmailCommissionsTestCase(TestCase):
     def test_self_managed_commission_does_not_send_email(self):
         managed_commission = utils.make_commission(
             self.user_creator, self.offer)
+        mail.outbox = []
         managed_commission.state = models.Commission.STATE_IN_PROGRESS
         managed_commission.save()
 
@@ -62,6 +65,8 @@ class CommissionMessagesTestCase(TestCase):
         self.offer = utils.make_offer(self.user_creator)
         self.commission = utils.make_commission(
             self.user_buyer, self.offer, state=models.Commission.STATE_REVIEW)
+        
+        mail.outbox = []
 
     def test_commission_message_sends_email(self):
         utils.make_commission_message(self.user_buyer, self.commission, "Test")

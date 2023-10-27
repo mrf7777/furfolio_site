@@ -76,3 +76,16 @@ def send_new_offer_email(new_offer: 'models.Offer'):
             subject,
             user.email,
         )
+
+
+def send_new_commission_email(commission: 'models.Commission'):
+    buyer_username = truncate_string(commission.commissioner.username, 15)
+    offer_name = truncate_string(commission.offer.name, 24)
+    subject = f"{buyer_username} made commission for {offer_name}"
+    send_email(
+        "furfolio/email/commissions/new_commission.txt",
+        "furfolio/email/commissions/new_commission.html",
+        {"commission": commission},
+        subject,
+        commission.offer.author.email,
+    )

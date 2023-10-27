@@ -20,7 +20,7 @@ from . import validators as furfolio_validators
 from . import mixins
 from .queries import commissions as commission_queries
 from .queries import users as user_queries
-from .email import send_commission_state_changed_email, send_new_commission_message_email, send_new_offer_email
+from .email import send_commission_state_changed_email, send_new_commission_message_email, send_new_offer_email, send_new_commission_email
 
 
 PIL.ImageFile.LOAD_TRUNCATED_IMAGES = True
@@ -471,7 +471,13 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
     def save(self, *args, **kwargs) -> None:
         if self.should_notify_state_change():
             send_commission_state_changed_email(self)
+        if self.should_notify_new_commission():
+            send_new_commission_email(self)
         super().save(*args, **kwargs)
+
+    def should_notify_new_commission(self):
+        should_notify = self.tracker.previous("id") is None and not self.is_self_managed()
+        return should_notify
 
     def friendly_state(self) -> str:
         COMMISSION_STATE_TO_FRIENDLY = dict(self.__class__.STATE_CHOICES)

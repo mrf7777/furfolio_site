@@ -95,6 +95,8 @@ class CommissionsSearchQuery:
         rejected: bool = False,
         offer: int | None = None,
         order: str | None = None,   # TODO: define an order class at the query package level to handle this
+        commissioner: str = "",
+        creator: str = "",
     ):
         self.sort = sort
         self.self_managed = self_managed
@@ -105,6 +107,8 @@ class CommissionsSearchQuery:
         self.rejected = rejected
         self.offer = offer
         self.order = order
+        self.commissioner = commissioner
+        self.creator = creator
 
     def commission_search_string_to_query(
             search_string: str) -> 'CommissionsSearchQuery':
@@ -150,6 +154,10 @@ class CommissionsSearchQuery:
                         pass
                 case "order":
                     query.order = suffix.lower()
+                case "commissioner":
+                    query.commissioner = suffix
+                case "creator":
+                    query.creator = suffix
 
         return query
 
@@ -176,6 +184,10 @@ class CommissionsSearchQuery:
             string += f"offer:{self.offer} "
         if self.order:
             string += f"order:{self.order} "
+        if self.commissioner:
+            string += f"commissioner:{self.commissioner} "
+        if self.creator:
+            string += f"creator:{self.creator} "
 
         return string.strip()
 
@@ -198,6 +210,12 @@ def search_commissions(search_query: CommissionsSearchQuery,
     # filter offer
     if search_query.offer is not None:
         query = query.filter(offer__pk=search_query.offer)
+    # filter commissioner
+    if search_query.commissioner:
+        query = query.filter(commissioner__username=search_query.commissioner)
+    # filter creator
+    if search_query.creator:
+        query = query.filter(offer__author__username=search_query.creator)
     # build filter for commission states
     state_queries = []
     if search_query.review:

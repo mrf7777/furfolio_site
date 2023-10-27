@@ -27,7 +27,8 @@ def make_offer(
         slots=3,
         max_review_commissions=2,
         forced_closed=False,
-        max_commissions_per_user=1):
+        max_commissions_per_user=1,
+        validate=True):
     offer = models.Offer(
         author=user,
         name=name,
@@ -37,7 +38,8 @@ def make_offer(
         forced_closed=forced_closed,
         max_commissions_per_user=max_commissions_per_user,
     )
-    offer.full_clean()
+    if validate:
+        offer.full_clean()
     offer.save()
     return offer
 

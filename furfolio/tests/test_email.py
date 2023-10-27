@@ -1,3 +1,4 @@
+from ctypes import util
 from django.test import TestCase, Client
 from ..models import Commission, User, Offer
 from django.utils import timezone
@@ -51,8 +52,27 @@ class EmailOffersTestCase(TestCase):
         self.user_buyer = utils.make_user(
             "buyer", role=models.User.ROLE_BUYER)
         utils.make_user_follow_user(self.user_buyer, self.user_creator)
-        
+
     def test_create_offer_sends_email_to_follower(self):
         utils.make_offer(self.user_creator)
-        
+
         self.assertEqual(len(mail.outbox), 1)
+
+
+class CommissionMessagesTestCase(TestCase):
+    def setUp(self) -> None:
+        self.user_creator = utils.make_user(
+            "creator", role=models.User.ROLE_CREATOR, email="creator@test.com")
+        self.user_buyer = utils.make_user(
+            "buyer", role=models.User.ROLE_BUYER, email="buyer@test.com")
+
+        self.offer = utils.make_offer(self.user_creator)
+        self.commission = utils.make_commission(
+            self.user_buyer, self.offer, state=models.Commission.STATE_REVIEW)
+
+    def test_commission_message_sends_email(self):
+        utils.make_commission_message(self.user_buyer, self.commission, "Test")
+
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertIn(self.user_creator.email, mail.outbox[0].recipients())
+        self.assertNotIn(self.user_buyer.email, mail.outbox[0].recipients())

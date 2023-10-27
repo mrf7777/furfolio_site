@@ -88,13 +88,13 @@ class CommissionsSearchQuery:
     def __init__(
         self,
         sort: str = "",
-        self_managed: bool = None,
+        self_managed: bool | None = None,
         review: bool = False,
         accepted: bool = False,
         in_progress: bool = False,
         closed: bool = False,
         rejected: bool = False,
-        offer: int = None,
+        offer: int | None = None,
     ):
         self.sort = sort
         self.self_managed = self_managed

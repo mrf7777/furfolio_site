@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.core.exceptions import ValidationError
 from . import utils
 from .. import utils as furfolio_utils
+from ..queries import commissions as commission_queries
 import datetime
 
 
@@ -109,3 +110,64 @@ class MaxCommissionLimitPerUserTestCase(TestCase):
     def test_commission_limit_does_not_apply_to_self_managed(self):
         utils.make_commission(self.creator, self.offer)
         utils.make_commission(self.creator, self.offer)
+
+
+class CommissionQueryTestCase(TestCase):
+    def test_filters_in_commission_query_string(self):
+        query_string = "self_managed:true state:review state:accepted state:in_progress state:finished state:rejected offer:1 sort:created_date"
+        query = commission_queries.CommissionsSearchQuery.commission_search_string_to_query(
+            query_string)
+        self.assertEqual(query.review, True)
+        self.assertEqual(query.self_managed, True)
+        self.assertEqual(query.offer, 1)
+
+    def test_bad_offer_in_commission_query_string(self):
+        query_string = "offer:abc123"
+        query = commission_queries.CommissionsSearchQuery.commission_search_string_to_query(
+            query_string)
+        self.assertEqual(query.offer, None)
+
+    def test_not_self_managed_commission_query_string(self):
+        query_string = "self_managed:false"
+        query = commission_queries.CommissionsSearchQuery.commission_search_string_to_query(
+            query_string)
+        self.assertEqual(query.self_managed, False)
+
+    def test_useless_commission_query_string(self):
+        query_string = " ffjsdlf  d:a:a 33!@#$%^&*()_::LOIJ(OL:)    "
+        query = commission_queries.CommissionsSearchQuery.commission_search_string_to_query(
+            query_string)
+        self.assertEqual(query.review, False)
+        self.assertEqual(query.accepted, False)
+        self.assertEqual(query.in_progress, False)
+        self.assertEqual(query.closed, False)
+        self.assertEqual(query.rejected, False)
+        self.assertEqual(query.sort, "")
+        self.assertEqual(query.offer, None)
+        self.assertEqual(query.self_managed, None)
+
+    def test_positive_commission_query_to_search_string(self):
+        query = commission_queries.CommissionsSearchQuery(
+            sort="created_date",
+            self_managed=True,
+            review=True,
+            accepted=True,
+            in_progress=True,
+            closed=True,
+            rejected=True,
+            offer=1,
+        )
+        query_string = query.to_search_string()
+        # TODO: make tests
+
+    def test_negative_commission_query_to_search_string(self):
+        query = commission_queries.CommissionsSearchQuery(
+            self_managed=False,
+            review=False,
+            accepted=False,
+            in_progress=False,
+            closed=False,
+            rejected=False,
+        )
+        query_string = query.to_search_string()
+        # TODO: make tests

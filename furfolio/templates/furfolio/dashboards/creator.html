@@ -1,4 +1,4 @@
-{% extends "furfolio/layouts/4_columns.html" %}
+{% extends "furfolio/layouts/3_columns.html" %}
 
 {% load static %}
 
@@ -82,19 +82,4 @@
 
 {% block column_3 %}
     {% include "./commission_card_list.html" with commissions=in_progress_commissions request=request csrf_token=csrf_token only %}
-{% endblock %}
-
-{% block column_4_title %}
-<a class="text-decoration-none text-reset" href="{{ see_closed_commissions_url }}">
-    {% include "furfolio/commissions/state_badge.html" with state="CLOSED" only %}
-</a>
-<span class="fs-5">
-    {{ closed_commissions.count }}
-    of
-    <a class="text-decoration-none" href="{{ see_closed_commissions_url }}">{{ closed_commissions_total_count }}</a>
-</span>
-{% endblock %}
-
-{% block column_4 %}
-    {% include "./commission_card_list.html" with commissions=closed_commissions request=request csrf_token=csrf_token only %}
 {% endblock %}

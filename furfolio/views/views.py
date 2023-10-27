@@ -60,46 +60,40 @@ class CreatorDashboard(LoginRequiredMixin, generic.FormView):
         offer_form.full_clean()
         context["offer_select_form"] = offer_form
 
+        selected_offer = offer_form.cleaned_data.get("offer")
         commissions = commission_queries.get_commissions_for_user_as_offer_author(
             self.request.user,
             [
                 models.Commission.STATE_REVIEW,
                 models.Commission.STATE_ACCEPTED,
                 models.Commission.STATE_IN_PROGRESS,
-                models.Commission.STATE_CLOSED,
             ],
-            offer_form.cleaned_data["offer"],
+            selected_offer,
         )
+
 
         review_commissions = commissions[models.Commission.STATE_REVIEW]
         accepted_commissions = commissions[models.Commission.STATE_ACCEPTED]
         in_progress_commissions = commissions[models.Commission.STATE_IN_PROGRESS]
-        closed_commissions = commissions[models.Commission.STATE_CLOSED]
 
         review_commissions_total_count = review_commissions.count()
         accepted_commissions_total_count = accepted_commissions.count()
         in_progress_commissions_total_count = in_progress_commissions.count()
-        closed_commissions_total_count = closed_commissions.count()
         context["review_commissions_total_count"] = review_commissions_total_count
         context["accepted_commissions_total_count"] = accepted_commissions_total_count
         context["in_progress_commissions_total_count"] = in_progress_commissions_total_count
-        context["closed_commissions_total_count"] = closed_commissions_total_count
 
         max_commissions_per_column = self.__class__.MAX_COMMISSIONS_PER_COLUMN
         context["review_commissions"] = review_commissions[:max_commissions_per_column]
         context["accepted_commissions"] = accepted_commissions[:max_commissions_per_column]
         context["in_progress_commissions"] = in_progress_commissions[:max_commissions_per_column]
-        context["closed_commissions"] = closed_commissions[:max_commissions_per_column]
 
         context["review_commissions_overflow"] = review_commissions_total_count > max_commissions_per_column
         context["accepted_commissions_overflow"] = accepted_commissions_total_count > max_commissions_per_column
         context["in_progress_commissions_overflow"] = in_progress_commissions_total_count > max_commissions_per_column
-        context["closed_commissions_overflow"] = closed_commissions_total_count > max_commissions_per_column
 
         # construct urls to commission searches for each column so that the
         # user can "see all"
-        selected_offer = offer_form.cleaned_data["offer"]
-
         review_commissions_query = commission_queries.CommissionsSearchQuery(
             review=True,
             offer=selected_offer.pk if selected_offer else None,
@@ -127,16 +121,6 @@ class CreatorDashboard(LoginRequiredMixin, generic.FormView):
         in_progress_commissions_query_url = reverse("commissions") + "?" + urlencode(
             {"search": in_progress_commissions_query.to_search_string()})
         context["see_in_progress_commissions_url"] = in_progress_commissions_query_url
-
-        closed_commissions_query = commission_queries.CommissionsSearchQuery(
-            closed=True,
-            offer=selected_offer.pk if selected_offer else None,
-        )
-        closed_commissions_query_url = \
-            reverse("commissions") \
-            + "?" \
-            + urlencode({"search": closed_commissions_query.to_search_string()})
-        context["see_closed_commissions_url"] = closed_commissions_query_url
 
         return context
 

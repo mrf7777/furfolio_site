@@ -30,6 +30,26 @@ def get_active_offers_for_user(user: 'models.User'):
     )
 
 
+class OfferSearchQuery:
+    def __init__(
+        self,
+        text_query: str = "",
+        sort: str = "",
+        author: str = "",
+        closed_offers: bool = False,
+        consent_to_adult_content: bool = False,
+        price_min: int | None = None,
+        price_max: int | None = None,
+    ):
+        self.text_query = text_query
+        self.sort = sort
+        self.author = author
+        self.closed_offers = closed_offers
+        self.consent_to_adult_content = consent_to_adult_content
+        self.price_min = price_min
+        self.price_max = price_max
+
+
 def full_text_search_offers(
     text_query: str,
     author: str,

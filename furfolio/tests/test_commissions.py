@@ -171,3 +171,31 @@ class CommissionQueryTestCase(TestCase):
         )
         query_string = query.to_search_string()
         # TODO: make tests
+
+
+class GetActiveCommissionsTestCase(TestCase):
+    def setUp(self):
+        self.creator = utils.make_user(
+            "creator", role=User.ROLE_CREATOR, email="creator@test.com")
+        self.buyer = utils.make_user(
+            "buyer", role=User.ROLE_BUYER, email="buyer@test.com")
+        self.offer = utils.make_offer(
+            self.creator,
+            max_commissions_per_user=100,
+            max_review_commissions=100)
+
+    def test_get_active_commissions(self):
+        utils.make_commission(
+            self.buyer, self.offer, state=Commission.STATE_REVIEW, validate=False)
+        commission_accepted = utils.make_commission(
+            self.buyer, self.offer, state=Commission.STATE_ACCEPTED, validate=False)
+        commission_in_progress = utils.make_commission(
+            self.buyer, self.offer, state=Commission.STATE_IN_PROGRESS, validate=False)
+        commission_closed = utils.make_commission(
+            self.buyer, self.offer, state=Commission.STATE_CLOSED, validate=False)
+        utils.make_commission(
+            self.buyer, self.offer, state=Commission.STATE_REJECTED, validate=False)
+
+        self.assertQuerySetEqual(commission_queries.get_active_commissions(), [
+            commission_accepted, commission_in_progress, commission_closed
+        ], ordered=False)

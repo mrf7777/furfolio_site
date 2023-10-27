@@ -44,15 +44,20 @@ def make_offer(
     return offer
 
 
-def make_commission(commissioner, offer, request_text="I want a commission.",
-                    state=models.Commission.STATE_REVIEW):
+def make_commission(
+        commissioner,
+        offer,
+        request_text="I want a commission.",
+        state=models.Commission.STATE_REVIEW,
+        validate: bool = True):
     commission = models.Commission(
         commissioner=commissioner,
         offer=offer,
         initial_request_text=request_text,
         state=state,
     )
-    commission.full_clean()
+    if validate:
+        commission.full_clean()
     commission.save()
     return commission
 

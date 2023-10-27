@@ -279,7 +279,7 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
     )
     max_review_commissions = models.PositiveIntegerField(
         name="max_review_commissions",
-        verbose_name="Max Commissions in Review",
+        verbose_name="Maximum Commissions in Review",
         help_text=mark_safe(
             "The maximum number of commissions allowed to be in the review state.<br>Use this to prevent being overloaded with too many commission requests at a time for this offer."),
         validators=[

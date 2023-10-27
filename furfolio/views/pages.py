@@ -21,6 +21,10 @@ class WhatIsFurfolio(generic.TemplateView):
     template_name = "furfolio/pages/help/what_is_furfolio.html"
 
 
+class OffersAndCommissions(generic.TemplateView):
+    template_name = "furfolio/pages/help/offers_and_commissions.html"
+
+
 class CommissionSearchHelpScenario:
     def __init__(self, scenario: str,
                  commission_query: commission_queries.CommissionsSearchQuery):

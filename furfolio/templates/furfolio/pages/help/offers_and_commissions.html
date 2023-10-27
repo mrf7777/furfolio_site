@@ -1,0 +1,99 @@
+{% extends "furfolio/layouts/help_page.html" %}
+
+{% block title %}
+Offers and Commissions
+{% endblock %}
+
+{% block body %}
+<p>
+    The two main objects in Furfolio are <b>Offers</b> and <b>Commissions</b>.
+</p>
+
+<p>
+    <h3>Offers...</h3>
+    <ul>
+        <li>
+            are created usually by Creators on the platform.
+        </li>
+        <li>
+            express that a Creator is open to being commissioned as described in the Offer they publish.
+        </li>
+        <li>
+            explain what service is being provided, a price range, and the number of avaliable slots.
+        </li>
+        <li>
+            are time-bound and only allow commissions to be requested before an expiration date.
+        </li>
+        <li>
+            provide functions that regulate the number of commissions.
+        </li>
+    </ul>
+
+    Offers are either <b>open</b> or <b>closed</b>.
+    <ul>
+        <li>
+            <b>Open</b> means that the offer has not expired and the Creator has not forced it closed.
+        </li>
+        <li>
+            <b>Closed</b> means that the offer is not open. Buyers cannot request commissions of closed offers.
+        </li>
+    </ul>
+
+    An open Offer communicates that it can potentially be commissioned.
+    However, even if an Offer is open, you may not be able to commission it; this could be becuase the Creator has configured it to limit incoming commissions using a special rule.
+</p>
+
+<p>
+    <h3>Commissions...</h3>
+    <ul>
+        <li>
+            are created from a Buyer on an Offer.
+        </li>
+        <li>
+            contain initial requirements from the Buyer about what they want.
+        </li>
+        <li>
+            have their own chat room between the Buyer and the Creator of the offer.
+        </li>
+    </ul>
+
+    Once a Commission is created, it is put into the <b>Review</b> state. The Creator will usually either accept or reject the Commission after looking at the initial requirements and potentially communicating with you.
+</p>
+
+<p>
+    Here are the different states a Commission can assume:
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">State</th>
+                <th scope="col">Meaning</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Review</th>
+                <td>The Commission needs to be reviewed by the Creator of the Offer.</td>
+            </tr>
+            <tr>
+                <th scope="row">Accepted</th>
+                <td>The Creator has decided that they are wanting to work on the Commission.</td>
+            </tr>
+            <tr>
+                <th scope="row">In Progress</th>
+                <td>The Creator is currently working on the commission.</td>
+            </tr>
+            <tr>
+                <th scope="row">Finished</th>
+                <td>The Commission is considered done and no more work is needed.</td>
+            </tr>
+            <tr>
+                <th scope="row">Rejected</th>
+                <td>The Creator has decided that they are not willing to work on the Commission.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    Between the Buyer and the Creator, only the Creator can change the state of a Commission.
+</p>
+
+{% endblock %}

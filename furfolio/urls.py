@@ -80,6 +80,9 @@ urlpatterns = [
     path('help/', pages.Help.as_view(), name="help"),
     path('help/what-is-furfolio/',
          pages.WhatIsFurfolio.as_view(), name="what_is_furfolio"),
+    path('help/offers-and-commissions',
+         pages.OffersAndCommissions.as_view(),
+         name="offers_and_commissions"),
     path('help/commission-search/', pages.CommissionSearchHelp.as_view(),
          name="commission_search_help"),
 ]

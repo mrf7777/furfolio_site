@@ -1,14 +1,7 @@
-from ctypes import util
-from django.test import TestCase, Client
-from ..models import Commission, User, Offer
-from django.utils import timezone
-from django.urls import reverse
-from django.core.exceptions import ValidationError
 from django.core import mail
+from django.test import TestCase
 from .. import models
 from . import utils
-from .. import email
-import datetime
 
 
 class EmailCommissionsTestCase(TestCase):

@@ -197,3 +197,101 @@ class GetActiveCommissionsTestCase(TestCase):
         self.assertQuerySetEqual(commission_queries.get_active_commissions(), [
             commission_accepted, commission_in_progress, commission_closed
         ], ordered=False)
+
+
+class CommissionSearchTest(TestCase):
+    def setUp(self):
+        self.creator = utils.make_user(
+            "creator", role=User.ROLE_CREATOR, email="creator@test.com")
+        self.buyer1 = utils.make_user(
+            "buyer1", role=User.ROLE_BUYER, email="buyer1@test.com")
+        self.buyer2 = utils.make_user(
+            "buyer2", role=User.ROLE_BUYER, email="buyer2@test.com")
+        self.offer1 = utils.make_offer(
+            self.creator,
+            max_commissions_per_user=100,
+            max_review_commissions=100, validate=False)
+        self.offer2 = utils.make_offer(
+            self.creator,
+            max_commissions_per_user=100,
+            max_review_commissions=100, validate=False)
+        
+        self.commissions = [
+            utils.make_commission(
+                self.buyer1, self.offer1, state=Commission.STATE_REVIEW, validate=False,
+            ),
+            utils.make_commission(
+                self.buyer1, self.offer1, state=Commission.STATE_ACCEPTED, validate=False,
+            ),
+            utils.make_commission(
+                self.buyer1, self.offer1, state=Commission.STATE_IN_PROGRESS, validate=False,
+            ),
+            utils.make_commission(
+                self.buyer1, self.offer1, state=Commission.STATE_CLOSED, validate=False,
+            ),
+            utils.make_commission(
+                self.buyer1, self.offer1, state=Commission.STATE_REJECTED, validate=False,
+            ),
+
+            utils.make_commission(
+                self.buyer1, self.offer2, state=Commission.STATE_REVIEW, validate=False,
+            ),
+            utils.make_commission(
+                self.buyer1, self.offer2, state=Commission.STATE_CLOSED, validate=False,
+            ),
+
+            utils.make_commission(
+                self.creator, self.offer1, state=Commission.STATE_REVIEW, validate=False,
+            ),
+            utils.make_commission(
+                self.creator, self.offer1, state=Commission.STATE_ACCEPTED, validate=False,
+            ),
+        ]
+
+    def test_filter_offer(self):
+        search = commission_queries.search_commissions(commission_queries.CommissionsSearchQuery(
+            offer=self.offer1.pk,
+        ), self.creator)
+        self.assertEqual(search.count(), 7)
+
+        search = commission_queries.search_commissions(commission_queries.CommissionsSearchQuery(
+            offer=self.offer2.pk,
+        ), self.creator)
+        self.assertEqual(search.count(), 2)
+
+    def test_filter_self_managed(self):
+        search = commission_queries.search_commissions(commission_queries.CommissionsSearchQuery(
+            self_managed=True,
+        ), self.creator)
+        self.assertEqual(search.count(), 2)
+
+        search = commission_queries.search_commissions(commission_queries.CommissionsSearchQuery(
+            self_managed=False,
+        ), self.creator)
+        self.assertEqual(search.count(), 7)
+
+    def test_filter_individual_states(self):
+        search = commission_queries.search_commissions(commission_queries.CommissionsSearchQuery(
+            review=True,
+        ), self.creator)
+        self.assertEqual(search.count(), 3)
+
+        search = commission_queries.search_commissions(commission_queries.CommissionsSearchQuery(
+            accepted=True,
+        ), self.creator)
+        self.assertEqual(search.count(), 2)
+
+        search = commission_queries.search_commissions(commission_queries.CommissionsSearchQuery(
+            in_progress=True,
+        ), self.creator)
+        self.assertEqual(search.count(), 1)
+
+        search = commission_queries.search_commissions(commission_queries.CommissionsSearchQuery(
+            closed=True,
+        ), self.creator)
+        self.assertEqual(search.count(), 2)
+
+        search = commission_queries.search_commissions(commission_queries.CommissionsSearchQuery(
+            rejected=True,
+        ), self.creator)
+        self.assertEqual(search.count(), 1)

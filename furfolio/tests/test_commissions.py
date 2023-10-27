@@ -157,8 +157,7 @@ class CommissionQueryTestCase(TestCase):
             rejected=True,
             offer=1,
         )
-        query_string = query.to_search_string()
-        # TODO: make tests
+        query.to_search_string()
 
     def test_negative_commission_query_to_search_string(self):
         query = commission_queries.CommissionsSearchQuery(
@@ -169,8 +168,7 @@ class CommissionQueryTestCase(TestCase):
             closed=False,
             rejected=False,
         )
-        query_string = query.to_search_string()
-        # TODO: make tests
+        query.to_search_string()
 
 
 class GetActiveCommissionsTestCase(TestCase):

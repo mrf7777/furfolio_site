@@ -142,7 +142,7 @@ class CommissionQueryTestCase(TestCase):
         self.assertEqual(query.in_progress, False)
         self.assertEqual(query.closed, False)
         self.assertEqual(query.rejected, False)
-        self.assertEqual(query.sort, "")
+        self.assertEqual(query.sort, "updated_date")
         self.assertEqual(query.offer, None)
         self.assertEqual(query.self_managed, None)
 

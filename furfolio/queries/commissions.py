@@ -86,7 +86,7 @@ def get_commissions_with_user(user: 'models.User'):
 class CommissionsSearchQuery:
     def __init__(
         self,
-        sort: str = "",
+        sort: str = "updated_date",    # TODO: without circular import, use constant defined in Commission model
         self_managed: bool | None = None,
         review: bool = False,
         accepted: bool = False,
@@ -94,6 +94,7 @@ class CommissionsSearchQuery:
         closed: bool = False,
         rejected: bool = False,
         offer: int | None = None,
+        order: str = "d",   # TODO: define an order class at the query package level to handle this
     ):
         self.sort = sort
         self.self_managed = self_managed
@@ -103,6 +104,7 @@ class CommissionsSearchQuery:
         self.closed = closed
         self.rejected = rejected
         self.offer = offer
+        self.order = order
 
     def commission_search_string_to_query(
             search_string: str) -> 'CommissionsSearchQuery':
@@ -146,6 +148,8 @@ class CommissionsSearchQuery:
                         query.offer = int(suffix)
                     except ValueError:
                         pass
+                case "order":
+                    query.order = suffix.lower()
 
         return query
 
@@ -170,6 +174,8 @@ class CommissionsSearchQuery:
             string += "state:rejected "
         if self.offer is not None:
             string += f"offer:{self.offer}"
+        if self.order:
+            string += f"order:{self.order}"
 
         return string.strip()
 
@@ -211,10 +217,15 @@ def search_commissions(search_query: CommissionsSearchQuery,
     # sort
     match search_query.sort:
         case models.Commission.SORT_CREATED_DATE:
-            query = query.order_by("-created_date")
+            query = query.order_by("created_date")
         case models.Commission.SORT_UPDATED_DATE:
-            query = query.order_by("-updated_date")
+            query = query.order_by("updated_date")
         case _:
-            query = query.order_by("-updated_date")
+            query = query.order_by("updated_date")
+    match search_query.order:
+        case "a":
+            pass
+        case "d":
+            query = query.reverse()
 
     return query

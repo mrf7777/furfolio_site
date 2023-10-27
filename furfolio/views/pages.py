@@ -2,7 +2,7 @@
 from typing import Any
 from django.views import generic
 from ..queries import commissions as commission_queries
-
+from .. import models
 
 class TermsOfService(generic.TemplateView):
     template_name = "furfolio/pages/terms_of_service.html"
@@ -41,9 +41,8 @@ class CommissionSearchHelp(generic.TemplateView):
                 )
             ),
             CommissionSearchHelpScenario(
-                "In progress commissions from offer with id 1234",
+                "Commissions from offer with id 1234",
                 commission_queries.CommissionsSearchQuery(
-                    in_progress=True,
                     offer=1234
                 )
             ),
@@ -61,11 +60,26 @@ class CommissionSearchHelp(generic.TemplateView):
                 )
             ),
             CommissionSearchHelpScenario(
-                "Commissions from other users, from a specific offer, that are rejected",
+                "Commissions with newest first",
+                commission_queries.CommissionsSearchQuery(
+                    sort=models.Commission.SORT_CREATED_DATE
+                )
+            ),
+            CommissionSearchHelpScenario(
+                "Commissions sorted by updated date in ascending order",
+                commission_queries.CommissionsSearchQuery(
+                    sort=models.Commission.SORT_UPDATED_DATE,
+                    order="a",
+                )
+            ),
+            CommissionSearchHelpScenario(
+                "Commissions from other users, from a specific offer, that are rejected or finished, sorted by created date",
                 commission_queries.CommissionsSearchQuery(
                     self_managed=False,
                     offer=4321,
                     rejected=True,
+                    closed=True,
+                    sort=models.Commission.SORT_CREATED_DATE,
                 )
             ),
         ]

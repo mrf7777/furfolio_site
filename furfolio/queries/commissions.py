@@ -86,7 +86,7 @@ def get_commissions_with_user(user: 'models.User'):
 class CommissionsSearchQuery:
     def __init__(
         self,
-        sort: str = "updated_date",    # TODO: without circular import, use constant defined in Commission model
+        sort: str | None = None,    # TODO: without circular import, use constant defined in Commission model
         self_managed: bool | None = None,
         review: bool = False,
         accepted: bool = False,
@@ -94,7 +94,7 @@ class CommissionsSearchQuery:
         closed: bool = False,
         rejected: bool = False,
         offer: int | None = None,
-        order: str = "d",   # TODO: define an order class at the query package level to handle this
+        order: str | None = None,   # TODO: define an order class at the query package level to handle this
     ):
         self.sort = sort
         self.self_managed = self_managed
@@ -173,9 +173,9 @@ class CommissionsSearchQuery:
         if self.rejected:
             string += "state:rejected "
         if self.offer is not None:
-            string += f"offer:{self.offer}"
+            string += f"offer:{self.offer} "
         if self.order:
-            string += f"order:{self.order}"
+            string += f"order:{self.order} "
 
         return string.strip()
 
@@ -218,14 +218,14 @@ def search_commissions(search_query: CommissionsSearchQuery,
     match search_query.sort:
         case models.Commission.SORT_CREATED_DATE:
             query = query.order_by("created_date")
-        case models.Commission.SORT_UPDATED_DATE:
+        case models.Commission.SORT_UPDATED_DATE | None:
             query = query.order_by("updated_date")
         case _:
             query = query.order_by("updated_date")
     match search_query.order:
         case "a":
             pass
-        case "d":
+        case "d" | None:
             query = query.reverse()
 
     return query

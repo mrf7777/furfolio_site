@@ -14,16 +14,25 @@
 {% endblock %}
 
 {% block body_1 %}
-<div class="mb-2 d-flex align-items-center">
-    <div class="me-1">Offers</div>
-    <a href="{% url "offer_list" %}?author={{ request.user.username }}&sort=created_date"><button class="btn btn-primary me-3">View</button></a>
-    <a class="btn btn-primary d-inline-flex" href="{% url "create_offer" %}"><img class="me-2" src="{% static "symbols/plus-white.svg" %}" style="width: 1em;">Create</a>
+<div class="row mb-3">
+    <div class="col-4 col-sm-2">
+        Offers
+    </div>
+    <div class="col-8 col-sm-10">
+        <a href="{% url "offer_list" %}?author={{ request.user.username }}&sort=created_date"><button class="btn btn-primary me-2">View</button></a>
+        <a class="btn btn-primary d-inline-flex" href="{% url "create_offer" %}"><img class="me-2" src="{% static "symbols/plus-white.svg" %}" style="width: 1em;">Create</a>
+    </div>
 </div>
 
-<div class="mb-2 d-flex align-items-center">
-    <div class="me-1">Commissions</div>
-    <a href="{% url "commissions" %}" class="text-decoration-none btn btn-primary">View</a>
+<div class="row mb-3">
+    <div class="col-4 col-sm-2">
+        Commissions
+    </div>
+    <div class="col-8 col-md-10">
+        <a href="{% url "commissions" %}" class="text-decoration-none btn btn-primary">View</a>
+    </div>
 </div>
+
 
 <form method="get">
     {{ offer_select_form }}

@@ -173,15 +173,18 @@ class OfferList(mixins.GetAdultConsentMixin, generic.ListView):
             closed_offers = search_form.cleaned_data["closed_offers"]
             price_min = search_form.cleaned_data["price_min"]
             price_max = search_form.cleaned_data["price_max"]
-            return offer_queries.full_text_search_offers(
-                text_query,
-                author,
-                sort,
-                closed_offers,
-                consent_to_adult_content,
-                price_min,
-                price_max,
+
+            offer_query = offer_queries.OfferSearchQuery(
+                text_query=text_query,
+                sort=sort,
+                author=author,
+                closed_offers=closed_offers,
+                price_min=price_min,
+                price_max=price_max,
+                consent_to_adult_content=consent_to_adult_content
             )
+
+            return offer_queries.full_text_search_offers(offer_query)
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

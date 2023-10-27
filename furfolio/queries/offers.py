@@ -44,51 +44,41 @@ class OfferSearchQuery:
         self.text_query = text_query
         self.sort = sort
         self.author = author
-        self.closed_offers = closed_offers
+        self.closed_offers = closed_offers and True # convert (None | bool) to bool
         self.consent_to_adult_content = consent_to_adult_content
         self.price_min = price_min
         self.price_max = price_max
 
 
-def full_text_search_offers(
-    text_query: str,
-    author: str,
-    sort: str,
-    closed_offers: bool,
-    consent_to_adult_content: bool,
-    price_min: int = None,
-    price_max: int = None,
-):
+def full_text_search_offers(search_query: OfferSearchQuery):
     query = models.Offer.objects
-    text_query_cleaned = text_query.strip()
-    author_cleaned = author.strip()
+    text_query_cleaned = search_query.text_query.strip()
+    author_cleaned = search_query.author.strip()
     if text_query_cleaned:
         search_vector = SearchVector(
             "name", weight="A") + SearchVector("description", weight="A")
-        search_query = SearchQuery(text_query_cleaned)
-        search_rank = SearchRank(search_vector, search_query)
+        search_query_db = SearchQuery(text_query_cleaned)
+        search_rank = SearchRank(search_vector, search_query_db)
         query = query.annotate(rank=search_rank).filter(rank__gte=0.2)
     if author_cleaned:
-        print("query:", query)
         query = query.filter(author__username=author_cleaned)
-        print("query:", query)
-    if not closed_offers:
+    if not search_query.closed_offers:
         current_datetime = timezone.now()
         query = query.filter(
             cutoff_date__gt=current_datetime
         ).filter(
             forced_closed=False
         )
-    if not consent_to_adult_content:
+    if not search_query.consent_to_adult_content:
         query = query.filter(rating=models.Offer.RATING_GENERAL)
 
     # filter based on price
-    price_min = price_min if price_min else 0
-    price_max = price_max if price_max else models.Offer.HIGHEST_PRICE
+    price_min = search_query.price_min if search_query.price_min else 0
+    price_max = search_query.price_max if search_query.price_max else models.Offer.HIGHEST_PRICE
     # use range overlap formula: https://stackoverflow.com/a/3269471
     query = query.filter(min_price__lte=price_max, max_price__gte=price_min)
 
-    match sort:
+    match search_query.sort:
         case form_fields.SortField.CHOICE_RELEVANCE:
             if text_query_cleaned:
                 query = query.order_by("-rank")

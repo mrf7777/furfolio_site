@@ -78,6 +78,18 @@ class CommissionSearchHelp(generic.TemplateView):
                 )
             ),
             CommissionSearchHelpScenario(
+                "Commissions requested by user 'RedFox'",
+                commission_queries.CommissionsSearchQuery(
+                    commissioner="RedFox"
+                )
+            ),
+            CommissionSearchHelpScenario(
+                "Commissions of an Offer published by 'CreatorMan'",
+                commission_queries.CommissionsSearchQuery(
+                    creator="CreatorMan"
+                )
+            ),
+            CommissionSearchHelpScenario(
                 "Commissions from other users, from a specific offer, that are rejected or finished, sorted by created date",
                 commission_queries.CommissionsSearchQuery(
                     self_managed=False,

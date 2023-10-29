@@ -1,5 +1,11 @@
-{% for offer in offer_list %}
-<div class="mb-3">
-    {% include "./offer_card.html" with offer=offer title_is_link=True only %}
-</div>
-{% endfor %}
+{% if offer_list %}
+    {% for offer in offer_list %}
+    <div class="mb-3">
+        {% include "./offer_card.html" with offer=offer title_is_link=True only %}
+    </div>
+    {% endfor %}
+{% else %}
+    <div class="d-flex justify-content-center">
+        <strong>No offers found.</strong>
+    </div>
+{% endif %}

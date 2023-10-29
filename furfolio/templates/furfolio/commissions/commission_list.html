@@ -11,11 +11,17 @@
     </form>
 </div>
 
-{% for commission in commissions %}
-    <div class="mb-3">
-        {% include "./commission_card.html" with commission=commission csrf_token=csrf_token request=request show_status=True show_avatars=True only %}
+{% if commissions %}
+    {% for commission in commissions %}
+        <div class="mb-3">
+            {% include "./commission_card.html" with commission=commission csrf_token=csrf_token request=request show_status=True show_avatars=True only %}
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="d-flex justify-content-center">
+        <strong>No commissions found.</strong>
     </div>
-{% endfor %}
+{% endif %}
 
 {% if is_paginated %}
 <div class="d-flex justify-content-center">

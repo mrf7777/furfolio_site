@@ -11,10 +11,11 @@ class EmailCommissionsTestCase(TestCase):
         self.user_buyer = utils.make_user(
             "buyer", role=models.User.ROLE_BUYER)
 
-        self.offer = utils.make_offer(self.user_creator, max_commissions_per_user=2)
+        self.offer = utils.make_offer(
+            self.user_creator, max_commissions_per_user=2)
         self.commission = utils.make_commission(
             self.user_buyer, self.offer, state=models.Commission.STATE_REVIEW)
-        
+
         mail.outbox = []
 
     def test_send_email_on_commission_state_change(self):
@@ -39,7 +40,7 @@ class EmailCommissionsTestCase(TestCase):
         managed_commission.save()
 
         self.assertEqual(len(mail.outbox), 0)
-        
+
     def test_new_commission_sends_email(self):
         utils.make_commission(self.user_buyer, self.offer, validate=False)
         self.assertEqual(len(mail.outbox), 1)
@@ -69,7 +70,7 @@ class CommissionMessagesTestCase(TestCase):
         self.offer = utils.make_offer(self.user_creator)
         self.commission = utils.make_commission(
             self.user_buyer, self.offer, state=models.Commission.STATE_REVIEW)
-        
+
         mail.outbox = []
 
     def test_commission_message_sends_email(self):

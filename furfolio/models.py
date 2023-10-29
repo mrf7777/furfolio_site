@@ -476,7 +476,8 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
         super().save(*args, **kwargs)
 
     def should_notify_new_commission(self):
-        should_notify = self.tracker.previous("id") is None and not self.is_self_managed()
+        should_notify = self.tracker.previous(
+            "id") is None and not self.is_self_managed()
         return should_notify
 
     def friendly_state(self) -> str:

@@ -163,6 +163,7 @@
 - creators congregate at a convention
   - they are marketed together as the convention published the dealers and artists
 - having a landing page for a public event would help engagement with the platform
+- if demand from creators and buyers is high, provide a B2B solution for cons to manage commissions.
 - another search vector to find offers faster
 - CRUD
   - Create
@@ -176,6 +177,22 @@
     - Ideally, should never happen. Events should simply "expire".
 - How can a creator make offers to associate with an event?
   - Make event organizer provide a list of legitimate furfolio users who can add offers to the event.
+- use-cases:
+  - need to search for offers at convention or event
+  - need a landing page to put context around the offers
+  - event organizer (EO) manages an event
+  - creators publish offers that are affiliated with the event
+  - EO hard-limits number of offers (ever) to be associated with event.
+    - open and closed offers should count!
+    - by limiting offers per creator per event, clutter can be managed
+  - EO limits number of offers per creator
+    - definitely a later feature under subscription
+
+## event implementation ideas
+
+### iteration 1
+
+- 
 
 # monetization ideas
 
@@ -185,6 +202,7 @@
   - up max in review per offer limit
   - up max number of offer templates
   - ability to associate offers to certain events
+  - ability to manage events
 
 # search design
 - there are many things a user, based on role, would want to search with

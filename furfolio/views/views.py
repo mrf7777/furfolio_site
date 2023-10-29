@@ -200,6 +200,12 @@ class Offer(mixins.GetAdultConsentMixin,
         commissions_of_offer_url = reverse("commissions") + "?" + urlencode(
             {"search": commissions_of_offer_query.to_search_string()})
         context["see_commissions_url"] = commissions_of_offer_url
+        
+        if self.request.user == offer.author:
+            tweet_text = f"You can commission my new offer \"{offer.name}\" at Furfolio."
+        else:
+            tweet_text = f"You can commission the offer \"{offer.name}\" by \"{offer.author.username}\" at Furfolio."
+        context["tweet_text"] = tweet_text
 
         return context
 

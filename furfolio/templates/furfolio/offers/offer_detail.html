@@ -10,7 +10,7 @@
 
     <div class="d-flex mb-2">
         <div class="flex-fill"></div>
-        {% include "furfolio/components/3rd/twitter_tweet_button.html" with text="Tweet Text Here" url=offer.get_full_url only %}
+        {% include "furfolio/components/3rd/twitter_tweet_button.html" with text=tweet_text url=offer.get_full_url only %}
     </div>
 
     {% if offer.thumbnail %}

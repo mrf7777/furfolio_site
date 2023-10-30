@@ -5,6 +5,10 @@ from ..queries import commissions as commission_queries
 from .. import models
 
 
+class Error413(generic.TemplateView):
+    template_name = "413.html"
+
+
 class TermsOfService(generic.TemplateView):
     template_name = "furfolio/pages/terms_of_service.html"
 

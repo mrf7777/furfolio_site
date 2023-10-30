@@ -130,6 +130,8 @@ class User(mixins.GetFullUrlMixin, AbstractUser):
         blank=True,
         help_text="This will display on you profile page. Use this to describe yourself."
     )
+    
+    updated_date = models.DateTimeField(name="updated_date", auto_now=True)
 
     tracker = FieldTracker()
 

@@ -1,10 +1,16 @@
 from django.urls import path, include
+from django.contrib.sitemaps.views import sitemap
 from .views import views
 from .views import pages
+from .sitemaps import sitemaps
 from django.contrib.auth import views as auth_views
 from furfolio import forms as furfolio_forms
 
 urlpatterns = [
+    # sitemaps
+    path('sitemap.xml', sitemap, {"sitemaps": sitemaps},
+         name="django.contrib.sitemaps.views.sitemap"),
+    # home
     path('', views.Home.as_view(), name="home"),
     # offers
     path('offers/', views.OfferList.as_view(), name="offer_list"),

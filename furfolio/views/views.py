@@ -36,11 +36,16 @@ def get_page_range_items(page: Page) -> List[str]:
 class Home(generic.TemplateView):
     template_name = "furfolio/home.html"
 
-    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+    def get(
+            self,
+            request: HttpRequest,
+            *args: Any,
+            **kwargs: Any) -> HttpResponse:
         if self.request.user.is_authenticated:
             return redirect("dashboard")
         else:
             return super().get(request, *args, **kwargs)
+
 
 class DashboardRedirector(LoginRequiredMixin, generic.RedirectView):
     def get_redirect_url(self, *args: Any, **kwargs: Any) -> str | None:

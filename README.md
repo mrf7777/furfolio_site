@@ -31,9 +31,8 @@
 - [x] limit thumbnail aspect ratio and size
 - [ ] guard against large uploads
   - [ ] consider dockerfile with nginx
-- [ ] guard against spam
+- [x] guard against spam
   - [x] cool down for all creates (priority)
-  - [ ] cool down for all updates
 - [ ] consider other storage and CDN options (low priority)
 - [x] implement email for production
 - [x] allow account disabling?

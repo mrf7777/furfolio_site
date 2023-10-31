@@ -3,6 +3,7 @@ An includable script.
 Requires some context objects passed in.
   - form_id: the id of the form that, when submitted, should trigger this script.
   - id_to_hide: the id of the element to hide when element with id form_id is submitted.
+  - replace_with_spinner: (bool) if true, replaces element with spinner.
 {% endcomment %}
 
 <script>
@@ -11,6 +12,14 @@ Requires some context objects passed in.
     form.addEventListener("submit", function() {
         let element_to_hide = document.getElementById("{{ id_to_hide }}")
         element_to_hide.style.display = "none"
+
+        if( "{{ replace_with_spinner|default:True }}" === "True" ) {
+          parent = element_to_hide.parentNode
+          spinner = document.createElement("div")
+          spinner.innerHTML = `<div class="spinner-border text-primary m-3" role="status"><span class="visually-hidden">Loading...</span></div>`
+          parent.replaceChild(spinner, element_to_hide)
+        }
+        
     }) 
 }
 </script>

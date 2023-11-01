@@ -11,16 +11,18 @@ Requires some context objects passed in.
     let form = document.getElementById("{{ form_id }}")
     form.addEventListener("submit", function() {
         let element_to_hide = document.getElementById("{{ id_to_hide }}")
-        element_to_hide.style.display = "none"
 
         if( "{{ replace_with_spinner|default:True }}" === "True" ) {
           parent = element_to_hide.parentNode
           width = parent.offsetWidth
           height = parent.offsetHeight
           smallest_side = width < height ? width : height
+          element_to_hide.style.display = "none"
           spinner = document.createElement("div")
           spinner.innerHTML = `<div class="spinner-border text-primary mx-3" role="status" style="width: ${smallest_side}; height: ${smallest_side};"><span class="visually-hidden">Loading...</span></div>`
           parent.replaceChild(spinner, element_to_hide)
+        } else {
+          element_to_hide.style.display = "none"
         }
         
     }) 

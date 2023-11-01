@@ -17,6 +17,10 @@ class PrivacyPolicy(generic.TemplateView):
     template_name = "furfolio/pages/privacy_policy.html"
 
 
+class Legal(generic.TemplateView):
+    template_name = "furfolio/pages/legal.html"
+
+
 class Help(generic.TemplateView):
     template_name = "furfolio/pages/help/help.html"
 

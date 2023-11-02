@@ -1,7 +1,6 @@
 User "{{ offer.author.username }}" has published a new offer: "{{ offer.name }}"
-
+<br><br>
 You can find and commission the offer here <a href="{{ offer.get_full_url }}">{{ offer.get_full_url }}</a>
-
-
+<br><br>
 You received this message because you are following "{{ offer.author.username }}".
 You can unfollow here: <a href="{{ offer.author.get_full_url }}">{{ offer.author.get_full_url }}</a>

@@ -1,0 +1,3 @@
+User "{{ commission.commissioner.username }}" has requested a commission of your offer "{{ commission.offer.name }}".
+
+You can go to the commission here: {{ commission.get_full_url }}

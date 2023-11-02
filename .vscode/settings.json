@@ -1,11 +1,18 @@
 {
     "cSpell.words": [
+        "cartoonistic",
         "Commissionee",
-        "furfolio"
+        "furfolio",
+        "tbody",
+        "thead"
     ],
     "python.analysis.typeCheckingMode": "off",
     "[python]": {
         "editor.defaultFormatter": "ms-python.autopep8"
     },
-    "python.formatting.provider": "none"
+    "python.formatting.provider": "none",
+    "cSpell.enabled": true,
+    "cSpell.enableFiletypes": [
+        "django-html"
+    ]
 }

@@ -7,7 +7,7 @@ Expects the following objects:
 
 <a href="{% url "user" user.username %}" class="badge bg-secondary d-inline-flex align-items-center text-decoration-none">
   {% if show_avatar %}
-    <div class="me-1">
+    <div class="me-3">
       {% include "./avatar.html" with user=user only %}
     </div>
   {% endif %}

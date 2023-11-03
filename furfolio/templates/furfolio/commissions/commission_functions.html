@@ -47,6 +47,10 @@ Expects the following objects:
                 {% if commission.state == "CLOSED" %}
                     <div class="m-3" style="font-size: 0.65em">{% include "furfolio/commissions/state_buttons/state_setters/in_progress.html" with commission=commission request=request csrf_token=csrf_token only %}</div>
                 {% endif %}
+
+                {% if commission.state == "REJECTED" %}
+                    <div class="m-3">{% include "furfolio/commissions/state_buttons/state_setters/accept.html" with commission=commission request=request csrf_token=csrf_token only %}</div>
+                {% endif %}
             </div>
         </div>
     {% endif %}

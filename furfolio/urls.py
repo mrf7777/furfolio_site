@@ -82,7 +82,7 @@ urlpatterns = [
          pages.TermsOfService.as_view(), name="terms_of_service"),
     path('legal/privacy-policy/',
          pages.PrivacyPolicy.as_view(), name="privacy_policy"),
-    path('legal/legal/', pages.Legal.as_view(), name="legal"),
+    path('legal/credit/', pages.Credit.as_view(), name="credit"),
     # help pages
     path('help/', pages.Help.as_view(), name="help"),
     path('help/what-is-furfolio/',

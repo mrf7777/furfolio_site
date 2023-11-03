@@ -63,8 +63,8 @@ class PrivacyPolicy(
         return reverse("privacy_policy")
 
 
-class Legal(generic.TemplateView):
-    template_name = "furfolio/pages/legal.html"
+class Credit(generic.TemplateView):
+    template_name = "furfolio/pages/credit.html"
 
 
 class WhatIsFurfolio(generic.TemplateView):

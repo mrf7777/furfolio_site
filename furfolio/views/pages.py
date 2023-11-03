@@ -107,7 +107,7 @@ class GettingStarted(BreadcrumbContextMixin, generic.TemplateView, IBreadcrumbPa
     def breadcrumb_url():
         return reverse("getting_started")
 
-class WhatIsFurfolio(generic.TemplateView):
+class WhatIsFurfolio(BreadcrumbContextMixin, generic.TemplateView, IBreadcrumbParticipant):
     template_name = "furfolio/pages/what_is_furfolio.html"
 
     def breadcrumb_name():
@@ -120,7 +120,7 @@ class WhatIsFurfolio(generic.TemplateView):
         return reverse("what_is_furfolio")
 
 
-class OffersAndCommissions(generic.TemplateView):
+class OffersAndCommissions(BreadcrumbContextMixin, generic.TemplateView, IBreadcrumbParticipant):
     template_name = "furfolio/pages/offers_and_commissions.html"
 
     def breadcrumb_name():

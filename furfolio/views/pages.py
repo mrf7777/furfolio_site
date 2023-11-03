@@ -103,6 +103,19 @@ class OffersAndCommissions(generic.TemplateView):
     template_name = "furfolio/pages/offers_and_commissions.html"
 
 
+class Reference(BreadcrumbContextMixin, generic.TemplateView, IBreadcrumbParticipant):
+    template_name = "furfolio/pages/reference.html"
+
+    def breadcrumb_name():
+        return "Reference"
+
+    def breadcrumb_parent():
+        return Help
+
+    def breadcrumb_url():
+        return reverse("reference")
+
+
 class CommissionSearchHelpScenario:
     def __init__(self, scenario: str,
                  commission_query: commission_queries.CommissionsSearchQuery):
@@ -110,8 +123,17 @@ class CommissionSearchHelpScenario:
         self.commission_query = commission_query
 
 
-class CommissionSearchHelp(generic.TemplateView):
+class CommissionSearchHelp(BreadcrumbContextMixin, generic.TemplateView, IBreadcrumbParticipant):
     template_name = "furfolio/pages/commission_search.html"
+
+    def breadcrumb_name():
+        return "Commission Search"
+
+    def breadcrumb_parent():
+        return Reference
+
+    def breadcrumb_url():
+        return reverse("commission_search_help")
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

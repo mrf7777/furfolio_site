@@ -86,6 +86,7 @@ urlpatterns = [
     path('legal/credit/', pages.Credit.as_view(), name="credit"),
     # help pages
     path('help/', pages.Help.as_view(), name="help"),
+    path('help/reference/', pages.Reference.as_view(), name="reference"),
     path('help/what-is-furfolio/',
          pages.WhatIsFurfolio.as_view(), name="what_is_furfolio"),
     path('help/offers-and-commissions',

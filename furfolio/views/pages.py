@@ -1,16 +1,46 @@
 
-from typing import Any
+from typing import Any, Type
 from django.views import generic
+from django.urls import reverse
 from ..queries import commissions as commission_queries
 from .. import models
+from .breadcrumbs import IBreadcrumbParticipant, breadcrumb_items
+
+
+class BreadcrumbContextMixin:
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["breadcrumbs"] = breadcrumb_items(self.__class__)
+        return context
+
+
+class Help(generic.TemplateView, IBreadcrumbParticipant):
+    template_name = "furfolio/pages/help/help.html"
+
+    def breadcrumb_name() -> str:
+        return "Help"
+    
+    def breadcrumb_parent() -> Type[IBreadcrumbParticipant] | None:
+        return None
+    
+    def breadcrumb_url():
+        return reverse("help")
 
 
 class Error413(generic.TemplateView):
     template_name = "413.html"
 
-
-class TermsOfService(generic.TemplateView):
+class TermsOfService(BreadcrumbContextMixin, generic.TemplateView, IBreadcrumbParticipant):
     template_name = "furfolio/pages/terms_of_service.html"
+
+    def breadcrumb_name() -> str:
+        return "Terms of Service"
+    
+    def breadcrumb_parent() -> Type[IBreadcrumbParticipant] | None:
+        return Help
+    
+    def breadcrumb_url():
+        return reverse("terms_of_service")
 
 
 class PrivacyPolicy(generic.TemplateView):
@@ -19,10 +49,6 @@ class PrivacyPolicy(generic.TemplateView):
 
 class Legal(generic.TemplateView):
     template_name = "furfolio/pages/legal.html"
-
-
-class Help(generic.TemplateView):
-    template_name = "furfolio/pages/help/help.html"
 
 
 class WhatIsFurfolio(generic.TemplateView):

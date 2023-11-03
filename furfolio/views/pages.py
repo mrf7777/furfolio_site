@@ -95,7 +95,10 @@ class Credit(
         return reverse("credit")
 
 
-class GettingStarted(BreadcrumbContextMixin, generic.TemplateView, IBreadcrumbParticipant):
+class GettingStarted(
+        BreadcrumbContextMixin,
+        generic.TemplateView,
+        IBreadcrumbParticipant):
     template_name = "furfolio/pages/getting_started.html"
 
     def breadcrumb_name():
@@ -107,7 +110,11 @@ class GettingStarted(BreadcrumbContextMixin, generic.TemplateView, IBreadcrumbPa
     def breadcrumb_url():
         return reverse("getting_started")
 
-class WhatIsFurfolio(BreadcrumbContextMixin, generic.TemplateView, IBreadcrumbParticipant):
+
+class WhatIsFurfolio(
+        BreadcrumbContextMixin,
+        generic.TemplateView,
+        IBreadcrumbParticipant):
     template_name = "furfolio/pages/what_is_furfolio.html"
 
     def breadcrumb_name():
@@ -120,7 +127,10 @@ class WhatIsFurfolio(BreadcrumbContextMixin, generic.TemplateView, IBreadcrumbPa
         return reverse("what_is_furfolio")
 
 
-class OffersAndCommissions(BreadcrumbContextMixin, generic.TemplateView, IBreadcrumbParticipant):
+class OffersAndCommissions(
+        BreadcrumbContextMixin,
+        generic.TemplateView,
+        IBreadcrumbParticipant):
     template_name = "furfolio/pages/offers_and_commissions.html"
 
     def breadcrumb_name():
@@ -133,7 +143,10 @@ class OffersAndCommissions(BreadcrumbContextMixin, generic.TemplateView, IBreadc
         return reverse("offers_and_commissions")
 
 
-class Reference(BreadcrumbContextMixin, generic.TemplateView, IBreadcrumbParticipant):
+class Reference(
+        BreadcrumbContextMixin,
+        generic.TemplateView,
+        IBreadcrumbParticipant):
     template_name = "furfolio/pages/reference.html"
 
     def breadcrumb_name():
@@ -153,7 +166,10 @@ class CommissionSearchHelpScenario:
         self.commission_query = commission_query
 
 
-class CommissionSearchHelp(BreadcrumbContextMixin, generic.TemplateView, IBreadcrumbParticipant):
+class CommissionSearchHelp(
+        BreadcrumbContextMixin,
+        generic.TemplateView,
+        IBreadcrumbParticipant):
     template_name = "furfolio/pages/commission_search.html"
 
     def breadcrumb_name():

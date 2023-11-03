@@ -479,12 +479,10 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
                 super().save(*args, **kwargs)
                 saved = True
             send_new_commission_email(self)
-            
+
         if not saved:
             super().save(*args, **kwargs)
             saved = True
-        
-        
 
     def should_notify_new_commission(self):
         should_notify = self.tracker.previous(

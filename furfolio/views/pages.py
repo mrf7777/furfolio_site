@@ -19,10 +19,10 @@ class Help(generic.TemplateView, IBreadcrumbParticipant):
 
     def breadcrumb_name() -> str:
         return "Help"
-    
+
     def breadcrumb_parent() -> Type[IBreadcrumbParticipant] | None:
         return None
-    
+
     def breadcrumb_url():
         return reverse("help")
 
@@ -30,28 +30,35 @@ class Help(generic.TemplateView, IBreadcrumbParticipant):
 class Error413(generic.TemplateView):
     template_name = "413.html"
 
-class TermsOfService(BreadcrumbContextMixin, generic.TemplateView, IBreadcrumbParticipant):
+
+class TermsOfService(
+        BreadcrumbContextMixin,
+        generic.TemplateView,
+        IBreadcrumbParticipant):
     template_name = "furfolio/pages/terms_of_service.html"
 
     def breadcrumb_name() -> str:
         return "Terms of Service"
-    
+
     def breadcrumb_parent() -> Type[IBreadcrumbParticipant] | None:
         return Help
-    
+
     def breadcrumb_url():
         return reverse("terms_of_service")
 
 
-class PrivacyPolicy(BreadcrumbContextMixin, generic.TemplateView, IBreadcrumbParticipant):
+class PrivacyPolicy(
+        BreadcrumbContextMixin,
+        generic.TemplateView,
+        IBreadcrumbParticipant):
     template_name = "furfolio/pages/privacy_policy.html"
 
     def breadcrumb_name():
         return "Privacy Policy"
-    
+
     def breadcrumb_parent():
         return Help
-    
+
     def breadcrumb_url():
         return reverse("privacy_policy")
 

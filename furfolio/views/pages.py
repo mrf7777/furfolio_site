@@ -43,8 +43,17 @@ class TermsOfService(BreadcrumbContextMixin, generic.TemplateView, IBreadcrumbPa
         return reverse("terms_of_service")
 
 
-class PrivacyPolicy(generic.TemplateView):
+class PrivacyPolicy(BreadcrumbContextMixin, generic.TemplateView, IBreadcrumbParticipant):
     template_name = "furfolio/pages/privacy_policy.html"
+
+    def breadcrumb_name():
+        return "Privacy Policy"
+    
+    def breadcrumb_parent():
+        return Help
+    
+    def breadcrumb_url():
+        return reverse("privacy_policy")
 
 
 class Legal(generic.TemplateView):

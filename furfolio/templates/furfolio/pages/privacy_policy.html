@@ -1,5 +1,9 @@
 {% extends "./help_page.html" %}
 
+{% block breadcrumbs %}
+{% include "furfolio/components/breadcrumbs.html" with breadcrumbs=breadcrumbs only %}
+{% endblock %}
+
 {% block title %}
 Privacy Policy
 {% endblock %}

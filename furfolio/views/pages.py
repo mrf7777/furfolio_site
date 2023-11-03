@@ -15,7 +15,7 @@ class BreadcrumbContextMixin:
 
 
 class Help(generic.TemplateView, IBreadcrumbParticipant):
-    template_name = "furfolio/pages/help/help.html"
+    template_name = "furfolio/pages/help.html"
 
     def breadcrumb_name() -> str:
         return "Help"
@@ -68,11 +68,11 @@ class Credit(generic.TemplateView):
 
 
 class WhatIsFurfolio(generic.TemplateView):
-    template_name = "furfolio/pages/help/what_is_furfolio.html"
+    template_name = "furfolio/pages/what_is_furfolio.html"
 
 
 class OffersAndCommissions(generic.TemplateView):
-    template_name = "furfolio/pages/help/offers_and_commissions.html"
+    template_name = "furfolio/pages/offers_and_commissions.html"
 
 
 class CommissionSearchHelpScenario:
@@ -83,7 +83,7 @@ class CommissionSearchHelpScenario:
 
 
 class CommissionSearchHelp(generic.TemplateView):
-    template_name = "furfolio/pages/help/commission_search.html"
+    template_name = "furfolio/pages/commission_search.html"
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

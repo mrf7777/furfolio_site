@@ -31,15 +31,18 @@ class Error413(generic.TemplateView):
     template_name = "413.html"
 
 
-class Legal(BreadcrumbContextMixin, generic.TemplateView, IBreadcrumbParticipant):
-    template_name="furfolio/pages/legal.html"
+class Legal(
+        BreadcrumbContextMixin,
+        generic.TemplateView,
+        IBreadcrumbParticipant):
+    template_name = "furfolio/pages/legal.html"
 
     def breadcrumb_name():
         return "Legal"
-    
+
     def breadcrumb_parent():
         return Help
-    
+
     def breadcrumb_url():
         return reverse("legal")
 
@@ -76,7 +79,10 @@ class PrivacyPolicy(
         return reverse("privacy_policy")
 
 
-class Credit(BreadcrumbContextMixin, generic.TemplateView, IBreadcrumbParticipant):
+class Credit(
+        BreadcrumbContextMixin,
+        generic.TemplateView,
+        IBreadcrumbParticipant):
     template_name = "furfolio/pages/credit.html"
 
     def breadcrumb_name():

@@ -31,6 +31,19 @@ class Error413(generic.TemplateView):
     template_name = "413.html"
 
 
+class Legal(BreadcrumbContextMixin, generic.TemplateView, IBreadcrumbParticipant):
+    template_name="furfolio/pages/legal.html"
+
+    def breadcrumb_name():
+        return "Legal"
+    
+    def breadcrumb_parent():
+        return Help
+    
+    def breadcrumb_url():
+        return reverse("legal")
+
+
 class TermsOfService(
         BreadcrumbContextMixin,
         generic.TemplateView,
@@ -41,7 +54,7 @@ class TermsOfService(
         return "Terms of Service"
 
     def breadcrumb_parent() -> Type[IBreadcrumbParticipant] | None:
-        return Help
+        return Legal
 
     def breadcrumb_url():
         return reverse("terms_of_service")
@@ -57,14 +70,23 @@ class PrivacyPolicy(
         return "Privacy Policy"
 
     def breadcrumb_parent():
-        return Help
+        return Legal
 
     def breadcrumb_url():
         return reverse("privacy_policy")
 
 
-class Credit(generic.TemplateView):
+class Credit(BreadcrumbContextMixin, generic.TemplateView, IBreadcrumbParticipant):
     template_name = "furfolio/pages/credit.html"
+
+    def breadcrumb_name():
+        return "Credit"
+
+    def breadcrumb_parent():
+        return Legal
+
+    def breadcrumb_url():
+        return reverse("credit")
 
 
 class WhatIsFurfolio(generic.TemplateView):

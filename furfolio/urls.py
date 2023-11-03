@@ -78,6 +78,7 @@ urlpatterns = [
     path('commissions/<pk>/chat',
          views.CommissionChat.as_view(), name="commission_chat"),
     # static pages
+    path('legal/', pages.Legal.as_view(), name="legal"),
     path('legal/terms-of-service/',
          pages.TermsOfService.as_view(), name="terms_of_service"),
     path('legal/privacy-policy/',

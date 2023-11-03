@@ -13,4 +13,8 @@ $dark: furfolio-colors.$dark-blue;
 $badge-padding-y: 0.45em;
 $border-radius: 0.75rem;
 
+html {
+    font-size: 15px;
+}
+
 @import "../../bootstrap-5.3.2/scss/bootstrap.scss";

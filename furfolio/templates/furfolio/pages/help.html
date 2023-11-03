@@ -20,13 +20,9 @@ Help
     </li>
 </ul>
 
-<h3>Reference</h3>
+<a href="{% url "reference" %}"><h3>Reference</h3></a>
 
-<ul>
-    <li>
-        <a href="{% url "commission_search_help" %}">Commission Search</a>
-    </li>
-</ul>
+{% include "./reference_links.html" %}
 
 <a href="{% url "legal" %}"><h3>Legal</h3></a>
 

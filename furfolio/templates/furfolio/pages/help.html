@@ -9,16 +9,9 @@ Help
     Here you will find guides and references for using Furfolio.
 </p>
 
-<h3>Getting Started</h3>
+<a href="{% url "getting_started" %}"><h3>Getting Started</h3></a>
 
-<ul>
-    <li>
-        <a href="{% url "what_is_furfolio" %}">What is Furfolio?</a>
-    </li>
-    <li>
-        <a href="{% url "offers_and_commissions" %}">Offers and Commissions</a>
-    </li>
-</ul>
+{% include "./getting_started_links.html" %}
 
 <a href="{% url "reference" %}"><h3>Reference</h3></a>
 

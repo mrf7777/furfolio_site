@@ -1,0 +1,13 @@
+{% extends "./help_page.html" %}
+
+{% block breadcrumbs %}
+{% include "furfolio/components/breadcrumbs.html" with breadcrumbs=breadcrumbs only %}
+{% endblock %}
+
+{% block title %}
+Getting Started
+{% endblock %}
+
+{% block body %}
+{% include "./getting_started_links.html" %}
+{% endblock %}

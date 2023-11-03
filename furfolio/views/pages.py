@@ -95,12 +95,42 @@ class Credit(
         return reverse("credit")
 
 
+class GettingStarted(BreadcrumbContextMixin, generic.TemplateView, IBreadcrumbParticipant):
+    template_name = "furfolio/pages/getting_started.html"
+
+    def breadcrumb_name():
+        return "Getting Started"
+
+    def breadcrumb_parent():
+        return Help
+
+    def breadcrumb_url():
+        return reverse("getting_started")
+
 class WhatIsFurfolio(generic.TemplateView):
     template_name = "furfolio/pages/what_is_furfolio.html"
+
+    def breadcrumb_name():
+        return "What is Furfolio"
+
+    def breadcrumb_parent():
+        return GettingStarted
+
+    def breadcrumb_url():
+        return reverse("what_is_furfolio")
 
 
 class OffersAndCommissions(generic.TemplateView):
     template_name = "furfolio/pages/offers_and_commissions.html"
+
+    def breadcrumb_name():
+        return "Offers and Commissions"
+
+    def breadcrumb_parent():
+        return GettingStarted
+
+    def breadcrumb_url():
+        return reverse("offers_and_commissions")
 
 
 class Reference(BreadcrumbContextMixin, generic.TemplateView, IBreadcrumbParticipant):

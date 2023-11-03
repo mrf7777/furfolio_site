@@ -1,1 +1,13 @@
-Legal links
+{% extends "./help_page.html" %}
+
+{% block breadcrumbs %}
+{% include "furfolio/components/breadcrumbs.html" with breadcrumbs=breadcrumbs only %}
+{% endblock %}
+
+{% block title %}
+Legal
+{% endblock %}
+
+{% block body %}
+{% include "./legal_links.html" %}
+{% endblock %}

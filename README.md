@@ -38,6 +38,30 @@
 - [x] allow account disabling?
   - django already solved this
 
+# search ideas
+
+## tags
+- what would be a good ontology for the tags?
+- senses -> medium -> product -> properties/specifics
+  - senses: physical, visual, audio, gustatory, olfactory, informational
+  - medium: digital_art, digital, clothing, body_suit, pencil, pen, stretch_fur, clay, silicone, wax, acustic_insturments, 
+  - product: fursuit, full_fursuit, partial_fursuit, character_portrait, song, asmr, background_music candle, perfume, video_game, website, essay, cookies, comic_strip, manga, animation, video
+  - implications: full_fursuit -> fursuit, character_portrait -> digital_art, digital_art -> digital, digital_art -> visual, fursuit -> clothing, clothing -> physical
+  - properties: male, blue, red, tall_character,
+- what about use intention (business, personal, charitable, etc.)
+  - most artists on the platform would not care
+- 
+- senses -> medium -> (function/role + product)
+- tag implication models
+  - Tag
+  - Implication(Tag, Tag)
+- what about models for implications that require 2 or more tags to be present?
+  - Tag
+  - Implication(consequent: Tag)
+  - ImpicationAntecedent(implication: Implication, tag: Tag)
+  - assume implication a, b -> c (a and b together implies c), how do we resolve implication?
+    - Implication.objects.filter(implication_antecedent__tag=a).filter(implication_antecedent__tag=b).distinct()
+
 # Legal documents on website
 
 ## Terms of Service

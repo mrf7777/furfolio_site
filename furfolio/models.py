@@ -20,6 +20,7 @@ from . import validators as furfolio_validators
 from . import mixins
 from .queries import commissions as commission_queries
 from .queries import users as user_queries
+from .queries import offers as offer_queries
 from .email import send_commission_state_changed_email, send_new_commission_message_email, send_new_offer_email, send_new_commission_email
 
 
@@ -380,6 +381,9 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
     def has_max_review_commissions(self) -> bool:
         num_commissions_in_review = self.get_commissions_in_review().count()
         return num_commissions_in_review >= self.max_review_commissions
+    
+    def get_who_to_notify_for_new_offer(self):
+        return offer_queries.get_who_to_notify_for_new_offer(self)
 
     def get_currency_symbol(self) -> str:
         match self.currency:

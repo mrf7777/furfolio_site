@@ -48,17 +48,23 @@ class EmailCommissionsTestCase(TestCase):
 
 class EmailOffersTestCase(TestCase):
     def setUp(self):
-        self.user_creator = utils.make_user(
+        self.creator = utils.make_user(
             "creator", role=models.User.ROLE_CREATOR)
-        self.user_buyer = utils.make_user(
-            "buyer", role=models.User.ROLE_BUYER)
-        utils.make_user_follow_user(self.user_buyer, self.user_creator)
+        self.buyer = utils.make_user(
+            "buyer", role=models.User.ROLE_BUYER, consent_to_adult=False)
+        self.buyer2 = utils.make_user(
+            "buyer2", role=models.User.ROLE_BUYER, consent_to_adult=True)
+        utils.make_user_follow_user(self.buyer, self.creator)
+        utils.make_user_follow_user(self.buyer2, self.creator)
 
-    def test_create_offer_sends_email_to_follower(self):
-        utils.make_offer(self.user_creator)
-
+    def test_create_offer_emails_all_followers(self):
+        utils.make_offer(self.creator)
+        self.assertEqual(len(mail.outbox), 2)
+        
+    def test_create_adult_offer_emails_consenting_followers(self):
+        utils.make_offer(self.creator, rating=models.Offer.RATING_ADULT)
         self.assertEqual(len(mail.outbox), 1)
-
+        
 
 class CommissionMessagesTestCase(TestCase):
     def setUp(self) -> None:

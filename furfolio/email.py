@@ -68,7 +68,7 @@ def send_new_offer_email(new_offer: 'models.Offer'):
     author_username = truncate_string(new_offer.author.username, 20)
     subject = f"{author_username} Made an Offer | {truncated_offer_title}"
     # TODO: see if there is an efficient bulk email
-    for user in new_offer.author.get_following_users():
+    for user in new_offer.get_who_to_notify_for_new_offer():
         send_email(
             "furfolio/email/offers/offer_created.txt",
             "furfolio/email/offers/offer_created.html",

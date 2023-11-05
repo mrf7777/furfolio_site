@@ -2,12 +2,13 @@ from .. import models
 
 
 def make_user(username, password="admin",
-              role=models.User.ROLE_BUYER, email="test@furfolio.net"):
+              role=models.User.ROLE_BUYER, email="test@furfolio.net", consent_to_adult=False):
     user = models.User(
         username=username,
         password=password,
         role=role,
-        email=email
+        email=email,
+        consent_to_adult_content=consent_to_adult,
     )
     user.full_clean()
     user.save()
@@ -28,7 +29,8 @@ def make_offer(
         max_review_commissions=2,
         forced_closed=False,
         max_commissions_per_user=1,
-        validate=True):
+        validate=True,
+        rating=models.Offer.RATING_GENERAL):
     offer = models.Offer(
         author=user,
         name=name,
@@ -37,6 +39,7 @@ def make_offer(
         max_review_commissions=max_review_commissions,
         forced_closed=forced_closed,
         max_commissions_per_user=max_commissions_per_user,
+        rating=rating,
     )
     if validate:
         offer.full_clean()

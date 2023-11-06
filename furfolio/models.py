@@ -381,7 +381,7 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
     def has_max_review_commissions(self) -> bool:
         num_commissions_in_review = self.get_commissions_in_review().count()
         return num_commissions_in_review >= self.max_review_commissions
-    
+
     def get_who_to_notify_for_new_offer(self):
         return offer_queries.get_who_to_notify_for_new_offer(self)
 
@@ -398,25 +398,25 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
                 return "USD"
             case self.__class__.CURRENCY_EUR:
                 return "EUR"
-            
+
     def get_rating_friendly(self) -> str:
         rating_to_human_friendly = dict(self.__class__.RATING_TO_CHOICES)
         return rating_to_human_friendly[self.rating]
-    
+
     def is_adult(self) -> bool:
         return self.rating == self.__class__.RATING_ADULT
-    
+
     class SlotInfo:
         def __init__(self, max_slots: int, slots_taken: int):
             self.max_slots = max_slots
             self.slots_taken = slots_taken
-            
+
         def get_capped_slots_taken(self) -> int:
             return min(self.max_slots, self.slots_taken)
-        
+
         def is_more_taken_than_max(self) -> bool:
             return self.slots_taken > self.max_slots
-    
+
     def get_slot_info(self) -> SlotInfo:
         slots_taken = self.get_active_commissions().count()
         return self.__class__.SlotInfo(self.slots, slots_taken)

@@ -60,11 +60,11 @@ class EmailOffersTestCase(TestCase):
     def test_create_offer_emails_all_followers(self):
         utils.make_offer(self.creator)
         self.assertEqual(len(mail.outbox), 2)
-        
+
     def test_create_adult_offer_emails_consenting_followers(self):
         utils.make_offer(self.creator, rating=models.Offer.RATING_ADULT)
         self.assertEqual(len(mail.outbox), 1)
-        
+
 
 class CommissionMessagesTestCase(TestCase):
     def setUp(self) -> None:

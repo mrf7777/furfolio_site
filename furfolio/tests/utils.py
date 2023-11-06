@@ -1,8 +1,12 @@
 from .. import models
 
 
-def make_user(username, password="admin",
-              role=models.User.ROLE_BUYER, email="test@furfolio.net", consent_to_adult=False):
+def make_user(
+        username,
+        password="admin",
+        role=models.User.ROLE_BUYER,
+        email="test@furfolio.net",
+        consent_to_adult=False):
     user = models.User(
         username=username,
         password=password,

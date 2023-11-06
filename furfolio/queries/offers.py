@@ -28,15 +28,18 @@ def get_active_offers_for_user(user: 'models.User'):
         author=user,
     )
 
+
 def get_who_to_notify_for_new_offer(offer: 'models.Offer'):
     # Users who follow the offer author that do not consent to
     # seeing adult content should not receive a notification
     # about an adult offer.
     if offer.rating == models.Offer.RATING_ADULT:
-        following_users = offer.author.get_following_users().filter(consent_to_adult_content=True)
+        following_users = offer.author.get_following_users().filter(
+            consent_to_adult_content=True)
     else:
         following_users = offer.author.get_following_users()
     return following_users
+
 
 class OfferSearchQuery:
     def __init__(

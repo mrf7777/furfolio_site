@@ -6,9 +6,24 @@
 
 {% block body %}
 
-<div class="mb-3">
-    <b>State:</b> {% include "./state_badge_using_commission.html" with commission=commission only %}
+<div class="row">
+    <div class="col-3 col-sm-2">
+        State: 
+    </div>
+    <div class="col">
+        {% include "./state_badge_using_commission.html" with commission=commission only %}
+    </div>
 </div>
+<div class="row">
+    <div class="col-3 col-sm-2">
+        Created: 
+    </div>
+    <div class="col">
+        {{ commission.created_date }}
+    </div>
+</div>
+
+<hr>
 
 <div class="mb-3">
     <h5>Initial Requirements</h5>
@@ -21,9 +36,6 @@
     <a class="text-decoration-none" href="{{ commission.attachment.url }}">{{ commission.attachment.name }}</a>
 </div>
 {% endif %}
-
-<h5>Date Created</h5>
-<p>{{ commission.created_date }}</p>
 
 <div class="my-5">
     {% include "./commission_functions.html" with commission=commission csrf_token=csrf_token request=request some_space_between_functions=True fill=False only %}

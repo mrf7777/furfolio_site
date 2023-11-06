@@ -75,6 +75,7 @@ urlpatterns = [
          views.UpdateCommissionStatus.as_view(), name="update_commission_status"),
     path('commissions/', views.Commissions.as_view(), name="commissions"),
     # tags
+    path('tags/<name>/', views.Tag.as_view(), name="tag_detail"),
     path('tags/create/', views.CreateTag.as_view(), name="create_tag"),
     # commission chat
     path('commissions/<pk>/chat',

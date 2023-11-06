@@ -510,3 +510,10 @@ class CreateTag(LoginRequiredMixin, PermissionRequiredMixin, generic.CreateView)
         initial = super().get_initial()
         initial["author"] = self.request.user.id
         return initial
+    
+class Tag(generic.DetailView):
+    model = models.Tag
+    slug_field = "name"
+    slug_url_kwarg = "name"
+    template_name = "furfolio/tags/tag_detail.html"
+    context_object_name = "tag"

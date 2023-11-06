@@ -675,6 +675,7 @@ class Tag(mixins.GetFullUrlMixin, models.Model):
         name="description",
         verbose_name="Description",
         default="",
+        blank=True,
     )
     rating = models.CharField(
         name="rating",

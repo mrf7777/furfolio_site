@@ -505,3 +505,8 @@ class CreateTag(LoginRequiredMixin, PermissionRequiredMixin, generic.CreateView)
     form_class = TagForm
     template_name = "furfolio/tags/tag_create.html"
     permission_required = "furfolio.add_tag"
+
+    def get_initial(self) -> dict[str, Any]:
+        initial = super().get_initial()
+        initial["author"] = self.request.user.id
+        return initial

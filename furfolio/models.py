@@ -403,6 +403,9 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         rating_to_human_friendly = dict(self.__class__.RATING_TO_CHOICES)
         return rating_to_human_friendly[self.rating]
     
+    def is_adult(self) -> bool:
+        return self.rating == self.__class__.RATING_ADULT
+    
     class SlotInfo:
         def __init__(self, max_slots: int, slots_taken: int):
             self.max_slots = max_slots

@@ -31,13 +31,18 @@ Expects a 'title_is_link':bool object
                 <div class="flex-fill"></div>
                 <div class="d-flex align-items-end">
                     <div class="d-flex flex-column">
+                        {% if offer.is_adult %}
+                            <b class="fs-5 text-danger">Adult</b>
+                        {% endif %}
+
                         <div class="mb-1">
                             Slots: <b>{{ offer.get_slot_info.get_capped_slots_taken }}</b> / <b>{{ offer.get_slot_info.max_slots }}</b>
                         </div>
+
                         {% if not offer.is_closed %}
-                        <div>
-                            Closes in <b>{{ offer.cutoff_date|timeuntil }}</b>
-                        </div>
+                            <div>
+                                Closes in <b>{{ offer.cutoff_date|timeuntil }}</b>
+                            </div>
                         {% else %}
                             <b class="text-danger fs-5">Closed</b>
                         {% endif %}

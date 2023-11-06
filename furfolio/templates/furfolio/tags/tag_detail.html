@@ -5,5 +5,9 @@ Tag: <code>{{ tag.name }}</code>
 {% endblock %}
 
 {% block body %}
-{{ tag }}
+
+{% if tag.description %}
+    {{ tag.description|linebreaks|urlize }}
+{% endif %}
+
 {% endblock %}

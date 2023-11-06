@@ -19,31 +19,40 @@
         </div>
     {% endif %}
 
-    <div class="d-flex mb-3">
-        <div>
-            Slots: <b>{{ offer.get_active_commissions.count }}</b> / <b>{{ offer.slots }}</b>
+    <div class="row">
+        <div class="col-3 col-sm-2">
+            Slots: 
         </div>
-        <div class="flex-fill"></div>
-        <div>
-            Price: <b>{{ offer.get_currency_symbol }} {{ offer.min_price }}</b> - <b>{{ offer.max_price }}</b> {{ offer.get_iso_4217_currency_code }}
+        <div class="col">
+            <b>{{ offer.get_active_commissions.count }}</b> / <b>{{ offer.slots }}</b>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3 col-sm-2">
+            Price:
+        </div>
+        <div class="col">
+            <b>{{ offer.get_currency_symbol }} {{ offer.min_price }}</b> - <b>{{ offer.max_price }}</b> {{ offer.get_iso_4217_currency_code }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3 col-sm-2">
+            Closure:
+        </div>
+        <div class="col">
+            {% if offer.forced_closed %}
+                <b>Forced closed</b>
+            {% elif offer.is_closed %}
+                <b>Closed</b>
+            {% else %}
+                Closes in <b>{{ offer.cutoff_date|timeuntil }}</b> ({{ offer.cutoff_date }})
+            {% endif %}
         </div>
     </div>
 
-    {{ offer.description|linebreaks|urlize }}
+    <hr>
 
-    {% if offer.forced_closed %}
-        <p>
-            <b>Forced closed</b>
-        </p>
-    {% elif offer.is_closed %}
-        <p>
-            <b>Closed</b>
-        </p>
-    {% else %}
-        <p>
-            Closes in <b>{{ offer.cutoff_date|timeuntil }}</b> ({{ offer.cutoff_date }})
-        </p>
-    {% endif %}
+    {{ offer.description|linebreaks|urlize }}
 
     {% if request.user.pk == offer.author.pk %}
         <div>

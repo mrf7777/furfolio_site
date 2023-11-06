@@ -683,6 +683,9 @@ class Tag(mixins.GetFullUrlMixin, models.Model):
         default=RATING_GENERAL,
     )
 
+    created_date = models.DateTimeField(name="created_date", auto_now_add=True)
+    updated_date = models.DateTimeField(name="updated_date", auto_now=True)
+
     def __str__(self) -> str:
         return self.name
 

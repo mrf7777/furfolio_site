@@ -65,6 +65,13 @@ class EmailOffersTestCase(TestCase):
         utils.make_offer(self.creator, rating=models.RATING_ADULT)
         self.assertEqual(len(mail.outbox), 1)
 
+    def test_update_offer_does_not_email_followers(self):
+        offer = utils.make_offer(self.creator)
+        mail.outbox = []
+        offer.description = "This is a new description and should not trigger an email if saved."
+        offer.save()
+        self.assertEqual(len(mail.outbox), 0)
+
 
 class CommissionMessagesTestCase(TestCase):
     def setUp(self) -> None:

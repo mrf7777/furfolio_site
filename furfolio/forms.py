@@ -86,6 +86,8 @@ class OfferFormUpdate(OfferForm):
 
 
 class OfferSearchForm(TextSearchForm):
+    template_name = "furfolio/form_templates/offer_search.html"
+
     author = forms.CharField(max_length=300, required=False)
     sort = forms.ChoiceField(
         choices=Offer.SORT_CHOICES,

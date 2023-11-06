@@ -1,0 +1,47 @@
+{% for hidden_field in form.hidden_fields %}
+{{ hidden_field }}
+{% endfor %}
+
+{% if errors %}
+<div class="text-danger">
+    <strong>Errors:</strong>
+    {{ errors }}
+</div>
+{% endif %}
+
+<div class="mb-3">
+    <div class="mb-2 row g-2 d-flex align-items-center">
+        <div class="col-2">{{ form.text_query.label }}</div>
+        <div class="col-10 col-md-6">{{ form.text_query }}</div>
+    </div>
+    <details class="">
+        <summary class="my-2">Filters</summary>
+
+        <div class="mb-2 row g-2 d-flex align-items-center">
+            <div class="col-2">{{ form.price_min.label }}</div>
+            <div class="col-10 col-md-6">{{ form.price_min }}</div>
+        </div>
+        <div class="mb-2 row g-2 d-flex align-items-center">
+            <div class="col-2">{{ form.price_max.label }}</div>
+            <div class="col-10 col-md-6">{{ form.price_max }}</div>
+        </div>
+        <div class="mb-2 row g-2 d-flex align-items-center">
+            <div class="col-2">{{ form.sort.label }}</div>
+            <div class="col-10 col-md-6">{{ form.sort }}</div>
+        </div>
+        <div class="mb-2 row g-2 d-flex align-items-center">
+            <div class="col-2">{{ form.author.label }}</div>
+            <div class="col-10 col-md-6">{{ form.author }}</div>
+        </div>
+        <div class="mb-2 row g-2 d-flex align-items-center">
+            <div class="col-2">{{ form.closed_offers.label }}</div>
+            <div class="col-10 col-md-6">{{ form.closed_offers }}</div>
+        </div>
+    </details>
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-10">
+            <input class="btn btn-primary" type="submit" value="Search">
+        </div>
+    </div>
+</div>

@@ -193,15 +193,15 @@ OFFER_DESCRIPTION_MAX_LENGTH = math.ceil(AVERAGE_CHARACTERS_PER_WORD * 1000)
 # offer description must have at least about 4 words
 OFFER_DESCRIPTION_MIN_LENGTH = math.floor(AVERAGE_CHARACTERS_PER_WORD * 4)
 
+RATING_GENERAL = "GEN"
+RATING_ADULT = "ADL"
+RATING_TO_CHOICES = [
+    (RATING_GENERAL, "General"),
+    (RATING_ADULT, "Adult"),
+]
+
 
 class Offer(mixins.GetFullUrlMixin, models.Model):
-    RATING_GENERAL = "GEN"
-    RATING_ADULT = "ADL"
-    RATING_TO_CHOICES = [
-        (RATING_GENERAL, "General"),
-        (RATING_ADULT, "Adult"),
-    ]
-
     # https://en.wikipedia.org/wiki/ISO_4217#Active_codes_(List_One)
     EURO_SYMBOL = "\u20AC"
     CURRENCY_USD = "USD"
@@ -400,11 +400,11 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
                 return "EUR"
 
     def get_rating_friendly(self) -> str:
-        rating_to_human_friendly = dict(self.__class__.RATING_TO_CHOICES)
+        rating_to_human_friendly = dict(RATING_TO_CHOICES)
         return rating_to_human_friendly[self.rating]
 
     def is_adult(self) -> bool:
-        return self.rating == self.__class__.RATING_ADULT
+        return self.rating == RATING_ADULT
 
     class SlotInfo:
         def __init__(self, max_slots: int, slots_taken: int):
@@ -633,3 +633,4 @@ class CommissionMessage(mixins.GetFullUrlMixin, models.Model):
     def get_absolute_url(self):
         return reverse("commission_chat", kwargs={
                        "pk": self.commission.pk}) + "#" + self.get_html_id()
+

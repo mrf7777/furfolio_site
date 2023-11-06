@@ -33,7 +33,7 @@ def get_who_to_notify_for_new_offer(offer: 'models.Offer'):
     # Users who follow the offer author that do not consent to
     # seeing adult content should not receive a notification
     # about an adult offer.
-    if offer.rating == models.Offer.RATING_ADULT:
+    if offer.rating == models.RATING_ADULT:
         following_users = offer.author.get_following_users().filter(
             consent_to_adult_content=True)
     else:
@@ -82,7 +82,7 @@ def full_text_search_offers(search_query: OfferSearchQuery):
             forced_closed=False
         )
     if not search_query.consent_to_adult_content:
-        query = query.filter(rating=models.Offer.RATING_GENERAL)
+        query = query.filter(rating=models.RATING_GENERAL)
 
     # filter based on price
     price_min = search_query.price_min if search_query.price_min else 0

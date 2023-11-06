@@ -34,7 +34,7 @@ def make_offer(
         forced_closed=False,
         max_commissions_per_user=1,
         validate=True,
-        rating=models.Offer.RATING_GENERAL):
+        rating=models.RATING_GENERAL):
     offer = models.Offer(
         author=user,
         name=name,

@@ -195,9 +195,9 @@ class Offer(mixins.GetAdultConsentMixin,
 
     def test_func(self) -> bool | None:
         match self.get_object().rating:
-            case models.Offer.RATING_GENERAL:
+            case models.RATING_GENERAL:
                 return True
-            case models.Offer.RATING_ADULT:
+            case models.RATING_ADULT:
                 return self.does_user_consent_to_adult_content()
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:

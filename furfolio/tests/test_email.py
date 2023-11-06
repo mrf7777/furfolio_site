@@ -62,7 +62,7 @@ class EmailOffersTestCase(TestCase):
         self.assertEqual(len(mail.outbox), 2)
 
     def test_create_adult_offer_emails_consenting_followers(self):
-        utils.make_offer(self.creator, rating=models.Offer.RATING_ADULT)
+        utils.make_offer(self.creator, rating=models.RATING_ADULT)
         self.assertEqual(len(mail.outbox), 1)
 
 

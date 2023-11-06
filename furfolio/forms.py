@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.forms import EmailField
 from django import forms
 from django.forms.renderers import TemplatesSetting
-from .models import User, Offer, Commission, CommissionMessage
+from .models import User, Offer, Commission, CommissionMessage, Tag
 
 
 class TextSearchForm(forms.Form):
@@ -148,3 +148,11 @@ class OfferSelectForm(forms.Form):
 
     def set_queryset(self, queryset):
         self.fields["offer"].queryset = queryset
+
+class TagForm(forms.ModelForm):
+    class Meta:
+        model = Tag
+        fields = ["author", "name", "category", "description", "rating"]
+        widgets = {
+            "author": forms.HiddenInput(),
+        }

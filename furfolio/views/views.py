@@ -6,7 +6,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.views import generic
 from django.core.paginator import Page
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.utils.http import urlencode
 from django.core.exceptions import PermissionDenied
@@ -18,7 +18,7 @@ from ..queries import commissions as commission_queries
 from ..queries import offers as offer_queries
 from ..queries import commission_messages as commission_messages_queries
 from ..queries import user_following_user as user_following_user_queries
-from ..forms import CommissionSearchForm, CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm, UserSearchForm, UpdateCommissionForm, CommissionMessageForm, OfferSelectForm
+from ..forms import CommissionSearchForm, CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm, UserSearchForm, UpdateCommissionForm, CommissionMessageForm, OfferSelectForm, TagForm
 
 
 PAGE_SIZE = 10
@@ -498,3 +498,10 @@ class MakeUserUnfollowUser(LoginRequiredMixin, generic.View):
 
         redirect_url = request.GET["next"]
         return redirect(redirect_url)
+
+
+class CreateTag(LoginRequiredMixin, PermissionRequiredMixin, generic.CreateView):
+    model = models.Tag
+    form_class = TagForm
+    template_name = "furfolio/tags/tag_create.html"
+    permission_required = "furfolio.add_tag"

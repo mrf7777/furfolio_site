@@ -398,6 +398,10 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
                 return "USD"
             case self.__class__.CURRENCY_EUR:
                 return "EUR"
+            
+    def get_rating_friendly(self) -> str:
+        rating_to_human_friendly = dict(self.__class__.RATING_TO_CHOICES)
+        return rating_to_human_friendly[self.rating]
     
     class SlotInfo:
         def __init__(self, max_slots: int, slots_taken: int):

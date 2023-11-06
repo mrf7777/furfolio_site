@@ -683,6 +683,9 @@ class Tag(mixins.GetFullUrlMixin, models.Model):
         default=RATING_GENERAL,
     )
 
+    def __str__(self) -> str:
+        return self.name
+
     def get_absolute_url(self):
         return reverse("tag_detail", kwargs={"name": self.name})
     

@@ -669,6 +669,7 @@ class Tag(mixins.GetFullUrlMixin, models.Model):
         name="name",
         verbose_name="Name",
         max_length=38,
+        validators=[furfolio_validators.validate_tag_name,]
     )
     description = models.TextField(
         max_length=DESCRIPTION_MAX_LENGTH,

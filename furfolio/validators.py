@@ -1,3 +1,4 @@
+import re
 from datetime import datetime, timedelta
 from django.utils import timezone
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
@@ -201,4 +202,18 @@ def check_user_will_not_go_over_max_active_offers(offer: 'models.Offer'):
     if active_offers_by_author.count() >= MAX_ACTIVE_OFFERS_PER_USER:
         raise ValidationError(
             f"Cannot save offer because the number of active offers is at its maximum limit (which is {MAX_ACTIVE_OFFERS_PER_USER}). Consider force-closing an active offer or waiting for an offer to pass its cutoff date."
+        )
+
+
+def validate_tag_name(tag_name: str):
+    name_stripped = tag_name.strip()
+    if len(name_stripped) != len(tag_name):
+        raise ValidationError(
+            "Tag name cannot have whitespace characters at either end of the string."
+        )
+    
+    pattern = re.compile(r'^[a-zA-Z0-9_-]*$')
+    if not pattern.match(tag_name):
+        raise ValidationError(
+            "A tag name can have only letters, numbers, and the symbols '_' and '-'"
         )

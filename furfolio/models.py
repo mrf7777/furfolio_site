@@ -398,6 +398,21 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
                 return "USD"
             case self.__class__.CURRENCY_EUR:
                 return "EUR"
+    
+    class SlotInfo:
+        def __init__(self, max_slots: int, slots_taken: int):
+            self.max_slots = max_slots
+            self.slots_taken = slots_taken
+            
+        def get_capped_slots_taken(self) -> int:
+            return min(self.max_slots, self.slots_taken)
+        
+        def is_more_taken_than_max(self) -> bool:
+            return self.slots_taken > self.max_slots
+    
+    def get_slot_info(self) -> SlotInfo:
+        slots_taken = self.get_active_commissions().count()
+        return self.__class__.SlotInfo(self.slots, slots_taken)
 
 
 class OfferDescriptiveStrForCreator(Offer):

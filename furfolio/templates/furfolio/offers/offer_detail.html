@@ -24,7 +24,7 @@
             Slots: 
         </div>
         <div class="col">
-            <b>{{ offer.get_active_commissions.count }}</b> / <b>{{ offer.slots }}</b>
+            <b>{{ offer.get_slot_info.get_capped_slots_taken }}</b> / <b>{{ offer.get_slot_info.max_slots }}</b>
         </div>
     </div>
     <div class="row">

@@ -204,7 +204,7 @@ class Offer(mixins.GetAdultConsentMixin,
         context = super().get_context_data(**kwargs)
         context["should_show_create_commission_button"] = self.should_show_create_commission_button()
 
-        offer = self.get_object()
+        offer: models.Offer = self.get_object()
         commissions_of_offer_query = commission_queries.CommissionsSearchQuery(
             offer=offer.pk
         )

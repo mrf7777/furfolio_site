@@ -633,4 +633,51 @@ class CommissionMessage(mixins.GetFullUrlMixin, models.Model):
     def get_absolute_url(self):
         return reverse("commission_chat", kwargs={
                        "pk": self.commission.pk}) + "#" + self.get_html_id()
+        
 
+class TagCategory(models.Model):
+    name = models.CharField(
+        unique=True,
+        name="name",
+        verbose_name="Name",
+        max_length=32,
+    )
+
+
+class Tag(models.Model):
+    DESCRIPTION_MAX_LENGTH = math.ceil(
+    AVERAGE_CHARACTERS_PER_WORD * 1000)
+    
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        name="author",
+        on_delete=models.SET_NULL,
+        null=True,
+    )
+    category = models.ForeignKey(
+        TagCategory,
+        name="category",
+        verbose_name="Category",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+    )
+    name = models.CharField(
+        unique=True,
+        name="name",
+        verbose_name="Name",
+        max_length=38,
+    )
+    description = models.TextField(
+        max_length=DESCRIPTION_MAX_LENGTH,
+        name="description",
+        verbose_name="Description",
+        default="",
+    )
+    rating = models.CharField(
+        name="rating",
+        max_length=3,
+        choices=RATING_TO_CHOICES,
+        default=RATING_GENERAL,
+    )
+    

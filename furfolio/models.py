@@ -646,7 +646,7 @@ class TagCategory(models.Model):
     )
 
 
-class Tag(models.Model):
+class Tag(mixins.GetFullUrlMixin, models.Model):
     DESCRIPTION_MAX_LENGTH = math.ceil(
     AVERAGE_CHARACTERS_PER_WORD * 1000)
     
@@ -682,4 +682,7 @@ class Tag(models.Model):
         choices=RATING_TO_CHOICES,
         default=RATING_GENERAL,
     )
+
+    def get_absolute_url(self):
+        return reverse("tag_detail", kwargs={"name": self.name})
     

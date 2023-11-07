@@ -156,3 +156,8 @@ class TagForm(forms.ModelForm):
         widgets = {
             "author": forms.HiddenInput(),
         }
+
+class TagUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Tag
+        fields = ["name", "category", "description", "rating"]

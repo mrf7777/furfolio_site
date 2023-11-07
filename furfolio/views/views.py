@@ -18,7 +18,7 @@ from ..queries import commissions as commission_queries
 from ..queries import offers as offer_queries
 from ..queries import commission_messages as commission_messages_queries
 from ..queries import user_following_user as user_following_user_queries
-from ..forms import CommissionSearchForm, CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm, UserSearchForm, UpdateCommissionForm, CommissionMessageForm, OfferSelectForm, TagForm
+from ..forms import CommissionSearchForm, CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm, UserSearchForm, UpdateCommissionForm, CommissionMessageForm, OfferSelectForm, TagForm, TagUpdateForm
 
 
 PAGE_SIZE = 10
@@ -511,6 +511,15 @@ class CreateTag(LoginRequiredMixin, PermissionRequiredMixin, generic.CreateView)
         initial["author"] = self.request.user.id
         return initial
     
+
+class UpdateTag(LoginRequiredMixin, PermissionRequiredMixin, generic.UpdateView):
+    model = models.Tag
+    slug_field = "name"
+    slug_url_kwarg = "name"
+    form_class = TagUpdateForm
+    template_name = "furfolio/tags/tag_update.html"
+    permission_required = "furfolio.change_tag"
+
 class Tag(generic.DetailView):
     model = models.Tag
     slug_field = "name"

@@ -1,0 +1,17 @@
+{% extends "furfolio/layouts/title_body.html" %}
+
+{% block title %}
+Edit tag <code>{{ tag.name }}</code>
+{% endblock %}
+
+{% block body %}
+
+<form method="post" id="form">
+    {% csrf_token %}
+    {{ form }}
+    <input class="btn btn-primary" id="update-button" type="submit" value="Save Changes">
+</form>
+
+{% include "furfolio/scripts/hide_on_submit.html" with form_id="form" id_to_hide="update-button" only %}
+
+{% endblock %}

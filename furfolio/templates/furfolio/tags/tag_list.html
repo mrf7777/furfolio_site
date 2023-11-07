@@ -1,12 +1,26 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-{% for tag in tags %}
-    <div>
-        <a href="{% url "tag_detail" tag.name %}">{{ tag }}</a>
-    </div>
-{% endfor %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Tag</th>
+            <th scope="col">Category</th>
+            <th scope="col">Author</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        {% for tag in tags %}
+            <tr>
+                <th scope="col"><a href="{% url "tag_detail" tag.name %}">{{ tag.name }}</a></th>
+                <td>{{ tag.category }}</td>
+                <td>{% include "furfolio/users/badge.html" with user=tag.author only %}</td>
+                <td>{{ tag.description|truncatechars:150 }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 {% if is_paginated %}
 <div class="d-flex justify-content-center">

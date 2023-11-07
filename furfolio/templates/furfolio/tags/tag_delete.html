@@ -1,0 +1,17 @@
+{% extends "furfolio/layouts/title_body.html" %}
+
+{% block title %}
+Delete tag <code>{{ tag.name }}</code>
+{% endblock %}
+
+{% block body %}
+
+Deleting a tag cannot be undone. Please be sure that this is what you want to do.
+
+<form class="mt-3" method="post" id="form">
+    {% csrf_token %}
+    {{ form }}
+    <input class="btn btn-primary" id="create-button" type="submit" value="Delete">
+</form>
+
+{% endblock %}

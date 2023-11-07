@@ -520,6 +520,14 @@ class UpdateTag(LoginRequiredMixin, PermissionRequiredMixin, generic.UpdateView)
     template_name = "furfolio/tags/tag_update.html"
     permission_required = "furfolio.change_tag"
 
+class DeleteTag(LoginRequiredMixin, PermissionRequiredMixin, generic.DeleteView):
+    model = models.Tag
+    slug_field = "name"
+    slug_url_kwarg = "name"
+    template_name = "furfolio/tags/tag_delete.html"
+    permission_required = "furfolio.delete_tag"
+    success_url = reverse_lazy("home")
+
 class Tag(generic.DetailView):
     model = models.Tag
     slug_field = "name"

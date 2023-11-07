@@ -1,9 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 {% for tag in tags %}
     <div>
         <a href="{% url "tag_detail" tag.name %}">{{ tag }}</a>
     </div>
 {% endfor %}
+
+{% if is_paginated %}
+<div class="d-flex justify-content-center">
+    {% include "furfolio/components/pagination_buttons.html" with page_obj=page_obj page_range=page_range request=request only %}
+</div>
+{% endif %}
+
 {% endblock %}

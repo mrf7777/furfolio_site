@@ -539,7 +539,12 @@ class TagList(generic.ListView):
     model = models.Tag
     template_name = "furfolio/tags/tag_list.html"
     context_object_name = "tags"
-    paginate_by = PAGE_SIZE
+    paginate_by = 25
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["page_range"] = get_page_range_items(context["page_obj"])
+        return context
 
     def get_queryset(self) -> QuerySet[Any]:
         # TODO: move tag query logic to tag query module

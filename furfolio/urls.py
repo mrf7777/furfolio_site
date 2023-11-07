@@ -75,6 +75,7 @@ urlpatterns = [
          views.UpdateCommissionStatus.as_view(), name="update_commission_status"),
     path('commissions/', views.Commissions.as_view(), name="commissions"),
     # tags
+    path('tags/', views.TagList.as_view(), name="tags"),
     path('tags/create/', views.CreateTag.as_view(), name="create_tag"),
     path('tags/<name>/update/', views.UpdateTag.as_view(), name="update_tag"),
     path('tags/<name>/delete/', views.DeleteTag.as_view(), name="delete_tag"),

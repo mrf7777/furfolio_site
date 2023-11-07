@@ -534,3 +534,13 @@ class Tag(generic.DetailView):
     slug_url_kwarg = "name"
     template_name = "furfolio/tags/tag_detail.html"
     context_object_name = "tag"
+
+class TagList(generic.ListView):
+    model = models.Tag
+    template_name = "furfolio/tags/tag_list.html"
+    context_object_name = "tags"
+    paginate_by = PAGE_SIZE
+
+    def get_queryset(self) -> QuerySet[Any]:
+        # TODO: move tag query logic to tag query module
+        return models.Tag.objects.all().order_by("-updated_date")

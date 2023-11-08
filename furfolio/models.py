@@ -657,6 +657,7 @@ class Tag(mixins.GetFullUrlMixin, models.Model):
         settings.AUTH_USER_MODEL,
         name="author",
         on_delete=models.SET_NULL,
+        blank=True,
         null=True,
     )
     category = models.ForeignKey(

@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block content %}
+
+{% if perms.furfolio.add_tag %}
+    <a class="btn btn-primary mb-3 d-inline-flex align-items-center" href="{% url "create_tag" %}"><img class="me-2" src="{% static "symbols/plus-white.svg" %}" style="width: 1em;">Create Tag</a>
+{% endif %}
+
 <table class="table table-striped">
     <thead>
         <tr>

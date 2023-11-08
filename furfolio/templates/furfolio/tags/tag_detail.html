@@ -25,9 +25,13 @@ Tag: <code>{{ tag.name }}</code>
 
 <hr>
 
-{% if tag.description %}
-    {{ tag.description|linebreaks|urlize }}
-{% endif %}
+<div class="mb-3">
+    {% if tag.description %}
+        {{ tag.description|linebreaks|urlize }}
+    {% else %}
+        <b>No Description</b>
+    {% endif %}
+</div>
 
 {% if perms.furfolio.change_tag %}
     <a class="btn btn-primary" href="{% url "update_tag" tag.name %}">Edit</a>

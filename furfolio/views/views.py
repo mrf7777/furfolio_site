@@ -536,7 +536,7 @@ class DeleteTag(
     slug_url_kwarg = "name"
     template_name = "furfolio/tags/tag_delete.html"
     permission_required = "furfolio.delete_tag"
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("tags")
 
 
 class Tag(generic.DetailView):

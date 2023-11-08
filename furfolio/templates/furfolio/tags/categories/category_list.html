@@ -6,8 +6,19 @@ Tag Categories
 
 {% block body %}
 
-{% for category in tag_categories %}
-    {{ category }}
-{% endfor %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        {% for category in tag_categories %}
+            <tr>
+                <th scope="col"><a class="text-decoration-none" href="{% url "tag_category_detail" category.name %}">{{ category.name }}</a></th>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 {% endblock %}

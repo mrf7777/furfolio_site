@@ -81,6 +81,7 @@ urlpatterns = [
     path('tags/<name>/delete/', views.DeleteTag.as_view(), name="delete_tag"),
     path('tags/<name>/', views.Tag.as_view(), name="tag_detail"),
     # tag categories
+    path('tag-categories/', views.TagCategoryList.as_view(), name="tag_categories"),
     path('tag-categories/create/', views.CreateTagCategory.as_view(), name="create_tag_category"),
     path('tag-categories/<name>/', views.TagCategory.as_view(), name="tag_category_detail"),
     # commission chat

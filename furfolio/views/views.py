@@ -578,3 +578,13 @@ class TagCategory(generic.DetailView):
     slug_field = "name"
     slug_url_kwarg = "name"
     context_object_name = "tag_category"
+
+
+class TagCategoryList(generic.ListView):
+    model = models.TagCategory
+    template_name = "furfolio/tags/categories/category_list.html"
+    context_object_name = "tag_categories"
+
+    def get_queryset(self) -> QuerySet[Any]:
+        # TODO: move tag category query logic to tag category query module
+        return models.TagCategory.objects.all().order_by("name")

@@ -1,0 +1,13 @@
+{% extends "furfolio/layouts/title_body.html" %}
+
+{% block title %}
+Tag Categories
+{% endblock %}
+
+{% block body %}
+
+{% for category in tag_categories %}
+    {{ category }}
+{% endfor %}
+
+{% endblock %}

@@ -10,4 +10,8 @@ Tag: <code>{{ tag.name }}</code>
     {{ tag.description|linebreaks|urlize }}
 {% endif %}
 
+{% if perms.furfolio.change_tag %}
+    <a class="btn btn-primary" href="{% url "update_tag" tag.name %}">Edit</a>
+{% endif %}
+
 {% endblock %}

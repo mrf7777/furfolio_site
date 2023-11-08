@@ -11,7 +11,7 @@ Tag: <code>{{ tag.name }}</code>
         Category:
     </div>
     <div class="col">
-        {% if tag.category %}{{ tag.friendly_category_string }}{% else %}<b>No Category</b>{% endif %}
+        {% if tag.category %}<a class="text-decoration-none" href="{% url "tag_category_detail" tag.category %}">{{ tag.friendly_category_string }}</a>{% else %}<b>No Category</b>{% endif %}
     </div>
 </div>
 <div class="row">

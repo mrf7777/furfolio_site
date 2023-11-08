@@ -211,7 +211,7 @@ def validate_tag_name(tag_name: str):
         raise ValidationError(
             "Tag name cannot have whitespace characters at either end of the string."
         )
-    
+
     pattern = re.compile(r'^[a-zA-Z0-9_-]*$')
     if not pattern.match(tag_name):
         raise ValidationError(

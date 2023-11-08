@@ -353,8 +353,6 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
 
         super(Offer, self).save(*args, **kwargs)
 
-        
-
     def clean(self):
         furfolio_validators.check_user_is_not_spamming_offers(self.author)
         furfolio_validators.validate_price_min_is_less_than_max(
@@ -635,7 +633,7 @@ class CommissionMessage(mixins.GetFullUrlMixin, models.Model):
     def get_absolute_url(self):
         return reverse("commission_chat", kwargs={
                        "pk": self.commission.pk}) + "#" + self.get_html_id()
-        
+
 
 class TagCategory(models.Model):
     name = models.CharField(
@@ -651,8 +649,8 @@ class TagCategory(models.Model):
 
 class Tag(mixins.GetFullUrlMixin, models.Model):
     DESCRIPTION_MAX_LENGTH = math.ceil(
-    AVERAGE_CHARACTERS_PER_WORD * 1000)
-    
+        AVERAGE_CHARACTERS_PER_WORD * 1000)
+
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         name="author",
@@ -694,7 +692,7 @@ class Tag(mixins.GetFullUrlMixin, models.Model):
 
     def __str__(self) -> str:
         return self.name
-    
+
     def friendly_category_string(self) -> str:
         if self.category:
             return self.category
@@ -703,4 +701,3 @@ class Tag(mixins.GetFullUrlMixin, models.Model):
 
     def get_absolute_url(self):
         return reverse("tag_detail", kwargs={"name": self.name})
-    

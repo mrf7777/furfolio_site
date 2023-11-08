@@ -149,6 +149,7 @@ class OfferSelectForm(forms.Form):
     def set_queryset(self, queryset):
         self.fields["offer"].queryset = queryset
 
+
 class TagForm(forms.ModelForm):
     class Meta:
         model = Tag
@@ -156,6 +157,7 @@ class TagForm(forms.ModelForm):
         widgets = {
             "author": forms.HiddenInput(),
         }
+
 
 class TagUpdateForm(forms.ModelForm):
     class Meta:

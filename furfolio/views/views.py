@@ -500,7 +500,10 @@ class MakeUserUnfollowUser(LoginRequiredMixin, generic.View):
         return redirect(redirect_url)
 
 
-class CreateTag(LoginRequiredMixin, PermissionRequiredMixin, generic.CreateView):
+class CreateTag(
+        LoginRequiredMixin,
+        PermissionRequiredMixin,
+        generic.CreateView):
     model = models.Tag
     form_class = TagForm
     template_name = "furfolio/tags/tag_create.html"
@@ -510,9 +513,12 @@ class CreateTag(LoginRequiredMixin, PermissionRequiredMixin, generic.CreateView)
         initial = super().get_initial()
         initial["author"] = self.request.user.id
         return initial
-    
 
-class UpdateTag(LoginRequiredMixin, PermissionRequiredMixin, generic.UpdateView):
+
+class UpdateTag(
+        LoginRequiredMixin,
+        PermissionRequiredMixin,
+        generic.UpdateView):
     model = models.Tag
     slug_field = "name"
     slug_url_kwarg = "name"
@@ -520,7 +526,11 @@ class UpdateTag(LoginRequiredMixin, PermissionRequiredMixin, generic.UpdateView)
     template_name = "furfolio/tags/tag_update.html"
     permission_required = "furfolio.change_tag"
 
-class DeleteTag(LoginRequiredMixin, PermissionRequiredMixin, generic.DeleteView):
+
+class DeleteTag(
+        LoginRequiredMixin,
+        PermissionRequiredMixin,
+        generic.DeleteView):
     model = models.Tag
     slug_field = "name"
     slug_url_kwarg = "name"
@@ -528,12 +538,14 @@ class DeleteTag(LoginRequiredMixin, PermissionRequiredMixin, generic.DeleteView)
     permission_required = "furfolio.delete_tag"
     success_url = reverse_lazy("home")
 
+
 class Tag(generic.DetailView):
     model = models.Tag
     slug_field = "name"
     slug_url_kwarg = "name"
     template_name = "furfolio/tags/tag_detail.html"
     context_object_name = "tag"
+
 
 class TagList(generic.ListView):
     model = models.Tag

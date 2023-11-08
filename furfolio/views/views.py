@@ -600,3 +600,14 @@ class UpdateTagCategory(LoginRequiredMixin,
     template_name = "furfolio/tags/categories/category_update.html"
     context_object_name = "tag_category"
     permission_required = "furfolio.change_tagcategory"
+    
+
+class DeleteTagCategory(LoginRequiredMixin,
+        PermissionRequiredMixin,
+        generic.DeleteView):
+    model = models.TagCategory
+    slug_field = "name"
+    slug_url_kwarg = "name"
+    template_name = "furfolio/tags/categories/category_delete.html"
+    permission_required = "furfolio.delete_tagcategory"
+    success_url = reverse_lazy("tag_categories")

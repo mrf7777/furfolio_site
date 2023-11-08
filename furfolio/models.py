@@ -645,6 +645,9 @@ class TagCategory(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        return reverse("tag_category_detail", kwargs={"name": self.name})
 
 
 class Tag(mixins.GetFullUrlMixin, models.Model):

@@ -82,6 +82,7 @@ urlpatterns = [
     path('tags/<name>/', views.Tag.as_view(), name="tag_detail"),
     # tag categories
     path('tag-categories/create/', views.CreateTagCategory.as_view(), name="create_tag_category"),
+    path('tag-categories/<name>/', views.TagCategory.as_view(), name="tag_category_detail"),
     # commission chat
     path('commissions/<pk>/chat',
          views.CommissionChat.as_view(), name="commission_chat"),

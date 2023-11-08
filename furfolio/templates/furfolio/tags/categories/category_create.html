@@ -1,1 +1,17 @@
-Create tag category.
+{% extends "furfolio/layouts/title_body.html" %}
+
+{% block title %}
+Create Tag Category
+{% endblock %}
+
+{% block body %}
+
+<form method="post" id="form">
+    {% csrf_token %}
+    {{ form }}
+    <input class="btn btn-primary" id="create-button" type="submit" value="Create">
+</form>
+
+{% include "furfolio/scripts/hide_on_submit.html" with form_id="form" id_to_hide="create-button" only %}
+
+{% endblock %}

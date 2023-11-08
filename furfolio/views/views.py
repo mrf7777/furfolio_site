@@ -570,3 +570,11 @@ class CreateTagCategory(LoginRequiredMixin,
     template_name = "furfolio/tags/categories/category_create.html"
     form_class = TagCategoryForm
     permission_required = "furfolio.add_tagcategory"
+
+
+class TagCategory(generic.DetailView):
+    model = models.TagCategory
+    template_name = "furfolio/tags/categories/category_detail.html"
+    slug_field = "name"
+    slug_url_kwarg = "name"
+    context_object_name = "tag_category"

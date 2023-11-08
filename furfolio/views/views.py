@@ -588,3 +588,15 @@ class TagCategoryList(generic.ListView):
     def get_queryset(self) -> QuerySet[Any]:
         # TODO: move tag category query logic to tag category query module
         return models.TagCategory.objects.all().order_by("name")
+    
+
+class UpdateTagCategory(LoginRequiredMixin,
+        PermissionRequiredMixin,
+        generic.UpdateView):
+    model = models.TagCategory
+    slug_field = "name"
+    slug_url_kwarg = "name"
+    form_class = TagCategoryForm
+    template_name = "furfolio/tags/categories/category_update.html"
+    context_object_name = "tag_category"
+    permission_required = "furfolio.change_tagcategory"

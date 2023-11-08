@@ -3,16 +3,10 @@
 {% load static %}
 
 {% block title %}
-Edit Tag <code>{{ tag.name }}</code>
+Edit Tag Category <code>{{ tag_category.name }}</code>
 {% endblock %}
 
 {% block body %}
-
-{% if perms.furfolio.delete_tag %}
-    <div class="d-flex justify-content-end">
-        <a class="btn btn-danger text-light d-flex align-items-center" href="{% url "delete_tag" tag.name %}"><img class="me-1" src="{% static "symbols/trash-white.svg" %}" style="width: 2em;">Delete</a>
-    </div>
-{% endif %}
 
 <form method="post" id="form">
     {% csrf_token %}

@@ -5,4 +5,11 @@ Tag Category: <code>{{ tag_category.name }}</code>
 {% endblock %}
 
 {% block body %}
+
+<hr>
+
+{% if perms.furfolio.change_tagcategory %}
+    <a class="btn btn-primary" href="{% url "update_tag_category" tag_category.name %}">Edit</a>
+{% endif %}
+
 {% endblock %}

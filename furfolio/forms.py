@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.forms import EmailField
 from django import forms
 from django.forms.renderers import TemplatesSetting
-from .models import User, Offer, Commission, CommissionMessage, Tag
+from .models import User, Offer, Commission, CommissionMessage, Tag, TagCategory
 
 
 class TextSearchForm(forms.Form):
@@ -163,3 +163,9 @@ class TagUpdateForm(forms.ModelForm):
     class Meta:
         model = Tag
         fields = ["name", "category", "description", "rating"]
+
+
+class TagCategoryForm(forms.ModelForm):
+    class Meta:
+        model = TagCategory
+        fields = ["name",]

@@ -18,7 +18,7 @@ from ..queries import commissions as commission_queries
 from ..queries import offers as offer_queries
 from ..queries import commission_messages as commission_messages_queries
 from ..queries import user_following_user as user_following_user_queries
-from ..forms import CommissionSearchForm, CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm, UserSearchForm, UpdateCommissionForm, CommissionMessageForm, OfferSelectForm, TagForm, TagUpdateForm
+from ..forms import CommissionSearchForm, CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm, UserSearchForm, UpdateCommissionForm, CommissionMessageForm, OfferSelectForm, TagForm, TagUpdateForm, TagCategoryForm
 
 
 PAGE_SIZE = 10
@@ -561,3 +561,12 @@ class TagList(generic.ListView):
     def get_queryset(self) -> QuerySet[Any]:
         # TODO: move tag query logic to tag query module
         return models.Tag.objects.all().order_by("-updated_date")
+
+
+class CreateTagCategory(LoginRequiredMixin,
+        PermissionRequiredMixin,
+        generic.CreateView):
+    model = models.TagCategory
+    template_name = "furfolio/tags/categories/category_create.html"
+    form_class = TagCategoryForm
+    permission_required = "furfolio.add_tagcategory"

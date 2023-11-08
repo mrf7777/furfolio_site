@@ -645,6 +645,9 @@ class TagCategory(models.Model):
         max_length=32,
     )
 
+    def __str__(self):
+        return self.name
+
 
 class Tag(mixins.GetFullUrlMixin, models.Model):
     DESCRIPTION_MAX_LENGTH = math.ceil(
@@ -690,6 +693,12 @@ class Tag(mixins.GetFullUrlMixin, models.Model):
 
     def __str__(self) -> str:
         return self.name
+    
+    def friendly_category_string(self) -> str:
+        if self.category:
+            return self.category
+        else:
+            return ""
 
     def get_absolute_url(self):
         return reverse("tag_detail", kwargs={"name": self.name})

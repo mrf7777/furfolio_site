@@ -5,7 +5,7 @@
 {% block content %}
 
 <div class="mb-3">
-    {% include "./tag_navigation.html" %}
+    {% include "./tag_navigation.html" with active_tag_link=True only %}
 </div>
 
 {% if perms.furfolio.add_tag %}

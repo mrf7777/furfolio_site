@@ -1,8 +1,11 @@
 {% comment "" %}
 This component has buttons to help navigate between different tag-related pages.
+Expects the following objects:
+  - active_tag_link: if true, makes the tag link seem active
+  - active_tag_category_link: if true, makes the tag categories link seem active
 {% endcomment %}
 
 <div class="btn-group btn-group-sm" role="group" aria-label="Tag-related navigation button group">
-    <a class="btn btn-outline-primary" href="{% url "tags" %}">Tags</a>
-    <a class="btn btn-outline-primary" href="{% url "tag_categories" %}">Tag Categories</a>
+    <a class="btn btn-outline-primary {% if active_tag_link %}active{% endif %}" href="{% url "tags" %}">Tags</a>
+    <a class="btn btn-outline-primary {% if active_tag_category_link %}active{% endif %}" href="{% url "tag_categories" %}">Tag Categories</a>
 </div>

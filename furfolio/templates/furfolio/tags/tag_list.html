@@ -18,7 +18,6 @@
             <th scope="col">Tag</th>
             <th scope="col">Category</th>
             <th scope="col">Author</th>
-            <th scope="col">Description</th>
         </tr>
     </thead>
     <tbody class="table-group-divider">
@@ -27,7 +26,6 @@
                 <th scope="col"><a class="text-decoration-none" href="{% url "tag_detail" tag.name %}">{{ tag.name }}</a></th>
                 <td>{% if tag.category %}<a class="text-decoration-none" href="{% url "tag_category_detail" tag.category %}">{{ tag.friendly_category_string }}</a>{% endif %}</td>
                 <td>{% if tag.author %}{% include "furfolio/users/badge.html" with user=tag.author only %}{% endif %}</td>
-                <td>{{ tag.description|truncatechars:150 }}</td>
             </tr>
         {% endfor %}
     </tbody>

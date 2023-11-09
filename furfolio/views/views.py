@@ -222,7 +222,10 @@ class Offer(mixins.GetAdultConsentMixin,
 
     def should_show_create_commission_button(self) -> bool:
         offer = self.get_object()
-        return self.request.user.can_commission_offer(offer)
+        if self.request.user.is_authenticated:
+            return self.request.user.can_commission_offer(offer)
+        else:
+            return None
 
 
 class SignUp(generic.CreateView):

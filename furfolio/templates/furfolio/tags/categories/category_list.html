@@ -10,12 +10,14 @@ Tag Categories
     <thead>
         <tr>
             <th scope="col">Name</th>
+            <th scope="col">Description</th>
         </tr>
     </thead>
     <tbody class="table-group-divider">
         {% for category in tag_categories %}
             <tr>
                 <th scope="col"><a class="text-decoration-none" href="{% url "tag_category_detail" category.name %}">{{ category.name }}</a></th>
+                <td>{% if category.description %}{{ category.description }}{% endif %}</td>
             </tr>
         {% endfor %}
     </tbody>

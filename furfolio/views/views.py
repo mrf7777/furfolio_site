@@ -278,8 +278,11 @@ class User(generic.DetailView):
             models.User,
             username=self.kwargs["username"],
         )
-        context["is_user_followed"] = user_following_user_queries.does_user_follow_user(
-            self.request.user, user_to_follow, )
+        if self.request.user.is_authenticated:
+            context["is_user_followed"] = user_following_user_queries.does_user_follow_user(
+                self.request.user, user_to_follow)
+        else:
+            context["is_user_followed"] = None
 
         return context
 

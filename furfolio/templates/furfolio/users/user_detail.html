@@ -12,12 +12,12 @@
             <a class="btn btn-primary" href="{% url "update_user" user.username %}">Settings</a>
         </div>
     {% else %}
-        {% if is_user_followed %}
+        {% if is_user_followed is True %}
             <form method="post" action="{% url "unfollow_user" user.username %}?next={{ request.get_full_path|urlencode }}">
                 {% csrf_token %}
                 <button class="btn btn-primary">Unfollow</button>
             </form>
-        {% else %}
+        {% elif is_user_followed is False %}
             <form method="post" action="{% url "follow_user" user.username %}?next={{ request.get_full_path|urlencode }}">
                 {% csrf_token %}
                 <button class="btn btn-primary">Follow</button>

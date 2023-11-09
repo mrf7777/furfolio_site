@@ -168,4 +168,4 @@ class TagUpdateForm(forms.ModelForm):
 class TagCategoryForm(forms.ModelForm):
     class Meta:
         model = TagCategory
-        fields = ["name",]
+        fields = ["name", "description"]

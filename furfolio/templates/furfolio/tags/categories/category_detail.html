@@ -8,6 +8,14 @@ Tag Category: <code>{{ tag_category.name }}</code>
 
 <hr>
 
+<div class="mb-3">
+    {% if tag_category.description %}
+        {{ tag_category.description|linebreaks|urlize }}
+    {% else %}
+        <b>No Description</b>
+    {% endif %}
+</div>
+
 {% if perms.furfolio.change_tagcategory %}
     <a class="btn btn-primary" href="{% url "update_tag_category" tag_category.name %}">Edit</a>
 {% endif %}

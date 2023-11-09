@@ -1,0 +1,8 @@
+{% comment "" %}
+This component has buttons to help navigate between different tag-related pages.
+{% endcomment %}
+
+<div class="btn-group btn-group-sm" role="group" aria-label="Tag-related navigation button group">
+    <a class="btn btn-outline-primary" href="{% url "tags" %}">Tags</a>
+    <a class="btn btn-outline-primary" href="{% url "tag_categories" %}">Tag Categories</a>
+</div>

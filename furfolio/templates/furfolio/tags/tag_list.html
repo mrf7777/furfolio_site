@@ -4,6 +4,10 @@
 
 {% block content %}
 
+<div class="mb-3">
+    {% include "./tag_navigation.html" %}
+</div>
+
 {% if perms.furfolio.add_tag %}
     <a class="btn btn-primary mb-3 d-inline-flex align-items-center" href="{% url "create_tag" %}"><img class="me-2" src="{% static "symbols/plus-white.svg" %}" style="width: 1em;">Create Tag</a>
 {% endif %}

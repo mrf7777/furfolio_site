@@ -1,10 +1,16 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block content %}
 
 <div class="mb-3">
     {% include "../tag_navigation.html" with active_tag_category_link=True only %}
 </div>
+
+{% if perms.furfolio.add_tagcategory %}
+    <a class="btn btn-primary mb-3 d-inline-flex align-items-center" href="{% url "create_tag_category" %}"><img class="me-2" src="{% static "symbols/plus-white.svg" %}" style="width: 1em;">Create Category</a>
+{% endif %}
 
 <table class="table table-striped">
     <thead>

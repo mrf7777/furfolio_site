@@ -35,6 +35,14 @@ def get_page_range_items(page: Page) -> List[str]:
     return list(page.paginator.get_elided_page_range(page.number))
 
 
+class PageRangeContextMixin:
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["page_range"] = get_page_range_items(context["page_obj"])
+        return context
+
+
+
 class Home(generic.TemplateView):
     template_name = "furfolio/home.html"
 
@@ -137,23 +145,18 @@ class CreatorDashboard(LoginRequiredMixin, generic.FormView):
         return context
 
 
-class BuyerDashboard(LoginRequiredMixin, generic.ListView):
+class BuyerDashboard(PageRangeContextMixin, LoginRequiredMixin, generic.ListView):
     template_name = "furfolio/dashboards/buyer.html"
     context_object_name = "commissions"
     model = models.Commission
     paginate_by = PAGE_SIZE
-
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-        context["page_range"] = get_page_range_items(context["page_obj"])
-        return context
 
     def get_queryset(self) -> QuerySet[Any]:
         return commission_queries.get_commissions_for_user_as_commissioner(
             self.request.user)
 
 
-class OfferList(mixins.GetAdultConsentMixin, generic.ListView):
+class OfferList(PageRangeContextMixin, mixins.GetAdultConsentMixin, generic.ListView):
     model = models.Offer
     template_name = "furfolio/offers/offer_list.html"
     context_object_name = "offer_list"
@@ -185,7 +188,6 @@ class OfferList(mixins.GetAdultConsentMixin, generic.ListView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["search_form"] = OfferSearchForm(self.request.GET)
-        context["page_range"] = get_page_range_items(context["page_obj"])
         return context
 
 
@@ -302,7 +304,7 @@ class UpdateUser(UserMixin, LoginRequiredMixin, UserPassesTestMixin, generic.Upd
         return self.get_object().pk == self.request.user.pk
 
 
-class UserList(UserMixin, generic.ListView):
+class UserList(PageRangeContextMixin, UserMixin, generic.ListView):
     context_object_name = "users"
     template_name = "furfolio/users/user_list.html"
     paginate_by = PAGE_SIZE
@@ -316,7 +318,6 @@ class UserList(UserMixin, generic.ListView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["search_form"] = UserSearchForm(self.request.GET)
-        context["page_range"] = get_page_range_items(context["page_obj"])
         return context
 
 
@@ -374,7 +375,7 @@ class Commission(LoginRequiredMixin, UserPassesTestMixin, generic.DetailView):
             return False
 
 
-class Commissions(LoginRequiredMixin, generic.ListView):
+class Commissions(PageRangeContextMixin, LoginRequiredMixin, generic.ListView):
     model = models.Commission
     template_name = "furfolio/commissions/commission_list.html"
     context_object_name = "commissions"
@@ -398,7 +399,6 @@ class Commissions(LoginRequiredMixin, generic.ListView):
         else:
             search_form = CommissionSearchForm()
         context["form"] = search_form
-        context["page_range"] = get_page_range_items(context["page_obj"])
         return context
 
 
@@ -550,15 +550,10 @@ class Tag(TagMixin, generic.DetailView):
     context_object_name = "tag"
 
 
-class TagList(TagMixin, generic.ListView):
+class TagList(PageRangeContextMixin, TagMixin, generic.ListView):
     template_name = "furfolio/tags/tag_list.html"
     context_object_name = "tags"
     paginate_by = 25
-
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-        context["page_range"] = get_page_range_items(context["page_obj"])
-        return context
 
     def get_queryset(self) -> QuerySet[Any]:
         return tag_queries.get_all_tags()

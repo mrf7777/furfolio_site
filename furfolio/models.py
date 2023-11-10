@@ -105,7 +105,7 @@ class User(mixins.GetFullUrlMixin, AbstractUser):
     avatar = models.ImageField(
         name="avatar",
         blank=True,
-        help_text="Avatars are optional. Your avatar must be 64 by 64 pixels.",
+        help_text="Avatars are optional. Your avatar will be resized to 64 by 64 pixels.",
         validators=[
             furfolio_validators.validate_profile_image_is_right_size,
             furfolio_validators.validate_avatar_has_max_size,
@@ -237,7 +237,24 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
     description = models.TextField(
         max_length=OFFER_DESCRIPTION_MAX_LENGTH,
         name="description",
-        help_text="Describes the details of the offer.",
+        help_text=mark_safe(
+            """
+            Describes the details of the offer.
+            <br>
+            Explain (when applicable):
+            <ul>
+                <li>
+                    what service is being provided
+                </li>
+                <li>
+                    what you need from the buyer (requirements, references, etc.)
+                </li>
+                <li>
+                    when a commission is considered finished
+                </li>
+            </ul>
+            """
+        ),
         validators=[validators.MinLengthValidator(
             OFFER_DESCRIPTION_MIN_LENGTH),],
         default="",
@@ -245,6 +262,7 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
     cutoff_date = models.DateTimeField(
         name="cutoff_date",
         default=seven_days_from_now,
+        help_text="When your offer is no longer accepting commissions.",
         validators=[
             furfolio_validators.validate_datetime_not_in_past,
             furfolio_validators.validate_datetime_is_not_over_year_into_future,
@@ -259,6 +277,7 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         name="thumbnail",
         blank=True,
         null=True,
+        help_text="A thumbnail is optional, but it will be shown when users search for offers and when they visit this offer's page.",
         validators=[
             furfolio_validators.validate_offer_thumbnail_aspect_ratio,
             furfolio_validators.validate_offer_thumbnail_has_max_size,
@@ -274,7 +293,12 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         name="slots",
         verbose_name="Slots",
         help_text=mark_safe(
-            "The maximum number of commissions you are willing to work on for this offer.<br>This is not a hard limit; it is used to communicate how many commissions you are willing to work."),
+            """
+            The maximum number of commissions you are willing to work on for this offer.
+            <br>
+            This is not a hard limit; it is used to communicate how many commissions you are willing to work.
+            """
+        ),
         validators=[
             validators.MinValueValidator(1),
         ],
@@ -284,7 +308,14 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         name="max_review_commissions",
         verbose_name="Maximum Commissions in Review",
         help_text=mark_safe(
-            "The maximum number of commissions allowed to be in the review state.<br>Use this to prevent being overloaded with too many commission requests at a time for this offer."),
+            """
+            The maximum number of commissions allowed to be in the review state.
+            <br>
+            Use this to prevent being overloaded with too many commission requests at a time for this offer.
+            <br>
+            Self-managed commissions are not limited by this, but contribute to the number of commissions in review.
+            """
+        ),
         validators=[
             validators.MinValueValidator(1),
         ],
@@ -318,7 +349,15 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
     max_commissions_per_user = models.PositiveIntegerField(
         name="max_commissions_per_user",
         verbose_name="Maximum Commissions per User",
-        help_text="Limits how many commissions a user can make on this offer. Self-managed commissions are not limited.",
+        help_text=mark_safe(
+            """
+            Limits how many commissions a user can make on this offer.
+            <br>
+            Commission state does not matter, so if you reject a commission from a user, it still counts to this limit.
+            <br>
+            Self-managed commissions are not limited.
+            """
+        ),
         default=1,
         validators=[
             validators.MinValueValidator(1),

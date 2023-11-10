@@ -49,7 +49,7 @@ class LoginForm(AuthenticationForm):
 
 class OfferForm(forms.ModelForm):
     cutoff_date = forms.SplitDateTimeField(
-        help_text="When your offer is no longer accepting commissions.",
+        help_text="After this date and time, this offer will no longer accept commissions unless they are self-managed commissions.",
         label="Cutoff Time",
         widget=forms.SplitDateTimeWidget(),
     )

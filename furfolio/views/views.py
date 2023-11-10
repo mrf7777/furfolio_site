@@ -502,11 +502,17 @@ class MakeUserUnfollowUser(LoginRequiredMixin, generic.View):
         return redirect(redirect_url)
 
 
+class TagMixin:
+    model = models.Tag
+    slug_field = "name"
+    slug_url_kwarg = "name"
+
+
 class CreateTag(
+        TagMixin,
         LoginRequiredMixin,
         PermissionRequiredMixin,
         generic.CreateView):
-    model = models.Tag
     form_class = TagForm
     template_name = "furfolio/tags/tag_create.html"
     permission_required = "furfolio.add_tag"
@@ -518,39 +524,31 @@ class CreateTag(
 
 
 class UpdateTag(
+        TagMixin,
         LoginRequiredMixin,
         PermissionRequiredMixin,
         generic.UpdateView):
-    model = models.Tag
-    slug_field = "name"
-    slug_url_kwarg = "name"
     form_class = TagUpdateForm
     template_name = "furfolio/tags/tag_update.html"
     permission_required = "furfolio.change_tag"
 
 
 class DeleteTag(
+        TagMixin,
         LoginRequiredMixin,
         PermissionRequiredMixin,
         generic.DeleteView):
-    model = models.Tag
-    slug_field = "name"
-    slug_url_kwarg = "name"
     template_name = "furfolio/tags/tag_delete.html"
     permission_required = "furfolio.delete_tag"
     success_url = reverse_lazy("tags")
 
 
-class Tag(generic.DetailView):
-    model = models.Tag
-    slug_field = "name"
-    slug_url_kwarg = "name"
+class Tag(TagMixin, generic.DetailView):
     template_name = "furfolio/tags/tag_detail.html"
     context_object_name = "tag"
 
 
-class TagList(generic.ListView):
-    model = models.Tag
+class TagList(TagMixin, generic.ListView):
     template_name = "furfolio/tags/tag_list.html"
     context_object_name = "tags"
     paginate_by = 25
@@ -565,25 +563,28 @@ class TagList(generic.ListView):
         return models.Tag.objects.all().order_by("-updated_date")
 
 
-class CreateTagCategory(LoginRequiredMixin,
+class TagCategoryMixin:
+    model = models.TagCategory
+    slug_field = "name"
+    slug_url_kwarg = "name"
+
+
+class CreateTagCategory(
+        TagCategoryMixin,
+        LoginRequiredMixin,
         PermissionRequiredMixin,
         generic.CreateView):
-    model = models.TagCategory
     template_name = "furfolio/tags/categories/category_create.html"
     form_class = TagCategoryForm
     permission_required = "furfolio.add_tagcategory"
 
 
-class TagCategory(generic.DetailView):
-    model = models.TagCategory
+class TagCategory(TagCategoryMixin, generic.DetailView):
     template_name = "furfolio/tags/categories/category_detail.html"
-    slug_field = "name"
-    slug_url_kwarg = "name"
     context_object_name = "tag_category"
 
 
-class TagCategoryList(generic.ListView):
-    model = models.TagCategory
+class TagCategoryList(TagCategoryMixin, generic.ListView):
     template_name = "furfolio/tags/categories/category_list.html"
     context_object_name = "tag_categories"
 
@@ -592,24 +593,22 @@ class TagCategoryList(generic.ListView):
         return models.TagCategory.objects.all().order_by("name")
     
 
-class UpdateTagCategory(LoginRequiredMixin,
+class UpdateTagCategory(
+        TagCategoryMixin,
+        LoginRequiredMixin,
         PermissionRequiredMixin,
         generic.UpdateView):
-    model = models.TagCategory
-    slug_field = "name"
-    slug_url_kwarg = "name"
     form_class = TagCategoryForm
     template_name = "furfolio/tags/categories/category_update.html"
     context_object_name = "tag_category"
     permission_required = "furfolio.change_tagcategory"
     
 
-class DeleteTagCategory(LoginRequiredMixin,
+class DeleteTagCategory(
+        TagCategoryMixin,
+        LoginRequiredMixin,
         PermissionRequiredMixin,
         generic.DeleteView):
-    model = models.TagCategory
-    slug_field = "name"
-    slug_url_kwarg = "name"
     template_name = "furfolio/tags/categories/category_delete.html"
     permission_required = "furfolio.delete_tagcategory"
     success_url = reverse_lazy("tag_categories")

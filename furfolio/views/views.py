@@ -18,6 +18,7 @@ from ..queries import commissions as commission_queries
 from ..queries import offers as offer_queries
 from ..queries import commission_messages as commission_messages_queries
 from ..queries import user_following_user as user_following_user_queries
+from ..queries import tags as tag_queries
 from ..forms import CommissionSearchForm, CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm, UserSearchForm, UpdateCommissionForm, CommissionMessageForm, OfferSelectForm, TagForm, TagUpdateForm, TagCategoryForm
 
 
@@ -559,8 +560,7 @@ class TagList(TagMixin, generic.ListView):
         return context
 
     def get_queryset(self) -> QuerySet[Any]:
-        # TODO: move tag query logic to tag query module
-        return models.Tag.objects.all().order_by("-updated_date")
+        return tag_queries.get_all_tags()
 
 
 class TagCategoryMixin:

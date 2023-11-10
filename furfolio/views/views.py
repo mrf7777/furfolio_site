@@ -116,28 +116,21 @@ class CreatorDashboard(LoginRequiredMixin, generic.FormView):
             review=True,
             offer=selected_offer.pk if selected_offer else None,
         )
-        review_commissions_query_url = \
-            reverse("commissions") \
-            + "?" \
-            + urlencode({"search": review_commissions_query.to_search_string()})
+        review_commissions_query_url = Commissions.url_for_query(review_commissions_query)
         context["see_review_commissions_url"] = review_commissions_query_url
 
         accepted_commissions_query = commission_queries.CommissionsSearchQuery(
             accepted=True,
             offer=selected_offer.pk if selected_offer else None,
         )
-        accepted_commissions_query_url = \
-            reverse("commissions") \
-            + "?" \
-            + urlencode({"search": accepted_commissions_query.to_search_string()})
+        accepted_commissions_query_url = Commissions.url_for_query(accepted_commissions_query)
         context["see_accepted_commissions_url"] = accepted_commissions_query_url
 
         in_progress_commissions_query = commission_queries.CommissionsSearchQuery(
             in_progress=True,
             offer=selected_offer.pk if selected_offer else None,
         )
-        in_progress_commissions_query_url = reverse("commissions") + "?" + urlencode(
-            {"search": in_progress_commissions_query.to_search_string()})
+        in_progress_commissions_query_url = Commissions.url_for_query(in_progress_commissions_query)
         context["see_in_progress_commissions_url"] = in_progress_commissions_query_url
 
         return context
@@ -216,8 +209,7 @@ class Offer(mixins.GetAdultConsentMixin,
         commissions_of_offer_query = commission_queries.CommissionsSearchQuery(
             offer=offer.pk
         )
-        commissions_of_offer_url = reverse("commissions") + "?" + urlencode(
-            {"search": commissions_of_offer_query.to_search_string()})
+        commissions_of_offer_url = Commissions.url_for_query(commissions_of_offer_query)
         context["see_commissions_url"] = commissions_of_offer_url
 
         if self.request.user == offer.author:
@@ -408,7 +400,12 @@ class Commissions(PageRangeContextMixin, LoginRequiredMixin, generic.ListView):
             search_form = forms.CommissionSearchForm()
         context["form"] = search_form
         return context
-
+    
+    def url_for_query(query: commission_queries.CommissionsSearchQuery) -> str:
+        return \
+            reverse("commissions") \
+            + "?" \
+            + urlencode({"search": query.to_search_string()})
 
 class UpdateCommission(
         LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):

@@ -4,7 +4,8 @@
         "Commissionee",
         "furfolio",
         "tbody",
-        "thead"
+        "thead",
+        "Unfollow"
     ],
     "python.analysis.typeCheckingMode": "off",
     "[python]": {

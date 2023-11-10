@@ -265,10 +265,13 @@ class DeleteOffer(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
         return self.get_object().author.pk == self.request.user.pk
 
 
-class User(generic.DetailView):
+class UserMixin:
     model = models.User
     slug_field = "username"
     slug_url_kwarg = "username"
+
+
+class User(UserMixin, generic.DetailView):
     context_object_name = "user"
     template_name = "furfolio/users/user_detail.html"
 
@@ -288,20 +291,16 @@ class User(generic.DetailView):
         return context
 
 
-class UpdateUser(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
-    model = models.User
+class UpdateUser(UserMixin, LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     template_name = "furfolio/users/user_update.html"
     context_object_name = "user"
-    slug_field = "username"
-    slug_url_kwarg = "username"
     form_class = UpdateUserForm
 
     def test_func(self):
         return self.get_object().pk == self.request.user.pk
 
 
-class UserList(generic.ListView):
-    model = models.User
+class UserList(UserMixin, generic.ListView):
     context_object_name = "users"
     template_name = "furfolio/users/user_list.html"
     paginate_by = PAGE_SIZE

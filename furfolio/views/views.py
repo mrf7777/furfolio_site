@@ -258,8 +258,6 @@ class UpdateOffer(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
 
 class DeleteOffer(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
     model = models.Offer
-    slug_field = "username"
-    slug_url_kwarg = "username"
     template_name = "furfolio/offers/offer_delete.html"
     success_url = reverse_lazy("offer_list")
 

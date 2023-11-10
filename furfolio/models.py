@@ -388,9 +388,10 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
 
         # determine who to email if offer is created
         if self.tracker.previous("id") is None:
+            super(Offer, self).save(*args, **kwargs)
             send_new_offer_email(self)
-
-        super(Offer, self).save(*args, **kwargs)
+        else:
+            super(Offer, self).save(*args, **kwargs)
 
     def clean(self):
         furfolio_validators.check_user_is_not_spamming_offers(self.author)

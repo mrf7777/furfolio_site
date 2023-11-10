@@ -18,8 +18,7 @@ from ..queries import commission_messages as commission_messages_queries
 from ..queries import user_following_user as user_following_user_queries
 from ..queries import tags as tag_queries
 from ..queries import tag_categories as tag_category_queries
-from ..forms import CommissionSearchForm, CustomUserCreationForm, OfferForm, CommissionForm, UpdateUserForm, OfferFormUpdate, OfferSearchForm, UserSearchForm, UpdateCommissionForm, CommissionMessageForm, OfferSelectForm, TagForm, TagUpdateForm, TagCategoryForm
-
+from .. import forms
 
 PAGE_SIZE = 10
 
@@ -66,7 +65,7 @@ class DashboardRedirector(LoginRequiredMixin, generic.RedirectView):
 
 class CreatorDashboard(LoginRequiredMixin, generic.FormView):
     template_name = "furfolio/dashboards/creator.html"
-    form_class = OfferSelectForm
+    form_class = forms.OfferSelectForm
 
     MAX_COMMISSIONS_PER_COLUMN = 15
 
@@ -75,7 +74,7 @@ class CreatorDashboard(LoginRequiredMixin, generic.FormView):
 
         relevant_offers_to_show_on_board = offer_queries.get_relevant_offers_for_user(
             self.request.user)
-        offer_form = OfferSelectForm(
+        offer_form = forms.OfferSelectForm(
             queryset=relevant_offers_to_show_on_board, data=self.request.GET)
         offer_form.full_clean()
         context["offer_select_form"] = offer_form
@@ -168,7 +167,7 @@ class OfferList(
     paginate_by = PAGE_SIZE
 
     def get_queryset(self) -> QuerySet[Any]:
-        search_form = OfferSearchForm(self.request.GET)
+        search_form = forms.OfferSearchForm(self.request.GET)
         consent_to_adult_content = self.does_user_consent_to_adult_content()
         if search_form.is_valid():
             text_query = search_form.cleaned_data["text_query"].strip()
@@ -192,7 +191,7 @@ class OfferList(
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["search_form"] = OfferSearchForm(self.request.GET)
+        context["search_form"] = forms.OfferSearchForm(self.request.GET)
         return context
 
 
@@ -238,14 +237,14 @@ class Offer(mixins.GetAdultConsentMixin,
 
 
 class SignUp(generic.CreateView):
-    form_class = CustomUserCreationForm
+    form_class = forms.CustomUserCreationForm
     success_url = reverse_lazy("login")
     template_name = "registration/signup.html"
 
 
 class CreateOffer(LoginRequiredMixin, generic.CreateView):
     model = models.Offer
-    form_class = OfferForm
+    form_class = forms.OfferForm
     template_name = "furfolio/offers/offer_form.html"
 
     def get_initial(self) -> dict[str, Any]:
@@ -256,7 +255,7 @@ class CreateOffer(LoginRequiredMixin, generic.CreateView):
 
 class UpdateOffer(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = models.Offer
-    form_class = OfferFormUpdate
+    form_class = forms.OfferFormUpdate
     template_name = "furfolio/offers/offer_update_form.html"
 
     # TODO: use the slightly more efficient version
@@ -307,7 +306,7 @@ class UpdateUser(
         generic.UpdateView):
     template_name = "furfolio/users/user_update.html"
     context_object_name = "user"
-    form_class = UpdateUserForm
+    form_class = forms.UpdateUserForm
 
     def test_func(self):
         return self.get_object().pk == self.request.user.pk
@@ -319,14 +318,14 @@ class UserList(PageRangeContextMixin, UserMixin, generic.ListView):
     paginate_by = PAGE_SIZE
 
     def get_queryset(self) -> QuerySet[Any]:
-        search_form = UserSearchForm(self.request.GET)
+        search_form = forms.UserSearchForm(self.request.GET)
         if search_form.is_valid():
             text_query = search_form.cleaned_data["text_query"].strip()
             return user_queries.full_text_search_creators(text_query)
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["search_form"] = UserSearchForm(self.request.GET)
+        context["search_form"] = forms.UserSearchForm(self.request.GET)
         return context
 
 
@@ -352,7 +351,7 @@ class FollowedList(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
 class CreateCommission(LoginRequiredMixin, generic.CreateView):
     model = models.Commission
     template_name = "furfolio/commissions/commission_create.html"
-    form_class = CommissionForm
+    form_class = forms.CommissionForm
 
     # prefill offer and commissioner for the commission since these are hidden
     # fields
@@ -391,7 +390,7 @@ class Commissions(PageRangeContextMixin, LoginRequiredMixin, generic.ListView):
     paginate_by = PAGE_SIZE
 
     def get_queryset(self) -> QuerySet[Any]:
-        form = CommissionSearchForm(self.request.GET)
+        form = forms.CommissionSearchForm(self.request.GET)
         if form.is_valid():
             return commission_queries.search_commissions(
                 commission_queries.CommissionsSearchQuery.commission_search_string_to_query(
@@ -403,10 +402,10 @@ class Commissions(PageRangeContextMixin, LoginRequiredMixin, generic.ListView):
         context = super().get_context_data(**kwargs)
         search_form = None
         # https://stackoverflow.com/a/43096716
-        if self.request.GET & CommissionSearchForm.base_fields.keys():
-            search_form = CommissionSearchForm(self.request.GET)
+        if self.request.GET & forms.CommissionSearchForm.base_fields.keys():
+            search_form = forms.CommissionSearchForm(self.request.GET)
         else:
-            search_form = CommissionSearchForm()
+            search_form = forms.CommissionSearchForm()
         context["form"] = search_form
         return context
 
@@ -415,7 +414,7 @@ class UpdateCommission(
         LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = models.Commission
     template_name = "furfolio/commissions/commission_update.html"
-    form_class = UpdateCommissionForm
+    form_class = forms.UpdateCommissionForm
     context_object_name = "commission"
 
     # only let the offer author update the commission
@@ -443,7 +442,7 @@ class UpdateCommissionStatus(LoginRequiredMixin, generic.View):
 class CommissionChat(LoginRequiredMixin,
                      UserPassesTestMixin, generic.CreateView):
     model = models.CommissionMessage
-    form_class = CommissionMessageForm
+    form_class = forms.CommissionMessageForm
     template_name = "furfolio/commissions/chat/chat.html"
 
     def get_commission(self):
@@ -524,7 +523,7 @@ class CreateTag(
         LoginRequiredMixin,
         PermissionRequiredMixin,
         generic.CreateView):
-    form_class = TagForm
+    form_class = forms.TagForm
     template_name = "furfolio/tags/tag_create.html"
     permission_required = "furfolio.add_tag"
 
@@ -539,7 +538,7 @@ class UpdateTag(
         LoginRequiredMixin,
         PermissionRequiredMixin,
         generic.UpdateView):
-    form_class = TagUpdateForm
+    form_class = forms.TagUpdateForm
     template_name = "furfolio/tags/tag_update.html"
     permission_required = "furfolio.change_tag"
 
@@ -580,7 +579,7 @@ class CreateTagCategory(
         PermissionRequiredMixin,
         generic.CreateView):
     template_name = "furfolio/tags/categories/category_create.html"
-    form_class = TagCategoryForm
+    form_class = forms.TagCategoryForm
     permission_required = "furfolio.add_tagcategory"
 
 
@@ -602,7 +601,7 @@ class UpdateTagCategory(
         LoginRequiredMixin,
         PermissionRequiredMixin,
         generic.UpdateView):
-    form_class = TagCategoryForm
+    form_class = forms.TagCategoryForm
     template_name = "furfolio/tags/categories/category_update.html"
     context_object_name = "tag_category"
     permission_required = "furfolio.change_tagcategory"

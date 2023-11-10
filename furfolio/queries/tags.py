@@ -9,4 +9,3 @@ from .. import models
 
 def get_all_tags() -> 'Manager[models.Tag]':
     return models.Tag.objects.all().order_by("name")
-

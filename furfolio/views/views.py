@@ -42,7 +42,6 @@ class PageRangeContextMixin:
         return context
 
 
-
 class Home(generic.TemplateView):
     template_name = "furfolio/home.html"
 
@@ -145,7 +144,10 @@ class CreatorDashboard(LoginRequiredMixin, generic.FormView):
         return context
 
 
-class BuyerDashboard(PageRangeContextMixin, LoginRequiredMixin, generic.ListView):
+class BuyerDashboard(
+        PageRangeContextMixin,
+        LoginRequiredMixin,
+        generic.ListView):
     template_name = "furfolio/dashboards/buyer.html"
     context_object_name = "commissions"
     model = models.Commission
@@ -156,7 +158,10 @@ class BuyerDashboard(PageRangeContextMixin, LoginRequiredMixin, generic.ListView
             self.request.user)
 
 
-class OfferList(PageRangeContextMixin, mixins.GetAdultConsentMixin, generic.ListView):
+class OfferList(
+        PageRangeContextMixin,
+        mixins.GetAdultConsentMixin,
+        generic.ListView):
     model = models.Offer
     template_name = "furfolio/offers/offer_list.html"
     context_object_name = "offer_list"
@@ -295,7 +300,11 @@ class User(UserMixin, generic.DetailView):
         return context
 
 
-class UpdateUser(UserMixin, LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
+class UpdateUser(
+        UserMixin,
+        LoginRequiredMixin,
+        UserPassesTestMixin,
+        generic.UpdateView):
     template_name = "furfolio/users/user_update.html"
     context_object_name = "user"
     form_class = UpdateUserForm
@@ -586,7 +595,7 @@ class TagCategoryList(TagCategoryMixin, generic.ListView):
 
     def get_queryset(self) -> QuerySet[Any]:
         return tag_category_queries.get_all_tag_categories()
-    
+
 
 class UpdateTagCategory(
         TagCategoryMixin,
@@ -597,7 +606,7 @@ class UpdateTagCategory(
     template_name = "furfolio/tags/categories/category_update.html"
     context_object_name = "tag_category"
     permission_required = "furfolio.change_tagcategory"
-    
+
 
 class DeleteTagCategory(
         TagCategoryMixin,

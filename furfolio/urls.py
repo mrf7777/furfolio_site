@@ -81,11 +81,26 @@ urlpatterns = [
     path('tags/<name>/delete/', views.DeleteTag.as_view(), name="delete_tag"),
     path('tags/<name>/', views.Tag.as_view(), name="tag_detail"),
     # tag categories
-    path('tag-categories/', views.TagCategoryList.as_view(), name="tag_categories"),
-    path('tag-categories/create/', views.CreateTagCategory.as_view(), name="create_tag_category"),
-    path('tag-categories/<name>/update/', views.UpdateTagCategory.as_view(), name="update_tag_category"),
-    path('tag-categories/<name>/delete/', views.DeleteTagCategory.as_view(), name="delete_tag_category"),
-    path('tag-categories/<name>/', views.TagCategory.as_view(), name="tag_category_detail"),
+    path(
+        'tag-categories/',
+        views.TagCategoryList.as_view(),
+        name="tag_categories"),
+    path(
+        'tag-categories/create/',
+        views.CreateTagCategory.as_view(),
+        name="create_tag_category"),
+    path(
+        'tag-categories/<name>/update/',
+        views.UpdateTagCategory.as_view(),
+        name="update_tag_category"),
+    path(
+        'tag-categories/<name>/delete/',
+        views.DeleteTagCategory.as_view(),
+        name="delete_tag_category"),
+    path(
+        'tag-categories/<name>/',
+        views.TagCategory.as_view(),
+        name="tag_category_detail"),
     # commission chat
     path('commissions/<pk>/chat',
          views.CommissionChat.as_view(), name="commission_chat"),

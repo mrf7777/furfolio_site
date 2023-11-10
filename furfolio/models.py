@@ -638,7 +638,7 @@ class CommissionMessage(mixins.GetFullUrlMixin, models.Model):
 class TagCategory(models.Model):
     DESCRIPTION_MAX_LENGTH = math.ceil(
         AVERAGE_CHARACTERS_PER_WORD * 1000)
-    
+
     name = models.CharField(
         unique=True,
         name="name",
@@ -654,7 +654,7 @@ class TagCategory(models.Model):
 
     def __str__(self):
         return self.name
-    
+
     def get_absolute_url(self):
         return reverse("tag_category_detail", kwargs={"name": self.name})
 

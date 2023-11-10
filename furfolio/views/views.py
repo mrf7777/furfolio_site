@@ -290,7 +290,6 @@ class User(generic.DetailView):
 
 class UpdateUser(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = models.User
-    form_class = CustomUserCreationForm
     template_name = "furfolio/users/user_update.html"
     context_object_name = "user"
     slug_field = "username"

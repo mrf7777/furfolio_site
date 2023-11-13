@@ -76,23 +76,23 @@ Offers and Commissions
         </thead>
         <tbody class="table-group-divider">
             <tr>
-                <th scope="row">Review</th>
+                <th scope="row">{% include "furfolio/commissions/state_badge.html" with state="REVIEW" only %}</th>
                 <td>The Commission needs to be reviewed by the Creator of the Offer.</td>
             </tr>
             <tr>
-                <th scope="row">Accepted</th>
+                <th scope="row">{% include "furfolio/commissions/state_badge.html" with state="ACCEPTED" only %}</th>
                 <td>The Creator has decided that they are wanting to work on the Commission.</td>
             </tr>
             <tr>
-                <th scope="row">In Progress</th>
+                <th scope="row">{% include "furfolio/commissions/state_badge.html" with state="IN_PROGRESS" only %}</th>
                 <td>The Creator is currently working on the commission.</td>
             </tr>
             <tr>
-                <th scope="row">Finished</th>
+                <th scope="row">{% include "furfolio/commissions/state_badge.html" with state="CLOSED" only %}</th>
                 <td>The Commission is considered done and no more work is needed.</td>
             </tr>
             <tr>
-                <th scope="row">Rejected</th>
+                <th scope="row">{% include "furfolio/commissions/state_badge.html" with state="REJECTED" only %}</th>
                 <td>The Creator has decided that they are not willing to work on the Commission.</td>
             </tr>
         </tbody>

@@ -149,6 +149,11 @@ class OfferSelectForm(forms.Form):
     def set_queryset(self, queryset):
         self.fields["offer"].queryset = queryset
 
+    def get_context(self):
+        context = super().get_context()
+        context["hide_submit_button"] = True
+        return context
+
 
 class TagForm(forms.ModelForm):
     class Meta:

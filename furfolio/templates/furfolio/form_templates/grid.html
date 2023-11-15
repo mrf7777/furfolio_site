@@ -20,10 +20,12 @@
             </div>
         </div>
     {% endfor %}
-    <div class="row">
-        <div class="col-2"></div>
-        <div class="col-10">
-            <input class="btn btn-primary" type="submit" value="Search">
+    {% if not hide_submit_button %}
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-10">
+                <input class="btn btn-primary" type="submit" value="Search">
+            </div>
         </div>
-    </div>
+    {% endif %}
 </div>

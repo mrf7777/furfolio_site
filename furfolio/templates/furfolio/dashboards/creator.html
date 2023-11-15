@@ -35,9 +35,12 @@
 
 <hr>
 
-<form method="get">
+<form method="get" id="offer-select-form">
     {{ offer_select_form }}
 </form>
+
+{% include "furfolio/scripts/submit_form_on_change.html" with form_id="offer-select-form" only %}
+
 {% endblock %}
 
 {% block column_1_title %}

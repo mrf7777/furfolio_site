@@ -1,0 +1,15 @@
+{% comment "" %}
+When any element in the form changes, submit the form.
+Expects thw following context objects:
+  - form_id: the id of the form to listen for changes and to submit
+{% endcomment %}
+
+<script>
+{
+    let form = document.getElementById("{{ form_id }}")
+
+    form.addEventListener("input", (e) => {
+        form.submit()
+    })
+}
+</script>

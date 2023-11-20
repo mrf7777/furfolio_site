@@ -123,6 +123,7 @@ urlpatterns = [
     path('help/offers-and-commissions',
          pages.OffersAndCommissions.as_view(),
          name="offers_and_commissions"),
+    path('help/offer-reference', pages.OfferReference.as_view(), name="offer_reference"),
     path('help/commission-search/', pages.CommissionSearchHelp.as_view(),
          name="commission_search_help"),
     # error pages

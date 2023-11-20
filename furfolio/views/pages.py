@@ -159,6 +159,22 @@ class Reference(
         return reverse("reference")
 
 
+class OfferReference(
+    BreadcrumbContextMixin,
+    generic.TemplateView,
+    IBreadcrumbParticipant):
+    template_name = "furfolio/pages/offer_reference.html"
+
+    def breadcrumb_name():
+        return "Offers"
+    
+    def breadcrumb_parent():
+        return Reference
+    
+    def breadcrumb_url():
+        return reverse("offer_reference")
+
+
 class CommissionSearchHelpScenario:
     def __init__(self, scenario: str,
                  commission_query: commission_queries.CommissionsSearchQuery):

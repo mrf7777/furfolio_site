@@ -1,13 +1,19 @@
 {% comment "" %}
 Includable template.
-Expects an offer object.
-Expects a 'title_is_link':bool object
+Expects the following context objects:
+  - offer: the offer to show
+  - title_is_link: (bool) if true, the title of the card is a link to the offer
+  - use_example_thumbnail: (bool) if true, uses an example thumbnail
 {% endcomment %}
+
+{% load static %}
 
 <div class="row">
     <div class="col-md-7">
         <div class="card" style="height: 100%;">
-            {% if offer.thumbnail %}
+            {% if use_example_thumbnail %}
+                <img class="card-img-top d-md-none" style="max-height: 30vh; object-fit: contain;" src="{% static "/examples/example_thumbnail.png" %}" loading="lazy">
+            {% elif offer.thumbnail %}
                 <img class="card-img-top d-md-none" style="max-height: 30vh; object-fit: contain;" src="{{ offer.thumbnail.url }}" loading="lazy">
             {% endif %}
             <div class="card-header d-flex align-items-center">
@@ -57,8 +63,10 @@ Expects a 'title_is_link':bool object
     </div>
 
     <div class="col-md-5 d-none d-md-block">
-        {% if offer.thumbnail %}
-        <img class="border border-secondary-subtle rounded" style="max-height: 30vh; max-width: 100%;" src="{{ offer.thumbnail.url }}" loading="lazy">
+        {% if use_example_thumbnail %}
+            <img class="border border-secondary-subtle rounded" style="max-height: 30vh; max-width: 100%;" src="{% static "/examples/example_thumbnail.png" %}" loading="lazy">
+        {% elif offer.thumbnail %}
+            <img class="border border-secondary-subtle rounded" style="max-height: 30vh; max-width: 100%;" src="{{ offer.thumbnail.url }}" loading="lazy">
         {% endif %}
     </div>
 </div>

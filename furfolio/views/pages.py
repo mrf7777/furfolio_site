@@ -153,7 +153,7 @@ class OffersAndCommissions(
     def get_context_data(self, **kwargs) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         example_user = models.User(role=models.User.ROLE_CREATOR, username="RedFoxDefacto")
-        context["example_offer"] = models.Offer(
+        example_offer = models.Offer(
             name="Abstract Portrait with YCH",
             description="""
                 I will draw your character in a portrait.
@@ -161,7 +161,11 @@ class OffersAndCommissions(
                 It takes about 5 business days to finish a commission.
             """,
             author=example_user,
+            min_price=20,
+            max_price=30,
+            slots=7,
         )
+        context["example_offer"] = example_offer
         return context
     
 

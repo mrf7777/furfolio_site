@@ -230,7 +230,7 @@ class Offer(mixins.GetAdultConsentMixin,
 
 class SignUp(generic.CreateView):
     form_class = forms.CustomUserCreationForm
-    success_url = reverse_lazy("login")
+    success_url = reverse_lazy("welcome_to_furfolio")
     template_name = "registration/signup.html"
 
 

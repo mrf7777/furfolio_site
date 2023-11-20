@@ -111,6 +111,22 @@ class GettingStarted(
         return reverse("getting_started")
 
 
+class WelcomeToFurfolio(
+        BreadcrumbContextMixin,
+        generic.TemplateView,
+        IBreadcrumbParticipant):
+    template_name = "furfolio/pages/welcome_to_furfolio.html"
+
+    def breadcrumb_name():
+        return "Welcome"
+
+    def breadcrumb_parent():
+        return GettingStarted
+
+    def breadcrumb_url():
+        return reverse("welcome_to_furfolio")
+
+
 class WhatIsFurfolio(
         BreadcrumbContextMixin,
         generic.TemplateView,

@@ -113,6 +113,7 @@ urlpatterns = [
     path('legal/credit/', pages.Credit.as_view(), name="credit"),
     # help pages
     path('help/', pages.Help.as_view(), name="help"),
+    path('help/welcome-to-furfolio/', pages.WelcomeToFurfolio.as_view(), name="welcome_to_furfolio"),
     path(
         'help/getting-started/',
         pages.GettingStarted.as_view(),

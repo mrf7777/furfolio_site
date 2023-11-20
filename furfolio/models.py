@@ -593,7 +593,7 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
             Commission.STATE_CLOSED}
 
     def is_self_managed(self):
-        return self.commissioner.pk == self.offer.author.pk
+        return self.commissioner == self.offer.author
 
 
 # limit commisson message to about 350 words

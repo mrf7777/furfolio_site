@@ -152,6 +152,7 @@ class OffersAndCommissions(
 
     def get_context_data(self, **kwargs) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
+
         example_user = models.User(role=models.User.ROLE_CREATOR, username="RedFoxDefacto")
         example_offer = models.Offer(
             name="Abstract Portrait with YCH",
@@ -166,6 +167,18 @@ class OffersAndCommissions(
             slots=7,
         )
         context["example_offer"] = example_offer
+
+        example_buyer = models.User(role=models.User.ROLE_BUYER, username="BuyerWolf")
+        example_commission = models.Commission(
+            commissioner=example_buyer,
+            offer=example_offer,
+            initial_request_text="""
+            This looks cool! I want you to make a portrait of my character using rectangles.
+            My character reference sheet is attached as a photo.
+            """,
+        )
+        context["example_commission"] = example_commission
+
         return context
     
 

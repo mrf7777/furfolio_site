@@ -19,7 +19,7 @@ Offers and Commissions
     They look like this:
 </p>
 
-<div class="my-4">
+<div class="my-4" style="pointer-events: none;">
     {% include "furfolio/offers/offer_card.html" with offer=example_offer use_example_thumbnail=True only %}
 </div>
 
@@ -38,6 +38,15 @@ Offers and Commissions
 
 <p>
     <h3>Commissions</h3>
+
+    They can look like this:
+</p>
+
+<div class="my-4" style="pointer-events: none;">
+    {% include "furfolio/commissions/commission_card.html" with commission=example_commission show_status=True  only %}
+</div>
+
+<p>
     Commissions are created by Buyers on an Offer they found. They represent an ongoing transaction between the Buyer and the Creator.
     Furfolio helps track the progress of Commissions. A Chat is also provided between the Buyer and Creator.
 </p>

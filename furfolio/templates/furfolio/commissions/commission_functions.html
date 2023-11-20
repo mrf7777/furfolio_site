@@ -23,7 +23,7 @@ Expects the following objects:
         <div class="flex-fill"></div>
     {% endif %}
 
-    {% if request.user.pk == commission.offer.author.pk %}
+    {% if request.user == commission.offer.author %}
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle text-light" type="button" data-bs-toggle="dropdown">
                 Change State

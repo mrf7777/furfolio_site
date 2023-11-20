@@ -8,6 +8,43 @@ from .. import models
 from .breadcrumbs import IBreadcrumbParticipant, breadcrumb_items
 
 
+class ExampleOfferAndCommissionMixin:
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+
+        example_user = models.User(
+            role=models.User.ROLE_CREATOR,
+            username="RedFoxDefacto")
+        example_offer = models.Offer(
+            name="Abstract Portrait with YCH",
+            description="""
+                I will draw your character in a portrait.
+                Your character will face the viewer.
+                It takes about 5 business days to finish a commission.
+            """,
+            author=example_user,
+            min_price=20,
+            max_price=30,
+            slots=7,
+        )
+        context["example_offer"] = example_offer
+
+        example_buyer = models.User(
+            role=models.User.ROLE_BUYER,
+            username="BuyerWolf")
+        example_commission = models.Commission(
+            commissioner=example_buyer,
+            offer=example_offer,
+            initial_request_text="""
+            This looks cool! I want you to make a portrait of my character using rectangles.
+            My character reference sheet is attached as a photo.
+            """,
+        )
+        context["example_commission"] = example_commission
+
+        return context
+
+
 class BreadcrumbContextMixin:
     def get_context_data(self, **kwargs) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
@@ -145,45 +182,12 @@ class WhatIsFurfolio(
 
 
 class OffersAndCommissions(
+    ExampleOfferAndCommissionMixin,
         BreadcrumbContextMixin,
         generic.TemplateView,
-        IBreadcrumbParticipant):
+        IBreadcrumbParticipant,
+):
     template_name = "furfolio/pages/offers_and_commissions.html"
-
-    def get_context_data(self, **kwargs) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-
-        example_user = models.User(
-            role=models.User.ROLE_CREATOR,
-            username="RedFoxDefacto")
-        example_offer = models.Offer(
-            name="Abstract Portrait with YCH",
-            description="""
-                I will draw your character in a portrait.
-                Your character will face the viewer.
-                It takes about 5 business days to finish a commission.
-            """,
-            author=example_user,
-            min_price=20,
-            max_price=30,
-            slots=7,
-        )
-        context["example_offer"] = example_offer
-
-        example_buyer = models.User(
-            role=models.User.ROLE_BUYER,
-            username="BuyerWolf")
-        example_commission = models.Commission(
-            commissioner=example_buyer,
-            offer=example_offer,
-            initial_request_text="""
-            This looks cool! I want you to make a portrait of my character using rectangles.
-            My character reference sheet is attached as a photo.
-            """,
-        )
-        context["example_commission"] = example_commission
-
-        return context
 
     def breadcrumb_name():
         return "Offers and Commissions"

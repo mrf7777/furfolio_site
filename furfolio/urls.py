@@ -120,10 +120,11 @@ urlpatterns = [
     path('help/reference/', pages.Reference.as_view(), name="reference"),
     path('help/what-is-furfolio/',
          pages.WhatIsFurfolio.as_view(), name="what_is_furfolio"),
-    path('help/offers-and-commissions',
+    path('help/offers-and-commissions/',
          pages.OffersAndCommissions.as_view(),
          name="offers_and_commissions"),
-    path('help/offer-reference', pages.OfferReference.as_view(), name="offer_reference"),
+    path('help/offer-reference/', pages.OfferReference.as_view(), name="offer_reference"),
+    path('help/commission-reference/', pages.CommissionReference.as_view(), name="commission_reference"),
     path('help/commission-search/', pages.CommissionSearchHelp.as_view(),
          name="commission_search_help"),
     # error pages

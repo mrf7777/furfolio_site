@@ -16,90 +16,25 @@ Offers and Commissions
 <p>
     <h3>Offers</h3>
     A Creator creates and publishes Offers. Offers are the way Creators say that they are open for commissions.
-    A Buyer looks for an Offer that they are interested in, the they try to make a commission on the Offer.
+    A Buyer looks for an Offer that they are interested in, then they try to make a commission on the Offer.
 </p>
 
 <p>
-    Offers give Creators the power to limit commissions from buyers.
+    Offers also give Creators the power to limit commissions from buyers.
 </p>
 
 <p>
-    If you want to learn more about offers, see the <a href="{% url "offer_reference" %}">offer reference</a>.
+    If you want to learn more about Offers, see the <a href="{% url "offer_reference" %}">Offer reference</a>.
 </p>
 
 <p>
-    <h3>Commissions...</h3>
-    <ul>
-        <li>
-            are created by a Buyer on an Offer.
-        </li>
-        <li>
-            contain initial requirements from the Buyer about what they want.
-        </li>
-        <li>
-            have their own chat room between the Buyer and the Creator of the offer.
-        </li>
-    </ul>
-
-    Once a Commission is created, it is put into the <b>Review</b> state.
-    The Creator will usually either accept or reject the Commission after looking at the initial requirements and potentially communicating with the buyer.
+    <h3>Commissions</h3>
+    Commissions are created by Buyers on an Offer they found. They represent an ongoing transaction between the Buyer and the Creator.
+    Furfolio helps track the progress of Commissions. A Chat is also provided between the Buyer and Creator.
 </p>
 
 <p>
-    Here are the different states of a Commission:
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">State</th>
-                <th scope="col">Meaning</th>
-            </tr>
-        </thead>
-        <tbody class="table-group-divider">
-            <tr>
-                <th scope="row">{% include "furfolio/commissions/state_badge.html" with state="REVIEW" only %}</th>
-                <td>The Commission needs to be reviewed by the Creator of the Offer.</td>
-            </tr>
-            <tr>
-                <th scope="row">{% include "furfolio/commissions/state_badge.html" with state="ACCEPTED" only %}</th>
-                <td>The Creator has decided that they are wanting to work on the Commission.</td>
-            </tr>
-            <tr>
-                <th scope="row">{% include "furfolio/commissions/state_badge.html" with state="IN_PROGRESS" only %}</th>
-                <td>The Creator is currently working on the commission.</td>
-            </tr>
-            <tr>
-                <th scope="row">{% include "furfolio/commissions/state_badge.html" with state="CLOSED" only %}</th>
-                <td>The Commission is considered done and no more work is needed.</td>
-            </tr>
-            <tr>
-                <th scope="row">{% include "furfolio/commissions/state_badge.html" with state="REJECTED" only %}</th>
-                <td>The Creator has decided that they are not willing to work on the Commission.</td>
-            </tr>
-        </tbody>
-    </table>
-
-    Every Commission is in one state at a time.
-    Between the Buyer and the Creator, only the Creator can change the state of a Commission.
-</p>
-
-<p>
-    <h3>Self-managed Commissions</h3>
-
-    Self-managed Commissions are a feature that allow Creators to track Commissions that happen outside of Furfolio.
-    This means that Furfolio can track Commissions initiated outside of the Furfolio platform.
-    When a Creator requests a Commission on their own Offer, that Commission is considered self-managed.
-    These types of Commissions are not subject to the Commission limits configured in the Offer.
-</p>
-<p>
-    Self-managed Commissions satisfy cases that Furfolio cannot fully manage:
-    <ul>
-        <li>
-            in-person Commission requests (at convention or elsewhere)
-        </li>
-        <li>
-            to accept special Buyer requests regardless of the Offer limits
-        </li>
-    </ul>
+    If you want to learn more about Commissions, see the <a href="{% url "commission_reference" %}">Commission reference</a>.
 </p>
 
 {% endblock %}

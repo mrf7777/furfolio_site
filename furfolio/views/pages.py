@@ -14,7 +14,7 @@ class ExampleOfferAndCommissionMixin:
 
         example_user = models.User(
             role=models.User.ROLE_CREATOR,
-            username="RedFoxDefacto")
+            username="RedFoxCreator")
         example_offer = models.Offer(
             name="Abstract Portrait with YCH",
             description="""
@@ -150,6 +150,7 @@ class GettingStarted(
 
 
 class WelcomeToFurfolio(
+        ExampleOfferAndCommissionMixin,
         BreadcrumbContextMixin,
         generic.TemplateView,
         IBreadcrumbParticipant):

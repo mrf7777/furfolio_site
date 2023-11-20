@@ -14,11 +14,38 @@ Welcome to Furfolio!
 </p>
 
 <p>
-    You are most likely here because you just created an account with us.
-    Do not worry, this is a very short orientation before using Furfolio.
-    We ask that you read these pages and use the links below to navigate this orientation.
-    When finished, we will take you to your dashboard so you can start playing.
+    You are most likely here because you just created an account with us. Here is a 30 second rundown of Furfolio.
 </p>
+
+<h2>Furfolio in 30 seconds</h2>
+
+<p>
+    Users are either <b>Buyers</b> or <b>Creators</b>.
+</p>
+
+<p>
+    Creators create <b>Offers</b>. They look like this:
+</p>
+
+<div class="my-4" style="pointer-events: none;">
+    {% include "furfolio/offers/offer_card.html" with offer=example_offer use_example_thumbnail=True only %}
+</div>
+
+<p>
+    A Buyer can request a <b>Commission</b> of an offer. A Commission looks like this:
+</p>
+
+<div class="my-4" style="pointer-events: none;">
+    {% include "furfolio/commissions/commission_card.html" with commission=example_commission show_status=True  only %}
+</div>
+
+<div class="mb-3">
+    Furfolio helps move the commission from
+    <span>{% include "furfolio/commissions/state_badge.html" with state="REVIEW" only %}</span>
+    to
+    <span class="border rounded d-inline-block">{% include "furfolio/commissions/state_badge.html" with state="CLOSED" only %}</span>.
+
+</div>
 
 <p>
     <a href="{% url "what_is_furfolio" %}">Next: What is Furfolio?</a>

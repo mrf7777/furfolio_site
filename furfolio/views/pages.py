@@ -2,6 +2,7 @@
 from typing import Any, Type
 from django.views import generic
 from django.urls import reverse
+from django.db.models import ImageField
 from ..queries import commissions as commission_queries
 from .. import models
 from .breadcrumbs import IBreadcrumbParticipant, breadcrumb_items
@@ -148,6 +149,21 @@ class OffersAndCommissions(
         generic.TemplateView,
         IBreadcrumbParticipant):
     template_name = "furfolio/pages/offers_and_commissions.html"
+
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        example_user = models.User(role=models.User.ROLE_CREATOR, username="RedFoxDefacto")
+        context["example_offer"] = models.Offer(
+            name="Abstract Portrait with YCH",
+            description="""
+                I will draw your character in a portrait.
+                Your character will face the viewer.
+                It takes about 5 business days to finish a commission.
+            """,
+            author=example_user,
+        )
+        return context
+    
 
     def breadcrumb_name():
         return "Offers and Commissions"

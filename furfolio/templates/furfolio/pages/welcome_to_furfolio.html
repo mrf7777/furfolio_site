@@ -1,1 +1,16 @@
+{% extends "./help_page.html" %}
+
+{% block breadcrumbs %}
+{% include "furfolio/components/breadcrumbs.html" with breadcrumbs=breadcrumbs only %}
+{% endblock %}
+
+{% block title %}
 Welcome to Furfolio!
+{% endblock %}
+
+{% block body %}
+<p>
+    Furfolio is an online commission management system that helps with the entire commission process.
+</p>
+
+{% endblock %}

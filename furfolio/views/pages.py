@@ -118,7 +118,7 @@ class WelcomeToFurfolio(
     template_name = "furfolio/pages/welcome_to_furfolio.html"
 
     def breadcrumb_name():
-        return "Welcome"
+        return "Welcome to Furfolio"
 
     def breadcrumb_parent():
         return GettingStarted

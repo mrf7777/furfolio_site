@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="163.51199mm"
+   height="163.51199mm"
+   viewBox="0 0 163.51199 163.51199"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09, custom)"
+   sodipodi:docname="example-user"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="true"
+     inkscape:zoom="0.60667088"
+     inkscape:cx="513.45798"
+     inkscape:cy="393.95331"
+     inkscape:window-width="1850"
+     inkscape:window-height="909"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid256"
+       spacingx="0.26458333"
+       spacingy="0.26458333"
+       empspacing="103"
+       originx="0"
+       originy="0" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:#ff6600;stroke-width:0.264583"
+       d="M 1.1770544e-6,4.9587891e-7 27.252084,27.252083 H 136.26042 L 163.5125,4.9587891e-7 V 136.26041 L 109.00834,163.5125 H 54.504165 L 1.1770544e-6,136.26041 V 4.9587891e-7"
+       id="path949" />
+    <rect
+       style="fill:#ffffff;stroke-width:0.264583"
+       id="rect1003"
+       width="27.252083"
+       height="27.252083"
+       x="27.252083"
+       y="54.504166" />
+    <rect
+       style="fill:#ffffff;stroke-width:0.264583"
+       id="rect1005"
+       width="27.252083"
+       height="27.252083"
+       x="109.00833"
+       y="54.504166" />
+    <path
+       style="fill:#ffffff;stroke-width:0.264583"
+       d="m 54.504165,109.00833 27.25208,27.25208 27.252095,-27.25208 z"
+       id="path1007" />
+  </g>
+  <metadata
+     id="metadata1009">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by/4.0/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by/4.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>

@@ -109,8 +109,7 @@ class User(mixins.GetFullUrlMixin, AbstractUser):
         validators=[
             furfolio_validators.validate_profile_image_is_right_size,
             furfolio_validators.validate_avatar_has_max_size,
-        ]
-    )
+        ])
     role = models.CharField(
         max_length=7,
         choices=ROLE_CHOICES,
@@ -281,8 +280,7 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         validators=[
             furfolio_validators.validate_offer_thumbnail_aspect_ratio,
             furfolio_validators.validate_offer_thumbnail_has_max_size,
-        ]
-    )
+        ])
     rating = models.CharField(
         name="rating",
         max_length=3,

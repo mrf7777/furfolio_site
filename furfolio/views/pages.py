@@ -153,7 +153,9 @@ class OffersAndCommissions(
     def get_context_data(self, **kwargs) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
 
-        example_user = models.User(role=models.User.ROLE_CREATOR, username="RedFoxDefacto")
+        example_user = models.User(
+            role=models.User.ROLE_CREATOR,
+            username="RedFoxDefacto")
         example_offer = models.Offer(
             name="Abstract Portrait with YCH",
             description="""
@@ -168,7 +170,9 @@ class OffersAndCommissions(
         )
         context["example_offer"] = example_offer
 
-        example_buyer = models.User(role=models.User.ROLE_BUYER, username="BuyerWolf")
+        example_buyer = models.User(
+            role=models.User.ROLE_BUYER,
+            username="BuyerWolf")
         example_commission = models.Commission(
             commissioner=example_buyer,
             offer=example_offer,
@@ -180,7 +184,6 @@ class OffersAndCommissions(
         context["example_commission"] = example_commission
 
         return context
-    
 
     def breadcrumb_name():
         return "Offers and Commissions"
@@ -209,33 +212,33 @@ class Reference(
 
 
 class OfferReference(
-    BreadcrumbContextMixin,
-    generic.TemplateView,
-    IBreadcrumbParticipant):
+        BreadcrumbContextMixin,
+        generic.TemplateView,
+        IBreadcrumbParticipant):
     template_name = "furfolio/pages/offer_reference.html"
 
     def breadcrumb_name():
         return "Offers"
-    
+
     def breadcrumb_parent():
         return Reference
-    
+
     def breadcrumb_url():
         return reverse("offer_reference")
 
 
 class CommissionReference(
-    BreadcrumbContextMixin,
-    generic.TemplateView,
-    IBreadcrumbParticipant):
+        BreadcrumbContextMixin,
+        generic.TemplateView,
+        IBreadcrumbParticipant):
     template_name = "furfolio/pages/commission_reference.html"
 
     def breadcrumb_name():
         return "Commissions"
-    
+
     def breadcrumb_parent():
         return Reference
-    
+
     def breadcrumb_url():
         return reverse("commission_reference")
 

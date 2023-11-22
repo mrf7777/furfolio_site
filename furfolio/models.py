@@ -262,10 +262,7 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         name="cutoff_date",
         default=seven_days_from_now,
         help_text="When your offer is no longer accepting commissions.",
-        validators=[
-            furfolio_validators.validate_datetime_not_in_past,
-            furfolio_validators.validate_datetime_is_not_over_year_into_future,
-        ],
+        validators=[],
     )
     forced_closed = models.BooleanField(
         name="forced_closed",

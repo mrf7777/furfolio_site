@@ -4,6 +4,7 @@ from django.forms import EmailField
 from django import forms
 from django.forms.renderers import TemplatesSetting
 from .models import User, Offer, Commission, CommissionMessage, Tag, TagCategory
+from . import validators as furfolio_validators
 
 
 class TextSearchForm(forms.Form):
@@ -53,6 +54,12 @@ class OfferForm(forms.ModelForm):
         label="Cutoff Time",
         widget=forms.SplitDateTimeWidget(),
     )
+
+    def clean_cutoff_date(self):
+        cutoff_date = self.cleaned_data["cutoff_date"]
+        furfolio_validators.validate_datetime_at_least_12_hours(cutoff_date)
+        furfolio_validators.validate_datetime_is_not_over_year_into_future(cutoff_date)
+        return cutoff_date
 
     class Meta:
         model = Offer

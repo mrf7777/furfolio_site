@@ -75,11 +75,11 @@ class OfferForm(forms.ModelForm):
         }
 
 
-class OfferFormUpdate(OfferForm):
+class OfferFormUpdate(forms.ModelForm):
     class Meta(OfferForm.Meta):
         model = Offer
         fields = ["name", "description",
-                  "forced_closed", "cutoff_date", "thumbnail",
+                  "forced_closed", "thumbnail",
                   "rating", "slots", "max_review_commissions",
                   "max_commissions_per_user",
                   "min_price", "max_price", "currency"]

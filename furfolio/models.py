@@ -389,7 +389,6 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
             super(Offer, self).save(*args, **kwargs)
 
     def clean(self):
-        furfolio_validators.check_user_is_not_spamming_offers(self.author)
         furfolio_validators.validate_price_min_is_less_than_max(
             self.min_price, self.max_price)
         furfolio_validators.check_user_will_not_go_over_max_active_offers(

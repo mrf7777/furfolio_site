@@ -49,12 +49,6 @@ class LoginForm(AuthenticationForm):
 
 
 class OfferForm(forms.ModelForm):
-    cutoff_date = forms.SplitDateTimeField(
-        help_text="After this date and time, this offer will no longer accept commissions unless they are self-managed commissions.",
-        label="Cutoff Time",
-        widget=forms.SplitDateTimeWidget(),
-    )
-
     def clean_cutoff_date(self):
         cutoff_date = self.cleaned_data["cutoff_date"]
         furfolio_validators.validate_datetime_at_least_12_hours(cutoff_date)
@@ -79,6 +73,7 @@ class OfferForm(forms.ModelForm):
         widgets = {
             "thumbnail": forms.ClearableFileInput(),
             "author": forms.HiddenInput(),
+            "cutoff_date": forms.SplitDateTimeWidget(),
         }
 
 

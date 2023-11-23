@@ -260,8 +260,15 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
     )
     cutoff_date = models.DateTimeField(
         name="cutoff_date",
+        verbose_name="Cutoff Time",
         default=seven_days_from_now,
-        help_text="When your offer is no longer accepting commissions.",
+        help_text=mark_safe(
+            """
+            When your offer is no longer accepting commissions.
+            <br>
+            <span class="text-danger">Note</span>: This cannot be changed after the offer is created. 
+            """
+        ),
         validators=[],
     )
     forced_closed = models.BooleanField(

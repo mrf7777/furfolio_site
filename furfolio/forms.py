@@ -49,6 +49,10 @@ class LoginForm(AuthenticationForm):
 
 
 class OfferForm(forms.ModelForm):
+    cutoff_date = forms.SplitDateTimeField(
+        widget=forms.SplitDateTimeWidget(),
+    )
+
     def clean_cutoff_date(self):
         cutoff_date = self.cleaned_data["cutoff_date"]
         furfolio_validators.validate_datetime_at_least_12_hours(cutoff_date)
@@ -73,7 +77,6 @@ class OfferForm(forms.ModelForm):
         widgets = {
             "thumbnail": forms.ClearableFileInput(),
             "author": forms.HiddenInput(),
-            "cutoff_date": forms.SplitDateTimeWidget(),
         }
 
 

@@ -257,3 +257,29 @@
       - sort:created_date order:desending
     - search for commissions where user "test" is the commissioner
       - commissioner:test
+
+# emails vs in-app notifications
+- emails
+  - pros
+    - simply just works for notifications
+    - readable by 3rd party software
+  - cons
+    - costs for high-volume transactional emails
+    - flooding of inbox
+    - spam filtering issues
+- in-app notification
+  - pros
+    - much cheaper than email
+    - not prone to 3rd party spam
+    - CRUD on notifications as objects
+    - does not clutter email inbox
+  - cons
+    - does not immediately notify user
+    - user has to sign-in to see notification
+
+# creating requirements per offer
+- what about offer templates if those are a thing
+
+# ToS creation 
+- allow user to create ToS as a separate object
+- encourage new creators to create a ToS as their first step.

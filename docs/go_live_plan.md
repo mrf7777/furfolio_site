@@ -1,0 +1,178 @@
+future of FF notes.
+
+why?
+- to create software
+- to help the FF community & to learn about web dev & to build CV
+- to job hp
+- for growth
+- for money
+- to give back
+- they provide meaning
+- to buy FS
+- to participate in community
+- to make rel.
+- meaning
+- root cause: to establish rel.
+
+how?
+- plan of attack
+  - cultural beta
+    - site goes live, no formal beta, just warn users that there may be breaking changes
+    - when does beta finish?
+      - define a roadmap
+      - beta closes when sufficient bugs and features on the roadmap are completed.
+      - increase community interest by having a percentage timeline
+    - ask for feedback
+      - to improve site
+      - to engage users
+      - ask about:
+        - general rating
+        - things they did not like
+        - feed into an AI to summarize
+    - monitization
+      - donation model setup
+  - post-beta
+    - defines the end of the beta and that the site is live for regular use
+    - still need feedback
+      - keep discord alive
+      - point system to score users?
+        - names?: experience, senority, tally,
+  - regular lifecycle
+    - maintnaince
+      - testing
+      - refactoring
+    - monitization
+      - keep donation model
+        - start to increase asking for dontations
+          - at the completion of commissions
+          - after signup
+          - during blog posts
+      - subscription model
+        - reduce limits, unlock features, optional public badge
+        - more strong forecast information to me
+        - reduce risk in hiring
+        - may be time to create an LLC first
+      - pay to rank
+        - pay to rank some offers higher in search results
+          - feels too competitive and anti-cultural to me
+      - merch
+        - not as predictive as sub model
+        - extra points of failure with 3rd party business
+        - might be easy to get money early and consider brand development
+        - is monitization of software hype to kickstart funding for more development
+      - monitization models ranked, best first: donation, merch, sub, rank
+    - moderation
+      - community-based moderation would be very helpful here if low on funds
+      - we already have community tag moderation
+      - legal requirements and response (LLC)
+
+# ideas
+- automation as a seperate model
+  - commission automation pass 1
+    - define a precondition
+      - there is a domain of discourse here, in this case, commissions.
+      - example: commission A is closed
+      - example: commission A is in group "YCHs"
+      - multiple preconditions with the same commission A
+    - define an action
+      - append text to description of commission A
+      - append to title of commission A
+  - commission automation pass 2
+    - define variables of discourse
+      - for example, let A be a commission
+    - define preconditions
+      - example: A is in group "YCHs"
+      - example: A is past cutoff date
+      - example: A is before cutoff date
+    - define action (single action is important since actions need to be executed in sequence. 'A' may be invalid in a later action)
+      - delete A
+      - create offer from template "Default Template"
+      - change thumbnail in A to this image
+- sign-in with qr code on kiosk or laptop
+  - let a kiosk have a QR code that says "Scan me to sign in"
+  - The phone scans the QR code
+  - The QR code is a url of the form "https://furfolio.net/qr-code-sign-in/<unique qr code request id>"
+  - If the phone has an authenticated session, it will POST to the server about the signed in user and the QR code
+    - url POSTed to may be "https://furfolionet/qr-code-sign-in/<qr code request id>/sign-in"
+    - POSTed data may be just the cookies. the server will see the signed in user and 
+      
+# actual plan of attack for beta and release
+- 1 create production FF (time estimate: 2-3 days)
+  - create a production branch which keeps track of current FF commit to use in production
+  - create a digital ocean account on business FF email
+  - create a DO project for production
+  - study staging environment, reporduce in production
+  - document steps and put them in version control
+  - do manual config of production
+    - site framework requires website domain name
+  - make domain name point to production
+  - set up DO alerts and automation
+- 2 if not already, finish FF site content for publication (time estimate: 2 days)
+  - finish homepage
+  - finish sign-up flow
+  - ToS and PP
+- 2 setup donation (time estimate: 1-2 days)
+  - create a paypal account on business email
+  - put donation button on the footer of the site
+  - put in other flows such as sign-up flow
+  - NEVER EVER make it intrusive (do the opposite of wikipedia)
+  - direct donations into personal checking
+  - create a seperate checking account if many donations come in and stays strong without dying out
+- 3 finish discord, socials, and beta setup (time estimate: 7 days)
+  - configure all socials to have up-to-date info about site
+    - reddit
+    - twitter
+    - discord
+  - configure and test discord
+    - ensure issue tracking is working on discord
+      - Create
+        - guidelines, tags
+      - Read
+        - tags, searching, filtering, easy-to-find
+      - Update
+        - closure of issue, permissions
+      - Delete
+        - consider closure instead, permissions
+  - define beta roadmap
+    - define when beta is done
+    - list out features that need to be made to close beta
+      - * = must have!
+      - *notification system
+      - *trouble ticket system
+      - transparent commission (self-managed commission that does not affect commission count or limits)
+      - client-side file size limit detection (save the client time and fustration)
+  - collect feedback
+    - how?: survey, discord issues, etc.
+    - survey
+      - pros: designed to format feedback, declutter discord, private responses
+      - cons: potential for fraud, 
+    - discord:
+      - pros: same platform, easy via discussion system
+      - cons: public responses, hard to aggregate data
+    - best to go with survey to start
+- 4 announce on socials (time estimate: 1 day)
+  - twitter
+  - reddit
+  - discord
+  - make time to respond to replys from socials
+    - discord will be the heaviest if there are bugs reported
+- 5 monitor and rapidly develop (time estimate: continous after previous steps)
+  - study and implement tools to monitor service health
+  - aspects which are continously acted on:
+    - system health
+    - bug feedback
+    - feature requests
+    - monitization studies
+      - merch
+      - subscription model
+      - sponsoring offers
+    - community health
+      - culture
+      - sentiment
+      - general feedback
+      - active user count
+      - user lifetime
+    - software health
+      - automated tests
+      - refactoring
+      - effort to business value ratio studies

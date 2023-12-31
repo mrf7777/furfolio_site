@@ -9,7 +9,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, 
 from django.contrib import auth
 from django.urls import reverse_lazy, reverse
 from django.utils.http import urlencode
+from django.utils.decorators import method_decorator
 from django.core.exceptions import PermissionDenied
+from honeypot.decorators import check_honeypot
 from .. import models
 from .. import mixins
 from .. import utils
@@ -233,7 +235,8 @@ class Offer(mixins.GetAdultConsentMixin,
         else:
             return None
 
-
+# decorate the 'post' method of this class to check for honeypot
+@method_decorator(check_honeypot, name="post")
 class SignUp(generic.CreateView):
     form_class = forms.CustomUserCreationForm
     success_url = reverse_lazy("welcome_to_furfolio")

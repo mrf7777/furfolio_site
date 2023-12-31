@@ -8,6 +8,7 @@ coverage==7.3.2
 dj-database-url==2.1.0
 Django==4.2.7
 django-advanced-password-validation==1.1.1
+django-honeypot==1.1.0
 django-model-utils==4.3.1
 django-pwa==1.1.0
 django-storages==1.14

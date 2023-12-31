@@ -266,7 +266,7 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
             """
             When your offer is no longer accepting commissions.
             <br>
-            <span class="text-danger">Note</span>: This cannot be changed after the offer is created. 
+            <span class="text-danger">Note</span>: This cannot be changed after the offer is created.
             """
         ),
         validators=[],

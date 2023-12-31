@@ -56,7 +56,8 @@ class OfferForm(forms.ModelForm):
     def clean_cutoff_date(self):
         cutoff_date = self.cleaned_data["cutoff_date"]
         furfolio_validators.validate_datetime_at_least_12_hours(cutoff_date)
-        furfolio_validators.validate_datetime_is_not_over_year_into_future(cutoff_date)
+        furfolio_validators.validate_datetime_is_not_over_year_into_future(
+            cutoff_date)
         return cutoff_date
 
     class Meta:

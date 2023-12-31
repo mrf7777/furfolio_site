@@ -137,6 +137,10 @@ urlpatterns = [
         name="commission_reference"),
     path('help/commission-search/', pages.CommissionSearchHelp.as_view(),
          name="commission_search_help"),
+    path(
+        'help/localization',
+        pages.LocalizationReference.as_view(),
+        name="localization_reference"),
     # error pages
     path('413/', pages.Error413.as_view(), name="413"),
 ]

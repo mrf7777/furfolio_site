@@ -1,0 +1,25 @@
+{% extends "./help_page.html" %}
+
+{% block breadcrumbs %}
+{% include "furfolio/components/breadcrumbs.html" with breadcrumbs=breadcrumbs only %}
+{% endblock %}
+
+{% block title %}
+Website Localization
+{% endblock %}
+
+{% block body %}
+<h4>Timezone</h4>
+<p>
+The Furfolio website uses cookies to automatically detect what timezone you are in.
+The detected timezone is used to display times.
+Your browser informs Furfolio what timezone you are in; when your system changes timezones,
+Furfolio should also display times in the new timezone.
+</p>
+
+<h4>Language</h4>
+<p>
+Currently, Furfolio is only in english.
+</p>
+
+{% endblock %}

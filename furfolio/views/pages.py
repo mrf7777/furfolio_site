@@ -337,3 +337,18 @@ class CommissionSearchHelp(
         ]
 
         return context
+
+
+class LocalizationReference(BreadcrumbContextMixin,
+                            generic.TemplateView,
+                            IBreadcrumbParticipant):
+    template_name = "furfolio/pages/localization.html"
+
+    def breadcrumb_name():
+        return "Website Localization"
+
+    def breadcrumb_parent():
+        return Reference
+
+    def breadcrumb_url():
+        return reverse("localization_reference")

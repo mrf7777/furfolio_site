@@ -22,6 +22,7 @@ from ..queries import commission_messages as commission_messages_queries
 from ..queries import user_following_user as user_following_user_queries
 from ..queries import tags as tag_queries
 from ..queries import tag_categories as tag_category_queries
+from ..queries import chat as chat_queries
 from .. import forms
 
 PAGE_SIZE = 10
@@ -382,6 +383,16 @@ class CreateCommission(LoginRequiredMixin, generic.CreateView):
         context["offer"] = offer_queries.get_offer_by_pk(
             self.kwargs["offer_pk"])
         return context
+
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        response = super().form_valid(form)
+
+        # if not self-managed commission, create a chat
+        commission: 'models.Commission' = self.object
+        if not commission.is_self_managed():
+            chat_queries.create_chat_for_commission(commission)
+
+        return response
 
 
 class Commission(LoginRequiredMixin, UserPassesTestMixin, generic.DetailView):

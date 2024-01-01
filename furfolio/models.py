@@ -761,9 +761,10 @@ class Chat(models.Model):
         name="name",
         help_text="The name of the chat room.",
     )
-    
+
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)
+
 
 class ChatParticipant(models.Model):
     chat = models.ForeignKey(
@@ -774,9 +775,10 @@ class ChatParticipant(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-    
+
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)
+
 
 class ChatMessage(models.Model):
     chat = models.ForeignKey(
@@ -799,6 +801,6 @@ class ChatMessage(models.Model):
             furfolio_validators.validate_commission_message_attachment_has_max_size,
         ]
     )
-    
+
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)

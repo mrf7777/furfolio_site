@@ -4,7 +4,6 @@ from io import BytesIO
 from pathlib import Path
 from model_utils import FieldTracker
 from django.db import models
-from django.db.models import Q
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.indexes import GinIndex
@@ -754,3 +753,52 @@ class Tag(mixins.GetFullUrlMixin, models.Model):
 
     def get_absolute_url(self):
         return reverse("tag_detail", kwargs={"name": self.name})
+
+
+class Chat(models.Model):
+    name = models.CharField(
+        max_length=160,
+        name="name",
+        help_text="The name of the chat room.",
+    )
+    
+    created_date = models.DateTimeField(name="created_date", auto_now_add=True)
+    updated_date = models.DateTimeField(name="updated_date", auto_now=True)
+
+class ChatParticipant(models.Model):
+    chat = models.ForeignKey(
+        Chat,
+        on_delete=models.CASCADE,
+    )
+    participant = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    
+    created_date = models.DateTimeField(name="created_date", auto_now_add=True)
+    updated_date = models.DateTimeField(name="updated_date", auto_now=True)
+
+class ChatMessage(models.Model):
+    chat = models.ForeignKey(
+        Chat,
+        on_delete=models.CASCADE,
+    )
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+    )
+    message = models.TextField(
+        name="message",
+        max_length=COMMISSION_MESSAGE_MAX_LENGTH,
+    )
+    attachment = models.FileField(
+        name="attachment",
+        blank=True,
+        validators=[
+            furfolio_validators.validate_commission_message_attachment_has_max_size,
+        ]
+    )
+    
+    created_date = models.DateTimeField(name="created_date", auto_now_add=True)
+    updated_date = models.DateTimeField(name="updated_date", auto_now=True)

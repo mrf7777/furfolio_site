@@ -813,3 +813,10 @@ class ChatMessage(models.Model):
 
     def __str__(self):
         return f"\"{self.author}\" made message in \"{self.chat}\""
+    
+    def get_html_id(self) -> str:
+        return "message_" + str(self.pk)
+    
+    def get_absolute_url(self):
+        return reverse("chat", kwargs={
+                       "pk": self.chat.pk}) + "#" + self.get_html_id()

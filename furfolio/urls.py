@@ -7,6 +7,7 @@ from .views import registration
 from .views import tags
 from .views import users
 from .views import pages
+from .views import chat
 from .sitemaps import sitemaps
 from django.contrib.auth import views as auth_views
 from furfolio import forms as furfolio_forms
@@ -115,6 +116,8 @@ urlpatterns = [
     # commission chat
     path('commissions/<pk>/chat',
          commissions.CommissionChat.as_view(), name="commission_chat"),
+    # chat
+    path('chat/<pk>/', chat.Chat.as_view(), name="chat"),
     # static pages
     path('legal/', pages.Legal.as_view(), name="legal"),
     path('legal/terms-of-service/',

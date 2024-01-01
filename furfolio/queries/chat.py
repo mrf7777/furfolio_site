@@ -1,7 +1,3 @@
-from functools import reduce
-from typing import Any
-from django.db.models import Q
-from django.db.models import Manager
 from django.shortcuts import get_object_or_404
 
 from .. import models
@@ -20,3 +16,10 @@ def create_chat_for_commission(commission: 'models.Commission'):
             chat=chat,
             participant=user
         )
+
+def get_chat_by_pk(pk) -> 'models.Chat':
+    return get_object_or_404(models.Chat, pk=pk)
+
+
+def test_user_is_participant_of_chat(chat: 'models.Chat', user: 'models.User') -> bool:
+    return models.Chat.objects.filter(chatparticipant__participant=user).exists()

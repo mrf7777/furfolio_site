@@ -7,7 +7,7 @@ from .. import forms
 
 class Chat(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView):
     model = models.ChatMessage
-    form_class = forms.CommissionMessageForm
+    form_class = forms.ChatMessageForm
     template_name = "furfolio/chat/chat.html"
     
     def get_chat(self):
@@ -23,3 +23,9 @@ class Chat(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView):
     def test_func(self):
         chat = self.get_chat()
         return chat_queries.test_user_is_participant_of_chat(chat, self.request.user)
+    
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        chat = self.get_chat()
+        context["messages"] = chat_queries.get_messages_from_chat(chat)
+        return context

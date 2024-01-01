@@ -4,7 +4,6 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect
 from django.views import generic
 from django.urls import reverse
-from django.db.models import ImageField
 from ..queries import commissions as commission_queries
 from .. import models
 from .breadcrumbs import IBreadcrumbParticipant, breadcrumb_items

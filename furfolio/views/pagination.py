@@ -4,6 +4,7 @@ from django.core.paginator import Page
 
 PAGE_SIZE = 10
 
+
 class PageRangeContextMixin:
     page_range_context_object_name = "page_range"
 

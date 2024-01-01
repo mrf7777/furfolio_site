@@ -60,7 +60,10 @@ urlpatterns = [
     path('accounts/reset/done/', auth_views.PasswordResetCompleteView.as_view(),
          name="password_reset_complete"),
     # dashboards
-    path('dashboard/', dashboards.DashboardRedirector.as_view(), name="dashboard"),
+    path(
+        'dashboard/',
+        dashboards.DashboardRedirector.as_view(),
+        name="dashboard"),
     path('dashboard/creator/', dashboards.CreatorDashboard.as_view(),
          name="creator_dashboard"),
     path(
@@ -78,7 +81,10 @@ urlpatterns = [
          commissions.UpdateCommission.as_view(), name="update_commission"),
     path('commissions/<pk>/update/status/',
          commissions.UpdateCommissionStatus.as_view(), name="update_commission_status"),
-    path('commissions/', commissions.Commissions.as_view(), name="commissions"),
+    path(
+        'commissions/',
+        commissions.Commissions.as_view(),
+        name="commissions"),
     # tags
     path('tags/', tags.TagList.as_view(), name="tags"),
     path('tags/create/', tags.CreateTag.as_view(), name="create_tag"),

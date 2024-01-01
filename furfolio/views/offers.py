@@ -89,8 +89,8 @@ class Offer(mixins.GetAdultConsentMixin,
             return self.request.user.can_commission_offer(offer)
         else:
             return None
-        
-        
+
+
 class CreateOffer(LoginRequiredMixin, generic.CreateView):
     model = models.Offer
     form_class = forms.OfferForm
@@ -120,4 +120,3 @@ class DeleteOffer(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
 
     def test_func(self):
         return self.get_object().author.pk == self.request.user.pk
-

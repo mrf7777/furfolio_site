@@ -18,6 +18,7 @@ from .. import forms
 from .pagination import PageRangeContextMixin
 from .pagination import PAGE_SIZE
 
+
 class CreateCommission(LoginRequiredMixin, generic.CreateView):
     model = models.Commission
     template_name = "furfolio/commissions/commission_create.html"
@@ -124,6 +125,7 @@ class UpdateCommissionStatus(LoginRequiredMixin, generic.View):
         commission.save()
         return redirect(redirect_url)
 
+
 class CommissionChat(LoginRequiredMixin,
                      UserPassesTestMixin, generic.CreateView):
     model = models.CommissionMessage
@@ -159,5 +161,3 @@ class CommissionChat(LoginRequiredMixin,
         context["other_user"] = utils.get_other_user_in_commission(
             self.request.user, commission)
         return context
-
-

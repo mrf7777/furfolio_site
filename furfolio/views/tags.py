@@ -9,6 +9,7 @@ from ..queries import tag_categories as tag_category_queries
 from .. import forms
 from .pagination import PageRangeContextMixin
 
+
 class TagMixin:
     model = models.Tag
     slug_field = "name"

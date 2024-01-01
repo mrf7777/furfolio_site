@@ -11,7 +11,6 @@ from .. import forms
 from .pagination import PageRangeContextMixin, PAGE_SIZE
 
 
-
 class UserMixin:
     model = models.User
     slug_field = "username"
@@ -66,7 +65,8 @@ class UserList(PageRangeContextMixin, UserMixin, generic.ListView):
         context = super().get_context_data(**kwargs)
         context["search_form"] = forms.UserSearchForm(self.request.GET)
         return context
-    
+
+
 class FollowedList(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
     model = models.UserFollowingUser
     context_object_name = "followed_users"

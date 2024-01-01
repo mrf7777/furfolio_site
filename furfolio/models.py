@@ -765,6 +765,9 @@ class Chat(models.Model):
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)
 
+    def __str__(self):
+        return self.name
+
 
 class ChatParticipant(models.Model):
     chat = models.ForeignKey(
@@ -778,6 +781,9 @@ class ChatParticipant(models.Model):
 
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)
+
+    def __str__(self):
+        return f"\"{self.participant}\" in chat \"{self.chat}\""
 
 
 class ChatMessage(models.Model):
@@ -804,3 +810,6 @@ class ChatMessage(models.Model):
 
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)
+
+    def __str__(self):
+        return f"\"{self.author}\" made message in \"{self.chat}\""

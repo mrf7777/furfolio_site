@@ -1,11 +1,26 @@
 
 from typing import Any, Type
+from django.http import HttpRequest, HttpResponse
+from django.shortcuts import redirect
 from django.views import generic
 from django.urls import reverse
 from django.db.models import ImageField
 from ..queries import commissions as commission_queries
 from .. import models
 from .breadcrumbs import IBreadcrumbParticipant, breadcrumb_items
+
+class Home(generic.TemplateView):
+    template_name = "furfolio/home.html"
+
+    def get(
+            self,
+            request: HttpRequest,
+            *args: Any,
+            **kwargs: Any) -> HttpResponse:
+        if self.request.user.is_authenticated:
+            return redirect("dashboard")
+        else:
+            return super().get(request, *args, **kwargs)
 
 
 class ExampleOfferAndCommissionMixin:

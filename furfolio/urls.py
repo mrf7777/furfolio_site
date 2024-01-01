@@ -1,6 +1,11 @@
 from django.urls import path, include
 from django.contrib.sitemaps.views import sitemap
-from .views import views
+from .views import commissions
+from .views import dashboards
+from .views import offers
+from .views import registration
+from .views import tags
+from .views import users
 from .views import pages
 from .sitemaps import sitemaps
 from django.contrib.auth import views as auth_views
@@ -11,33 +16,33 @@ urlpatterns = [
     path('sitemap.xml', sitemap, {"sitemaps": sitemaps},
          name="django.contrib.sitemaps.views.sitemap"),
     # home
-    path('', views.Home.as_view(), name="home"),
+    path('', pages.Home.as_view(), name="home"),
     # offers
-    path('offers/', views.OfferList.as_view(), name="offer_list"),
-    path('offers/create/', views.CreateOffer.as_view(), name="create_offer"),
+    path('offers/', offers.OfferList.as_view(), name="offer_list"),
+    path('offers/create/', offers.CreateOffer.as_view(), name="create_offer"),
     path(
         'offers/<pk>/update/',
-        views.UpdateOffer.as_view(),
+        offers.UpdateOffer.as_view(),
         name="update_offer"),
     path(
         'offers/<pk>/delete/',
-        views.DeleteOffer.as_view(),
+        offers.DeleteOffer.as_view(),
         name="delete_offer"),
-    path('offers/<pk>/', views.Offer.as_view(), name="offer_detail"),
+    path('offers/<pk>/', offers.Offer.as_view(), name="offer_detail"),
     # users
-    path('users/<username>/', views.User.as_view(), name="user"),
+    path('users/<username>/', users.User.as_view(), name="user"),
     path('users/<username>/update/',
-         views.UpdateUser.as_view(), name="update_user"),
-    path('users/', views.UserList.as_view(), name="user_list"),
+         users.UpdateUser.as_view(), name="update_user"),
+    path('users/', users.UserList.as_view(), name="user_list"),
     # user following
     path('users/<username>/follow/',
-         views.MakeUserFollowUser.as_view(), name="follow_user"),
+         users.MakeUserFollowUser.as_view(), name="follow_user"),
     path('users/<username>/unfollow/',
-         views.MakeUserUnfollowUser.as_view(), name="unfollow_user"),
+         users.MakeUserUnfollowUser.as_view(), name="unfollow_user"),
     path('users/<username>/followed/',
-         views.FollowedList.as_view(), name="followed_list"),
+         users.FollowedList.as_view(), name="followed_list"),
     # accounts
-    path('accounts/signup/', views.SignUp.as_view(), name="signup"),
+    path('accounts/signup/', registration.SignUp.as_view(), name="signup"),
     path(
         'accounts/login/',
         auth_views.LoginView.as_view(
@@ -55,55 +60,55 @@ urlpatterns = [
     path('accounts/reset/done/', auth_views.PasswordResetCompleteView.as_view(),
          name="password_reset_complete"),
     # dashboards
-    path('dashboard/', views.DashboardRedirector.as_view(), name="dashboard"),
-    path('dashboard/creator/', views.CreatorDashboard.as_view(),
+    path('dashboard/', dashboards.DashboardRedirector.as_view(), name="dashboard"),
+    path('dashboard/creator/', dashboards.CreatorDashboard.as_view(),
          name="creator_dashboard"),
     path(
         'dashboard/buyer/',
-        views.BuyerDashboard.as_view(),
+        dashboards.BuyerDashboard.as_view(),
         name="buyer_dashboard"),
     # commissions
     path(
         'commissions/<pk>',
-        views.Commission.as_view(),
+        commissions.Commission.as_view(),
         name="commission_detail"),
-    path('offers/<offer_pk>/commissions/create/', views.CreateCommission.as_view(),
+    path('offers/<offer_pk>/commissions/create/', commissions.CreateCommission.as_view(),
          name="create_commission"),
     path('commissions/<pk>/update/',
-         views.UpdateCommission.as_view(), name="update_commission"),
+         commissions.UpdateCommission.as_view(), name="update_commission"),
     path('commissions/<pk>/update/status/',
-         views.UpdateCommissionStatus.as_view(), name="update_commission_status"),
-    path('commissions/', views.Commissions.as_view(), name="commissions"),
+         commissions.UpdateCommissionStatus.as_view(), name="update_commission_status"),
+    path('commissions/', commissions.Commissions.as_view(), name="commissions"),
     # tags
-    path('tags/', views.TagList.as_view(), name="tags"),
-    path('tags/create/', views.CreateTag.as_view(), name="create_tag"),
-    path('tags/<name>/update/', views.UpdateTag.as_view(), name="update_tag"),
-    path('tags/<name>/delete/', views.DeleteTag.as_view(), name="delete_tag"),
-    path('tags/<name>/', views.Tag.as_view(), name="tag_detail"),
+    path('tags/', tags.TagList.as_view(), name="tags"),
+    path('tags/create/', tags.CreateTag.as_view(), name="create_tag"),
+    path('tags/<name>/update/', tags.UpdateTag.as_view(), name="update_tag"),
+    path('tags/<name>/delete/', tags.DeleteTag.as_view(), name="delete_tag"),
+    path('tags/<name>/', tags.Tag.as_view(), name="tag_detail"),
     # tag categories
     path(
         'tag-categories/',
-        views.TagCategoryList.as_view(),
+        tags.TagCategoryList.as_view(),
         name="tag_categories"),
     path(
         'tag-categories/create/',
-        views.CreateTagCategory.as_view(),
+        tags.CreateTagCategory.as_view(),
         name="create_tag_category"),
     path(
         'tag-categories/<name>/update/',
-        views.UpdateTagCategory.as_view(),
+        tags.UpdateTagCategory.as_view(),
         name="update_tag_category"),
     path(
         'tag-categories/<name>/delete/',
-        views.DeleteTagCategory.as_view(),
+        tags.DeleteTagCategory.as_view(),
         name="delete_tag_category"),
     path(
         'tag-categories/<name>/',
-        views.TagCategory.as_view(),
+        tags.TagCategory.as_view(),
         name="tag_category_detail"),
     # commission chat
     path('commissions/<pk>/chat',
-         views.CommissionChat.as_view(), name="commission_chat"),
+         commissions.CommissionChat.as_view(), name="commission_chat"),
     # static pages
     path('legal/', pages.Legal.as_view(), name="legal"),
     path('legal/terms-of-service/',

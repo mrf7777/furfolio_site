@@ -10,7 +10,7 @@ from .. import models
 def create_chat_for_commission(commission: 'models.Commission'):
     # create chat then create participants for
     # the commissioner and commissionee
-    chat, _ = models.Chat.objects.get_or_create(
+    chat = models.Chat.objects.create(
         name=commission.offer.name,
     )
     commissioner = commission.commissioner

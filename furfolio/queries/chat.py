@@ -32,4 +32,6 @@ def test_user_is_participant_of_chat(
         chat: 'models.Chat',
         user: 'models.User') -> bool:
     return models.Chat.objects.filter(
-        chatparticipant__participant=user).exists()
+        pk=chat.pk,
+        chatparticipant__participant=user,
+    ).exists()

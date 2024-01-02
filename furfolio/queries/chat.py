@@ -4,12 +4,12 @@ from django.db.models import Manager
 from .. import models
 
 
-def create_chat_for_commission(commission: 'models.Commission'):
-    # create chat then create participants for
-    # the commissioner and commissionee
+def create_chat_for_commission(commission: 'models.Commission', link_chat_to_commission: bool = True):
+    # create chat
     chat = models.Chat.objects.create(
         name=commission.offer.name,
     )
+    # add participants
     commissioner = commission.commissioner
     commissionee = commission.offer.author
     for user in [commissioner, commissionee]:
@@ -17,6 +17,10 @@ def create_chat_for_commission(commission: 'models.Commission'):
             chat=chat,
             participant=user
         )
+    # point commission to the chat
+    if link_chat_to_commission:
+        commission.chat = chat
+        commission.save()
 
 
 def get_messages_from_chat(

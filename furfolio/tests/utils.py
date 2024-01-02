@@ -67,14 +67,3 @@ def make_commission(
         commission.full_clean()
     commission.save()
     return commission
-
-
-def make_commission_message(author, commission, message):
-    commission_message = models.CommissionMessage(
-        commission=commission,
-        author=author,
-        message=message
-    )
-    commission_message.full_clean()
-    commission_message.save()
-    return commission_message

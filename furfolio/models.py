@@ -1,3 +1,4 @@
+from email.policy import default
 from PIL import Image
 import PIL.ImageFile
 from io import BytesIO
@@ -20,7 +21,7 @@ from . import mixins
 from .queries import commissions as commission_queries
 from .queries import users as user_queries
 from .queries import offers as offer_queries
-from .email import send_commission_state_changed_email, send_new_commission_message_email, send_new_offer_email, send_new_commission_email
+from .email import send_commission_state_changed_email, send_new_offer_email, send_new_commission_email
 
 
 PIL.ImageFile.LOAD_TRUNCATED_IMAGES = True
@@ -534,6 +535,7 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
         "Chat",
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,
     )
 
     tracker = FieldTracker()
@@ -599,85 +601,6 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
 
     def is_self_managed(self):
         return self.commissioner == self.offer.author
-
-
-# limit commisson message to about 350 words
-COMMISSION_MESSAGE_MAX_LENGTH = math.ceil(
-    AVERAGE_CHARACTERS_PER_WORD * 350)
-
-
-class CommissionMessage(mixins.GetFullUrlMixin, models.Model):
-    commission = models.ForeignKey(
-        Commission,
-        name="commission",
-        on_delete=models.CASCADE,
-    )
-    # if the author is deleted, keep the chat history by preserving these
-    # messages
-    author = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.SET_NULL,
-        null=True,
-    )
-    message = models.TextField(
-        name="message",
-        max_length=COMMISSION_MESSAGE_MAX_LENGTH,
-    )
-    attachment = models.FileField(
-        name="attachment",
-        blank=True,
-        validators=[
-            furfolio_validators.validate_commission_message_attachment_has_max_size,
-        ]
-    )
-
-    tracker = FieldTracker()
-
-    created_date = models.DateTimeField(name="created_date", auto_now_add=True)
-    updated_date = models.DateTimeField(name="updated_date", auto_now=True)
-
-    def save(self, *args, **kwargs) -> None:
-        super().save(*args, **kwargs)
-        if self.should_notify_new_message():
-            send_new_commission_message_email(self)
-
-    def clean(self) -> None:
-        furfolio_validators.check_user_is_not_spamming_commission_messages(
-            self.author)
-        return super().clean()
-
-    def should_notify_new_message(self):
-        return (
-            # if message is newly created
-            self.tracker.previous("pk") is None
-            and not self.commission.is_self_managed()   # and commission is not self managed
-        )
-
-    def been_edited(self) -> bool:
-        # only consider to be edited if change to message happened 10 seconds
-        # after being created
-        return abs(
-            (self.created_date -
-             self.updated_date).total_seconds()) > 10
-
-    def get_html_id(self) -> str:
-        return "message_" + str(self.pk)
-
-    def get_receiving_user(self) -> User | None:
-        """
-        Returns the user that is the recipient of this message.
-        Because a chat always has two users, it returns the user
-        that did NOT send this message.
-        """
-        if self.author is not None:
-            if self.author.pk == self.commission.commissioner.pk:
-                return self.commission.offer.author
-            else:
-                return self.commission.commissioner
-
-    def get_absolute_url(self):
-        return reverse("commission_chat", kwargs={
-                       "pk": self.commission.pk}) + "#" + self.get_html_id()
 
 
 class TagCategory(models.Model):
@@ -792,6 +715,10 @@ class ChatParticipant(models.Model):
 
 
 class ChatMessage(models.Model):
+    
+    MESSAGE_MAX_LENGTH = math.ceil(
+    AVERAGE_CHARACTERS_PER_WORD * 350)
+    
     chat = models.ForeignKey(
         Chat,
         on_delete=models.CASCADE,
@@ -803,7 +730,7 @@ class ChatMessage(models.Model):
     )
     message = models.TextField(
         name="message",
-        max_length=COMMISSION_MESSAGE_MAX_LENGTH,
+        max_length=MESSAGE_MAX_LENGTH,
     )
     attachment = models.FileField(
         name="attachment",

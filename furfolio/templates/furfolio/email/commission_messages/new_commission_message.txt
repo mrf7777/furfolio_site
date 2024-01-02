@@ -1,3 +1,0 @@
-You got a message about commission "{{ message.commission.offer.name }}" from "{{ message.author.username }}".
-
-You can go to the message here: {{ message.get_full_url }}

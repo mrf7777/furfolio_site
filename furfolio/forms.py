@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.forms import EmailField
 from django import forms
 from django.forms.renderers import TemplatesSetting
-from .models import ChatMessage, User, Offer, Commission, CommissionMessage, Tag, TagCategory
+from .models import ChatMessage, User, Offer, Commission, Tag, TagCategory
 from . import validators as furfolio_validators
 
 
@@ -130,16 +130,6 @@ class UpdateCommissionForm(CommissionForm):
     class Meta(CommissionForm.Meta):
         fields = ["commissioner", "offer",
                   "state", "initial_request_text", "attachment"]
-
-
-class CommissionMessageForm(forms.ModelForm):
-    class Meta:
-        model = CommissionMessage
-        fields = ["commission", "author", "message", "attachment"]
-        widgets = {
-            "commission": forms.HiddenInput(),
-            "author": forms.HiddenInput(),
-        }
 
 
 class ChatMessageForm(forms.ModelForm):

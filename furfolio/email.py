@@ -50,19 +50,6 @@ def send_commission_state_changed_email(new_commission: 'models.Commission'):
     )
 
 
-def send_new_commission_message_email(
-        commission_message: 'models.CommissionMessage'):
-    truncated_message = truncate_string(commission_message.message, 40)
-    subject = f"You Got a Message | {truncated_message}"
-    send_email(
-        "furfolio/email/commission_messages/new_commission_message.txt",
-        "furfolio/email/commission_messages/new_commission_message.html",
-        {"message": commission_message},
-        subject,
-        commission_message.get_receiving_user().email,
-    )
-
-
 def send_new_offer_email(new_offer: 'models.Offer'):
     truncated_offer_title = truncate_string(new_offer.name, 23)
     author_username = truncate_string(new_offer.author.username, 20)

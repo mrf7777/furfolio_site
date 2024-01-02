@@ -113,9 +113,6 @@ urlpatterns = [
         'tag-categories/<name>/',
         tags.TagCategory.as_view(),
         name="tag_category_detail"),
-    # commission chat
-    path('commissions/<pk>/chat',
-         commissions.CommissionChat.as_view(), name="commission_chat"),
     # chat
     path('chat/<pk>/', chat.Chat.as_view(), name="chat"),
     # static pages

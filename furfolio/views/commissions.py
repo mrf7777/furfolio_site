@@ -12,7 +12,6 @@ from .. import models
 from .. import utils
 from ..queries import commissions as commission_queries
 from ..queries import offers as offer_queries
-from ..queries import commission_messages as commission_messages_queries
 from ..queries import chat as chat_queries
 from .. import forms
 from .pagination import PageRangeContextMixin
@@ -125,39 +124,3 @@ class UpdateCommissionStatus(LoginRequiredMixin, generic.View):
         commission.save()
         return redirect(redirect_url)
 
-
-class CommissionChat(LoginRequiredMixin,
-                     UserPassesTestMixin, generic.CreateView):
-    model = models.CommissionMessage
-    form_class = forms.CommissionMessageForm
-    template_name = "furfolio/commissions/chat/chat.html"
-
-    def get_commission(self):
-        return commission_queries.get_commission_by_pk(self.kwargs["pk"])
-
-    def get_initial(self) -> dict[str, Any]:
-        commission = self.get_commission()
-        initial = super().get_initial()
-        initial["commission"] = commission
-        initial["author"] = self.request.user
-        return initial
-
-    def test_func(self):
-        object = self.get_commission()
-        if object.is_self_managed():
-            return False
-        elif object.offer.author.pk == self.request.user.pk:
-            return True
-        elif object.commissioner.pk == self.request.user.pk:
-            return True
-        else:
-            return False
-
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-        commission = self.get_commission()
-        context["commission_messages"] = commission_messages_queries.get_commission_messages_for_commission(
-            commission)
-        context["other_user"] = utils.get_other_user_in_commission(
-            self.request.user, commission)
-        return context

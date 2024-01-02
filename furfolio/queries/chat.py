@@ -18,12 +18,18 @@ def create_chat_for_commission(commission: 'models.Commission'):
             participant=user
         )
 
-def get_messages_from_chat(chat: 'models.Chat') -> 'Manager[models.ChatMessage]':
+
+def get_messages_from_chat(
+        chat: 'models.Chat') -> 'Manager[models.ChatMessage]':
     return models.ChatMessage.objects.filter(chat=chat)
+
 
 def get_chat_by_pk(pk) -> 'models.Chat':
     return get_object_or_404(models.Chat, pk=pk)
 
 
-def test_user_is_participant_of_chat(chat: 'models.Chat', user: 'models.User') -> bool:
-    return models.Chat.objects.filter(chatparticipant__participant=user).exists()
+def test_user_is_participant_of_chat(
+        chat: 'models.Chat',
+        user: 'models.User') -> bool:
+    return models.Chat.objects.filter(
+        chatparticipant__participant=user).exists()

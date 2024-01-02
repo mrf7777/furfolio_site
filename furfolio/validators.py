@@ -220,7 +220,8 @@ def validate_tag_name(tag_name: str):
         )
 
 
-def validate_chat_message_author_is_participant(chat_message: 'models.ChatMessage'):
+def validate_chat_message_author_is_participant(
+        chat_message: 'models.ChatMessage'):
     is_participant = chat_queries.test_user_is_participant_of_chat(
         chat_message.chat,
         chat_message.author

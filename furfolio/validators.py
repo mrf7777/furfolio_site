@@ -7,6 +7,7 @@ from django.utils.safestring import mark_safe
 from . import models
 from .queries import commissions as commission_queries
 from .queries import offers as offer_queries
+from .queries import chat as chat_queries
 
 
 def validate_datetime_not_in_past(value: datetime):
@@ -216,4 +217,15 @@ def validate_tag_name(tag_name: str):
     if not pattern.match(tag_name):
         raise ValidationError(
             "A tag name can have only letters, numbers, and the symbols '_' and '-'"
+        )
+
+
+def validate_chat_message_author_is_participant(chat_message: 'models.ChatMessage'):
+    is_participant = chat_queries.test_user_is_participant_of_chat(
+        chat_message.chat,
+        chat_message.author
+    )
+    if not is_participant:
+        raise ValidationError(
+            "User is not not allowed in chat because they are not a participant."
         )

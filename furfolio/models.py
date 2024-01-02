@@ -820,3 +820,7 @@ class ChatMessage(models.Model):
     def get_absolute_url(self):
         return reverse("chat", kwargs={
                        "pk": self.chat.pk}) + "#" + self.get_html_id()
+        
+    def clean(self) -> None:
+        furfolio_validators.validate_chat_message_author_is_participant(self)
+        return super().clean()

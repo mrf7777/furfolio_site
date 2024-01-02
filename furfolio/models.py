@@ -727,6 +727,7 @@ class ChatMessage(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,
     )
     message = models.TextField(
         name="message",

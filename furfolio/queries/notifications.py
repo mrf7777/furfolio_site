@@ -44,6 +44,22 @@ def create_offer_posted_notifications_for_followers(offer: 'models.Offer'):
         create_offer_posted_notification(offer, user)
 
 
+def create_commission_state_notification(commission: 'models.Commission', recipient: 'models.User') -> 'models.CommissionStateNotification':
+    notification = models.Notification.objects.create(
+        recipient=recipient,
+    )
+    commission_state_notification = models.CommissionStateNotification.objects.create(
+        notification=notification,
+        commission=commission,
+        state=commission.state,
+    )
+    return commission_state_notification
+
+
+def create_commission_state_notification_for_commissioner(commission: 'models.Commission'):
+    create_commission_state_notification(commission, commission.commissioner)
+
+
 def get_notifications_for_user(user: 'models.User') -> 'Manager[models.User]':
     return models.Notification.objects.filter(recipient=user).order_by("-created_date")
 

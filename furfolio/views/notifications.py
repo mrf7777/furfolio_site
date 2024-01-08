@@ -9,17 +9,25 @@ from .. import models
 from ..queries import notifications as notification_queries
 from .pagination import PageRangeContextMixin, PAGE_SIZE
 
-class Notifications(PageRangeContextMixin, LoginRequiredMixin, generic.ListView):
+
+class Notifications(
+        PageRangeContextMixin,
+        LoginRequiredMixin,
+        generic.ListView):
     model = models.Notification
     context_object_name = "notifications"
     template_name = "furfolio/notifications/notification_list.html"
     paginate_by = PAGE_SIZE
-    
-    def get_queryset(self) -> QuerySet[Any]:
-        return notification_queries.get_notifications_for_user(self.request.user)
-    
 
-class OpenNotification(LoginRequiredMixin, UserPassesTestMixin, generic.RedirectView):
+    def get_queryset(self) -> QuerySet[Any]:
+        return notification_queries.get_notifications_for_user(
+            self.request.user)
+
+
+class OpenNotification(
+        LoginRequiredMixin,
+        UserPassesTestMixin,
+        generic.RedirectView):
     def get_notification(self) -> 'models.Notification':
         return notification_queries.get_notification_by_pk(self.kwargs["pk"])
 
@@ -29,7 +37,11 @@ class OpenNotification(LoginRequiredMixin, UserPassesTestMixin, generic.Redirect
 
     def get_redirect_url(self, *args, **kwargs) -> str | None:
         return self.get_notification().get_content_url()
-    
-    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+
+    def get(
+            self,
+            request: HttpRequest,
+            *args: Any,
+            **kwargs: Any) -> HttpResponse:
         notification_queries.make_notification_seen(self.get_notification())
         return super().get(request, *args, **kwargs)

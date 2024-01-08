@@ -117,8 +117,14 @@ urlpatterns = [
     # chat
     path('chat/<pk>/', chat.Chat.as_view(), name="chat"),
     # notifications
-    path('notifications/', notifications.Notifications.as_view(), name="notifications"),
-    path('notifications/<pk>/view/', notifications.OpenNotification.as_view(), name="open_notification"),
+    path(
+        'notifications/',
+        notifications.Notifications.as_view(),
+        name="notifications"),
+    path(
+        'notifications/<pk>/view/',
+        notifications.OpenNotification.as_view(),
+        name="open_notification"),
     # static pages
     path('legal/', pages.Legal.as_view(), name="legal"),
     path('legal/terms-of-service/',

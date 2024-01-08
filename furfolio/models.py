@@ -812,3 +812,6 @@ class ChatMessageNotification(models.Model):
 
     def __str__(self):
         return f"\"{self.notification.recipient}\" has a chat message notification"
+    
+    def friendly_string(self) -> str:
+        return f"Message in chat: {self.message.chat.name}"

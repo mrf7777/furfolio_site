@@ -1,3 +1,17 @@
-notification list
+{% extends "furfolio/layouts/title_body.html" %}
 
-{{ notifications }}
+{% block title %}
+Notifications
+{% endblock %}
+
+{% block body %}
+
+{% if notifications %}
+    {% include "./notification_list_component.html" with notifications=notifications only %}
+{% else %}
+    <p>
+        Looks like you are all caught up on notifications. Great!
+    </p>
+{% endif %}
+
+{% endblock %}

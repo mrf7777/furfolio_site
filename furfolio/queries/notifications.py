@@ -26,3 +26,13 @@ def create_message_notifications_for_recipients(message: 'models.ChatMessage'):
 
 def get_notifications_for_user(user: 'models.User') -> 'Manager[models.User]':
     return models.Notification.objects.filter(recipient=user)
+
+
+def get_notification_by_pk(pk) -> 'models.Notification':
+    return get_object_or_404(models.Notification, pk=pk)
+
+
+def make_notification_seen(notification: 'models.Notification'):
+    notification.seen = True
+    notification.full_clean()
+    notification.save()

@@ -388,10 +388,10 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
                 Offer.THUMBNAIL_MAX_DIMENTIONS[0],
                 Offer.THUMBNAIL_MAX_DIMENTIONS[1])
 
-        # determine who to email if offer is created
+        # determine who to notify if offer is created
         if self.tracker.previous("id") is None:
             super(Offer, self).save(*args, **kwargs)
-            send_new_offer_email(self)
+            notification_queries.create_offer_posted_notifications_for_followers(self)
         else:
             super(Offer, self).save(*args, **kwargs)
 

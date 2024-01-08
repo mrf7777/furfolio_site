@@ -813,3 +813,14 @@ class ChatMessageNotification(models.Model):
 
     def friendly_string(self) -> str:
         return f"{self.message.author.username} wrote to chat: {self.message.chat.name}"
+
+
+class OfferPostedNotification(models.Model):
+    notification = models.OneToOneField(
+        Notification,
+        on_delete=models.CASCADE,
+    )
+    offer = models.ForeignKey(
+        Offer,
+        on_delete=models.CASCADE,
+    )

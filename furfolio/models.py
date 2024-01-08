@@ -811,9 +811,6 @@ class ChatMessageNotification(models.Model):
     def __str__(self):
         return f"\"{self.notification.recipient}\" has a chat message notification"
 
-    def friendly_string(self) -> str:
-        return f"{self.message.author.username} wrote to chat: {self.message.chat.name}"
-
 
 class OfferPostedNotification(models.Model):
     notification = models.OneToOneField(

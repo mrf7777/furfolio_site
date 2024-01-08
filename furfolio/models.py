@@ -769,7 +769,7 @@ class ChatMessage(models.Model):
             return super().save(*args, **kwargs)
 
 
-class Notification(models.Model):
+class Notification(mixins.GetFullUrlMixin, models.Model):
     recipient = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -779,6 +779,25 @@ class Notification(models.Model):
     )
 
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
+
+    def __str__(self):
+        return f"\"{self.recipient}\" has a notification"
+
+    def get_absolute_url(self):
+        return reverse("open_notification", kwargs={"pk": self.pk})
+
+    def get_content_url(self) -> str | None:
+        """
+        Returns the url that this notification points to.
+        This url points to the content it is representing.
+        This url does not "open" the notification.
+        """
+        if hasattr(self, "chatmessagenotification"):
+            return self.chatmessagenotification.message.get_absolute_url()
+        else:
+            return None
+            
+
 
 
 class ChatMessageNotification(models.Model):
@@ -790,3 +809,6 @@ class ChatMessageNotification(models.Model):
         ChatMessage,
         on_delete=models.CASCADE,
     )
+
+    def __str__(self):
+        return f"\"{self.notification.recipient}\" has a chat message notification"

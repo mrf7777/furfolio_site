@@ -25,7 +25,9 @@ def create_message_notifications_for_recipients(message: 'models.ChatMessage'):
         create_message_notification(message, recipient)
 
 
-def create_offer_posted_notification(offer: 'models.Offer', recipient: 'models.User') -> 'models.OfferPostedNotification':
+def create_offer_posted_notification(
+        offer: 'models.Offer',
+        recipient: 'models.User') -> 'models.OfferPostedNotification':
     notification = models.Notification.objects.create(
         recipient=recipient,
     )

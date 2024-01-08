@@ -391,7 +391,8 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         # determine who to notify if offer is created
         if self.tracker.previous("id") is None:
             super(Offer, self).save(*args, **kwargs)
-            notification_queries.create_offer_posted_notifications_for_followers(self)
+            notification_queries.create_offer_posted_notifications_for_followers(
+                self)
         else:
             super(Offer, self).save(*args, **kwargs)
 

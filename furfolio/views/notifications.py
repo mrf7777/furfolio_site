@@ -1,7 +1,7 @@
 from typing import Any
 from django.db.models.query import QuerySet
 from django.http import HttpRequest
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, HttpResponse as HttpResponse
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
@@ -21,16 +21,15 @@ class Notifications(PageRangeContextMixin, LoginRequiredMixin, generic.ListView)
 
 class OpenNotification(LoginRequiredMixin, UserPassesTestMixin, generic.RedirectView):
     def get_notification(self) -> 'models.Notification':
-        return notification_queries.get_notification_by_pk()
+        return notification_queries.get_notification_by_pk(self.kwargs["pk"])
 
     def test_func(self) -> bool | None:
         notification = self.get_notification()
         return notification.recipient.pk == self.request.user.pk
 
-    def get_redirect_url(self) -> str | None:
+    def get_redirect_url(self, *args, **kwargs) -> str | None:
         return self.get_notification().get_content_url()
-
-    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
-        dispatch_response = super().dispatch(request, *args, **kwargs)
+    
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
         notification_queries.make_notification_seen(self.get_notification())
-        return dispatch_response
+        return super().get(request, *args, **kwargs)

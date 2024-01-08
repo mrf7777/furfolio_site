@@ -45,7 +45,7 @@ def create_offer_posted_notifications_for_followers(offer: 'models.Offer'):
 
 
 def get_notifications_for_user(user: 'models.User') -> 'Manager[models.User]':
-    return models.Notification.objects.filter(recipient=user)
+    return models.Notification.objects.filter(recipient=user).order_by("-created_date")
 
 
 def get_notification_by_pk(pk) -> 'models.Notification':

@@ -794,6 +794,8 @@ class Notification(mixins.GetFullUrlMixin, models.Model):
         """
         if hasattr(self, "chatmessagenotification"):
             return self.chatmessagenotification.message.get_absolute_url()
+        elif hasattr(self, "offerpostednotification"):
+            return self.offerpostednotification.offer.get_absolute_url()
         else:
             return None
 
@@ -821,3 +823,6 @@ class OfferPostedNotification(models.Model):
         Offer,
         on_delete=models.CASCADE,
     )
+
+    def __str__(self):
+        return f"\"{self.notification.recipient}\" has been notified of a new offer \"{self.offer.name}\""

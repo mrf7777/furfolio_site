@@ -1,0 +1,7 @@
+{% comment "" %}
+Represents the text to show for a posted offer notification.
+Expects the following context objects:
+  - offer: the offer to show
+{% endcomment %}
+
+<span class="me-2">{% include "../users/badge.html" with user=offer.author no_link=True only %}</span> posted a new offer: {{ offer.name }}

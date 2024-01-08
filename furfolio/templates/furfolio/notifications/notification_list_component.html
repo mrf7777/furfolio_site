@@ -10,6 +10,10 @@ Expects the following context objects:
             <a href="{% url "open_notification" notification.pk %}" class="d-flex align-items-center list-group-item list-group-item-action {% if not notification.seen %}list-group-item-warning fw-bold{% endif %}">
                 {% include "./chat_message_notification_text.html" with message=notification.chatmessagenotification.message only %}
             </a>
+        {% elif notification.offerpostednotification %}
+            <a href="{% url "open_notification" notification.pk %}" class="d-flex align-items-center list-group-item list-group-item-action {% if not notification.seen %}list-group-item-warning fw-bold{% endif %}">
+                {% include "./offer_posted_notification_text.html" with offer=notification.offerpostednotification.offer only %}
+            </a>
         {% endif %}
     {% endfor %}
 </div>

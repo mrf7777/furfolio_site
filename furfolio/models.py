@@ -20,6 +20,7 @@ from . import mixins
 from .queries import commissions as commission_queries
 from .queries import users as user_queries
 from .queries import offers as offer_queries
+from .queries import notifications as notification_queries
 from .email import send_commission_state_changed_email, send_new_offer_email, send_new_commission_email
 
 
@@ -756,6 +757,15 @@ class ChatMessage(models.Model):
     def clean(self) -> None:
         furfolio_validators.validate_chat_message_author_is_participant(self)
         return super().clean()
+    
+    def save(self, *args, **kwargs):
+        # if message is new, notify all recipients
+        if not self.pk:
+            save_return = super().save(*args, **kwargs)
+            notification_queries.create_message_notifications_for_recipients(self)
+            return save_return
+        else:
+            return super().save(*args, **kwargs)        
 
 
 class Notification(models.Model):

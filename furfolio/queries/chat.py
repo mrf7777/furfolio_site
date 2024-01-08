@@ -1,5 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.db.models import Manager
+from django.db.models import Q
+
 
 from .. import models
 
@@ -39,3 +41,12 @@ def test_user_is_participant_of_chat(
         pk=chat.pk,
         chatparticipant__participant=user,
     ).exists()
+
+
+def get_recipients_of_message(message: 'models.ChatMessage') -> 'Manager[models.User]':
+    # the message author is never a "recipient" of their own message
+    return models.User.objects.filter(
+        chatparticipant__chat=message.chat
+    ).exclude(
+        pk=message.author.pk
+    )

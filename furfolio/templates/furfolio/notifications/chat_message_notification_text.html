@@ -1,0 +1,7 @@
+{% comment "" %}
+Represents the text to show for a chat message notification.
+Expects the following context objects:
+  - message: a chat message object
+{% endcomment %}
+
+<span class="me-2">{% include "../users/badge.html" with user=message.author no_link=True only %}</span> wrote to chat: {{ message.chat.name }}

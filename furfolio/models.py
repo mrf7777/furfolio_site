@@ -812,4 +812,4 @@ class ChatMessageNotification(models.Model):
         return f"\"{self.notification.recipient}\" has a chat message notification"
 
     def friendly_string(self) -> str:
-        return f"Message in chat: {self.message.chat.name}"
+        return f"{self.message.author.username} wrote to chat: {self.message.chat.name}"

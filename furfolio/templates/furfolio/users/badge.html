@@ -3,15 +3,22 @@ Includable user badge: a small and clickable box that represents the user.
 Expects the following objects:
   - user: the user to make the badge of
   - show_avatar: (bool) if true, show the avatar of the user if it exists
+  - no_link: (bool) false by default. if true, the badge is not link
 {% endcomment %}
 
-<a href="{% url "user" user.username %}" class="badge bg-secondary d-inline-flex align-items-center text-decoration-none">
-  {% if show_avatar %}
-    <div class="me-3">
-      {% include "./avatar.html" with user=user only %}
+{% if not no_link%}
+<a href="{% url "user" user.username %}" class="text-decoration-none">
+{% endif %}
+  <div class="badge bg-secondary d-inline-flex align-items-center text-decoration-none">
+    {% if show_avatar %}
+      <div class="me-3">
+        {% include "./avatar.html" with user=user only %}
+      </div>
+    {% endif %}
+    <div>
+        {{ user.username }}
     </div>
-  {% endif %}
-  <div>
-      {{ user.username }}
   </div>
+{% if not no_link %}
 </a>
+{% endif %}

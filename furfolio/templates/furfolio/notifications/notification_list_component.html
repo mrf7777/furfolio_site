@@ -8,7 +8,7 @@ Expects the following context objects:
     {% for notification in notifications %}
         {% if notification.chatmessagenotification %}
             <a href="{% url "open_notification" notification.pk %}" class="d-flex align-items-center list-group-item list-group-item-action {% if not notification.seen %}list-group-item-warning fw-bold{% endif %}">
-                {{notification.chatmessagenotification.friendly_string}}
+                {% include "./chat_message_notification_text.html" with message=notification.chatmessagenotification.message only %}
             </a>
         {% endif %}
     {% endfor %}

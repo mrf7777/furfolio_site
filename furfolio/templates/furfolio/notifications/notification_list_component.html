@@ -7,10 +7,7 @@ Expects the following context objects:
 <div class="list-group">
     {% for notification in notifications %}
         {% if notification.chatmessagenotification %}
-            <a href="{% url "open_notification" notification.pk %}" class="d-flex align-items-center list-group-item list-group-item-action list-group-item-warning">
-                {% if not notification.seen %}
-                <span class="badge bg-secondary me-2">New</span>
-                {% endif %}
+            <a href="{% url "open_notification" notification.pk %}" class="d-flex align-items-center list-group-item list-group-item-action {% if not notification.seen %}list-group-item-warning fw-bold{% endif %}">
                 {{notification.chatmessagenotification.friendly_string}}
             </a>
         {% endif %}

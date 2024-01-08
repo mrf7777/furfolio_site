@@ -17,14 +17,14 @@ class ChatParticipantCanMessageTestCase(TestCase):
         self.chat = utils.make_chat()
         for user in [self.user1, self.user2]:
             utils.add_chat_participant(self.chat, user)
-            
+
     def test_participating_user_message(self):
         utils.make_chat_message(self.chat, self.user1)
-        
+
     def test_non_participating_user_cannot_message(self):
         with self.assertRaises(ValidationError):
             utils.make_chat_message(self.chat, self.user3)
-            
+
 
 class ChatMessageNotificationTestCase(TestCase):
     def setUp(self):
@@ -35,7 +35,7 @@ class ChatMessageNotificationTestCase(TestCase):
         self.chat = utils.make_chat()
         for user in [self.user1, self.user2, self.user3]:
             utils.add_chat_participant(self.chat, user)
-            
+
     def test_message_notifies_participants(self):
         utils.make_chat_message(self.chat, self.user1)
         self.assertQuerySetEqual(

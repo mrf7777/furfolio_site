@@ -77,6 +77,7 @@ def make_chat(
     chat.save()
     return chat
 
+
 def add_chat_participant(
     chat,
     user,
@@ -85,6 +86,7 @@ def add_chat_participant(
     participation.full_clean()
     participation.save()
     return participation
+
 
 def make_chat_message(
     chat,

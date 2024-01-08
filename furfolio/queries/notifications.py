@@ -6,7 +6,9 @@ from . import chat as chat_queries
 from .. import models
 
 
-def create_message_notification(message: 'models.ChatMessage', recipient: 'models.User') -> 'models.ChatMessageNotification':
+def create_message_notification(
+        message: 'models.ChatMessage',
+        recipient: 'models.User') -> 'models.ChatMessageNotification':
     notification = models.Notification.objects.create(
         recipient=recipient,
     )

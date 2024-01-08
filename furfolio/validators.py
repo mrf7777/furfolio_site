@@ -144,7 +144,7 @@ def check_user_is_not_spamming_commissions(user: 'models.User'):
             )
     except ObjectDoesNotExist:
         pass
-    
+
 
 def check_file_field_has_max_size(file_field: FileField, max_file_size: int):
     if file_field.size > max_file_size:

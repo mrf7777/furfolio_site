@@ -6,7 +6,9 @@ from django.db.models import Q
 from .. import models
 
 
-def create_chat_for_commission(commission: 'models.Commission', link_chat_to_commission: bool = True):
+def create_chat_for_commission(
+        commission: 'models.Commission',
+        link_chat_to_commission: bool = True):
     # create chat
     chat = models.Chat.objects.create(
         name=commission.offer.name,
@@ -43,7 +45,8 @@ def test_user_is_participant_of_chat(
     ).exists()
 
 
-def get_recipients_of_message(message: 'models.ChatMessage') -> 'Manager[models.User]':
+def get_recipients_of_message(
+        message: 'models.ChatMessage') -> 'Manager[models.User]':
     # the message author is never a "recipient" of their own message
     return models.User.objects.filter(
         chatparticipant__chat=message.chat

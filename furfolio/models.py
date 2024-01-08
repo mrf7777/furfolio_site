@@ -827,3 +827,22 @@ class OfferPostedNotification(models.Model):
 
     def __str__(self):
         return f"\"{self.notification.recipient}\" has been notified of a new offer \"{self.offer.name}\""
+
+
+class CommissionStateNotification(models.Model):
+    notification = models.OneToOneField(
+        Notification,
+        on_delete=models.CASCADE,
+    )
+    commission = models.ForeignKey(
+        Commission,
+        on_delete=models.CASCADE,
+    )
+    commission_state = models.CharField(
+        name="state",
+        max_length=11,
+        choices=Commission.STATE_CHOICES,
+    )
+
+    def __str__(self):
+        return f"commission of offer \"{self.commission.offer.name}\" has changed its state to {self.commission_state}"

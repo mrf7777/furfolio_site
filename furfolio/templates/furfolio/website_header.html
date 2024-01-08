@@ -36,6 +36,15 @@ Includable website header.
         </ul>
         <ul class="navbar-nav ms-auto">
             <li class="nav-item">
+                {% block notifications_link %}
+                    {% if request.user.is_authenticated %}
+                        <a class="nav-link" href="https://www.google.com">
+                            <img width="22px" src="{% static "symbols/notification-black.svg" %}"></img>
+                        </a>
+                    {% endif %}
+                {% endblock %}
+            </li>
+            <li class="nav-item">
                 {% block logout_link %}
                     {% if request.user.is_authenticated %}
                     <a class="nav-link" href="{% url 'logout' %}">

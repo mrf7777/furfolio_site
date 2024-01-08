@@ -1,4 +1,3 @@
-from email.policy import default
 from PIL import Image
 import PIL.ImageFile
 from io import BytesIO
@@ -757,3 +756,23 @@ class ChatMessage(models.Model):
     def clean(self) -> None:
         furfolio_validators.validate_chat_message_author_is_participant(self)
         return super().clean()
+
+
+class Notification(models.Model):
+    recipient = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    
+    created_date = models.DateTimeField(name="created_date", auto_now_add=True)
+    
+    
+class ChatMessageNotification(models.Model):
+    notification = models.OneToOneField(
+        Notification,
+        on_delete=models.CASCADE,
+    )
+    message = models.ForeignKey(
+        ChatMessage,
+        on_delete=models.CASCADE,
+    )

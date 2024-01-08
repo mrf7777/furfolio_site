@@ -715,10 +715,10 @@ class ChatParticipant(models.Model):
 
 
 class ChatMessage(models.Model):
-    
+
     MESSAGE_MAX_LENGTH = math.ceil(
-    AVERAGE_CHARACTERS_PER_WORD * 350)
-    
+        AVERAGE_CHARACTERS_PER_WORD * 350)
+
     chat = models.ForeignKey(
         Chat,
         on_delete=models.CASCADE,
@@ -757,15 +757,16 @@ class ChatMessage(models.Model):
     def clean(self) -> None:
         furfolio_validators.validate_chat_message_author_is_participant(self)
         return super().clean()
-    
+
     def save(self, *args, **kwargs):
         # if message is new, notify all recipients
         if not self.pk:
             save_return = super().save(*args, **kwargs)
-            notification_queries.create_message_notifications_for_recipients(self)
+            notification_queries.create_message_notifications_for_recipients(
+                self)
             return save_return
         else:
-            return super().save(*args, **kwargs)        
+            return super().save(*args, **kwargs)
 
 
 class Notification(models.Model):
@@ -773,10 +774,13 @@ class Notification(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-    
+    seen = models.BooleanField(
+        default=False,
+    )
+
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
-    
-    
+
+
 class ChatMessageNotification(models.Model):
     notification = models.OneToOneField(
         Notification,

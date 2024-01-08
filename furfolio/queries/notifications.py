@@ -1,6 +1,6 @@
 from django.utils import timezone
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
-from django.db.models import Q
+from django.db.models import Manager
 from django.shortcuts import get_object_or_404
 from . import chat as chat_queries
 from .. import models
@@ -22,3 +22,7 @@ def create_message_notification(
 def create_message_notifications_for_recipients(message: 'models.ChatMessage'):
     for recipient in chat_queries.get_recipients_of_message(message):
         create_message_notification(message, recipient)
+
+
+def get_notifications_for_user(user: 'models.User') -> 'Manager[models.User]':
+    return models.Notification.objects.filter(recipient=user)

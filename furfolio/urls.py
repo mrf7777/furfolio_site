@@ -8,6 +8,7 @@ from .views import tags
 from .views import users
 from .views import pages
 from .views import chat
+from .views import notifications
 from .sitemaps import sitemaps
 from django.contrib.auth import views as auth_views
 from furfolio import forms as furfolio_forms
@@ -115,6 +116,8 @@ urlpatterns = [
         name="tag_category_detail"),
     # chat
     path('chat/<pk>/', chat.Chat.as_view(), name="chat"),
+    # notifications
+    path('notifications/', notifications.Notifications.as_view(), name="notifications"),
     # static pages
     path('legal/', pages.Legal.as_view(), name="legal"),
     path('legal/terms-of-service/',

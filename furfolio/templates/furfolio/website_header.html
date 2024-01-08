@@ -38,7 +38,7 @@ Includable website header.
             <li class="nav-item me-3">
                 {% block notifications_link %}
                     {% if request.user.is_authenticated %}
-                        <a class="nav-link" href="https://www.google.com">
+                        <a class="nav-link" href="{% url "notifications" %}">
                             <img width="22px" src="{% static "symbols/notification-black.svg" %}"></img>
                         </a>
                     {% endif %}

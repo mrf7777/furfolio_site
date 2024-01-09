@@ -7,7 +7,6 @@ from django.utils import timezone
 from datetime import timedelta
 
 
-
 PIL.ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 

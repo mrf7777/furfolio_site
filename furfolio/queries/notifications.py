@@ -44,54 +44,59 @@ def create_offer_posted_notifications_for_followers(offer: 'models.Offer'):
         create_offer_posted_notification(offer, user)
 
 
-def create_commission_state_notification(commission: 'models.Commission', recipient: 'models.User') -> 'models.CommissionStateNotification':
+def create_commission_state_notification(
+        commission: 'models.Commission',
+        recipient: 'models.User') -> 'models.CommissionStateNotification':
     notification = models.Notification.objects.create(
         recipient=recipient,
     )
     commission_state_notification = models.CommissionStateNotification.objects.create(
-        notification=notification,
-        commission=commission,
-        state=commission.state,
-    )
+        notification=notification, commission=commission, state=commission.state, )
     return commission_state_notification
 
 
-def create_commission_state_notification_for_commissioner(commission: 'models.Commission'):
+def create_commission_state_notification_for_commissioner(
+        commission: 'models.Commission'):
     create_commission_state_notification(commission, commission.commissioner)
 
 
-def create_commission_created_notification(commission: 'models.Commission', recipient: 'models.User') -> 'models.CommissionCreatedNotification':
+def create_commission_created_notification(
+        commission: 'models.Commission',
+        recipient: 'models.User') -> 'models.CommissionCreatedNotification':
     notification = models.Notification.objects.create(
         recipient=recipient,
     )
     commission_created_notification = models.CommissionCreatedNotification.objects.create(
-        notification=notification,
-        commission=commission,
-    )
+        notification=notification, commission=commission, )
     return commission_created_notification
 
 
-def create_commission_created_notification_for_author(commission: 'models.Commission'):
+def create_commission_created_notification_for_author(
+        commission: 'models.Commission'):
     create_commission_created_notification(commission, commission.offer.author)
 
 
-def create_user_followed_notification(follower: 'models.User', recipient: 'models.User') -> 'models.UserFollowedNotification':
+def create_user_followed_notification(
+        follower: 'models.User',
+        recipient: 'models.User') -> 'models.UserFollowedNotification':
     notification = models.Notification.objects.create(
         recipient=recipient,
     )
     user_followed_notification = models.UserFollowedNotification.objects.create(
-        notification=notification,
-        follower=follower,
-    )
+        notification=notification, follower=follower, )
     return user_followed_notification
 
 
-def create_user_followed_notification_using_user_following_user(user_following_user: 'models.UserFollowingUser'):
-    create_user_followed_notification(user_following_user.follower, user_following_user.followed)
+def create_user_followed_notification_using_user_following_user(
+        user_following_user: 'models.UserFollowingUser'):
+    create_user_followed_notification(
+        user_following_user.follower,
+        user_following_user.followed)
 
 
 def get_notifications_for_user(user: 'models.User') -> 'Manager[models.User]':
-    return models.Notification.objects.filter(recipient=user).order_by("-created_date")
+    return models.Notification.objects.filter(
+        recipient=user).order_by("-created_date")
 
 
 def get_notification_by_pk(pk) -> 'models.Notification':

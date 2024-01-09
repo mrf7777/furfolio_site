@@ -18,10 +18,11 @@ from ..queries import notifications as notification_queries
 
 
 # limit offer description to about 1000 words
-OFFER_DESCRIPTION_MAX_LENGTH = math.ceil(settings.AVERAGE_CHARACTERS_PER_WORD * 1000)
+OFFER_DESCRIPTION_MAX_LENGTH = math.ceil(
+    settings.AVERAGE_CHARACTERS_PER_WORD * 1000)
 # offer description must have at least about 4 words
-OFFER_DESCRIPTION_MIN_LENGTH = math.floor(settings.AVERAGE_CHARACTERS_PER_WORD * 4)
-
+OFFER_DESCRIPTION_MIN_LENGTH = math.floor(
+    settings.AVERAGE_CHARACTERS_PER_WORD * 4)
 
 
 class Offer(mixins.GetFullUrlMixin, models.Model):

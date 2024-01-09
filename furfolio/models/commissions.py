@@ -82,12 +82,14 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
     def save(self, *args, **kwargs) -> None:
         saved: bool = False
         if self.should_notify_state_change():
-            notification_queries.create_commission_state_notification_for_commissioner(self)
+            notification_queries.create_commission_state_notification_for_commissioner(
+                self)
         if self.should_notify_new_commission():
             if not saved:
                 super().save(*args, **kwargs)
                 saved = True
-            notification_queries.create_commission_created_notification_for_author(self)
+            notification_queries.create_commission_created_notification_for_author(
+                self)
             pass
 
         if not saved:

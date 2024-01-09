@@ -8,8 +8,6 @@ from .commissions import Commission
 from .. import mixins
 
 
-
-
 class Notification(mixins.GetFullUrlMixin, models.Model):
     recipient = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -92,7 +90,7 @@ class CommissionStateNotification(models.Model):
 
     def __str__(self):
         return f"commission of offer \"{self.commission.offer.name}\" has changed its state to {self.state}"
-    
+
 
 class CommissionCreatedNotification(models.Model):
     notification = models.OneToOneField(
@@ -106,7 +104,7 @@ class CommissionCreatedNotification(models.Model):
 
     def __str__(self):
         return f"commission of offer \"{self.commission.offer.name}\" has been created"
-    
+
 
 class UserFollowedNotification(models.Model):
     notification = models.OneToOneField(

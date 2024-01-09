@@ -87,3 +87,7 @@ def make_notification_seen(notification: 'models.Notification'):
     notification.seen = True
     notification.full_clean()
     notification.save()
+
+
+def get_num_unread_notifications_for_user(user: 'models.User') -> int:
+    return get_notifications_for_user(user).filter(seen=False).count()

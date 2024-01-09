@@ -39,7 +39,14 @@ Includable website header.
                 {% block notifications_link %}
                     {% if request.user.is_authenticated %}
                         <a class="nav-link" href="{% url "notifications" %}">
-                            <img width="22px" src="{% static "symbols/notification-black.svg" %}"></img>
+                            <div class="position-relative">
+                                <img width="26px" src="{% static "symbols/notification-black.svg" %}">
+                                {% if request.user.get_num_unread_notifications > 0 %}
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+                                        {{ request.user.get_num_unread_notifications }}
+                                    </span>
+                                {% endif %}
+                            </div>
                         </a>
                     {% endif %}
                 {% endblock %}

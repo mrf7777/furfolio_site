@@ -159,6 +159,9 @@ class User(mixins.GetFullUrlMixin, AbstractUser):
     def get_absolute_url(self):
         return reverse("user", kwargs={"username": self.username})
 
+    def get_num_unread_notifications(self):
+        return notification_queries.get_num_unread_notifications_for_user(self)
+
     def can_commission_offer(self, offer: 'Offer'):
         if self == offer.author:
             return True

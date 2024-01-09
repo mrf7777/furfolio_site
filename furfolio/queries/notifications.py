@@ -94,9 +94,13 @@ def create_user_followed_notification_using_user_following_user(
         user_following_user.followed)
 
 
-def get_notifications_for_user(user: 'models.User') -> 'Manager[models.User]':
-    return models.Notification.objects.filter(
-        recipient=user).order_by("-created_date")
+def get_notifications_for_user(user: 'models.User', include_seen: bool = True) -> 'Manager[models.User]':
+    query = models.Notification.objects.filter(
+        recipient=user)
+    if not include_seen:
+        query = query.filter(seen=False)
+    query = query.order_by("-created_date")
+    return query
 
 
 def get_notification_by_pk(pk) -> 'models.Notification':

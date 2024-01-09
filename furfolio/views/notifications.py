@@ -6,6 +6,7 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from .. import models
+from ..forms import NotificationSearchForm
 from ..queries import notifications as notification_queries
 from .pagination import PageRangeContextMixin, PAGE_SIZE
 
@@ -20,8 +21,16 @@ class Notifications(
     paginate_by = PAGE_SIZE
 
     def get_queryset(self) -> QuerySet[Any]:
-        return notification_queries.get_notifications_for_user(
-            self.request.user)
+        search_form = NotificationSearchForm(self.request.GET)
+        if search_form.is_valid():
+            show_opened = search_form.cleaned_data["opened"]
+            return notification_queries.get_notifications_for_user(
+            self.request.user, show_opened)
+    
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["search_form"] = NotificationSearchForm(self.request.GET)
+        return context
 
 
 class OpenNotification(

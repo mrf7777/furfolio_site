@@ -6,6 +6,10 @@ Notifications
 
 {% block body %}
 
+<form method="get" id="notification_search_form">
+    {{ search_form }}
+</form>
+
 {% if notifications %}
     {% include "./notification_list_component.html" with notifications=notifications only %}
 {% else %}
@@ -15,5 +19,6 @@ Notifications
 {% endif %}
 
 {% include "furfolio/scripts/refresh_page_on_history_navigation.html" %}
+{% include "furfolio/scripts/submit_form_on_change.html" with form_id="notification_search_form" only %}
 
 {% endblock %}

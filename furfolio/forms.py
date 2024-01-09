@@ -113,6 +113,16 @@ class OfferSearchForm(TextSearchForm):
                 self.cleaned_data["price_max"] = price_min
 
 
+class NotificationSearchForm(forms.Form):
+    template_name = "furfolio/form_templates/grid.html"
+    opened = forms.BooleanField(required=False, initial=False)
+
+    def get_context(self):
+        context = super().get_context()
+        context["hide_submit_button"] = True
+        return context
+
+
 class CommissionForm(forms.ModelForm):
     class Meta:
         model = Commission

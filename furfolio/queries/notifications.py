@@ -60,6 +60,21 @@ def create_commission_state_notification_for_commissioner(commission: 'models.Co
     create_commission_state_notification(commission, commission.commissioner)
 
 
+def create_commission_created_notification(commission: 'models.Commission', recipient: 'models.User') -> 'models.CommissionCreatedNotification':
+    notification = models.Notification.objects.create(
+        recipient=recipient,
+    )
+    commission_created_notification = models.CommissionCreatedNotification.objects.create(
+        notification=notification,
+        commission=commission,
+    )
+    return commission_created_notification
+
+
+def create_commission_created_notification_for_author(commission: 'models.Commission'):
+    create_commission_created_notification(commission, commission.offer.author)
+
+
 def get_notifications_for_user(user: 'models.User') -> 'Manager[models.User]':
     return models.Notification.objects.filter(recipient=user).order_by("-created_date")
 

@@ -552,7 +552,8 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
             if not saved:
                 super().save(*args, **kwargs)
                 saved = True
-            send_new_commission_email(self)
+            notification_queries.create_commission_created_notification_for_author(self)
+            pass
 
         if not saved:
             super().save(*args, **kwargs)
@@ -849,7 +850,7 @@ class CommissionStateNotification(models.Model):
     )
 
     def __str__(self):
-        return f"commission of offer \"{self.commission.offer.name}\" has changed its state to {self.commission_state}"
+        return f"commission of offer \"{self.commission.offer.name}\" has changed its state to {self.state}"
     
 
 class CommissionCreatedNotification(models.Model):

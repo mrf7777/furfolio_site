@@ -5,4 +5,7 @@ Expects the following context objects:
   - state: a commission state string that the commission changed to
 {% endcomment %}
 
+{% load static %}
+
+<span class="me-2"><img src="{% static "symbols/left-right-black.svg" %}" style="width: 1.5em;"></span>
 <span class="me-2">{% include "../users/badge.html" with user=commission.commissioner no_link=True only %}</span> commission of "{{ commission.offer.name }}"  changed to state <span class="ms-2">{% include "../commissions/state_badge.html" with state=state only %}</span>

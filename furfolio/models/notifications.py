@@ -1,12 +1,16 @@
 from django.db import models
 from django.conf import settings
 from django.urls import reverse
-
 from .offers import Offer
 from .chat import ChatMessage
 from .commissions import Commission
 from .. import mixins
 
+"""
+When creating a notification submodel,
+add a reciever that deletes the parent model object
+when its child is deleted.
+"""
 
 class Notification(mixins.GetFullUrlMixin, models.Model):
     recipient = models.ForeignKey(

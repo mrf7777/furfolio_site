@@ -21,7 +21,6 @@ from .queries import commissions as commission_queries
 from .queries import users as user_queries
 from .queries import offers as offer_queries
 from .queries import notifications as notification_queries
-from .email import send_commission_state_changed_email, send_new_offer_email, send_new_commission_email
 
 
 PIL.ImageFile.LOAD_TRUNCATED_IMAGES = True

@@ -1,6 +1,10 @@
-{% extends "base.html" %}
+{% extends "furfolio/layouts/title_body.html" %}
 
-{% block content %}
+{% block title %}
+{{ chat.name }}
+{% endblock %}
+
+{% block body %}
 
 {% for message in messages %}
     <div class="row mb-2">

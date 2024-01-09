@@ -30,4 +30,5 @@ class Chat(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView):
         context = super().get_context_data(**kwargs)
         chat = self.get_chat()
         context["messages"] = chat_queries.get_messages_from_chat(chat)
+        context["chat"] = chat
         return context

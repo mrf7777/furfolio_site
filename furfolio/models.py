@@ -181,6 +181,11 @@ class UserFollowingUser(models.Model):
     followed = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="followed")
 
+    created_date = models.DateTimeField(
+        name="created_date",
+        auto_now_add=True,
+    )
+
     def __str__(self):
         return f"{self.follower.username} is following {self.followed.username}"
 

@@ -18,6 +18,10 @@ Expects the following context objects:
             <a href="{% url "open_notification" notification.pk %}" class="d-flex align-items-center list-group-item list-group-item-action list-group-item-info{% if not notification.seen %}fw-bold{% endif %}">
                 {% include "./commission_state_notification_text.html" with commission=notification.commissionstatenotification.commission state=notification.commissionstatenotification.state only %}
             </a>
+        {% elif notification.commissioncreatednotification %}
+            <a href="{% url "open_notification" notification.pk %}" class="d-flex align-items-center list-group-item list-group-item-action list-group-item-info{% if not notification.seen %}fw-bold{% endif %}">
+                {% include "./commission_created_notification_text.html" with commission=notification.commissioncreatednotification.commission only %}
+            </a>
         {% endif %}
         
     {% endfor %}

@@ -848,3 +848,17 @@ class CommissionStateNotification(models.Model):
 
     def __str__(self):
         return f"commission of offer \"{self.commission.offer.name}\" has changed its state to {self.commission_state}"
+    
+
+class CommissionCreatedNotification(models.Model):
+    notification = models.OneToOneField(
+        Notification,
+        on_delete=models.CASCADE,
+    )
+    commission = models.ForeignKey(
+        Commission,
+        on_delete=models.CASCADE,
+    )
+
+    def __str__(self):
+        return f"commission of offer \"{self.commission.offer.name}\" has been created"

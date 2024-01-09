@@ -10,9 +10,6 @@ from datetime import timedelta
 PIL.ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
-AVERAGE_CHARACTERS_PER_WORD = 4.7
-
-
 def remove_transparency(im, bg_colour=(255, 255, 255)):
 
     # Only process if image has transparency

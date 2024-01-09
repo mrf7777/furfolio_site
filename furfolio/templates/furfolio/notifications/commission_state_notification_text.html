@@ -1,0 +1,8 @@
+{% comment "" %}
+Represents the text to show for a commission state change.
+Expects the following context objects:
+  - commission: the commission the notification is talking about
+  - state: a commission state string that the commission changed to
+{% endcomment %}
+
+<span class="me-2">{% include "../users/badge.html" with user=commission.commissioner no_link=True only %}</span> commission of "{{ commission.offer.name }}"  changed to state <span class="ms-2">{% include "../commissions/state_badge.html" with state=state only %}</span>

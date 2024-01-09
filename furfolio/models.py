@@ -186,6 +186,14 @@ class UserFollowingUser(models.Model):
         auto_now_add=True,
     )
 
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            super().save(*args, **kwargs)
+            notification_queries.create_user_followed_notification_using_user_following_user(self)
+        else:
+            super().save(*args, **kwargs)
+        
+
     def __str__(self):
         return f"{self.follower.username} is following {self.followed.username}"
 
@@ -809,6 +817,8 @@ class Notification(mixins.GetFullUrlMixin, models.Model):
             return self.commissionstatenotification.commission.get_absolute_url()
         elif hasattr(self, "commissioncreatednotification"):
             return self.commissioncreatednotification.commission.get_absolute_url()
+        elif hasattr(self, "userfollowednotification"):
+            return self.userfollowednotification.follower.get_absolute_url()
         else:
             return None
 
@@ -872,3 +882,17 @@ class CommissionCreatedNotification(models.Model):
 
     def __str__(self):
         return f"commission of offer \"{self.commission.offer.name}\" has been created"
+    
+
+class UserFollowedNotification(models.Model):
+    notification = models.OneToOneField(
+        Notification,
+        on_delete=models.CASCADE,
+    )
+    follower = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+
+    def __str__(self):
+        return f"user \"{self.follower.username}\" is following you \"{self.notification.recipient.username}\""

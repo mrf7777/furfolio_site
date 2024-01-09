@@ -1,0 +1,7 @@
+{% comment "" %}
+Represents the text to show for a user is following you notification
+Expects the following context objects:
+  - follower: a user object that is considered following
+{% endcomment %}
+
+<span class="me-2">{% include "../users/badge.html" with user=follower no_link=True only %}</span> has followed you

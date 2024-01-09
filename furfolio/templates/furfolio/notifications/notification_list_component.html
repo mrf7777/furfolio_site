@@ -11,7 +11,7 @@ Expects the following context objects:
                 {% include "./chat_message_notification_text.html" with message=notification.chatmessagenotification.message only %}
             </a>
         {% elif notification.offerpostednotification %}
-            <a href="{% url "open_notification" notification.pk %}" class="d-flex align-items-center list-group-item list-group-item-action list-group-item-success {% if not notification.seen %}fw-bold{% endif %}">
+            <a href="{% url "open_notification" notification.pk %}" class="d-flex align-items-center list-group-item list-group-item-action list-group-item-secondary {% if not notification.seen %}fw-bold{% endif %}">
                 {% include "./offer_posted_notification_text.html" with offer=notification.offerpostednotification.offer only %}
             </a>
         {% elif notification.commissionstatenotification %}
@@ -21,6 +21,10 @@ Expects the following context objects:
         {% elif notification.commissioncreatednotification %}
             <a href="{% url "open_notification" notification.pk %}" class="d-flex align-items-center list-group-item list-group-item-action list-group-item-info {% if not notification.seen %}fw-bold{% endif %}">
                 {% include "./commission_created_notification_text.html" with commission=notification.commissioncreatednotification.commission only %}
+            </a>
+        {% elif notification.userfollowednotification %}
+            <a href="{% url "open_notification" notification.pk %}" class="d-flex align-items-center list-group-item list-group-item-action list-group-item-success {% if not notification.seen %}fw-bold{% endif %}">
+                {% include "./user_followed_notification_text.html" with follower=notification.userfollowednotification.follower only %}
             </a>
         {% endif %}
         

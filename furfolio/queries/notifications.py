@@ -75,6 +75,21 @@ def create_commission_created_notification_for_author(commission: 'models.Commis
     create_commission_created_notification(commission, commission.offer.author)
 
 
+def create_user_followed_notification(follower: 'models.User', recipient: 'models.User') -> 'models.UserFollowedNotification':
+    notification = models.Notification.objects.create(
+        recipient=recipient,
+    )
+    user_followed_notification = models.UserFollowedNotification.objects.create(
+        notification=notification,
+        follower=follower,
+    )
+    return user_followed_notification
+
+
+def create_user_followed_notification_using_user_following_user(user_following_user: 'models.UserFollowingUser'):
+    create_user_followed_notification(user_following_user.follower, user_following_user.followed)
+
+
 def get_notifications_for_user(user: 'models.User') -> 'Manager[models.User]':
     return models.Notification.objects.filter(recipient=user).order_by("-created_date")
 

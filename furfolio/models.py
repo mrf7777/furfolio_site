@@ -797,6 +797,8 @@ class Notification(mixins.GetFullUrlMixin, models.Model):
             return self.chatmessagenotification.message.get_absolute_url()
         elif hasattr(self, "offerpostednotification"):
             return self.offerpostednotification.offer.get_absolute_url()
+        elif hasattr(self, "commissionstatenotification"):
+            return self.commissionstatenotification.commission.get_absolute_url()
         else:
             return None
 

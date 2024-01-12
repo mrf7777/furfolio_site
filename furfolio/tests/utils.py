@@ -70,9 +70,8 @@ def make_commission(
 
 
 def make_chat(
-    name="Chat"
 ):
-    chat = models.Chat(name=name)
+    chat = models.Chat()
     chat.full_clean()
     chat.save()
     return chat

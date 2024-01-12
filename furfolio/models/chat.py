@@ -13,7 +13,16 @@ class Chat(models.Model):
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)
 
     def __str__(self):
-        return self.name
+        return self.get_name()
+    
+    def get_name(self) -> str:
+        # for each possible child model of Chat, try to get the name
+        try:
+            return self.commissionchat.get_name()
+        except CommissionChat.DoesNotExist:
+            pass
+
+        return "Generic Chat"
 
 
 class CommissionChat(Chat):
@@ -21,6 +30,9 @@ class CommissionChat(Chat):
         Commission,
         on_delete=models.CASCADE,
     )
+
+    def get_name(self) -> str:
+        return f"{self.commission.offer.name}"
 
 
 class ChatParticipant(models.Model):

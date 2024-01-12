@@ -4,4 +4,7 @@ Expects the following context objects:
   - message: a chat message object
 {% endcomment %}
 
+{% load static %}
+
+<span class="me-2"><img src="{% static "symbols/chat-black.svg" %}" style="width: 1.5em;"></span>
 <span class="me-2">{% include "../users/badge.html" with user=message.author no_link=True only %}</span> wrote to chat: {{ message.chat.get_name }}

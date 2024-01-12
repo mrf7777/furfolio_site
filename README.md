@@ -290,3 +290,12 @@
 # ToS creation 
 - allow user to create ToS as a separate object
 - encourage new creators to create a ToS as their first step.
+
+# trouble center it1
+- trouble ticket
+  - a trouble ticket is for users to submit requests and resolve conflicts
+    - what kind of problems?
+      - forgot password
+      - change username
+      - report breach of ToS by another user
+      - report abuse

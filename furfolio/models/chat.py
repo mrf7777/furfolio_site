@@ -4,6 +4,7 @@ from django.urls import reverse
 import math
 
 from .. import validators as furfolio_validators
+from .commissions import Commission
 from ..queries import notifications as notification_queries
 
 
@@ -19,6 +20,13 @@ class Chat(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class CommissionChat(Chat):
+    commission = models.ForeignKey(
+        Commission,
+        on_delete=models.CASCADE,
+    )
 
 
 class ChatParticipant(models.Model):

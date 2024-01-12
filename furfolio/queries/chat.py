@@ -6,25 +6,19 @@ from django.db.models import Q
 from .. import models
 
 
-def create_chat_for_commission(
-        commission: 'models.Commission',
-        link_chat_to_commission: bool = True):
-    # create chat
-    chat = models.Chat.objects.create(
-        name=commission.offer.name,
+def create_chat_for_commission(commission: 'models.Commission'):
+    commission_chat = models.CommissionChat.objects.create(
+        name="TODO: remove chat name field",
+        commission=commission,
     )
     # add participants
     commissioner = commission.commissioner
     commissionee = commission.offer.author
     for user in [commissioner, commissionee]:
         models.ChatParticipant.objects.create(
-            chat=chat,
-            participant=user
+            chat=commission_chat,
+            participant=user,
         )
-    # point commission to the chat
-    if link_chat_to_commission:
-        commission.chat = chat
-        commission.save()
 
 
 def get_messages_from_chat(

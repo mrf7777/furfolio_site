@@ -9,12 +9,6 @@ from ..queries import notifications as notification_queries
 
 
 class Chat(models.Model):
-    name = models.CharField(
-        max_length=160,
-        name="name",
-        help_text="The name of the chat room.",
-    )
-
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)
 

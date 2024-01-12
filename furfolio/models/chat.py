@@ -15,7 +15,7 @@ class Chat(models.Model):
     def __str__(self):
         return self.get_name()
     
-    def get_name(self) -> str:
+    def get_name(self):
         # for each possible child model of Chat, try to get the name
         try:
             return self.commissionchat.get_name()
@@ -31,7 +31,7 @@ class CommissionChat(Chat):
         on_delete=models.CASCADE,
     )
 
-    def get_name(self) -> str:
+    def get_name(self):
         return f"{self.commission.offer.name}"
 
 

@@ -67,12 +67,6 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
         choices=STATE_CHOICES,
         default=STATE_REVIEW,
     )
-    chat = models.ForeignKey(
-        "Chat",
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-    )
 
     tracker = FieldTracker()
 

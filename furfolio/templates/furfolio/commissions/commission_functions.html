@@ -10,9 +10,9 @@ Expects the following objects:
 {% endcomment %}
 
 <div class="d-flex flex-wrap">
-    {% if commission.chat %}
+    {% if commission.get_chat %}
         <div class="flex-column me-0">
-            <div class="mb-1"><a class="text-reset" href="{% url "chat" commission.chat.pk %}">{% include "../chat/chat_button.html" %}</a></div>
+            <div class="mb-1"><a class="text-reset" href="{% url "chat" commission.get_chat.pk %}">{% include "../chat/chat_button.html" %}</a></div>
         </div>
         {% if some_space_between_functions %}
             <div class="me-5"></div>

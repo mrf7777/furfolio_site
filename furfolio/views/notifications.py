@@ -8,7 +8,7 @@ from django.urls import reverse_lazy
 from .. import models
 from ..forms import NotificationSearchForm
 from ..queries import notifications as notification_queries
-from .pagination import PageRangeContextMixin, PAGE_SIZE
+from .pagination import PageRangeContextMixin
 
 
 class Notifications(
@@ -18,7 +18,7 @@ class Notifications(
     model = models.Notification
     context_object_name = "notifications"
     template_name = "furfolio/notifications/notification_list.html"
-    paginate_by = PAGE_SIZE
+    paginate_by = 20
 
     def get_queryset(self) -> QuerySet[Any]:
         search_form = NotificationSearchForm(self.request.GET)

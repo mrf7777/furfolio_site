@@ -22,9 +22,9 @@ Expects the following context objects:
             <li class="active page-item">
                 <span class="page-link border-primary">{{ i }}</span>
             </li>
-        {% elif i == paginator.ELLIPSIS %}
+        {% elif i == page_obj.paginator.ELLIPSIS %}
             <li class="page-item">
-                <span class="page-link border-primary">{{ paginator.ELLIPSIS }}</span>
+                <span class="page-link border-primary">{{ page_obj.paginator.ELLIPSIS }}</span>
             </li>
         {% else %}
             <li class="page-item">

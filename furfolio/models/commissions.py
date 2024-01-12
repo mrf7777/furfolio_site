@@ -8,6 +8,7 @@ from .offers import Offer
 from .. import validators as furfolio_validators
 from .. import mixins
 from ..queries import notifications as notification_queries
+from ..queries import chat as chat_queries
 
 
 # limit initial request text to about 800 words
@@ -134,3 +135,6 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
 
     def is_self_managed(self):
         return self.commissioner == self.offer.author
+    
+    def get_chat(self):
+        return chat_queries.get_commission_chat_by_commission(self)

@@ -30,6 +30,15 @@ def get_chat_by_pk(pk) -> 'models.Chat':
     return get_object_or_404(models.Chat, pk=pk)
 
 
+def get_commission_chat_by_commission(commission: 'models.Commission') -> 'models.CommissionChat' | None:
+    try:
+        return models.CommissionChat.objects.get(
+            commission=commission,
+        )
+    except models.CommissionChat.DoesNotExist:
+        return None
+
+
 def test_user_is_participant_of_chat(
         chat: 'models.Chat',
         user: 'models.User') -> bool:

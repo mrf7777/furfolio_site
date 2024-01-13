@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Notification, ChatMessageNotification, Chat, ChatMessage, ChatParticipant, User, Offer, Commission, UserFollowingUser, Tag, TagCategory
+from .models import SupportTicket, Notification, ChatMessageNotification, Chat, ChatMessage, ChatParticipant, User, Offer, Commission, UserFollowingUser, Tag, TagCategory
 
 admin.site.register(User)
 admin.site.register(Offer)
@@ -13,3 +13,4 @@ admin.site.register(ChatParticipant)
 admin.site.register(ChatMessage)
 admin.site.register(Notification)
 admin.site.register(ChatMessageNotification)
+admin.site.register(SupportTicket)

@@ -9,7 +9,6 @@ from .. import models
 
 def create_chat_for_commission(commission: 'models.Commission'):
     commission_chat = models.CommissionChat.objects.create(
-        name="TODO: remove chat name field",
         commission=commission,
     )
     # add participants

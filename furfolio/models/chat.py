@@ -5,6 +5,7 @@ import math
 
 from .. import validators as furfolio_validators
 from .commissions import Commission
+from .support import SupportTicket
 from ..queries import notifications as notification_queries
 
 
@@ -21,6 +22,11 @@ class Chat(models.Model):
             return self.commissionchat.get_name()
         except CommissionChat.DoesNotExist:
             pass
+        
+        try:
+            return self.supportticketchat.get_name()
+        except SupportTicketChat.DoesNotExist:
+            pass
 
         return "Generic Chat"
 
@@ -33,6 +39,16 @@ class CommissionChat(Chat):
 
     def get_name(self):
         return f"{self.commission.offer.name}"
+
+
+class SupportTicketChat(Chat):
+    support_ticket = models.ForeignKey(
+        SupportTicket,
+        on_delete=models.CASCADE,
+    )
+    
+    def get_name(self):
+        return f"{self.support_ticket.title}"
 
 
 class ChatParticipant(models.Model):

@@ -9,6 +9,7 @@ from .views import users
 from .views import pages
 from .views import chat
 from .views import notifications
+from .views import support
 from .sitemaps import sitemaps
 from django.contrib.auth import views as auth_views
 from furfolio import forms as furfolio_forms
@@ -125,6 +126,8 @@ urlpatterns = [
         'notifications/<pk>/view/',
         notifications.OpenNotification.as_view(),
         name="open_notification"),
+    # support
+    path('support/', support.Support.as_view(), name="support"),
     # static pages
     path('legal/', pages.Legal.as_view(), name="legal"),
     path('legal/terms-of-service/',

@@ -14,7 +14,7 @@ class Chat(models.Model):
 
     def __str__(self):
         return self.get_name()
-    
+
     def get_name(self):
         # for each possible child model of Chat, try to get the name
         try:

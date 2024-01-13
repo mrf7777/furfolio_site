@@ -12,6 +12,7 @@ add a reciever that deletes the parent model object
 when its child is deleted.
 """
 
+
 class Notification(mixins.GetFullUrlMixin, models.Model):
     recipient = models.ForeignKey(
         settings.AUTH_USER_MODEL,

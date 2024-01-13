@@ -135,6 +135,6 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
 
     def is_self_managed(self):
         return self.commissioner == self.offer.author
-    
+
     def get_chat(self):
         return chat_queries.get_commission_chat_by_commission(self)

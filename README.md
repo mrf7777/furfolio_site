@@ -28,6 +28,7 @@
   - [ ] consider recaptch v3
   - [ ] consider other approaches and tools
     - [ ] Email verification.
+    - [x] honeypot
 - [x] limit thumbnail aspect ratio and size
 - [ ] guard against large uploads
   - [ ] consider dockerfile with nginx
@@ -37,6 +38,12 @@
 - [x] implement email for production
 - [x] allow account disabling?
   - django already solved this
+- [ ] beta release features
+  - [x] separate chat
+  - [ ] notifications instead of emails
+  - [ ] trouble ticket system
+  - [ ] (optional) transparent commission for self-managed commissions
+  - [ ] (optional) client-size file upload size detection
 
 # search ideas
 
@@ -283,3 +290,12 @@
 # ToS creation 
 - allow user to create ToS as a separate object
 - encourage new creators to create a ToS as their first step.
+
+# trouble center it1
+- trouble ticket
+  - a trouble ticket is for users to submit requests and resolve conflicts
+    - what kind of problems?
+      - forgot password
+      - change username
+      - report breach of ToS by another user
+      - report abuse

@@ -1,0 +1,10 @@
+{% comment "" %}
+Represents the text to show for a posted offer notification.
+Expects the following context objects:
+  - offer: the offer to show
+{% endcomment %}
+
+{% load static %}
+
+<span class="me-2"><img src="{% static "symbols/bam-black.svg" %}" style="width: 1.5em;"></span>
+<span class="me-2">{% include "../users/badge.html" with user=offer.author no_link=True only %}</span> posted a new offer: {{ offer.name }}

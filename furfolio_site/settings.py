@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'pwa',
     'storages',
     'furfolio',
+    'honeypot',
 ]
 
 SITE_ID = 1
@@ -298,8 +299,16 @@ else:
     DEFAULT_FROM_EMAIL = os.getenv("EMAIL_FROM_ADDRESS")
     REPLY_EMAIL = os.getenv("EMAIL_REPLY_ADDRESS")
 
+# security
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 if DEVELOPMENT_MODE is False:
     SECURE_HSTS_SECONDS = 60
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+# honeypots
+HONEYPOT_FIELD_NAME = "phone_numbers"
+HONEYPOT_VALUE = "31232451202"
+
+# words
+AVERAGE_CHARACTERS_PER_WORD = 4.7

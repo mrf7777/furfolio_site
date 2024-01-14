@@ -1,0 +1,43 @@
+{% extends "furfolio/layouts/title_body.html" %}
+
+{% block title %}
+    {% if chat.commissionchat %}
+        Chat for commission <a href="{% url "commission_detail" chat.commissionchat.commission.pk %}" class="text-decoration-none">{{ chat.commissionchat.get_name }}</a>
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+
+{% for message in messages %}
+    <div class="row mb-2">
+        {% if message.author.pk == request.user.pk %}
+            <div class="col-md-6"></div>
+            <div class="col-md-6">
+                {% if message.attachment %}
+                    {% include "./message_card.html" with id=message.get_html_id text=message.message sender="CURRENT_USER" attachment_url=message.attachment.url attachment_name=message.attachment.name only %}
+                {% else %}
+                    {% include "./message_card.html" with id=message.get_html_id text=message.message sender="CURRENT_USER" only %}
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="col-md-6">
+                {% if message.attachment %}
+                    {% include "./message_card.html" with id=message.get_html_id user=message.author text=message.message sender="NON_CURRENT_USER" attachment_url=message.attachment.url attachment_name=message.attachment.name only %}
+                {% else %}
+                    {% include "./message_card.html" with id=message.get_html_id user=message.author text=message.message sender="NON_CURRENT_USER" only %}
+                {% endif %}
+            </div>
+            <div class="col-md-6"></div>
+        {% endif %}
+    </div>
+{% endfor %}
+
+<form method="post" id="chat-form" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" id="chat-submit-button" class="btn btn-primary" value="Send">
+</form>
+
+{% include "furfolio/scripts/hide_on_submit.html" with form_id="chat-form" id_to_hide="chat-submit-button" only %}
+
+{% endblock %}

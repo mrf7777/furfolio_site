@@ -1,0 +1,30 @@
+{% extends "furfolio/layouts/title_body.html" %}
+
+{% block title %}
+Notifications
+{% endblock %}
+
+{% block body %}
+
+<form method="get" id="notification_search_form">
+    {{ search_form }}
+</form>
+
+{% if notifications %}
+    {% include "./notification_list_component.html" with notifications=notifications only %}
+
+    {% if is_paginated %}
+        <div class="mt-3 d-flex justify-content-center">
+            {% include "furfolio/components/pagination_buttons.html" with page_obj=page_obj page_range=page_range request=request only %}
+        </div>
+    {% endif %}
+{% else %}
+    <p>
+        Looks like you are all caught up on notifications. Great!
+    </p>
+{% endif %}
+
+{% include "furfolio/scripts/refresh_page_on_history_navigation.html" %}
+{% include "furfolio/scripts/submit_form_on_change.html" with form_id="notification_search_form" only %}
+
+{% endblock %}

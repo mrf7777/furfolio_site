@@ -1,0 +1,15 @@
+{% comment "" %}
+When the user naviages the browser history and hits a page
+with this script, this script will force a refresh.
+Very useful for updating a page when something just changed and the user
+goes to the previous page.
+{% endcomment %}
+
+<script>
+    // https://stackoverflow.com/a/43043658
+    window.addEventListener( "pageshow", function ( event ) {
+        if(event.persisted || window.performance.getEntriesByType("navigation")[0].type === "back_forward") {
+            window.location.reload()
+        }
+    });
+</script>

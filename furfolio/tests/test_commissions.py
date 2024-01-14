@@ -1,4 +1,3 @@
-from ctypes import util
 from django.test import TestCase
 from ..models import Commission, User, Offer
 from django.utils import timezone

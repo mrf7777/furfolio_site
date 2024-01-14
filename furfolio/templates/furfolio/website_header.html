@@ -35,7 +35,23 @@ Includable website header.
             </li>
         </ul>
         <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
+            <li class="nav-item me-3">
+                {% block notifications_link %}
+                    {% if request.user.is_authenticated %}
+                        <a class="nav-link" href="{% url "notifications" %}">
+                            <div class="position-relative" style="width: fit-content;">
+                                <img width="26px" src="{% static "symbols/notification-black.svg" %}">
+                                {% if request.user.get_num_unread_notifications > 0 %}
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+                                        {{ request.user.get_num_unread_notifications }}
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </a>
+                    {% endif %}
+                {% endblock %}
+            </li>
+            <li class="nav-item me-3">
                 {% block logout_link %}
                     {% if request.user.is_authenticated %}
                     <a class="nav-link" href="{% url 'logout' %}">
@@ -64,7 +80,7 @@ Includable website header.
             </li>
             <li class="nav-item">
                 {% if request.user.is_authenticated %}
-                    <a class="nav-link" href="{% url "user" request.user.username %}">Profile</a>
+                    <a class="nav-link" href="{% url "user" request.user.username %}">{% include "./users/avatar.html" with user=request.user only %}</a>
                 {% endif %}
             </li>
         </ul>

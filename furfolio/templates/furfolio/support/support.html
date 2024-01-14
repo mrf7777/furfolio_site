@@ -1,0 +1,16 @@
+{% extends "furfolio/layouts/title_body.html" %}
+
+{% block title %}
+Support
+{% endblock %}
+
+{% block body %}
+
+{# TODO: create a support ticket creation view and link here #}
+<a>Create support ticket</a>
+
+{% for ticket in support_tickets %}
+    {{ ticket }}
+{% endfor %}
+
+{% endblock %}

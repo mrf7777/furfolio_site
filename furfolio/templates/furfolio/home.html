@@ -3,69 +3,13 @@
 {% load static %}
 
 {% block content %}
-<div class="d-flex flex-column align-items-center">
-    <div class="mb-3">
-        <img style="width: 12em;" src="{% static "logos/light/light-chrom-f.svg" %}">
-    </div>
-    <div class="fs-1 mb-3">
+<div class="d-flex flex-column align-items-center mb-5">
+    <div class="fs-1 mb-3 fw-bold">
         Furfolio
     </div>
-    <div class="fs-4 mb-5">
-        Simple, powerful commission management
+    <div class="fs-4">
+        Commission management
     </div>
-</div>
-
-<div class="bg-secondary-subtle rounded p-1 mb-5">
-    <div class="row mb-5">
-        <div class="col-md-1">
-        </div>
-        <div class="col-md-5 fs-1">
-            Post Offers
-        </div>
-        <div class="col-md-6 fs-4">
-            Publish offers to accept commissions. 
-        </div>
-    </div>
-
-    <div class="row mb-5">
-        <div class="col-md-1">
-        </div>
-        <div class="col-md-5 fs-1">
-            Commissions
-        </div>
-        <div class="col-md-6 fs-4">
-            Request and manage commissions of offers.
-        </div>
-    </div>
-
-    <div class="row mb-5">
-        <div class="col-md-1">
-        </div>
-        <div class="col-md-5 fs-1">
-            Tracking
-        </div>
-        <div class="col-md-6 fs-4">
-            Track the status of commissions.
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-1">
-        </div>
-        <div class="col-md-5 fs-1">
-            Chat
-        </div>
-        <div class="col-md-6 fs-4">
-            Define commission requirements through chat.
-        </div>
-    </div>
-</div>
-
-<div class="d-flex flex-column align-items-center mb-5">
-    <div class="fs-2 mb-3">
-        Take a sneek-peak at the avaliable offers
-    </div>
-    <a class="btn btn-primary fs-4" href="{% url "offer_list" %}">Offers</a>
 </div>
 
 <div class="d-flex flex-column align-items-center mb-3">
@@ -78,24 +22,80 @@
     <div class="row mb-5">
         <div class="col-md-1">
         </div>
-        <div class="col-md-5 fs-1">
-            Furry First
+        <div class="col-md-5 fs-2 fw-bold">
+            Cohesion
         </div>
         <div class="col-md-6 fs-4">
-            The furry fandom is first. 
+            A single place to manage the commission lifecycle.
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-5 fs-2 fw-bold">
+            Simplicity
+        </div>
+        <div class="col-md-6 fs-4">
+            Tools that are easy to use. Automation where possible.
+        </div>
+    </div>
+</div>
+
+<div class="d-flex flex-column align-items-center mb-3">
+    <div class="fs-1">
+        The lifecycle
+    </div>
+</div>
+
+<div class="bg-secondary-subtle rounded p-1 mb-5">
+    <div class="row mb-5">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-5 fs-2 fw-bold">
+            1. Offers
+        </div>
+        <div class="col-md-6 fs-4">
+            Publish offers to accept commissions. 
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-5 fs-2 fw-bold">
+            2. Commissions
+        </div>
+        <div class="col-md-6 fs-4">
+            Receive commissions of offers.
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-1">
         </div>
-        <div class="col-md-5 fs-1">
-            Cohesion
+        <div class="col-md-5 fs-2 fw-bold">
+            3. Fulfillment 
         </div>
         <div class="col-md-6 fs-4">
-            Less tools to manage the commission lifecycle.
+            Chat about, track, and work on commissions.
         </div>
     </div>
 </div>
+
+<div class="d-flex flex-column align-items-center mb-5">
+    <div class="fs-2 mb-3">
+        Take a look at some current offers.
+    </div>
+    <a class="btn btn-primary fs-4" href="{% url "offer_list" %}">Offers</a>
+</div>
+
+
+<div class="d-flex flex-column align-items-center mb-5">
+    <div class="fs-2 mb-3">
+        Learn more.
+    </div>
+    <a class="btn btn-primary fs-4" href="{% url "what_is_furfolio" %}">What is Furfolio?</a>
+</div>
+
 
 {% endblock %}

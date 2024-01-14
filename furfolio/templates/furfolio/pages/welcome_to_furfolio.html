@@ -10,11 +10,7 @@ Welcome to Furfolio!
 
 {% block body %}
 <p>
-    Thank you for signing up for Furfolio and being a part of this community!
-</p>
-
-<p>
-    You are most likely here because you just created an account with us. Here is a 30 second rundown of Furfolio.
+    Thank you for your interest in Furfolio and being a part of this community!
 </p>
 
 <h2>Furfolio in 30 seconds</h2>
@@ -27,7 +23,7 @@ Welcome to Furfolio!
     Creators create <b>Offers</b>. They look like this:
 </p>
 
-<div class="my-4" style="pointer-events: none;">
+<div class="my-5" style="pointer-events: none;">
     {% include "furfolio/offers/offer_card.html" with offer=example_offer use_example_thumbnail=True only %}
 </div>
 
@@ -35,7 +31,7 @@ Welcome to Furfolio!
     A Buyer can request a <b>Commission</b> of an offer. A Commission looks like this:
 </p>
 
-<div class="my-4" style="pointer-events: none;">
+<div class="my-5" style="pointer-events: none;">
     {% include "furfolio/commissions/commission_card.html" with commission=example_commission show_status=True  only %}
 </div>
 

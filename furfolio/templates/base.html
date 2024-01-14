@@ -40,7 +40,7 @@
     {% endblock %}
 
     <main class="flex-grow-1">
-        <div class="{% block content_container_class %}container-xl{% endblock %} mb-3">
+        <div class="{% block content_container_class %}container-lg{% endblock %} mb-3">
             {% block content %}
             {% endblock %}
         </div>
@@ -58,7 +58,8 @@
                 <a class="nav-link" href="{% url "privacy_policy" %}">Privacy Policy</a>
                 <a class="nav-link mb-3" href="{% url "credit" %}">Credit</a>
                 <a class="nav-link" href="{% url "tags" %}">Tags</a>
-                <a class="nav-link" href="{% url "help" %}">Help</a>
+                <a class="nav-link mb-3" href="{% url "help" %}">Help</a>
+                <span class="nav-link">{% include "furfolio/3rd/paypal_donation_button.html" %}</span>
             </div>
         </div>
     </footer>

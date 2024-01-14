@@ -1,0 +1,6 @@
+RATING_GENERAL = "GEN"
+RATING_ADULT = "ADL"
+RATING_TO_CHOICES = [
+    (RATING_GENERAL, "General"),
+    (RATING_ADULT, "Adult"),
+]

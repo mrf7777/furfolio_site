@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.forms import EmailField
 from django import forms
 from django.forms.renderers import TemplatesSetting
-from .models import User, Offer, Commission, CommissionMessage, Tag, TagCategory
+from .models import ChatMessage, User, Offer, Commission, Tag, TagCategory
 from . import validators as furfolio_validators
 
 
@@ -56,7 +56,8 @@ class OfferForm(forms.ModelForm):
     def clean_cutoff_date(self):
         cutoff_date = self.cleaned_data["cutoff_date"]
         furfolio_validators.validate_datetime_at_least_12_hours(cutoff_date)
-        furfolio_validators.validate_datetime_is_not_over_year_into_future(cutoff_date)
+        furfolio_validators.validate_datetime_is_not_over_year_into_future(
+            cutoff_date)
         return cutoff_date
 
     class Meta:
@@ -112,6 +113,16 @@ class OfferSearchForm(TextSearchForm):
                 self.cleaned_data["price_max"] = price_min
 
 
+class NotificationSearchForm(forms.Form):
+    template_name = "furfolio/form_templates/grid.html"
+    opened = forms.BooleanField(required=False, initial=False)
+
+    def get_context(self):
+        context = super().get_context()
+        context["hide_submit_button"] = True
+        return context
+
+
 class CommissionForm(forms.ModelForm):
     class Meta:
         model = Commission
@@ -131,12 +142,12 @@ class UpdateCommissionForm(CommissionForm):
                   "state", "initial_request_text", "attachment"]
 
 
-class CommissionMessageForm(forms.ModelForm):
+class ChatMessageForm(forms.ModelForm):
     class Meta:
-        model = CommissionMessage
-        fields = ["commission", "author", "message", "attachment"]
+        model = ChatMessage
+        fields = ["chat", "author", "message", "attachment"]
         widgets = {
-            "commission": forms.HiddenInput(),
+            "chat": forms.HiddenInput(),
             "author": forms.HiddenInput(),
         }
 

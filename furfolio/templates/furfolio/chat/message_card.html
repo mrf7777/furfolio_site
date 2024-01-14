@@ -8,11 +8,15 @@ Expects the following context objects:
   - sender: an enum value: "CURRENT_USER" or "NON_CURRENT_USER"
     - "CURRENT_USER": use this to make card styles as if the message is by the signed in user
     - "NON_CURRENT_USER": use this to make card styled as if the message is sent from someone else
+  - user: (optional) a user object. This is used to show user for non-current-user messages
 {% endcomment %}
 
 <div id="{{ id }}" class="card {% if sender == "CURRENT_USER" %}bg-success{% elif sender == "NON_CURRENT_USER" %}{% endif %}">
     <div class="card-body">
         <div class="card-text">
+            {% if sender == "NON_CURRENT_USER" %}
+                {% include "../users/badge.html" with user=user only %}
+            {% endif %}
             <p>
                 {{ text|urlize }}
             </p>

@@ -69,12 +69,30 @@ def make_commission(
     return commission
 
 
-def make_commission_message(author, commission, message):
-    commission_message = models.CommissionMessage(
-        commission=commission,
-        author=author,
-        message=message
-    )
-    commission_message.full_clean()
-    commission_message.save()
-    return commission_message
+def make_chat(
+):
+    chat = models.Chat()
+    chat.full_clean()
+    chat.save()
+    return chat
+
+
+def add_chat_participant(
+    chat,
+    user,
+):
+    participation = models.ChatParticipant(chat=chat, participant=user)
+    participation.full_clean()
+    participation.save()
+    return participation
+
+
+def make_chat_message(
+    chat,
+    author,
+    message="Test message.",
+):
+    message = models.ChatMessage(chat=chat, author=author, message=message)
+    message.full_clean()
+    message.save()
+    return message

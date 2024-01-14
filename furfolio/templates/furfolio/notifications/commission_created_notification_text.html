@@ -1,0 +1,10 @@
+{% comment "" %}
+Represents the text to show for a commission created notification.
+Expects the following context objects:
+  - commission: the commission the notification is talking about
+{% endcomment %}
+
+{% load static %}
+
+<span class="me-2"><img src="{% static "symbols/left-right-black.svg" %}" style="width: 1.5em;"></span>
+<span class="me-2">{% include "../users/badge.html" with user=commission.commissioner no_link=True only %}</span> requested a commission of "{{ commission.offer.name }}"

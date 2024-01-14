@@ -111,6 +111,14 @@ how?
   - finish homepage
   - finish sign-up flow
   - ToS and PP
+  - documentation
+    - dashboards
+      - creator
+      - buyer
+    - timezone
+    - tags
+    - commission search
+      - maybe define a Furfolio Search Language (FSL)
 - 2 setup donation (time estimate: 1-2 days)
   - create a paypal account on business email
   - put donation button on the footer of the site

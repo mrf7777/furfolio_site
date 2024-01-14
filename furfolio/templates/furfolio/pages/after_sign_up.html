@@ -1,0 +1,28 @@
+{% extends "furfolio/layouts/title_body.html" %}
+
+{% block title %}
+Thank you for signing up!
+{% endblock %}
+
+{% block body %}
+
+<p>
+    We appreciate your interest in our platform.
+    Our platform is free to use but you can still support development.
+    If you want, you can help with the development and operating costs by donating here.
+    You can either click the donate button or scan the QR code with your device.
+    
+</p>
+
+<p>
+    {% include "furfolio/3rd/paypal_donation_section.html" %}
+</p>
+
+<p>
+    <h2>Next Steps</h2>
+
+    Please read this quick overview of Furfolio if you have not already.
+</p>
+<a href="{% url "what_is_furfolio" %}" class="btn btn-primary">What is Furfolio?</a>
+
+{% endblock %}

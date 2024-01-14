@@ -14,7 +14,7 @@ from .. import forms
 @method_decorator(check_honeypot, name="post")
 class SignUp(generic.CreateView):
     form_class = forms.CustomUserCreationForm
-    success_url = reverse_lazy("welcome_to_furfolio")
+    success_url = reverse_lazy("after_sign_up")
     template_name = "registration/signup.html"
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
@@ -29,3 +29,7 @@ class SignUp(generic.CreateView):
         else:
             return HttpResponseServerError()
         return response
+
+
+class AfterSignUp(generic.TemplateView):
+    template_name = "furfolio/pages/after_sign_up.html"

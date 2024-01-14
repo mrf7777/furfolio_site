@@ -6,15 +6,16 @@ Thank you for signing up!
 
 {% block body %}
 
-<p>
-    We appreciate your interest in our platform.
+<div class="mb-4">
+    Hi <div class="d-inline">{% include "furfolio/users/badge.html" with user=request.user no_link=True only %}</div>,
+    we appreciate your engagement with our platform!
     <br>
-    Our platform is free to use but you can still support development and operations by donating here.
+    Our platform is currently free to use but you can still support development and operations by donating here.
     <br>
     You can either click the donate button or scan the QR code with your device.
     <br>
     Do not worry if you cannot give now, you can always donate at anytime.
-</p>
+</div>
 
 <p>
     {% include "furfolio/3rd/paypal_donation_section.html" %}
@@ -23,8 +24,50 @@ Thank you for signing up!
 <p>
     <h2>Next Steps</h2>
 
+    <h4>Learn</h4>
     Please read this quick overview of Furfolio if you have not already.
+    <br>
+    <a href="{% url "what_is_furfolio" %}" class="btn btn-primary">What is Furfolio?</a>
 </p>
-<a href="{% url "what_is_furfolio" %}" class="btn btn-primary">What is Furfolio?</a>
+
+{% if show_creator_next_steps %}
+<p>
+    <h4>I see that you are a Creator</h4>
+    In that case, you should set up your profile here.
+    <br>
+    <a href="{% url "update_user" request.user.username %}" class="btn btn-primary">User Settings</a>
+</p>
+
+<p>
+    The reference will also be your best friend in learning how to
+    use the tools on this platform as a Creator.
+    <br>
+    You can also find this in the "help" section at the bottom of this website
+    <br>
+    <a href="{% url "reference" %}" class="btn btn-primary">Reference</a>
+</p>
+{% endif %}
+
+<p>
+    <h4>Explore</h4>
+    After all of the above has been taken care of, consider:
+    <ul>
+        <li>
+            <div class="d-inline-flex align-items-center mb-2">
+                <a href="{% url "offer_list" %}" class="btn btn-primary me-2">Offers</a> looking at offers
+            </div>
+        </li>
+        <li>
+            <div class="d-inline-flex align-items-center mb-2">
+                <a href="{% url "dashboard" %}" class="btn btn-primary me-2">Dashboard</a> exploring your dashboard
+            </div>
+        </li>
+        <li>
+            <div class="d-inline-flex align-items-center">
+                <a href="{% url "user_list" %}" class="btn btn-primary me-2">Creator Users</a> finding Creators on this platform
+            </div>
+        </li>
+    </ul>
+</p>
 
 {% endblock %}

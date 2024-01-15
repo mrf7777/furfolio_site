@@ -62,7 +62,10 @@ urlpatterns = [
          auth_views.PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
     path('accounts/reset/done/', auth_views.PasswordResetCompleteView.as_view(),
          name="password_reset_complete"),
-    path('accounts/after-sign-up/', registration.AfterSignUp.as_view(), name="after_sign_up"),
+    path(
+        'accounts/after-sign-up/',
+        registration.AfterSignUp.as_view(),
+        name="after_sign_up"),
     # dashboards
     path(
         'dashboard/',

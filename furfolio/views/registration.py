@@ -36,7 +36,7 @@ class SignUp(generic.CreateView):
 
 class AfterSignUp(LoginRequiredMixin, generic.TemplateView):
     template_name = "furfolio/pages/after_sign_up.html"
-    
+
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["show_creator_next_steps"] = self.request.user.role == models.User.ROLE_CREATOR

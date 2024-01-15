@@ -27,10 +27,12 @@ class SupportTicket(models.Model):
         (STATE_INVESTIGATING, "Investigating"),
         (STATE_CLOSED, "Closed"),
     ]
-    
-    DESCRIPTION_MAX_LENGTH = math.ceil(settings.AVERAGE_CHARACTERS_PER_WORD * 5000)
-    DESCRIPTION_MIN_LENGTH = math.ceil(settings.AVERAGE_CHARACTERS_PER_WORD * 10)
-    
+
+    DESCRIPTION_MAX_LENGTH = math.ceil(
+        settings.AVERAGE_CHARACTERS_PER_WORD * 5000)
+    DESCRIPTION_MIN_LENGTH = math.ceil(
+        settings.AVERAGE_CHARACTERS_PER_WORD * 10)
+
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -42,7 +44,8 @@ class SupportTicket(models.Model):
     )
     title = models.CharField(
         max_length=100,
-        validators=[validators.MinLengthValidator(5)],
+        validators=[
+            validators.MinLengthValidator(5)],
         help_text="Summarize your issue with a few words. Must be between 5 and 100 characters.",
     )
     description = models.TextField(
@@ -70,6 +73,6 @@ class SupportTicket(models.Model):
             """
         ),
     )
-    
+
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)

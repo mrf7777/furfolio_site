@@ -24,6 +24,6 @@ class Support(LoginRequiredMixin, generic.ListView):
     template_name = "furfolio/support/support.html"
     context_object_name = "support_tickets"
     paginate_by = PAGE_SIZE
-    
+
     def get_queryset(self) -> QuerySet[Any]:
         return support_queries.get_support_tickets_by_author(self.request.user)

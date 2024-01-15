@@ -22,7 +22,7 @@ class Chat(models.Model):
             return self.commissionchat.get_name()
         except CommissionChat.DoesNotExist:
             pass
-        
+
         try:
             return self.supportticketchat.get_name()
         except SupportTicketChat.DoesNotExist:
@@ -46,7 +46,7 @@ class SupportTicketChat(Chat):
         SupportTicket,
         on_delete=models.CASCADE,
     )
-    
+
     def get_name(self):
         return f"{self.support_ticket.title}"
 

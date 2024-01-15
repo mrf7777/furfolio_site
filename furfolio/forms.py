@@ -156,7 +156,10 @@ class OfferSelectForm(forms.Form):
     template_name = "furfolio/form_templates/grid.html"
 
     offer = forms.ModelChoiceField(
-        queryset=None, required=False, empty_label="[Show All]", label="Filter")
+        queryset=None,
+        required=False,
+        empty_label="[Show All]",
+        label="Filter")
 
     def __init__(self, queryset=None, *args, **kwargs):
         super().__init__(*args, **kwargs)

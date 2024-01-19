@@ -36,7 +36,7 @@ class CreatorDashboard(LoginRequiredMixin, generic.FormView):
         context["offer_select_form"] = offer_form
 
         selected_offer = offer_form.cleaned_data.get("offer")
-        commissions = commission_queries.get_commissions_for_user_as_offer_author(
+        commissions = commission_queries.get_dashboard_commissions(
             self.request.user,
             [
                 models.Commission.STATE_REVIEW,

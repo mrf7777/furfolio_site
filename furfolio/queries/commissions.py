@@ -1,6 +1,6 @@
 
 from functools import reduce
-from typing import Any
+from typing import Any, Union
 from django.db.models import Q
 from django.db.models import Manager
 from django.shortcuts import get_object_or_404
@@ -31,11 +31,11 @@ def get_commissions_for_commissioner_and_offer(
     )
 
 
-def get_commissions_for_user_as_offer_author(
+def get_dashboard_commissions(
         user: 'models.User',
-        commission_states: [str],
-        offer: Any | None = None,
-        order_by: str = "-updated_date"
+        commission_states: [str] = [],
+        offer: Union[Any, None] = None,
+        order_by: str = "-updated_date" # TODO: figure out how to use commission model litreal without circular import
 ) -> 'dict[str, Manager[models.Commission]]':
     """
     Given a user and a set of commissions states, return
@@ -47,8 +47,7 @@ def get_commissions_for_user_as_offer_author(
 
     querysets = dict()
     for state in commission_states:
-        query = models.Commission.objects.filter(
-            offer__author=user,
+        query = get_commissions_with_user(user).filter(
             state=state,
         )
         if offer is not None:

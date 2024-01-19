@@ -10,7 +10,7 @@
 
 {% block body %}
     {% if success %}
-        Sign in to your account by clicking here.
+        Click here to sign in get started: <a class="ms-2 btn btn-primary" href="{% url "after_sign_up" %}">Get Started</a>
     {% else %}
         This could happen for a few reasons:
         <ul>

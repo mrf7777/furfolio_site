@@ -19,6 +19,30 @@ class DashboardRedirector(LoginRequiredMixin, generic.RedirectView):
             return reverse("creator_dashboard")
 
 
+class CommissionTitleSettings:
+    def __init__(self, show_commissioner: bool, show_commissionee: bool):
+        self.show_commissioner = show_commissioner
+        self.show_commissionee = show_commissionee
+
+    def hide_commissioner(self) -> bool:
+        return not self.show_commissioner
+    
+    def hide_commissionee(self) -> bool:
+        return not self.show_commissionee
+
+    def create_from_user_role(user_role: str) -> 'CommissionTitleSettings':
+        # Make sure that the commission title does not have
+        # redundant information. For example, a commissioner
+        # does not want to see thier name in the commission title.
+        match user_role:
+            case models.User.ROLE_BUYER:
+                return CommissionTitleSettings(False, True)
+            case models.User.ROLE_CREATOR:
+                return CommissionTitleSettings(True, False)
+            case _:
+                return CommissionTitleSettings(True, True)
+
+
 class CreatorDashboard(LoginRequiredMixin, generic.FormView):
     template_name = "furfolio/dashboards/creator.html"
     form_class = forms.OfferSelectForm
@@ -91,6 +115,8 @@ class CreatorDashboard(LoginRequiredMixin, generic.FormView):
         in_progress_commissions_query_url = Commissions.url_for_query(
             in_progress_commissions_query)
         context["see_in_progress_commissions_url"] = in_progress_commissions_query_url
+
+        context["commission_title_settings"] = CommissionTitleSettings.create_from_user_role(self.request.user.role)
 
         return context
 

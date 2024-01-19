@@ -4,12 +4,14 @@ Expects the following context objects:
   - commissions: a list of commission objects
   - request: the request object
   - csrf_token: the csrf_token
+  - hide_buyer: (bool) if True, and is not self-manged, hide the buyer
+  - hide_creator: (bool) if True, and is not self-managed, hide the creator
 {% endcomment %}
 
 {% if commissions %}
     {% for commission in commissions %}
         <div class="mb-3">
-            {% include "furfolio/commissions/commission_card.html" with commission=commission request=request csrf_token=csrf_token hide_creator=True only %}
+            {% include "furfolio/commissions/commission_card.html" with commission=commission request=request csrf_token=csrf_token hide_creator=hide_creator hide_buyer=hide_buyer only %}
         </div>
     {% endfor %}
 {% else %}

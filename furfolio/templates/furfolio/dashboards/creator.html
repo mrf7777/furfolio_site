@@ -59,7 +59,7 @@
 {% endblock %}
 
 {% block column_1 %}
-    {% include "./commission_card_list.html" with commissions=review_commissions request=request csrf_token=csrf_token only %}
+    {% include "./commission_card_list.html" with commissions=review_commissions request=request csrf_token=csrf_token hide_buyer=commission_title_settings.hide_commissioner hide_creator=commission_title_settings.hide_commissionee only %}
 {% endblock %}
 
 {% block column_2_title %}
@@ -74,7 +74,7 @@
 {% endblock %}
 
 {% block column_2 %}
-    {% include "./commission_card_list.html" with commissions=accepted_commissions request=request csrf_token=csrf_token only %}
+    {% include "./commission_card_list.html" with commissions=accepted_commissions request=request csrf_token=csrf_token hide_buyer=commission_title_settings.hide_commissioner hide_creator=commission_title_settings.hide_commissionee only %}
 {% endblock %}
 
 {% block column_3_title %}
@@ -89,5 +89,5 @@
 {% endblock %}
 
 {% block column_3 %}
-    {% include "./commission_card_list.html" with commissions=in_progress_commissions request=request csrf_token=csrf_token only %}
+    {% include "./commission_card_list.html" with commissions=in_progress_commissions request=request csrf_token=csrf_token hide_buyer=commission_title_settings.hide_commissioner hide_creator=commission_title_settings.hide_commissionee only %}
 {% endblock %}

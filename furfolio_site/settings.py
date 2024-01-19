@@ -302,6 +302,10 @@ else:
     EMAIL_FROM_ADDRESS = DEFAULT_FROM_EMAIL
     REPLY_EMAIL = os.getenv("EMAIL_REPLY_ADDRESS")
 
+ADMINS = [
+    ("Michael Fulghum", "furfolio.business@gmail.com"),
+]
+
 # security
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True

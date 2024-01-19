@@ -8,6 +8,7 @@ from django.contrib import auth
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from honeypot.decorators import check_honeypot
+import django_email_verification
 from .. import forms
 from .. import models
 
@@ -17,21 +18,34 @@ from .. import models
 @method_decorator(check_honeypot, name="post")
 class SignUp(generic.CreateView):
     form_class = forms.CustomUserCreationForm
-    success_url = reverse_lazy("after_sign_up")
+    success_url = reverse_lazy("please_verify_email")
     template_name = "registration/signup.html"
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        # verify email
+        # from https://github.com/LeoneBacciu/django-email-verification?tab=readme-ov-file#email-sending
         response = super().form_valid(form)
+        user = self.object
+        user.is_active = False
+        user.full_clean()
+        user.save()
+        django_email_verification.send_email(user)
+
         # sign in the new user
-        # TODO: consider testing via LiveServerTestCase class
-        username = self.request.POST["username"]
-        password = self.request.POST["password1"]
-        user = auth.authenticate(username=username, password=password)
-        if user is not None:
-            auth.login(self.request, user)
-        else:
-            return HttpResponseServerError()
+
+        # username = self.request.POST["username"]
+        # password = self.request.POST["password1"]
+        # user = auth.authenticate(username=username, password=password)
+        # if user is not None:
+        #     auth.login(self.request, user)
+        # else:
+        #     return HttpResponseServerError()
+
         return response
+
+
+class PleaseVerifyEmail(generic.TemplateView):
+    template_name = "furfolio/verify_email/please_verify_email.html"
 
 
 class AfterSignUp(LoginRequiredMixin, generic.TemplateView):

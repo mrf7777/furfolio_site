@@ -12,6 +12,7 @@ from .views import notifications
 from .views import support
 from .sitemaps import sitemaps
 from django.contrib.auth import views as auth_views
+from django_email_verification import urls as email_verification_urls
 from furfolio import forms as furfolio_forms
 
 urlpatterns = [
@@ -66,6 +67,9 @@ urlpatterns = [
         'accounts/after-sign-up/',
         registration.AfterSignUp.as_view(),
         name="after_sign_up"),
+    ## email verification
+    path('accounts/please-verify-email/', registration.PleaseVerifyEmail.as_view(), name="please_verify_email"),
+    path('accounts/email/verify/', include(email_verification_urls)),
     # dashboards
     path(
         'dashboard/',

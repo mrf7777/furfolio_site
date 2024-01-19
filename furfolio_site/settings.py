@@ -326,7 +326,7 @@ EMAIL_PAGE_DOMAIN = DOMAIN_AND_SCHEME + "/"
 EMAIL_MAIL_SUBJECT = "{{ user.username }}, confirm your email"
 EMAIL_MAIL_HTML = "furfolio/email/verify_email/confirm_email.html"
 EMAIL_MAIL_PLAIN = "furfolio/email/verify_email/confirm_email.txt"
-EMAIL_MAIL_TOKEN_LIFE = 60 * 60 * 2     # 2 hours
+EMAIL_MAIL_TOKEN_LIFE = 60 * 60 * 24 * 2     # 2 days
 
 EMAIL_MAIL_PAGE_TEMPLATE = "furfolio/verify_email/email_verified.html"
 EMAIL_MAIL_CALLBACK = email_verified_callback

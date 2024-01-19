@@ -1,5 +1,6 @@
 
 from typing import Any
+from django.utils.http import urlencode
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse, HttpResponseServerError
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -18,7 +19,6 @@ from .. import models
 @method_decorator(check_honeypot, name="post")
 class SignUp(generic.CreateView):
     form_class = forms.CustomUserCreationForm
-    success_url = reverse_lazy("please_verify_email")
     template_name = "registration/signup.html"
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
@@ -42,10 +42,21 @@ class SignUp(generic.CreateView):
         #     return HttpResponseServerError()
 
         return response
+    
+    def get_success_url(self) -> str:
+        user = self.object
+        encoded_email = urlencode({"email": user.email})
+        root_url = reverse_lazy("please_verify_email")
+        return f"{root_url}?{encoded_email}"
 
 
 class PleaseVerifyEmail(generic.TemplateView):
     template_name = "furfolio/verify_email/please_verify_email.html"
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["email"] = self.request.GET.get("email")
+        return context
 
 
 class AfterSignUp(LoginRequiredMixin, generic.TemplateView):

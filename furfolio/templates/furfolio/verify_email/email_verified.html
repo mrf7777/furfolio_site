@@ -1,5 +1,21 @@
-{% if success %}
-You have registered!
-{% else %}
-Sorry, registionatoin did not work.
-{% endif %}
+{% extends "furfolio/layouts/title_body.html" %}
+
+{% block title %}
+    {% if success %}
+        You have activated your account!
+    {% else %}
+        Sorry, account activation failed.
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% if success %}
+        Sign in to your account by clicking here.
+    {% else %}
+        This could happen for a few reasons:
+        <ul>
+            <li>The activation link is expired.</li>
+            <li>The activation link has already been used.</li>
+        </ul>
+    {% endif %}
+{% endblock %}

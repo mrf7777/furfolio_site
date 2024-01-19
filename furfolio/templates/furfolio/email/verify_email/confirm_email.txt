@@ -1,11 +1,5 @@
-<h1>
-    Hi {{ user.username }}, you are almost done with registration.
-</h1>
+Hi {{ user.username }}, you are almost done with registration.
 
-<p>
-    To confirm this email address and to active your account, please <a href="{{ link }}"><b>click here</b></a>.
-</p>
+To confirm this email address and to active your account, please click here: {{ link }}
 
-<p>
-    This token expires in two hours.
-</p>
+This token expires in 48 hours.

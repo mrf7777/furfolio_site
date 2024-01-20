@@ -71,7 +71,7 @@ urlpatterns = [
     path('accounts/please-verify-email/', registration.PleaseVerifyEmail.as_view(), name="please_verify_email"),
     path('accounts/email/verify/', include(email_verification_urls)),
     # dashboards
-    path('dashboard/creator/', dashboards.CreatorDashboard.as_view(),
+    path('dashboard/', dashboards.CreatorDashboard.as_view(),
          name="dashboard"),
     # commissions
     path(

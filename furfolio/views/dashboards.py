@@ -11,11 +11,6 @@ from .commissions import Commissions
 from .pagination import PageRangeContextMixin, PAGE_SIZE
 
 
-class DashboardRedirector(LoginRequiredMixin, generic.RedirectView):
-    def get_redirect_url(self, *args: Any, **kwargs: Any) -> str | None:
-        return reverse("creator_dashboard")
-
-
 class CreatorDashboard(LoginRequiredMixin, generic.FormView):
     template_name = "furfolio/dashboards/creator.html"
     form_class = forms.OfferSelectForm

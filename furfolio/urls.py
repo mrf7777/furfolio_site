@@ -77,10 +77,6 @@ urlpatterns = [
         name="dashboard"),
     path('dashboard/creator/', dashboards.CreatorDashboard.as_view(),
          name="creator_dashboard"),
-    path(
-        'dashboard/buyer/',
-        dashboards.BuyerDashboard.as_view(),
-        name="buyer_dashboard"),
     # commissions
     path(
         'commissions/<pk>',

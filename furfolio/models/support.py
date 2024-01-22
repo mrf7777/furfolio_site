@@ -73,6 +73,11 @@ class SupportTicket(mixins.GetFullUrlMixin, models.Model):
     def get_absolute_url(self):
         return reverse("support_ticket_detail", kwargs={"pk": self.pk})
     
+    def __str__(self) -> str:
+        states_as_dict = dict(self.STATE_CHOICES)
+        state_human_text = states_as_dict[self.state]
+        return f"({state_human_text}) \"{self.title}\" by {self.author.username}"
+    
 
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)

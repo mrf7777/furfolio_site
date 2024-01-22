@@ -1,13 +1,15 @@
 {% extends "furfolio/layouts/title_body.html" %}
 
+{% load static %}
+
 {% block title %}
 Support
 {% endblock %}
 
 {% block body %}
+<a class="btn btn-primary" href="{% url "create_support_ticket" %}"><img src="{% static "symbols/plus-white.svg" %}" class="me-2" style="width: 1em;">Create Ticket</a>
 
-{# TODO: create a support ticket creation view and link here #}
-<a>Create support ticket</a>
+<hr>
 
 {% for ticket in support_tickets %}
     <div class="mb-3">

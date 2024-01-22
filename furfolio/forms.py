@@ -24,8 +24,7 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = UserCreationForm.Meta.fields + \
-            ("email", "role", "avatar", "consent_to_adult_content")
+        fields = ["username", "email", "password1", "password2", "role", "avatar", "consent_to_adult_content"]
 
 
 class UpdateUserForm(forms.ModelForm):

@@ -121,8 +121,9 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
         return super().clean()
 
     def __str__(self):
-        return "Id: %i. \"%s\" requested \"%s\"." % (
-            self.id, self.commissioner.username, self.offer.name)
+        state_as_dict = dict(self.STATE_CHOICES)
+        human_readable_state = state_as_dict[self.state]
+        return f"({human_readable_state}) {self.commissioner.username} wants \"{self.offer.name}\" by {self.offer.author.username}"
 
     def get_absolute_url(self):
         return reverse("commission_detail", kwargs={"pk": self.pk})

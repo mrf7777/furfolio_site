@@ -20,21 +20,12 @@ class CustomFormRenderer(TemplatesSetting):
 
 
 class CustomUserCreationForm(UserCreationForm):
-    EMAIL_MISMATCH_ERROR_MESSAGE = "Emails do not match."
-
     email = EmailField(required=True)
-    email2 = EmailField(required=True, label="Confirm Email")
-
-    def clean(self) -> dict[str, Any]:
-        cleaned_data = super().clean()
-        if cleaned_data["email"] != cleaned_data["email2"]:
-            self.add_error("email", self.EMAIL_MISMATCH_ERROR_MESSAGE)
-            self.add_error("email2", self.EMAIL_MISMATCH_ERROR_MESSAGE)
-        return cleaned_data
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ["username", "email", "email2", "password1", "password2", "role", "consent_to_adult_content"]
+        fields = UserCreationForm.Meta.fields + \
+            ("email", "role", "avatar", "consent_to_adult_content")
 
 
 class UpdateUserForm(forms.ModelForm):

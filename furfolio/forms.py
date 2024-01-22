@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.forms import EmailField
 from django import forms
 from django.forms.renderers import TemplatesSetting
-from .models import ChatMessage, User, Offer, Commission, Tag, TagCategory
+from .models import SupportTicket, ChatMessage, User, Offer, Commission, Tag, TagCategory
 from . import validators as furfolio_validators
 
 
@@ -210,3 +210,12 @@ class TagCategoryForm(forms.ModelForm):
     class Meta:
         model = TagCategory
         fields = ["name", "description"]
+
+
+class SupportTicketForm(forms.ModelForm):
+    class Meta:
+        model = SupportTicket
+        fields = ["author", "title", "description"]
+        widgets = {
+            "author": forms.HiddenInput(),
+        }

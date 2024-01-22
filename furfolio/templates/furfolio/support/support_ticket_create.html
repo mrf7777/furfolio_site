@@ -1,0 +1,16 @@
+{% extends "furfolio/layouts/title_body.html" %}
+
+{% block title %}
+Create support ticket
+{% endblock %}
+
+{% block body %}
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input class="btn btn-primary" id="submit-button" type="submit" value="Create Ticket">
+</form>
+
+{% include "furfolio/scripts/hide_on_submit.html" with form_id="form" id_to_hide="submit-button" only %}
+
+{% endblock %}

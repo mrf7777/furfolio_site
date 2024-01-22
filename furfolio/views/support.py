@@ -27,3 +27,27 @@ class Support(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self) -> QuerySet[Any]:
         return support_queries.get_support_tickets_by_author(self.request.user)
+
+
+class CreateSupportTicket(LoginRequiredMixin, generic.CreateView):
+    model = models.SupportTicket
+    template_name = "furfolio/support/support_ticket_create.html"
+    form_class = forms.SupportTicketForm
+
+    def get_initial(self) -> dict[str, Any]:
+        initial = super().get_initial()
+        initial["author"] = self.request.user.pk
+        return initial
+
+
+class SupportTicket(LoginRequiredMixin, UserPassesTestMixin, generic.DetailView):
+    model = models.SupportTicket
+    template_name = "furfolio/support/support_ticket_detail.html"
+    context_object_name = "support_ticket"
+
+    def test_func(self) -> bool | None:
+        object = self.get_object()
+        if object.author.pk == self.request.user.pk:
+            return True
+        else:
+            return False

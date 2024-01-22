@@ -1,11 +1,14 @@
 from django.db import models
 from django.conf import settings
 from django.core import validators
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 import math
 
+from .. import mixins
 
-class SupportTicket(models.Model):
+
+class SupportTicket(mixins.GetFullUrlMixin, models.Model):
     STATE_OPEN = "OPEN"
     STATE_INVESTIGATING = "INVESTIGATING"
     STATE_CLOSED = "CLOSED"
@@ -45,13 +48,13 @@ class SupportTicket(models.Model):
             """
             Please describe your issue in detail.
             <br>
-            If possible, please answer the following questions:
+            If possible, please answer as many of the following questions as possible:
             <ul>
                 <li>
                     What is the issue?
                 </li>
                 <li>
-                    Where can we see this issue? (commission chat, published offers, etc.)
+                    Where can we see this issue? Add a URL or a link. (commission chat, published offers, etc.)
                 </li>
                 <li>
                     When did the issue happen or start?
@@ -59,10 +62,17 @@ class SupportTicket(models.Model):
                 <li>
                     Who is involved? (You, another user, a group of users, etc.)
                 </li>
+                <li>
+                    How did the issue happen?
+                </li>
             </ul>
             """
         ),
     )
+
+    def get_absolute_url(self):
+        return reverse("support_ticket_detail", kwargs={"pk": self.pk})
+    
 
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)

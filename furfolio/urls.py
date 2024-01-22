@@ -128,6 +128,8 @@ urlpatterns = [
         name="open_notification"),
     # support
     path('support/', support.Support.as_view(), name="support"),
+    path('support/create/', support.CreateSupportTicket.as_view(), name="create_support_ticket"),
+    path('support/<pk>/', support.SupportTicket.as_view(), name="support_ticket_detail"),
     # static pages
     path('legal/', pages.Legal.as_view(), name="legal"),
     path('legal/terms-of-service/',

@@ -7,15 +7,37 @@ Support
 {% endblock %}
 
 {% block body %}
+<p>
+    Here you can create and see your support tickets. Support tickets represent your request for us to help.
+    Support tickets are commonly created for the following reasons:
+    <ul>
+        <li>workaround a bug that impacted you</li>
+        <li>update your information</li>
+        <ul>
+            <li>email</li>
+        </ul>
+        <li>delete your account</li>
+        <li>enforce content guidelines</li>
+        <li>enforce user guidelines</li>
+    </ul>
+
+    If you still need help or something should be reported that is not listed here, create a support ticket.
+
+</p>
+
 <a class="btn btn-primary" href="{% url "create_support_ticket" %}"><img src="{% static "symbols/plus-white.svg" %}" class="me-2" style="width: 1em;">Create Ticket</a>
 
 <hr>
 
-{% for ticket in support_tickets %}
-    <div class="mb-3">
-        {% include "./support_ticket_card.html" with support_ticket=ticket only %}
-    </div>
-{% endfor %}
+{% if support_tickets %}
+    {% for ticket in support_tickets %}
+        <div class="mb-3">
+            {% include "./support_ticket_card.html" with support_ticket=ticket only %}
+        </div>
+    {% endfor %}
+{% else %}
+    <b>You have no support tickets.</b>
+{% endif %}
 
 {% if is_paginated %}
 <div class="d-flex justify-content-center">

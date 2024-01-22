@@ -7,6 +7,23 @@ from .models import ChatMessage, User, Offer, Commission, Tag, TagCategory
 from . import validators as furfolio_validators
 
 
+class HorizontalRuleWidget(forms.Widget):
+    def __init__(self):
+        self.template_name = "furfolio/form_templates/widgets/horizontal_rule.html"
+        self.attrs = {}
+
+
+class HorizontalRuleField(forms.Field):
+    def clean(self, value: Any) -> Any:
+        return super().clean(value)
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__()
+        self.widget = HorizontalRuleWidget()
+        self.template_name = "furfolio/form_templates/fields/only_widget_layout.html"
+        self.label = ""
+
+
 class TextSearchForm(forms.Form):
     template_name = "furfolio/form_templates/grid.html"
     text_query = forms.CharField(
@@ -21,10 +38,11 @@ class CustomFormRenderer(TemplatesSetting):
 
 class CustomUserCreationForm(UserCreationForm):
     email = EmailField(required=True)
+    pii_settings_split = HorizontalRuleField()
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ["username", "email", "password1", "password2", "role", "avatar", "consent_to_adult_content"]
+        fields = ["username", "email", "password1", "password2", "pii_settings_split", "role", "avatar", "consent_to_adult_content"]
 
 
 class UpdateUserForm(forms.ModelForm):

@@ -10,7 +10,15 @@ Support
 <a>Create support ticket</a>
 
 {% for ticket in support_tickets %}
-    {{ ticket }}
+    <div class="mb-3">
+        {% include "./support_ticket_card.html" with support_ticket=ticket only %}
+    </div>
 {% endfor %}
+
+{% if is_paginated %}
+<div class="d-flex justify-content-center">
+    {% include "furfolio/components/pagination_buttons.html" with page_obj=page_obj page_range=page_range request=request only %}
+</div>
+{% endif %}
 
 {% endblock %}

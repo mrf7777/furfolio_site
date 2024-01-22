@@ -19,7 +19,7 @@ from .pagination import PageRangeContextMixin
 from .pagination import PAGE_SIZE
 
 
-class Support(LoginRequiredMixin, generic.ListView):
+class Support(LoginRequiredMixin, PageRangeContextMixin, generic.ListView):
     model = models.SupportTicket
     template_name = "furfolio/support/support.html"
     context_object_name = "support_tickets"

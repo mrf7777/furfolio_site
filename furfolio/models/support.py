@@ -1,21 +1,8 @@
-from email.policy import default
-from model_utils import FieldTracker
 from django.db import models
 from django.conf import settings
-from django.contrib.postgres.indexes import GinIndex
 from django.core import validators
-from django.urls import reverse
-from django.utils import timezone
 from django.utils.safestring import mark_safe
 import math
-
-from .utils import image_resize, seven_days_from_now
-from .content_rating import RATING_TO_CHOICES, RATING_GENERAL, RATING_ADULT
-from .. import validators as furfolio_validators
-from .. import mixins
-from ..queries import commissions as commission_queries
-from ..queries import offers as offer_queries
-from ..queries import notifications as notification_queries
 
 
 class SupportTicket(models.Model):
@@ -32,6 +19,9 @@ class SupportTicket(models.Model):
         settings.AVERAGE_CHARACTERS_PER_WORD * 5000)
     DESCRIPTION_MIN_LENGTH = math.ceil(
         settings.AVERAGE_CHARACTERS_PER_WORD * 10)
+    
+    TITLE_MAX_LENGTH = 100
+    TITLE_MIN_LENGTH = 5
 
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -43,10 +33,10 @@ class SupportTicket(models.Model):
         default=STATE_OPEN,
     )
     title = models.CharField(
-        max_length=100,
+        max_length=TITLE_MAX_LENGTH,
         validators=[
-            validators.MinLengthValidator(5)],
-        help_text="Summarize your issue with a few words. Must be between 5 and 100 characters.",
+            validators.MinLengthValidator(TITLE_MIN_LENGTH)],
+        help_text=f"Summarize your issue with a few words. Must be between {TITLE_MIN_LENGTH} and {TITLE_MAX_LENGTH} characters.",
     )
     description = models.TextField(
         max_length=DESCRIPTION_MAX_LENGTH,

@@ -14,6 +14,12 @@ Login
     <input type="hidden" name="next" value="{% if next %}{{ next }}{% else %}{% url 'home' %}{% endif %}">
 </form>
 
-<a class="text-decoration-none" href="{% url "password_reset" %}">Forgot password?</a>
+<p>
+    <a class="text-decoration-none" href="{% url "password_reset" %}">Forgot password?</a>
+</p>
+
+<p>
+    <a class="text-decoration-none" href="{% url "signup" %}">Do not have an account? Sign up.</a>
+</p>
 
 {% endblock %}

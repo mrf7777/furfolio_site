@@ -3,6 +3,7 @@ from django.conf import settings
 from django.core import validators
 from django.urls import reverse
 from django.utils.safestring import mark_safe
+
 import math
 
 from .. import mixins
@@ -82,6 +83,5 @@ class SupportTicket(mixins.GetFullUrlMixin, models.Model):
         states_as_dict = dict(self.STATE_CHOICES)
         return states_as_dict[self.state]
     
-
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)

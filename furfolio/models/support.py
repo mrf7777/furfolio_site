@@ -78,6 +78,10 @@ class SupportTicket(mixins.GetFullUrlMixin, models.Model):
         state_human_text = states_as_dict[self.state]
         return f"({state_human_text}) \"{self.title}\" by {self.author.username}"
     
+    def friendly_state_text(self) -> str:
+        states_as_dict = dict(self.STATE_CHOICES)
+        return states_as_dict[self.state]
+    
 
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)

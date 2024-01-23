@@ -1,1 +1,38 @@
-Support ticket detail view.
+{% extends "furfolio/layouts/title_body.html" %}
+
+{% block title %}
+Support Ticket {{ support_ticket.title }}
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-3 col-sm-2">
+        Author:
+    </div>
+    <div class="col">
+        {% include "../users/badge.html" with user=support_ticket.author only %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-3 col-sm-2">
+        State:
+    </div>
+    <div class="col">
+        <b>{{ support_ticket.friendly_state_text }}</b>
+    </div>
+</div>
+<div class="row">
+    <div class="col-3 col-sm-2">
+        Date created:
+    </div>
+    <div class="col">
+        <b>{{ support_ticket.created_date }}</b>
+    </div>
+</div>
+
+<hr>
+
+<p>
+    {{ support_ticket.description }}
+</p>
+{% endblock %}

@@ -19,7 +19,7 @@ Requires some context objects passed in.
           smallest_side = width < height ? width : height
           element_to_hide.style.display = "none"
           spinner = document.createElement("div")
-          spinner.innerHTML = `<div class="spinner-border text-primary mx-3" role="status" style="width: ${smallest_side}; height: ${smallest_side};"><span class="visually-hidden">Loading...</span></div>`
+          spinner.innerHTML = ` {% include "furfolio/components/spinner.html" %} `
           parent.replaceChild(spinner, element_to_hide)
         } else {
           element_to_hide.style.display = "none"

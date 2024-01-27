@@ -1,9 +1,0 @@
-{% comment "" %}
-See: https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/overview
-Represents a twitter tweet button.
-Expects the following context objects:
-  - text: the text to prefill the tweet with
-  - url: the url for the tweet to share
-{% endcomment %}
-
-<a class="twitter-share-button" href="https://twitter.com/intent/tweet?text={{ text|urlencode }}&url={{ url|urlencode }}"></a>

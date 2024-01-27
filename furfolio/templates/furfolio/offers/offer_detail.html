@@ -7,12 +7,6 @@
 {% endblock %}
 
 {% block body %}
-
-    <div class="d-flex mb-2">
-        <div class="flex-fill"></div>
-        {% include "furfolio/components/3rd/twitter_tweet_button.html" with text=tweet_text url=offer.get_full_url only %}
-    </div>
-
     {% if offer.thumbnail %}
         <div class="d-flex justify-content-center mb-3">
             <img class="rounded border border-2 img-fluid" style="max-height: 40vh" src="{{ offer.thumbnail.url }}">

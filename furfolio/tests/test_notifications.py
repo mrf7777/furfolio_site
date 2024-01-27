@@ -112,3 +112,28 @@ class CommissionCreatedNotificationTestCase(TestCase):
         # confirm parent notification was also deleted
         self.assertEquals(models.CommissionCreatedNotification.objects.all().count(), 0)
         self.assertEquals(models.Notification.objects.all().count(), number_notifications_pre_delete - 1)
+        
+        
+class UserFollowedNotificationTestCase(TestCase):
+    def setUp(self):
+        self.user1 = utils.make_user("user1", role=models.User.ROLE_CREATOR)
+        self.user2 = utils.make_user("user2", role=models.User.ROLE_BUYER)
+        
+    def test_user_followed_creates_user_followed_notification(self):
+        utils.make_user_follow_user(self.user1, self.user2)
+        self.assertEqual(models.UserFollowedNotification.objects.all().count(), 1)
+        
+    def test_delete_user_followed_notification_deletes_parent(self):
+        utils.make_user_follow_user(self.user1, self.user2)
+        
+        # before delete
+        self.assertEquals(models.UserFollowedNotification.objects.all().count(), 1)
+        number_notifications_pre_delete = models.Notification.objects.all().count()
+        
+        # delete
+        user_followed_notification = models.UserFollowedNotification.objects.first()
+        user_followed_notification.delete()
+        
+        # confirm parent notification was also deleted
+        self.assertEquals(models.UserFollowedNotification.objects.all().count(), 0)
+        self.assertEquals(models.Notification.objects.all().count(), number_notifications_pre_delete - 1)

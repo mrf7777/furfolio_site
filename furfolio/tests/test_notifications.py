@@ -55,3 +55,60 @@ class OfferPostedNotificationTestCase(TestCase):
         # confirm parent notification was also deleted
         self.assertEquals(models.OfferPostedNotification.objects.all().count(), 0)
         self.assertEquals(models.Notification.objects.all().count(), number_notifications_pre_delete - 1)
+
+
+class CommissionStateNotificationTestCase(TestCase):
+    def setUp(self):
+        self.user1 = utils.make_user("user1", role=models.User.ROLE_CREATOR)
+        self.user2 = utils.make_user("user2", role=models.User.ROLE_BUYER)
+        self.offer = utils.make_offer(self.user1)
+        self.commission = utils.make_commission(self.user2, self.offer, models.Commission.STATE_REVIEW)
+        
+    def test_state_change_creates_commission_state_notification(self):
+        commission = models.Commission.objects.first()
+        commission.state = models.Commission.STATE_ACCEPTED
+        commission.save()
+        self.assertEqual(models.CommissionStateNotification.objects.all().count(), 1)
+        
+    def test_delete_state_change_notification_deletes_parent(self):
+        commission = models.Commission.objects.first()
+        commission.state = models.Commission.STATE_ACCEPTED
+        commission.save()
+        
+        # before delete
+        self.assertEquals(models.CommissionStateNotification.objects.all().count(), 1)
+        number_notifications_pre_delete = models.Notification.objects.all().count()
+        
+        # delete
+        state_notification = models.CommissionStateNotification.objects.first()
+        state_notification.delete()
+        
+        # confirm parent notification was also deleted
+        self.assertEquals(models.CommissionStateNotification.objects.all().count(), 0)
+        self.assertEquals(models.Notification.objects.all().count(), number_notifications_pre_delete - 1)
+        
+
+class CommissionCreatedNotificationTestCase(TestCase):
+    def setUp(self):
+        self.user1 = utils.make_user("user1", role=models.User.ROLE_CREATOR)
+        self.user2 = utils.make_user("user2", role=models.User.ROLE_BUYER)
+        self.offer = utils.make_offer(self.user1)
+
+    def test_commission_created_creates_commission_created_notification(self):
+        self.commission = utils.make_commission(self.user2, self.offer, models.Commission.STATE_REVIEW)
+        self.assertEqual(models.CommissionCreatedNotification.objects.all().count(), 1)
+        
+    def test_delete_commission_created_notification_deletes_parent(self):
+        self.commission = utils.make_commission(self.user2, self.offer, models.Commission.STATE_REVIEW)
+        
+        # before delete
+        self.assertEquals(models.CommissionCreatedNotification.objects.all().count(), 1)
+        number_notifications_pre_delete = models.Notification.objects.all().count()
+        
+        # delete
+        commission_created_notification = models.CommissionCreatedNotification.objects.first()
+        commission_created_notification.delete()
+        
+        # confirm parent notification was also deleted
+        self.assertEquals(models.CommissionCreatedNotification.objects.all().count(), 0)
+        self.assertEquals(models.Notification.objects.all().count(), number_notifications_pre_delete - 1)

@@ -39,7 +39,7 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
 
     ASPECT_RATIO_MIN = (1, 3)
     ASPECT_RATIO_MAX = (4, 1)
-    THUMBNAIL_MAX_DIMENTIONS = (600, 350)
+    THUMBNAIL_MAX_DIMENSIONS = (600, 350)
 
     SORT_RELEVANCE = "relevance"
     SORT_CREATED_DATE = "created_date"
@@ -210,8 +210,8 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
         if self.thumbnail and self.tracker.has_changed("thumbnail"):
             image_resize(
                 self.thumbnail,
-                Offer.THUMBNAIL_MAX_DIMENTIONS[0],
-                Offer.THUMBNAIL_MAX_DIMENTIONS[1])
+                Offer.THUMBNAIL_MAX_DIMENSIONS[0],
+                Offer.THUMBNAIL_MAX_DIMENSIONS[1])
 
         # determine who to notify if offer is created
         if self.tracker.previous("id") is None:

@@ -117,6 +117,7 @@ urlpatterns = [
         name="tag_category_detail"),
     # chat
     path('chat/<pk>/', chat.Chat.as_view(), name="chat"),
+    path('chat/<pk>/messages/', chat.ChatMessagesComponent.as_view(), name="chat_messages_component"),
     # notifications
     path(
         'notifications/',

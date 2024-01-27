@@ -8,7 +8,11 @@
 
 {% block body %}
 
-{% include "./messages.html" with messages=messages current_user=request.user only %}
+<div
+    hx-get="{% url "chat_messages_component" chat.pk %}"
+    hx-trigger="load"
+>
+</div>
 
 <form method="post" id="chat-form" enctype="multipart/form-data">
     {% csrf_token %}

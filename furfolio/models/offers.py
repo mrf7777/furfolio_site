@@ -39,7 +39,7 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
 
     ASPECT_RATIO_MIN = (1, 3)
     ASPECT_RATIO_MAX = (4, 1)
-    THUMBNAIL_MAX_DIMENSIONS = (600, 350)
+    THUMBNAIL_MAX_DIMENSIONS = (1200, 700)
 
     SORT_RELEVANCE = "relevance"
     SORT_CREATED_DATE = "created_date"

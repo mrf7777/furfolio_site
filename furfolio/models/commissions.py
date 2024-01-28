@@ -111,12 +111,18 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
         # TODO: BUG: this specific check can fail the object if full_cleaning a commission with just a state change
         # TODO: BUG commission should be able to be updated/saved even if offer
         # is closed
+        
+        # TODO: call this on new objects only
         furfolio_validators.check_commission_meets_offer_max_review_commissions(
             self)
+        # TODO: call this on new objects only
         furfolio_validators.check_commission_is_not_created_on_closed_offer(
             self)
+        # TODO: call this on new objects only
         furfolio_validators.check_user_is_within_commission_limit_for_offer(
             self)
+        
+        # TODO: call this on new object only
         if not self.is_self_managed():
             furfolio_validators.check_user_is_not_spamming_commissions(
                 self.commissioner

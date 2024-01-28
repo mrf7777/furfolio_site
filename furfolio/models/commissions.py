@@ -16,7 +16,7 @@ COMMISSION_INITIAL_REQUEST_TEXT_MAX_LENGTH = math.ceil(
     settings.AVERAGE_CHARACTERS_PER_WORD * 800)
 
 
-class Commission(mixins.GetFullUrlMixin, models.Model):
+class Commission(mixins.CleaningMixin, mixins.GetFullUrlMixin, models.Model):
     STATE_REVIEW = "REVIEW"
     STATE_ACCEPTED = "ACCEPTED"
     STATE_IN_PROGRESS = "IN_PROGRESS"
@@ -106,28 +106,19 @@ class Commission(mixins.GetFullUrlMixin, models.Model):
             and self.tracker.has_changed("state")
             and not self.is_self_managed()
         )
-
-    def clean(self) -> None:
-        # TODO: BUG: this specific check can fail the object if full_cleaning a commission with just a state change
-        # TODO: BUG commission should be able to be updated/saved even if offer
-        # is closed
-        
-        # TODO: call this on new objects only
+    
+    def post_clean_new_object(self):
         furfolio_validators.check_commission_meets_offer_max_review_commissions(
             self)
-        # TODO: call this on new objects only
         furfolio_validators.check_commission_is_not_created_on_closed_offer(
             self)
-        # TODO: call this on new objects only
         furfolio_validators.check_user_is_within_commission_limit_for_offer(
             self)
         
-        # TODO: call this on new object only
         if not self.is_self_managed():
             furfolio_validators.check_user_is_not_spamming_commissions(
                 self.commissioner
             )
-        return super().clean()
 
     def __str__(self):
         state_as_dict = dict(self.STATE_CHOICES)

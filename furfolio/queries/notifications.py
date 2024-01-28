@@ -28,8 +28,6 @@ def make_chat_message_notifications_seen_for_user_and_chat(
     chat: 'models.Chat',
     user: 'models.User',
 ):
-    print(chat)
-    print(user)
     """given a user and a chat they are in, make all message notifications seen.
 
     Args:

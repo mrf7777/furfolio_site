@@ -37,15 +37,12 @@ def make_chat_message_notifications_seen_for_user_and_chat(
         user (models.User): _description_
     """
     unread_message_notifications_for_user_in_chat = models.ChatMessageNotification.objects.filter(
-        message__chat=chat,
-        notification__recipient=user,
-        notification__seen=False,
-    )
+        message__chat=chat, notification__recipient=user, notification__seen=False, )
     for message_notification in unread_message_notifications_for_user_in_chat:
         message_notification.notification.seen = True
         message_notification.notification.full_clean()
         message_notification.notification.save()
-        
+
 
 def create_offer_posted_notification(
         offer: 'models.Offer',

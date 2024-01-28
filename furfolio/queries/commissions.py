@@ -35,7 +35,9 @@ def get_dashboard_commissions(
         user: 'models.User',
         commission_states: [str] = [],
         offer: Union[Any, None] = None,
-        order_by: str = "-updated_date" # TODO: figure out how to use commission model litreal without circular import
+        # TODO: figure out how to use commission model litreal without circular
+        # import
+        order_by: str = "-updated_date"
 ) -> 'dict[str, Manager[models.Commission]]':
     """
     Given a user and a set of commissions states, return

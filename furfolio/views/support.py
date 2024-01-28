@@ -40,7 +40,10 @@ class CreateSupportTicket(LoginRequiredMixin, generic.CreateView):
         return initial
 
 
-class SupportTicket(LoginRequiredMixin, UserPassesTestMixin, generic.DetailView):
+class SupportTicket(
+        LoginRequiredMixin,
+        UserPassesTestMixin,
+        generic.DetailView):
     model = models.SupportTicket
     template_name = "furfolio/support/support_ticket_detail.html"
     context_object_name = "support_ticket"

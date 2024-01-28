@@ -101,7 +101,7 @@ class ChatMessage(models.Model):
 
     def __str__(self):
         return f"\"{self.author}\" made message in \"{self.chat}\""
-    
+
     def timesince_created(self):
         return timesince.timesince(self.created_date)
 

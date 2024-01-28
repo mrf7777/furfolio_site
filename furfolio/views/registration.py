@@ -23,7 +23,8 @@ class SignUp(generic.CreateView):
 
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         # verify email
-        # from https://github.com/LeoneBacciu/django-email-verification?tab=readme-ov-file#email-sending
+        # from
+        # https://github.com/LeoneBacciu/django-email-verification?tab=readme-ov-file#email-sending
         response = super().form_valid(form)
         user = self.object
         user.is_active = False
@@ -42,7 +43,7 @@ class SignUp(generic.CreateView):
         #     return HttpResponseServerError()
 
         return response
-    
+
     def get_success_url(self) -> str:
         user = self.object
         encoded_email = urlencode({"email": user.email})

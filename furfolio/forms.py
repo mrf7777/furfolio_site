@@ -16,7 +16,7 @@ class HorizontalRuleWidget(forms.Widget):
 class HorizontalRuleField(forms.Field):
     def clean(self, value: Any) -> Any:
         return super().clean(value)
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__()
         self.widget = HorizontalRuleWidget()
@@ -42,7 +42,15 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ["username", "email", "password1", "password2", "pii_settings_split", "role", "avatar", "consent_to_adult_content"]
+        fields = [
+            "username",
+            "email",
+            "password1",
+            "password2",
+            "pii_settings_split",
+            "role",
+            "avatar",
+            "consent_to_adult_content"]
 
 
 class UpdateUserForm(forms.ModelForm):

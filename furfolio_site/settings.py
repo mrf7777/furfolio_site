@@ -321,9 +321,12 @@ HONEYPOT_VALUE = "31232451202"
 AVERAGE_CHARACTERS_PER_WORD = 4.7
 
 # django-email-verification settings
-## https://github.com/LeoneBacciu/django-email-verification?tab=readme-ov-file#settings-parameters
+# https://github.com/LeoneBacciu/django-email-verification?tab=readme-ov-file#settings-parameters
+
+
 def email_verified_callback(user):
     user.is_active = True
+
 
 EMAIL_PAGE_DOMAIN = DOMAIN_AND_SCHEME + "/"
 

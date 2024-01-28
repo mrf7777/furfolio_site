@@ -37,7 +37,10 @@ class Chat(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView):
         return context
 
 
-class ChatMessagesComponent(LoginRequiredMixin, UserPassesTestMixin, generic.TemplateView):
+class ChatMessagesComponent(
+        LoginRequiredMixin,
+        UserPassesTestMixin,
+        generic.TemplateView):
     model = models.ChatMessage
     template_name = "furfolio/chat/messages.html"
 
@@ -55,12 +58,14 @@ class ChatMessagesComponent(LoginRequiredMixin, UserPassesTestMixin, generic.Tem
         context["messages"] = chat_queries.get_messages_from_chat(chat)
         context["current_user"] = self.request.user
         return context
-    
-    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+
+    def get(
+            self,
+            request: HttpRequest,
+            *args: Any,
+            **kwargs: Any) -> HttpResponse:
         response = super().get(request, *args, **kwargs)
         chat = self.get_chat()
         notification_queries.make_chat_message_notifications_seen_for_user_and_chat(
-            chat,
-            self.request.user,
-        )
+            chat, self.request.user, )
         return response

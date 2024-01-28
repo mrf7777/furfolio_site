@@ -1,7 +1,10 @@
 from typing import Any
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import HttpRequest
+from django.http.response import HttpResponse as HttpResponse
 from django.views import generic
 from ..queries import chat as chat_queries
+from ..queries import notifications as notification_queries
 from .. import models
 from .. import forms
 
@@ -52,3 +55,12 @@ class ChatMessagesComponent(LoginRequiredMixin, UserPassesTestMixin, generic.Tem
         context["messages"] = chat_queries.get_messages_from_chat(chat)
         context["current_user"] = self.request.user
         return context
+    
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        response = super().get(request, *args, **kwargs)
+        chat = self.get_chat()
+        notification_queries.make_chat_message_notifications_seen_for_user_and_chat(
+            chat,
+            self.request.user,
+        )
+        return response

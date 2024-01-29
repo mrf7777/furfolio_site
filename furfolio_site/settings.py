@@ -306,6 +306,9 @@ ADMINS = [
     ("Michael Fulghum", "furfolio.business@gmail.com"),
 ]
 
+SUPPORT_EMAIL = "support@furfolio.net"
+INFO_EMAIL = "info@furfolio.net"
+
 # security
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True

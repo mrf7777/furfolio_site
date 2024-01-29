@@ -7,7 +7,7 @@ from django.urls import reverse
 from ..queries import commissions as commission_queries
 from .. import models
 from .breadcrumbs import IBreadcrumbParticipant, breadcrumb_items
-
+from .mixins import EmailsContextMixin
 
 class Home(generic.TemplateView):
     template_name = "furfolio/home.html"
@@ -21,7 +21,7 @@ class Home(generic.TemplateView):
             return redirect("dashboard")
         else:
             return super().get(request, *args, **kwargs)
-
+    
 
 class ExampleOfferAndCommissionMixin:
     def get_context_data(self, **kwargs) -> dict[str, Any]:
@@ -101,6 +101,7 @@ class Legal(
 
 
 class TermsOfService(
+        EmailsContextMixin,
         BreadcrumbContextMixin,
         generic.TemplateView,
         IBreadcrumbParticipant):

@@ -34,3 +34,7 @@ def get_followed_users(user: 'models.User') -> 'Manager[models.User]':
     query = models.User.objects.filter(
         followed__follower=user).order_by("username").distinct()
     return query
+
+
+def is_user_in_group(user: 'models.User', group_name: str) -> bool:
+    return user.groups.filter(name=group_name).exists()

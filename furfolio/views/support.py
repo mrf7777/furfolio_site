@@ -13,10 +13,15 @@ from .. import utils
 from ..queries import commissions as commission_queries
 from ..queries import offers as offer_queries
 from ..queries import chat as chat_queries
+from ..queries import users as user_queries
 from ..queries import support as support_queries
 from .. import forms
 from .pagination import PageRangeContextMixin
 from .pagination import PAGE_SIZE
+
+
+# the name of the user group that is allowed permissions to CRUD support tickets
+SUPPORT_MODERATOR_GROUP_NAME = "support_mod"
 
 
 class Support(LoginRequiredMixin, PageRangeContextMixin, generic.ListView):
@@ -51,6 +56,8 @@ class SupportTicket(
     def test_func(self) -> bool | None:
         object = self.get_object()
         if object.author.pk == self.request.user.pk:
+            return True
+        elif user_queries.is_user_in_group(self.request.user, SUPPORT_MODERATOR_GROUP_NAME):
             return True
         else:
             return False

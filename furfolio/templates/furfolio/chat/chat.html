@@ -10,11 +10,9 @@
 
 <div
     hx-get="{% url "chat_messages_component" chat.pk %}"
-    hx-trigger="load, every 4s"
+    hx-trigger="every 4s"
 >
-    <div class="m-2 htmx-indicator">
-        {% include "furfolio/components/spinner.html" %}
-    </div>
+    {% include "./messages.html" with messages=messages current_user=request.user only %}
 </div>
 
 <form method="post" id="chat-form" enctype="multipart/form-data">

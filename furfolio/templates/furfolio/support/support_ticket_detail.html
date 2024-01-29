@@ -33,6 +33,6 @@ Support Ticket {{ support_ticket.title }}
 <hr>
 
 <p>
-    {{ support_ticket.description }}
+    {{ support_ticket.description|linebreaks|urlize }}
 </p>
 {% endblock %}

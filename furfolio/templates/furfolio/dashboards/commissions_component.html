@@ -1,0 +1,52 @@
+{% extends "furfolio/layouts/partial/3_columns.html" %}
+
+{% comment "" %}
+Represents the relevent commissions for the dashbaord.
+{% endcomment %}
+
+{% block column_1_title %}
+<a class="text-decoration-none" href="{{ see_review_commissions_url }}">
+    {% include "furfolio/commissions/state_badge.html" with state="REVIEW" only %}
+</a>
+<span class="fs-5">
+    {{ review_commissions.count }}
+    of
+    <a class="text-decoration-none" href="{{ see_review_commissions_url }}">{{ review_commissions_total_count }}</a>
+</span>
+{% endblock %}
+
+{% block column_1 %}
+    {% include "./commission_card_list.html" with commissions=review_commissions request=request csrf_token=csrf_token only %}
+{% endblock %}
+
+
+{% block column_2_title %}
+<a class="text-decoration-none" href="{{ see_accepted_commissions_url }}">
+    {% include "furfolio/commissions/state_badge.html" with state="ACCEPTED" only %}
+</a>
+<span class="fs-5">
+    {{ accepted_commissions.count }}
+    of
+    <a class="text-decoration-none" href="{{ see_accepted_commissions_url }}">{{ accepted_commissions_total_count }}</a>
+</span>
+{% endblock %}
+
+{% block column_2 %}
+    {% include "./commission_card_list.html" with commissions=accepted_commissions request=request csrf_token=csrf_token only %}
+{% endblock %}
+
+
+{% block column_3_title %}
+<a class="text-decoration-none" href="{{ see_in_progress_commissions_url }}">
+    {% include "furfolio/commissions/state_badge.html" with state="IN_PROGRESS" only %}
+</a>
+<span class="fs-5">
+    {{ in_progress_commissions.count }}
+    of
+    <a class="text-decoration-none" href="{{ see_in_progress_commissions_url }}">{{ in_progress_commissions_total_count }}</a>
+</span>
+{% endblock %}
+
+{% block column_3 %}
+    {% include "./commission_card_list.html" with commissions=in_progress_commissions request=request csrf_token=csrf_token only %}
+{% endblock %}

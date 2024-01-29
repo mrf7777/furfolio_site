@@ -12,6 +12,7 @@
     hx-get="{% url "chat_messages_component" chat.pk %}"
     hx-trigger="every 4s"
 >
+    {# initially populate chat server-side #}
     {% include "./messages.html" with messages=messages current_user=request.user only %}
 </div>
 

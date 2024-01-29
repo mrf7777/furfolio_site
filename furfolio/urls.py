@@ -135,6 +135,7 @@ urlpatterns = [
         name="open_notification"),
     # support
     path('support/', support.Support.as_view(), name="support"),
+    path('support/not-logged-in/', support.SupportNotLoggedIn.as_view(), name="support_not_logged_in"),
     path(
         'support/create/',
         support.CreateSupportTicket.as_view(),

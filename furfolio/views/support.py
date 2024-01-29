@@ -1,7 +1,7 @@
 from typing import Any
 from django.db.models.query import QuerySet
 from django.forms.models import BaseModelForm
-from django.http import HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponse as HttpResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -16,6 +16,7 @@ from ..queries import chat as chat_queries
 from ..queries import users as user_queries
 from ..queries import support as support_queries
 from .. import forms
+from .mixins import EmailsContextMixin
 from .pagination import PageRangeContextMixin
 from .pagination import PAGE_SIZE
 
@@ -24,14 +25,32 @@ from .pagination import PAGE_SIZE
 SUPPORT_MODERATOR_GROUP_NAME = "support_mod"
 
 
-class Support(LoginRequiredMixin, PageRangeContextMixin, generic.ListView):
+class Support(PageRangeContextMixin, generic.ListView):
     model = models.SupportTicket
     template_name = "furfolio/support/support.html"
     context_object_name = "support_tickets"
     paginate_by = PAGE_SIZE
 
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        # check if user is logged in. if not, redirect to the not-logged-in version of this page
+        if not request.user.is_authenticated:
+            return redirect(reverse("support_not_logged_in"))
+        else:
+            return super().dispatch(request, *args, **kwargs)
+
     def get_queryset(self) -> QuerySet[Any]:
         return support_queries.get_support_tickets_by_author(self.request.user)
+
+
+class SupportNotLoggedIn(EmailsContextMixin, generic.TemplateView):
+    template_name = "furfolio/support/support_not_logged_in.html"
+    
+    def get(self, request: HttpRequest, *args: Any, **kwargs: Any) -> HttpResponse:
+        # if the user is authenticated, redirect to regular support page
+        if request.user.is_authenticated:
+            return redirect(reverse("support"))
+        else:
+            return super().get(request, *args, **kwargs)
 
 
 class CreateSupportTicket(LoginRequiredMixin, generic.CreateView):

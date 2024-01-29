@@ -3,10 +3,12 @@ from django.conf import settings
 from django.core import validators
 from django.urls import reverse
 from django.utils.safestring import mark_safe
+from model_utils import FieldTracker
 
 import math
 
 from .. import mixins
+from ..queries import notifications as notification_queries
 
 
 class SupportTicket(mixins.GetFullUrlMixin, models.Model):
@@ -70,6 +72,11 @@ class SupportTicket(mixins.GetFullUrlMixin, models.Model):
             """
         ),
     )
+    
+    tracker = FieldTracker()
+    
+    created_date = models.DateTimeField(name="created_date", auto_now_add=True)
+    updated_date = models.DateTimeField(name="updated_date", auto_now=True)
 
     def get_absolute_url(self):
         return reverse("support_ticket_detail", kwargs={"pk": self.pk})
@@ -82,6 +89,19 @@ class SupportTicket(mixins.GetFullUrlMixin, models.Model):
     def friendly_state_text(self) -> str:
         states_as_dict = dict(self.STATE_CHOICES)
         return states_as_dict[self.state]
+    
+    def save(self, *args, **kwargs) -> None:
+        saved: bool = False
+        if self.should_notify_state_changed():
+            super().save(*args, **kwargs)
+            saved = True
+            notification_queries.create_support_ticket_state_notification_for_author(self)
+            
+        if not saved:
+            super().save(*args, **kwargs)
+            saved = True
 
-    created_date = models.DateTimeField(name="created_date", auto_now_add=True)
-    updated_date = models.DateTimeField(name="updated_date", auto_now=True)
+    def should_notify_state_changed(self) -> bool:
+        return self.tracker.previous("state") is not None and self.tracker.has_changed("state")
+
+    

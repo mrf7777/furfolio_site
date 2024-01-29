@@ -1,6 +1,6 @@
 from django.dispatch import receiver
 from django.db.models.signals import post_delete
-from ..models import UserFollowedNotification, ChatMessageNotification, OfferPostedNotification, CommissionStateNotification, CommissionCreatedNotification
+from ..models import SupportTicketStateNotification, UserFollowedNotification, ChatMessageNotification, OfferPostedNotification, CommissionStateNotification, CommissionCreatedNotification
 
 
 @receiver(post_delete, sender=ChatMessageNotification)
@@ -29,5 +29,11 @@ def delete_commission_created_notification_parent(sender, instance, **kwargs):
 
 @receiver(post_delete, sender=UserFollowedNotification)
 def delete_user_followed_notification_parent(sender, instance, **kwargs):
+    if instance.notification:
+        instance.notification.delete()
+
+
+@receiver(post_delete, sender=SupportTicketStateNotification)
+def delete_support_ticket_state_notification_parent(sender, instance, **kwargs):
     if instance.notification:
         instance.notification.delete()

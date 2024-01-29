@@ -98,6 +98,23 @@ def make_chat_message(
     return message
 
 
+def make_support_ticket(
+    author,
+    title="Title for the ticket",
+    description="I have a problem that I need help with but I do not know what to put here.",
+    state=models.SupportTicket.STATE_OPEN,
+):
+    ticket = models.SupportTicket(
+        author=author,
+        title=title,
+        description=description,
+        state=state,
+    )
+    ticket.full_clean()
+    ticket.save()
+    return ticket
+
+
 def make_notification(
     recipient,
     seen=False,

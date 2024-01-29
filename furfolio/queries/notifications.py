@@ -111,6 +111,30 @@ def create_user_followed_notification_using_user_following_user(
         user_following_user.followed)
 
 
+def create_support_ticket_state_notification(
+    support_ticket: 'models.SupportTicket',
+    recipient: 'models.User',
+) -> 'models.SupportTicketStateNotification':
+    notification = models.Notification.objects.create(
+        recipient=recipient,
+    )
+    support_ticket_state_notification = models.SupportTicketStateNotification.objects.create(
+        notification=notification,
+        support_ticket=support_ticket,
+        support_ticket_state=support_ticket.state,
+    )
+    return support_ticket_state_notification
+
+
+def create_support_ticket_state_notification_for_author(
+    support_ticket: 'models.SupportTicket',
+):
+    create_support_ticket_state_notification(
+        support_ticket,
+        support_ticket.author,
+    )
+
+
 def get_notifications_for_user(
         user: 'models.User',
         include_seen: bool = True) -> 'Manager[models.User]':

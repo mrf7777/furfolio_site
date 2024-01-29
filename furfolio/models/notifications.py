@@ -4,6 +4,7 @@ from django.urls import reverse
 from .offers import Offer
 from .chat import ChatMessage
 from .commissions import Commission
+from .support import SupportTicket
 from .. import mixins
 
 """
@@ -48,6 +49,8 @@ class Notification(mixins.GetFullUrlMixin, models.Model):
             return self.commissioncreatednotification.commission.get_absolute_url()
         elif hasattr(self, "userfollowednotification"):
             return self.userfollowednotification.follower.get_absolute_url()
+        elif hasattr(self, "supportticketstatenotification"):
+            return self.supportticketstatenotification.support_ticket.get_absolute_url()
         else:
             return None
 
@@ -125,3 +128,21 @@ class UserFollowedNotification(models.Model):
 
     def __str__(self):
         return f"user \"{self.follower.username}\" is following you \"{self.notification.recipient.username}\""
+
+
+class SupportTicketStateNotification(models.Model):
+    notification = models.OneToOneField(
+        Notification,
+        on_delete=models.CASCADE,
+    )
+    support_ticket = models.ForeignKey(
+        SupportTicket,
+        on_delete=models.CASCADE,
+    )
+    support_ticket_state = models.CharField(
+        max_length=13,
+        choices=SupportTicket.STATE_CHOICES,
+    )
+    
+    def __str__(self):
+        return f"support ticket \"{self.support_ticket.title}\" has changed its state to {self.support_ticket_state}"

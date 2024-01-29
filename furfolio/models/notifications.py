@@ -7,9 +7,11 @@ from .commissions import Commission
 from .. import mixins
 
 """
-When creating a notification submodel,
-add a reciever that deletes the parent model object
+When creating a notification sub-model,
+add a receiver that deletes the parent model object
 when its child is deleted.
+
+Also add a test case to confirm the parent is deleted.
 """
 
 

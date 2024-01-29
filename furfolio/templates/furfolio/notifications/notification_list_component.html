@@ -26,6 +26,10 @@ Expects the following context objects:
             <a href="{% url "open_notification" notification.pk %}" class="d-flex align-items-center list-group-item list-group-item-action list-group-item-info {% if not notification.seen %}fw-bold{% endif %}">
                 {% include "./user_followed_notification_text.html" with follower=notification.userfollowednotification.follower only %}
             </a>
+        {% elif notification.supportticketstatenotification %}
+            <a href="{% url "open_notification" notification.pk %}" class="d-flex align-items-center list-group-item list-group-item-action list-group-item-info {% if not notification.seen %}fw-bold{% endif %}">
+                {% include "./support_ticket_state_notification_text.html" with support_ticket=notification.supportticketstatenotification.support_ticket only %}
+            </a>
         {% endif %}
         
     {% endfor %}

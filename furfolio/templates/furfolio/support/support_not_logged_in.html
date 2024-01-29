@@ -1,0 +1,17 @@
+{% extends "furfolio/layouts/title_body.html" %}
+
+{% block title %}
+Support (not logged in)
+{% endblock %}
+
+{% block body %}
+<p>
+You are not logged it, try to <a href="{% url "login" %}?next={{ request.get_full_path|urlencode }}">log in here</a>.
+</p>
+
+<p>
+If you cannot login to your account. It could be because your account email has not been verified
+or you entered in the wrong email during account creation.
+If you still need help, contact <code>{{ support_email }}</code>
+</p>
+{% endblock %}

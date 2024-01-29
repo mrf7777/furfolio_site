@@ -9,13 +9,13 @@ Expects the following objects:
   - some_space_between_functions: (bool) if True, will force add margin between commission functions
 {% endcomment %}
 
-<div class="d-flex flex-wrap">
+<div class="d-flex flex-wrap align-items-center">
     {% if commission.get_chat %}
         <div class="flex-column me-0">
             <div class="mb-1"><a class="text-reset" href="{% url "chat" commission.get_chat.pk %}">{% include "../chat/chat_button.html" %}</a></div>
         </div>
         {% if some_space_between_functions %}
-            <div class="me-5"></div>
+            <div class="me-3"></div>
         {% endif %}
     {% endif %}
 

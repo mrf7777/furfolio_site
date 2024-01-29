@@ -96,3 +96,88 @@ def make_chat_message(
     message.full_clean()
     message.save()
     return message
+
+
+def make_support_ticket(
+    author,
+    title="Title for the ticket",
+    description="I have a problem that I need help with but I do not know what to put here.",
+    state=models.SupportTicket.STATE_OPEN,
+):
+    ticket = models.SupportTicket(
+        author=author,
+        title=title,
+        description=description,
+        state=state,
+    )
+    ticket.full_clean()
+    ticket.save()
+    return ticket
+
+
+def make_notification(
+    recipient,
+    seen=False,
+):
+    notification = models.Notification(recipient=recipient, seen=seen)
+    notification.full_clean()
+    notification.save()
+    return notification
+
+
+def make_chat_message_notification(
+    notification,
+    message,
+):
+    notification = models.ChatMessageNotification(
+        notification=notification, message=message)
+    notification.full_clean()
+    notification.save()
+    return notification
+
+
+def make_offer_posted_notification(
+    notification,
+    offer,
+):
+    notification = models.OfferPostedNotification(
+        notification=notification, offer=offer)
+    notification.full_clean()
+    notification.save()
+    return notification
+
+
+def make_commission_state_notification(
+    notification,
+    commission,
+    commission_state,
+):
+    notification = models.CommissionStateNotification(
+        notification=notification,
+        commission=commission,
+        commission_state=commission_state)
+    notification.full_clean()
+    notification.save()
+    return notification
+
+
+def make_commission_created_notification(
+    notification,
+    commission,
+):
+    notification = models.CommissionCreatedNotification(
+        notification=notification, commission=commission)
+    notification.full_clean()
+    notification.save()
+    return notification
+
+
+def make_user_followed_notification(
+    notification,
+    follower,
+):
+    notification = models.UserFollowedNotification(
+        notification=notification, follower=follower)
+    notification.full_clean()
+    notification.save()
+    return notification

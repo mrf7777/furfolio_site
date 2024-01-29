@@ -3,33 +3,31 @@
 {% load static %}
 
 {% block title %}
-<div class="d-flex align-items-center">
-    Creator Dashboard
-    <div class="flex-fill"></div>
-    <a class="btn btn-primary" href="{% url "buyer_dashboard" %}">
-        <img class="me-1" style="width: 1.5em;" src="{% static "symbols/chasing-arrows-white.svg" %}">
-        Buyer Mode
-    </a>
-</div>
+{% endblock %}
+
+{% block title_class %}
 {% endblock %}
 
 {% block body_1 %}
-<div class="row mb-3">
-    <div class="col-4 col-sm-2">
-        Offers
+<div class="d-flex">
+    <div class="dropdown me-3">
+        <button class="btn btn-primary dropdown-toggle fw-bold" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Offers
+        </button>
+        <ul class="dropdown-menu">
+            {# TODO: extract offer search url to python context #}
+            <li><a class="dropdown-item fw-bold" href="{% url "offer_list" %}?author={{ request.user.username }}&sort=created_date">View</a></li>
+            <li><a class="dropdown-item d-inline-flex fw-bold"  href="{% url "create_offer" %}"><img class="me-2" src="{% static "symbols/plus-black.svg" %}" style="width: 1em;">Create</a></li>
+        </ul>
     </div>
-    <div class="col-8 col-sm-10">
-        <a href="{% url "offer_list" %}?author={{ request.user.username }}&sort=created_date"><button class="btn btn-primary me-2">View</button></a>
-        <a class="btn btn-primary d-inline-flex" href="{% url "create_offer" %}"><img class="me-2" src="{% static "symbols/plus-white.svg" %}" style="width: 1em;">Create</a>
-    </div>
-</div>
 
-<div class="row mb-3">
-    <div class="col-4 col-sm-2">
-        Commissions
-    </div>
-    <div class="col-8 col-md-10">
-        <a href="{% url "commissions" %}" class="text-decoration-none btn btn-primary">View</a>
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle fw-bold" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Commissions
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item fw-bold" href="{% url "commissions" %}">View</a></li>
+        </ul>
     </div>
 </div>
 
@@ -40,6 +38,7 @@
 </form>
 
 {% include "furfolio/scripts/submit_form_on_change.html" with form_id="offer-select-form" only %}
+{% include "furfolio/scripts/refresh_page_on_history_navigation.html" %}
 
 {% endblock %}
 

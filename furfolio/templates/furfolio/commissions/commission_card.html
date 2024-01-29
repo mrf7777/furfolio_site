@@ -8,6 +8,7 @@ show_status: (bool) set to True if you want to show status badge
 show_avatars: (bool) if True, shows the avatars of the users in the card
 hide_buyer: (bool) if True, and is not self-manged, hide the buyer
 hide_creator: (bool) if True, and is not self-managed, hide the creator
+hide_redundant_users: (bool) If true, equivallent to setting hide_buyer and hide_creator smartly based on the signed in user. If True, ignores hide_buyer and hide_creator.
 {% endcomment %}
 
 {% load static %}
@@ -16,7 +17,17 @@ hide_creator: (bool) if True, and is not self-managed, hide the creator
     <div class="card-header">
         <div class="card-title mb-0 d-flex">
             <h6 class="mb-0">
-                {% include "./commission_title.html" with commission=commission show_avatars=show_avatars hide_buyer=hide_buyer hide_creator=hide_creator only %}
+                {% if hide_redundant_users %}
+                    {% if request.user.pk == commission.commissioner.pk %}
+                        {% include "./commission_title.html" with commission=commission show_avatars=show_avatars hide_buyer=True hide_creator=False only %}
+                    {% elif request.user.pk == commission.offer.author.pk %}
+                        {% include "./commission_title.html" with commission=commission show_avatars=show_avatars hide_buyer=False hide_creator=True only %}
+                    {% else %}
+                        {% include "./commission_title.html" with commission=commission show_avatars=show_avatars hide_buyer=False hide_creator=False only %}
+                    {% endif %}
+                {% else %}
+                    {% include "./commission_title.html" with commission=commission show_avatars=show_avatars hide_buyer=hide_buyer hide_creator=hide_creator only %}
+                {% endif %}
             </h6>
             <div class="flex-fill"></div>
             {% if show_status is True %}

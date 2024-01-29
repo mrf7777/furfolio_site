@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'storages',
     'furfolio',
     'honeypot',
+    'django_email_verification',
 ]
 
 SITE_ID = 1
@@ -288,6 +289,7 @@ else:
 if DEVELOPMENT_MODE is True:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
     REPLY_EMAIL = "reply@furfolio.net"
+    EMAIL_FROM_ADDRESS = "no-reply-development@furfolio.net"
 else:
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
     EMAIL_HOST = os.getenv("EMAIL_HOST")
@@ -297,7 +299,15 @@ else:
     EMAIL_USE_TLS = True
     EMAIL_TIMEOUT = 10  # in seconds
     DEFAULT_FROM_EMAIL = os.getenv("EMAIL_FROM_ADDRESS")
+    EMAIL_FROM_ADDRESS = DEFAULT_FROM_EMAIL
     REPLY_EMAIL = os.getenv("EMAIL_REPLY_ADDRESS")
+
+ADMINS = [
+    ("Michael Fulghum", "furfolio.business@gmail.com"),
+]
+
+SUPPORT_EMAIL = "support@furfolio.net"
+INFO_EMAIL = "info@furfolio.net"
 
 # security
 SESSION_COOKIE_SECURE = True
@@ -312,3 +322,21 @@ HONEYPOT_VALUE = "31232451202"
 
 # words
 AVERAGE_CHARACTERS_PER_WORD = 4.7
+
+# django-email-verification settings
+# https://github.com/LeoneBacciu/django-email-verification?tab=readme-ov-file#settings-parameters
+
+
+def email_verified_callback(user):
+    user.is_active = True
+
+
+EMAIL_PAGE_DOMAIN = DOMAIN_AND_SCHEME + "/"
+
+EMAIL_MAIL_SUBJECT = "{{ user.username }}, confirm your email"
+EMAIL_MAIL_HTML = "furfolio/email/verify_email/confirm_email.html"
+EMAIL_MAIL_PLAIN = "furfolio/email/verify_email/confirm_email.txt"
+EMAIL_MAIL_TOKEN_LIFE = 60 * 60 * 24 * 2     # 2 days
+
+EMAIL_MAIL_PAGE_TEMPLATE = "furfolio/verify_email/email_verified.html"
+EMAIL_MAIL_CALLBACK = email_verified_callback

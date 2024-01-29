@@ -25,6 +25,10 @@
 
 <hr>
 
+<div class="my-3">
+    {% include "./commission_functions.html" with commission=commission csrf_token=csrf_token request=request some_space_between_functions=True fill=False only %}
+</div>
+
 <div class="mb-3">
     <h5>Initial Requirements</h5>
     <p>{{ commission.initial_request_text|linebreaks|urlize }}</p>
@@ -36,10 +40,6 @@
     <a class="text-decoration-none" href="{{ commission.attachment.url }}">{{ commission.attachment.name }}</a>
 </div>
 {% endif %}
-
-<div class="my-5">
-    {% include "./commission_functions.html" with commission=commission csrf_token=csrf_token request=request some_space_between_functions=True fill=False only %}
-</div>
 
 {% if request.user.pk == commission.offer.author.pk %}
     <a href="{% url "update_commission" commission.pk %}"><button class="btn btn-primary">Edit</button></a>

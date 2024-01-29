@@ -11,14 +11,6 @@ from .commissions import Commissions
 from .pagination import PageRangeContextMixin, PAGE_SIZE
 
 
-class DashboardRedirector(LoginRequiredMixin, generic.RedirectView):
-    def get_redirect_url(self, *args: Any, **kwargs: Any) -> str | None:
-        if self.request.user.role == models.User.ROLE_BUYER:
-            return reverse("buyer_dashboard")
-        elif self.request.user.role == models.User.ROLE_CREATOR:
-            return reverse("creator_dashboard")
-
-
 class CreatorDashboard(LoginRequiredMixin, generic.FormView):
     template_name = "furfolio/dashboards/creator.html"
     form_class = forms.OfferSelectForm
@@ -36,7 +28,7 @@ class CreatorDashboard(LoginRequiredMixin, generic.FormView):
         context["offer_select_form"] = offer_form
 
         selected_offer = offer_form.cleaned_data.get("offer")
-        commissions = commission_queries.get_commissions_for_user_as_offer_author(
+        commissions = commission_queries.get_dashboard_commissions(
             self.request.user,
             [
                 models.Commission.STATE_REVIEW,
@@ -93,17 +85,3 @@ class CreatorDashboard(LoginRequiredMixin, generic.FormView):
         context["see_in_progress_commissions_url"] = in_progress_commissions_query_url
 
         return context
-
-
-class BuyerDashboard(
-        PageRangeContextMixin,
-        LoginRequiredMixin,
-        generic.ListView):
-    template_name = "furfolio/dashboards/buyer.html"
-    context_object_name = "commissions"
-    model = models.Commission
-    paginate_by = PAGE_SIZE
-
-    def get_queryset(self) -> QuerySet[Any]:
-        return commission_queries.get_commissions_for_user_as_commissioner(
-            self.request.user)

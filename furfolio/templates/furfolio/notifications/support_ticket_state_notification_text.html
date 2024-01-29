@@ -1,0 +1,9 @@
+{% comment "" %}
+Represents the text to show for a support ticket state change.
+Expects the following context objects:
+  - support_ticket: the support ticket the notification is talking about
+{% endcomment %}
+
+{% load static %}
+
+Support ticket "{{ support_ticket.title }}" changed to state: {{ support_ticket.friendly_state_text }}

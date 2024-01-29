@@ -3,8 +3,25 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.forms import EmailField
 from django import forms
 from django.forms.renderers import TemplatesSetting
-from .models import ChatMessage, User, Offer, Commission, Tag, TagCategory
+from .models import SupportTicket, ChatMessage, User, Offer, Commission, Tag, TagCategory
 from . import validators as furfolio_validators
+
+
+class HorizontalRuleWidget(forms.Widget):
+    def __init__(self):
+        self.template_name = "furfolio/form_templates/widgets/horizontal_rule.html"
+        self.attrs = {}
+
+
+class HorizontalRuleField(forms.Field):
+    def clean(self, value: Any) -> Any:
+        return super().clean(value)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__()
+        self.widget = HorizontalRuleWidget()
+        self.template_name = "furfolio/form_templates/fields/only_widget_layout.html"
+        self.label = ""
 
 
 class TextSearchForm(forms.Form):
@@ -21,17 +38,25 @@ class CustomFormRenderer(TemplatesSetting):
 
 class CustomUserCreationForm(UserCreationForm):
     email = EmailField(required=True)
+    pii_settings_split = HorizontalRuleField()
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = UserCreationForm.Meta.fields + \
-            ("email", "role", "avatar", "consent_to_adult_content")
+        fields = [
+            "username",
+            "email",
+            "password1",
+            "password2",
+            "pii_settings_split",
+            "role",
+            "avatar",
+            "consent_to_adult_content"]
 
 
 class UpdateUserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ["profile", "role", "email",
+        fields = ["profile", "role",
                   "avatar", "consent_to_adult_content"]
 
 
@@ -156,7 +181,10 @@ class OfferSelectForm(forms.Form):
     template_name = "furfolio/form_templates/grid.html"
 
     offer = forms.ModelChoiceField(
-        queryset=None, required=False, empty_label="[Show All]")
+        queryset=None,
+        required=False,
+        empty_label="[Show All]",
+        label="Filter")
 
     def __init__(self, queryset=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -190,3 +218,12 @@ class TagCategoryForm(forms.ModelForm):
     class Meta:
         model = TagCategory
         fields = ["name", "description"]
+
+
+class SupportTicketForm(forms.ModelForm):
+    class Meta:
+        model = SupportTicket
+        fields = ["author", "title", "description"]
+        widgets = {
+            "author": forms.HiddenInput(),
+        }

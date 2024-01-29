@@ -18,6 +18,7 @@ from ..queries import notifications as notification_queries
 
 class User(mixins.GetFullUrlMixin, AbstractUser):
     MAX_PROFILE_LENGTH = math.ceil(settings.AVERAGE_CHARACTERS_PER_WORD * 1000)
+    MAX_USERNAME_LENGTH = 42
 
     ROLE_BUYER = "BUYER"
     ROLE_CREATOR = "CREATOR"
@@ -26,6 +27,20 @@ class User(mixins.GetFullUrlMixin, AbstractUser):
         (ROLE_CREATOR, "Creator"),
     ]
     AVATAR_SIZE_PIXELS = (64, 64)
+
+    username = models.CharField(
+        max_length=MAX_USERNAME_LENGTH,
+        unique=True,
+        help_text=mark_safe(
+            f"""
+            This is how you will be refered to on this website.
+            <ul>
+                <li>The maximum length is {MAX_USERNAME_LENGTH} characters</li>
+                <li>Usernames may contain alphanumeric, _, @, +, . and - characters.</li>
+            </ul>
+            """
+        )
+    )
     avatar = models.ImageField(
         name="avatar",
         blank=True,

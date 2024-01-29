@@ -1,0 +1,21 @@
+{% extends "furfolio/layouts/title_body.html" %}
+
+{% block title %}
+    {% if success %}
+        You have activated your account!
+    {% else %}
+        Sorry, account activation failed.
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% if success %}
+        Click here to sign in get started: <a class="ms-2 btn btn-primary" href="{% url "after_sign_up" %}">Get Started</a>
+    {% else %}
+        This could happen for a few reasons:
+        <ul>
+            <li>The activation link is expired.</li>
+            <li>The activation link has already been used.</li>
+        </ul>
+    {% endif %}
+{% endblock %}

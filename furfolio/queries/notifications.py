@@ -1,7 +1,6 @@
-from django.utils import timezone
-from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 from django.db.models import Manager
 from django.shortcuts import get_object_or_404
+
 from . import chat as chat_queries
 from . import offers as offer_queries
 from .. import models
@@ -23,6 +22,24 @@ def create_message_notification(
 def create_message_notifications_for_recipients(message: 'models.ChatMessage'):
     for recipient in chat_queries.get_recipients_of_message(message):
         create_message_notification(message, recipient)
+
+
+def make_chat_message_notifications_seen_for_user_and_chat(
+    chat: 'models.Chat',
+    user: 'models.User',
+):
+    """given a user and a chat they are in, make all message notifications seen.
+
+    Args:
+        chat (models.Chat): _description_
+        user (models.User): _description_
+    """
+    unread_message_notifications_for_user_in_chat = models.ChatMessageNotification.objects.filter(
+        message__chat=chat, notification__recipient=user, notification__seen=False, )
+    for message_notification in unread_message_notifications_for_user_in_chat:
+        message_notification.notification.seen = True
+        message_notification.notification.full_clean()
+        message_notification.notification.save()
 
 
 def create_offer_posted_notification(
@@ -92,6 +109,30 @@ def create_user_followed_notification_using_user_following_user(
     create_user_followed_notification(
         user_following_user.follower,
         user_following_user.followed)
+
+
+def create_support_ticket_state_notification(
+    support_ticket: 'models.SupportTicket',
+    recipient: 'models.User',
+) -> 'models.SupportTicketStateNotification':
+    notification = models.Notification.objects.create(
+        recipient=recipient,
+    )
+    support_ticket_state_notification = models.SupportTicketStateNotification.objects.create(
+        notification=notification,
+        support_ticket=support_ticket,
+        support_ticket_state=support_ticket.state,
+    )
+    return support_ticket_state_notification
+
+
+def create_support_ticket_state_notification_for_author(
+    support_ticket: 'models.SupportTicket',
+):
+    create_support_ticket_state_notification(
+        support_ticket,
+        support_ticket.author,
+    )
 
 
 def get_notifications_for_user(

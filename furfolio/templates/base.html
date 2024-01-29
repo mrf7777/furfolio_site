@@ -25,14 +25,13 @@
     </title>
     <link href="{% static "/style/style.css" %}" rel="stylesheet">
     <script src="{% static "/js/bootstrap.bundle.min.js" %}"></script>
+    <script src="{% static "/js/htmx.min.js" %}"></script>
 
     {% progressive_web_app_meta %}
 </head>
 
 <body class="d-flex flex-column vh-100">
-
-    {% include "furfolio/scripts/3rd/twitter_script.html" %}
-
+    
     {% block header %}
     <div class="container-fluid">
         {% include "furfolio/website_header.html" %}
@@ -58,7 +57,8 @@
                 <a class="nav-link" href="{% url "privacy_policy" %}">Privacy Policy</a>
                 <a class="nav-link mb-3" href="{% url "credit" %}">Credit</a>
                 <a class="nav-link" href="{% url "tags" %}">Tags</a>
-                <a class="nav-link mb-3" href="{% url "help" %}">Help</a>
+                <a class="nav-link" href="{% url "help" %}">Help</a>
+                <a class="nav-link mb-3" href="{% url "support" %}">Support</a>
                 <span class="nav-link">{% include "furfolio/3rd/paypal_donation_button.html" %}</span>
             </div>
         </div>

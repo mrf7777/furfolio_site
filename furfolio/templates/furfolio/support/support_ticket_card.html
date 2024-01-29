@@ -1,0 +1,16 @@
+{% comment "" %}
+Expects the following context objects:
+- support_ticket: the support ticket object to make this card of
+{% endcomment %}
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title"><a class="text-decoration-none" href="{% url "support_ticket_detail" support_ticket.pk %}">{{ support_ticket.title }}</a></h5>
+        <p class="card-text">
+            {{ support_ticket.description }}
+        </p>
+        <p class="card-text">
+            <b>{{ support_ticket.friendly_state_text }}</b>
+        </p>
+    </div>
+</div>

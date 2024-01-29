@@ -8,29 +8,13 @@
 
 {% block body %}
 
-{% for message in messages %}
-    <div class="row mb-2">
-        {% if message.author.pk == request.user.pk %}
-            <div class="col-md-6"></div>
-            <div class="col-md-6">
-                {% if message.attachment %}
-                    {% include "./message_card.html" with id=message.get_html_id text=message.message sender="CURRENT_USER" attachment_url=message.attachment.url attachment_name=message.attachment.name only %}
-                {% else %}
-                    {% include "./message_card.html" with id=message.get_html_id text=message.message sender="CURRENT_USER" only %}
-                {% endif %}
-            </div>
-        {% else %}
-            <div class="col-md-6">
-                {% if message.attachment %}
-                    {% include "./message_card.html" with id=message.get_html_id user=message.author text=message.message sender="NON_CURRENT_USER" attachment_url=message.attachment.url attachment_name=message.attachment.name only %}
-                {% else %}
-                    {% include "./message_card.html" with id=message.get_html_id user=message.author text=message.message sender="NON_CURRENT_USER" only %}
-                {% endif %}
-            </div>
-            <div class="col-md-6"></div>
-        {% endif %}
-    </div>
-{% endfor %}
+<div
+    hx-get="{% url "chat_messages_component" chat.pk %}"
+    hx-trigger="every 4s"
+>
+    {# initially populate chat server-side #}
+    {% include "./messages.html" with messages=messages current_user=request.user only %}
+</div>
 
 <form method="post" id="chat-form" enctype="multipart/form-data">
     {% csrf_token %}

@@ -12,6 +12,7 @@ from .views import notifications
 from .views import support
 from .sitemaps import sitemaps
 from django.contrib.auth import views as auth_views
+from django_email_verification import urls as email_verification_urls
 from furfolio import forms as furfolio_forms
 
 urlpatterns = [
@@ -62,18 +63,19 @@ urlpatterns = [
          auth_views.PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
     path('accounts/reset/done/', auth_views.PasswordResetCompleteView.as_view(),
          name="password_reset_complete"),
-    path('accounts/after-sign-up/', registration.AfterSignUp.as_view(), name="after_sign_up"),
+    path(
+        'accounts/after-sign-up/',
+        registration.AfterSignUp.as_view(),
+        name="after_sign_up"),
+    # email verification
+    path(
+        'accounts/please-verify-email/',
+        registration.PleaseVerifyEmail.as_view(),
+        name="please_verify_email"),
+    path('accounts/email/verify/', include(email_verification_urls)),
     # dashboards
-    path(
-        'dashboard/',
-        dashboards.DashboardRedirector.as_view(),
-        name="dashboard"),
-    path('dashboard/creator/', dashboards.CreatorDashboard.as_view(),
-         name="creator_dashboard"),
-    path(
-        'dashboard/buyer/',
-        dashboards.BuyerDashboard.as_view(),
-        name="buyer_dashboard"),
+    path('dashboard/', dashboards.CreatorDashboard.as_view(),
+         name="dashboard"),
     # commissions
     path(
         'commissions/<pk>',
@@ -118,6 +120,10 @@ urlpatterns = [
         name="tag_category_detail"),
     # chat
     path('chat/<pk>/', chat.Chat.as_view(), name="chat"),
+    path(
+        'chat/<pk>/messages/',
+        chat.ChatMessagesComponent.as_view(),
+        name="chat_messages_component"),
     # notifications
     path(
         'notifications/',
@@ -129,6 +135,15 @@ urlpatterns = [
         name="open_notification"),
     # support
     path('support/', support.Support.as_view(), name="support"),
+    path('support/not-logged-in/', support.SupportNotLoggedIn.as_view(), name="support_not_logged_in"),
+    path(
+        'support/create/',
+        support.CreateSupportTicket.as_view(),
+        name="create_support_ticket"),
+    path(
+        'support/<pk>/',
+        support.SupportTicket.as_view(),
+        name="support_ticket_detail"),
     # static pages
     path('legal/', pages.Legal.as_view(), name="legal"),
     path('legal/terms-of-service/',

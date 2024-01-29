@@ -1,24 +1,17 @@
-from email.policy import default
-from model_utils import FieldTracker
 from django.db import models
 from django.conf import settings
-from django.contrib.postgres.indexes import GinIndex
 from django.core import validators
 from django.urls import reverse
-from django.utils import timezone
 from django.utils.safestring import mark_safe
+from model_utils import FieldTracker
+
 import math
 
-from .utils import image_resize, seven_days_from_now
-from .content_rating import RATING_TO_CHOICES, RATING_GENERAL, RATING_ADULT
-from .. import validators as furfolio_validators
 from .. import mixins
-from ..queries import commissions as commission_queries
-from ..queries import offers as offer_queries
 from ..queries import notifications as notification_queries
 
 
-class SupportTicket(models.Model):
+class SupportTicket(mixins.GetFullUrlMixin, models.Model):
     STATE_OPEN = "OPEN"
     STATE_INVESTIGATING = "INVESTIGATING"
     STATE_CLOSED = "CLOSED"
@@ -27,10 +20,15 @@ class SupportTicket(models.Model):
         (STATE_INVESTIGATING, "Investigating"),
         (STATE_CLOSED, "Closed"),
     ]
-    
-    DESCRIPTION_MAX_LENGTH = math.ceil(settings.AVERAGE_CHARACTERS_PER_WORD * 5000)
-    DESCRIPTION_MIN_LENGTH = math.ceil(settings.AVERAGE_CHARACTERS_PER_WORD * 10)
-    
+
+    DESCRIPTION_MAX_LENGTH = math.ceil(
+        settings.AVERAGE_CHARACTERS_PER_WORD * 5000)
+    DESCRIPTION_MIN_LENGTH = math.ceil(
+        settings.AVERAGE_CHARACTERS_PER_WORD * 10)
+
+    TITLE_MAX_LENGTH = 100
+    TITLE_MIN_LENGTH = 5
+
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -41,9 +39,10 @@ class SupportTicket(models.Model):
         default=STATE_OPEN,
     )
     title = models.CharField(
-        max_length=100,
-        validators=[validators.MinLengthValidator(5)],
-        help_text="Summarize your issue with a few words. Must be between 5 and 100 characters.",
+        max_length=TITLE_MAX_LENGTH,
+        validators=[
+            validators.MinLengthValidator(TITLE_MIN_LENGTH)],
+        help_text=f"Summarize your issue with a few words. Must be between {TITLE_MIN_LENGTH} and {TITLE_MAX_LENGTH} characters.",
     )
     description = models.TextField(
         max_length=DESCRIPTION_MAX_LENGTH,
@@ -52,13 +51,13 @@ class SupportTicket(models.Model):
             """
             Please describe your issue in detail.
             <br>
-            If possible, please answer the following questions:
+            If possible, please answer as many of the following questions as possible:
             <ul>
                 <li>
                     What is the issue?
                 </li>
                 <li>
-                    Where can we see this issue? (commission chat, published offers, etc.)
+                    Where can we see this issue? Add a URL or a link. (commission chat, published offers, etc.)
                 </li>
                 <li>
                     When did the issue happen or start?
@@ -66,10 +65,43 @@ class SupportTicket(models.Model):
                 <li>
                     Who is involved? (You, another user, a group of users, etc.)
                 </li>
+                <li>
+                    How did the issue happen?
+                </li>
             </ul>
             """
         ),
     )
     
+    tracker = FieldTracker()
+    
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)
+
+    def get_absolute_url(self):
+        return reverse("support_ticket_detail", kwargs={"pk": self.pk})
+
+    def __str__(self) -> str:
+        states_as_dict = dict(self.STATE_CHOICES)
+        state_human_text = states_as_dict[self.state]
+        return f"({state_human_text}) \"{self.title}\" by {self.author.username}"
+
+    def friendly_state_text(self) -> str:
+        states_as_dict = dict(self.STATE_CHOICES)
+        return states_as_dict[self.state]
+    
+    def save(self, *args, **kwargs) -> None:
+        saved: bool = False
+        if self.should_notify_state_changed():
+            super().save(*args, **kwargs)
+            saved = True
+            notification_queries.create_support_ticket_state_notification_for_author(self)
+            
+        if not saved:
+            super().save(*args, **kwargs)
+            saved = True
+
+    def should_notify_state_changed(self) -> bool:
+        return self.tracker.previous("state") is not None and self.tracker.has_changed("state")
+
+    

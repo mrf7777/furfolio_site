@@ -1,0 +1,5 @@
+Hi {{ user.username }}, you are almost done with registration.
+
+To confirm this email address and to active your account, please click here: {{ link }}
+
+This token expires in 48 hours.

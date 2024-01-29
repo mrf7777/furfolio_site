@@ -4,6 +4,8 @@ Expects the following context objects:
   - text: the text
   - attachment_name: (optional) the name of the attachment
   - attachment_url: (optional) the url of the attachment
+  - created_date: (optional) a date time that represents the created date time of the message
+  - timesince: (optional) timesince created
   - id: the HTML id of the card.
   - sender: an enum value: "CURRENT_USER" or "NON_CURRENT_USER"
     - "CURRENT_USER": use this to make card styles as if the message is by the signed in user
@@ -21,8 +23,13 @@ Expects the following context objects:
                 {{ text|urlize }}
             </p>
             {% if attachment_name and attachment_url %}
+            <p>
                 <a href="{{ attachment_url }}">{{ attachment_name }}</a>
+            </p>
             {% endif %}
+            <div class="fw-light">
+                {{ timesince }} ago
+            </div>
         </div>
     </div>
 </div>

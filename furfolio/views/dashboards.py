@@ -99,3 +99,17 @@ class CreatorDashboard(LoginRequiredMixin, generic.FormView):
             self.request.GET,
         )
         return context
+    
+
+class CreatorDashboardCommissionsComponenet(LoginRequiredMixin, generic.TemplateView):
+    template_name = "furfolio/dashboards/commissions_component.html"
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        make_context_for_dashboard(
+            context,
+            self.request.user,
+            CreatorDashboard.MAX_COMMISSIONS_PER_COLUMN,
+            self.request.GET,
+        )
+        return context

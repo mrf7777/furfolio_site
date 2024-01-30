@@ -101,7 +101,7 @@ class CreatorDashboard(LoginRequiredMixin, generic.FormView):
         return context
     
 
-class CreatorDashboardCommissionsComponenet(LoginRequiredMixin, generic.TemplateView):
+class CreatorDashboardCommissionsComponent(LoginRequiredMixin, generic.TemplateView):
     template_name = "furfolio/dashboards/commissions_component.html"
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:

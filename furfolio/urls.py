@@ -76,7 +76,7 @@ urlpatterns = [
     # dashboards
     path('dashboard/', dashboards.CreatorDashboard.as_view(),
          name="dashboard"),
-    path('dashboard/commissions/', dashboards.CreatorDashboardCommissionsComponenet.as_view(), name="dashboard_commissions_component"),
+    path('dashboard/commissions/', dashboards.CreatorDashboardCommissionsComponent.as_view(), name="dashboard_commissions_component"),
     # commissions
     path(
         'commissions/<pk>',

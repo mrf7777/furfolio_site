@@ -32,6 +32,14 @@ Support Ticket {{ support_ticket.title }}
 
 <hr>
 
+{% if support_ticket.get_chat %}
+<p>
+    <a class="text-reset text-decoration-none" href="{% url "chat" support_ticket.get_chat.pk %}">
+        <div>{% include "furfolio/chat/chat_button.html" %}</div>
+    </a>
+</p>
+{% endif %}
+
 <p>
     {{ support_ticket.description|linebreaks|urlize }}
 </p>

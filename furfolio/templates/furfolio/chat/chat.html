@@ -15,7 +15,7 @@
     <summary>
         Participants
     </summary>
-    <div class="d-flex" style="width: auto; overflow-x: scroll; white-space: nowrap;">
+    <div class="d-flex align-items-center" style="width: auto; overflow-x: scroll; white-space: nowrap;">
         {% for participant in chat.get_participants %}
             <div class="m-2">
                 {% include "furfolio/users/badge.html" with user=participant show_avatar=True only %}

@@ -7,6 +7,7 @@ import math
 from .. import validators as furfolio_validators
 from .commissions import Commission
 from .support import SupportTicket
+from ..queries import chat as chat_queries
 from ..queries import notifications as notification_queries
 
 
@@ -30,6 +31,9 @@ class Chat(models.Model):
             pass
 
         return "Generic Chat"
+    
+    def get_participants(self):
+        return chat_queries.get_chat_participants(self)
 
 
 class CommissionChat(Chat):

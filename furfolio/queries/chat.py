@@ -33,7 +33,6 @@ def create_chat_for_support_ticket(support_ticket: 'models.SupportTicket', assig
         )
 
 
-
 def get_messages_from_chat(
         chat: 'models.Chat') -> 'Manager[models.ChatMessage]':
     return models.ChatMessage.objects.filter(chat=chat)
@@ -81,3 +80,9 @@ def get_recipients_of_message(
     ).exclude(
         pk=message.author.pk
     )
+
+
+def get_chat_participants(chat: 'models.Chat') -> 'Manager[models.User]':
+    return models.User.objects.filter(
+        chatparticipant__chat=chat,
+    ).distinct()

@@ -11,6 +11,19 @@
 
 {% block body %}
 
+<details class="mb-3">
+    <summary>
+        Participants
+    </summary>
+    <div class="d-flex" style="width: auto; overflow-x: scroll; white-space: nowrap;">
+        {% for participant in chat.get_participants %}
+            <div class="m-2">
+                {% include "furfolio/users/badge.html" with user=participant show_avatar=True only %}
+            </div>
+        {% endfor %}
+    </div>
+</details>
+
 <div
     hx-get="{% url "chat_messages_component" chat.pk %}"
     hx-trigger="every 4s"

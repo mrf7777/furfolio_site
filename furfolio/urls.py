@@ -133,6 +133,7 @@ urlpatterns = [
         'notifications/',
         notifications.Notifications.as_view(),
         name="notifications"),
+    path('notifications/count-component/', notifications.NotificationCountBadge.as_view(), name="notifications_count_component"),
     path(
         'notifications/<pk>/view/',
         notifications.OpenNotification.as_view(),

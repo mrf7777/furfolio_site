@@ -54,3 +54,12 @@ class OpenNotification(
             **kwargs: Any) -> HttpResponse:
         notification_queries.make_notification_seen(self.get_notification())
         return super().get(request, *args, **kwargs)
+
+
+class NotificationCountBadge(LoginRequiredMixin, generic.TemplateView):
+    template_name = "furfolio/notification_count_component.html"
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["user"] = self.request.user
+        return context

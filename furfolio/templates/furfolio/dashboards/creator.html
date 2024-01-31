@@ -42,10 +42,14 @@
 
 <div
     hx-get="{% url "dashboard_commissions_component" %}?{% query_replace request "next" request.get_full_path %}"
-    hx-trigger="every 5s"
+    hx-trigger="load, every 5s"
     hx-swap="morph:innerHTML"
 >
-    {% include "./commissions_component.html" %}
+    <span class="htmx-indicator">
+        <div class="d-flex justify-content-center">
+            {% include "furfolio/components/spinner.html" %}
+        </div>
+    </span>
 </div>
 
 {% include "furfolio/scripts/submit_form_on_change.html" with form_id="offer-select-form" only %}

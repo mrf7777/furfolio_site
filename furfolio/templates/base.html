@@ -25,12 +25,19 @@
     </title>
     <link href="{% static "/style/style.css" %}" rel="stylesheet">
     <script src="{% static "/js/bootstrap.bundle.min.js" %}"></script>
+
     <script src="{% static "/js/htmx.min.js" %}"></script>
+    <script src="{% static "/js/idiomorph-ext.min.js" %}"></script>
+    <script type="text/javascript">
+        // set defaults for idiomorph swapping in htmx
+        Idiomorph.defaults.callbacks.beforeAttributeUpdated = function(attributeName, node, mutationType) { return false; }
+        Idiomorph.defaults.morphStyle = "innerHTML"
+    </script>
 
     {% progressive_web_app_meta %}
 </head>
 
-<body class="d-flex flex-column vh-100">
+<body class="d-flex flex-column vh-100" hx-ext="morph">
     
     {% block header %}
     <div class="container-fluid">

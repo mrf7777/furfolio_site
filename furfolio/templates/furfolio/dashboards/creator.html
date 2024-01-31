@@ -1,6 +1,7 @@
 {% extends "furfolio/layouts/title_body.html" %}
 
 {% load static %}
+{% load query_replace %}
 
 {% block title %}
 {% endblock %}
@@ -40,8 +41,8 @@
 </form>
 
 <div
-    hx-get="{% url "dashboard_commissions_component" %}"
-    hx-trigger="every 4s"
+    hx-get="{% url "dashboard_commissions_component" %}?{% query_replace request "next" request.get_full_path %}"
+    hx-trigger="every 10s"
 >
     {% include "./commissions_component.html" %}
 </div>

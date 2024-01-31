@@ -16,7 +16,7 @@ Represents the relevent commissions for the dashbaord.
 {% endblock %}
 
 {% block column_1 %}
-    {% include "./commission_card_list.html" with commissions=review_commissions request=request csrf_token=csrf_token only %}
+    {% include "./commission_card_list.html" with commissions=review_commissions request=request csrf_token=csrf_token next=next only %}
 {% endblock %}
 
 
@@ -32,7 +32,7 @@ Represents the relevent commissions for the dashbaord.
 {% endblock %}
 
 {% block column_2 %}
-    {% include "./commission_card_list.html" with commissions=accepted_commissions request=request csrf_token=csrf_token only %}
+    {% include "./commission_card_list.html" with commissions=accepted_commissions request=request csrf_token=csrf_token next=next only %}
 {% endblock %}
 
 
@@ -48,5 +48,5 @@ Represents the relevent commissions for the dashbaord.
 {% endblock %}
 
 {% block column_3 %}
-    {% include "./commission_card_list.html" with commissions=in_progress_commissions request=request csrf_token=csrf_token only %}
+    {% include "./commission_card_list.html" with commissions=in_progress_commissions request=request csrf_token=csrf_token next=next only %}
 {% endblock %}

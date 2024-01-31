@@ -9,6 +9,7 @@ show_avatars: (bool) if True, shows the avatars of the users in the card
 hide_buyer: (bool) if True, and is not self-manged, hide the buyer
 hide_creator: (bool) if True, and is not self-managed, hide the creator
 hide_redundant_users: (bool) If true, equivallent to setting hide_buyer and hide_creator smartly based on the signed in user. If True, ignores hide_buyer and hide_creator.
+next: (optional) when setting commission state or updating other info, where to redirect to
 {% endcomment %}
 
 {% load static %}
@@ -50,7 +51,7 @@ hide_redundant_users: (bool) If true, equivallent to setting hide_buyer and hide
     </div>
 
     <div class="card-footer">
-        {% include "./commission_functions.html" with commission=commission csrf_token=csrf_token request=request fill=True only %}
+        {% include "./commission_functions.html" with commission=commission csrf_token=csrf_token request=request fill=True next=next only %}
     </div>
 
 </div>

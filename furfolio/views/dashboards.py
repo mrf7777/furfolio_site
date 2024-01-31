@@ -112,4 +112,5 @@ class CreatorDashboardCommissionsComponent(LoginRequiredMixin, generic.TemplateV
             CreatorDashboard.MAX_COMMISSIONS_PER_COLUMN,
             self.request.GET,
         )
+        context["next"] = self.request.GET.get("next")
         return context

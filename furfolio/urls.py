@@ -141,6 +141,7 @@ urlpatterns = [
         'support/create/',
         support.CreateSupportTicket.as_view(),
         name="create_support_ticket"),
+    path('support/<pk>/create-chat/', support.CreateChatForSupportTicket.as_view(), name="create_support_ticket_chat"),
     path(
         'support/<pk>/',
         support.SupportTicket.as_view(),

@@ -80,3 +80,24 @@ class SupportTicket(
             return True
         else:
             return False
+        
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["current_user_is_support_mod"] = user_queries.is_user_in_group(self.request.user, SUPPORT_MODERATOR_GROUP_NAME)
+        return context
+
+
+class CreateChatForSupportTicket(LoginRequiredMixin, generic.View):
+    def post(self, request, pk):
+        if not user_queries.is_user_in_group(request.user, SUPPORT_MODERATOR_GROUP_NAME):
+            raise PermissionDenied(
+                "You do not have permission to add a chat to this support ticket."
+            )
+        
+        support_ticket = get_object_or_404(models.SupportTicket, pk=pk)
+        chat_queries.create_chat_for_support_ticket(support_ticket, request.user)
+
+        redirect_url = request.GET["next"]
+        return redirect(redirect_url)
+
+

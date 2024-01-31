@@ -21,6 +21,19 @@ def create_chat_for_commission(commission: 'models.Commission'):
         )
 
 
+def create_chat_for_support_ticket(support_ticket: 'models.SupportTicket', assignee: 'models.User'):
+    support_ticket_chat = models.SupportTicketChat.objects.create(
+        support_ticket=support_ticket,
+    )
+    # add participants
+    for user in [support_ticket.author, assignee]:
+        models.ChatParticipant.objects.create(
+            chat=support_ticket_chat,
+            participant=user,
+        )
+
+
+
 def get_messages_from_chat(
         chat: 'models.Chat') -> 'Manager[models.ChatMessage]':
     return models.ChatMessage.objects.filter(chat=chat)

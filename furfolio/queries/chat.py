@@ -40,6 +40,17 @@ def get_commission_chat_by_commission(
         return None
 
 
+def get_support_ticket_chat_by_support_ticket(
+    support_ticket: 'models.SupportTicket',
+) -> Union['models.SupportTicketChat', None]:
+    try:
+        return models.SupportTicketChat.objects.get(
+            support_ticket=support_ticket,
+        )
+    except models.SupportTicketChat.DoesNotExist:
+        return None
+
+
 def test_user_is_participant_of_chat(
         chat: 'models.Chat',
         user: 'models.User') -> bool:

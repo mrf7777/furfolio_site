@@ -9,6 +9,7 @@ import math
 
 from .. import mixins
 from ..queries import notifications as notification_queries
+from ..queries import chat as chat_queries
 
 
 class SupportTicket(mixins.GetFullUrlMixin, models.Model):
@@ -104,4 +105,5 @@ class SupportTicket(mixins.GetFullUrlMixin, models.Model):
     def should_notify_state_changed(self) -> bool:
         return self.tracker.previous("state") is not None and self.tracker.has_changed("state")
 
-    
+    def get_chat(self):
+        return chat_queries.get_support_ticket_chat_by_support_ticket(self)

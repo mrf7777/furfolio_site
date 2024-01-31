@@ -85,4 +85,4 @@ def get_recipients_of_message(
 def get_chat_participants(chat: 'models.Chat') -> 'Manager[models.User]':
     return models.User.objects.filter(
         chatparticipant__chat=chat,
-    ).distinct()
+    ).order_by("username").distinct()

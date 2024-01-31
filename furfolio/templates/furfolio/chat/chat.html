@@ -4,6 +4,9 @@
     {% if chat.commissionchat %}
         Chat for commission <a href="{% url "commission_detail" chat.commissionchat.commission.pk %}" class="text-decoration-none">{{ chat.commissionchat.get_name }}</a>
     {% endif %}
+    {% if chat.supportticketchat %}
+        Chat for support ticket <a href="{% url "support_ticket_detail" chat.supportticketchat.support_ticket.pk %}" class="text-decoration-none">{{ chat.supportticketchat.get_name }}</a>
+    {% endif %}
 {% endblock %}
 
 {% block body %}

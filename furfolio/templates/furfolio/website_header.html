@@ -41,11 +41,7 @@ Includable website header.
                         <a class="nav-link" href="{% url "notifications" %}">
                             <div class="position-relative" style="width: fit-content;">
                                 <img width="26px" src="{% static "symbols/notification-black.svg" %}">
-                                {% if request.user.get_num_unread_notifications > 0 %}
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
-                                        {{ request.user.get_num_unread_notifications }}
-                                    </span>
-                                {% endif %}
+                                {% include "./notification_count_component.html" with user=request.user only %}
                             </div>
                         </a>
                     {% endif %}

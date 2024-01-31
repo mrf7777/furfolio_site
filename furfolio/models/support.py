@@ -73,9 +73,9 @@ class SupportTicket(mixins.GetFullUrlMixin, models.Model):
             """
         ),
     )
-    
+
     tracker = FieldTracker()
-    
+
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)
     updated_date = models.DateTimeField(name="updated_date", auto_now=True)
 
@@ -90,20 +90,22 @@ class SupportTicket(mixins.GetFullUrlMixin, models.Model):
     def friendly_state_text(self) -> str:
         states_as_dict = dict(self.STATE_CHOICES)
         return states_as_dict[self.state]
-    
+
     def save(self, *args, **kwargs) -> None:
         saved: bool = False
         if self.should_notify_state_changed():
             super().save(*args, **kwargs)
             saved = True
-            notification_queries.create_support_ticket_state_notification_for_author(self)
-            
+            notification_queries.create_support_ticket_state_notification_for_author(
+                self)
+
         if not saved:
             super().save(*args, **kwargs)
             saved = True
 
     def should_notify_state_changed(self) -> bool:
-        return self.tracker.previous("state") is not None and self.tracker.has_changed("state")
+        return self.tracker.previous(
+            "state") is not None and self.tracker.has_changed("state")
 
     def get_chat(self):
         return chat_queries.get_support_ticket_chat_by_support_ticket(self)

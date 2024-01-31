@@ -34,6 +34,7 @@ def delete_user_followed_notification_parent(sender, instance, **kwargs):
 
 
 @receiver(post_delete, sender=SupportTicketStateNotification)
-def delete_support_ticket_state_notification_parent(sender, instance, **kwargs):
+def delete_support_ticket_state_notification_parent(
+        sender, instance, **kwargs):
     if instance.notification:
         instance.notification.delete()

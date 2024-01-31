@@ -21,7 +21,9 @@ def create_chat_for_commission(commission: 'models.Commission'):
         )
 
 
-def create_chat_for_support_ticket(support_ticket: 'models.SupportTicket', assignee: 'models.User'):
+def create_chat_for_support_ticket(
+        support_ticket: 'models.SupportTicket',
+        assignee: 'models.User'):
     support_ticket_chat = models.SupportTicketChat.objects.create(
         support_ticket=support_ticket,
     )

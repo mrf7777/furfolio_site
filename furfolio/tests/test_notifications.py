@@ -170,20 +170,21 @@ class UserFollowedNotificationTestCase(TestCase):
 class SupportTicketStateNotificationTestCase(TestCase):
     def setUp(self):
         self.user1 = utils.make_user("user1", role=models.User.ROLE_CREATOR)
-        self.support_ticket = utils.make_support_ticket(self.user1, state=models.SupportTicket.STATE_OPEN)
-        
+        self.support_ticket = utils.make_support_ticket(
+            self.user1, state=models.SupportTicket.STATE_OPEN)
+
     def test_support_ticket_state_changed_creates_notification(self):
         self.support_ticket.state = models.SupportTicket.STATE_INVESTIGATING
         self.support_ticket.full_clean()
         self.support_ticket.save()
         self.assertEqual(
             models.SupportTicketStateNotification.objects.all().count(), 1)
-        
+
     def test_delete_support_ticket_state_notification_deletes_parent(self):
         self.support_ticket.state = models.SupportTicket.STATE_INVESTIGATING
         self.support_ticket.full_clean()
         self.support_ticket.save()
-        
+
         # before delete
         self.assertEquals(
             models.SupportTicketStateNotification.objects.all().count(), 1)

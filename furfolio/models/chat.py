@@ -31,7 +31,7 @@ class Chat(models.Model):
             pass
 
         return "Generic Chat"
-    
+
     def get_participants(self):
         return chat_queries.get_chat_participants(self)
 

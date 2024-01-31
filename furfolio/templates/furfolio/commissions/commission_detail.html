@@ -1,11 +1,19 @@
 {% extends "furfolio/layouts/title_body.html" %}
 
+{% load query_replace %}
+
 {% block title %}
 {% include "./commission_title.html" with commission=commission link_to_offer=True show_avatars=True only %}
 {% endblock %}
 
 {% block body %}
 
-{% include "./commission_detail_component.html" %}
+<div
+    hx-get="{% url "commission_detail_component" commission.pk %}?{% query_replace request "next" request.get_full_path %}"
+    hx-trigger="every 5s"
+    hx-swap="morph:innerHTML"
+>
+    {% include "./commission_detail_component.html" %}
+</div>
 
 {% endblock %}

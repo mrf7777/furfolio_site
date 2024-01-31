@@ -85,6 +85,7 @@ urlpatterns = [
         'commissions/<pk>',
         commissions.Commission.as_view(),
         name="commission_detail"),
+    path('commissions/<pk>/detail-component/', commissions.CommissionDetailComponent.as_view(), name="commission_detail_component"),
     path('offers/<offer_pk>/commissions/create/', commissions.CreateCommission.as_view(),
          name="create_commission"),
     path('commissions/<pk>/update/',

@@ -13,8 +13,8 @@ Expects the following objects:
 
 <div class="d-flex flex-wrap align-items-center">
     {% if commission.get_chat %}
-        <div class="flex-column me-0">
-            <div class="mb-1"><a class="text-reset" href="{% url "chat" commission.get_chat.pk %}">{% include "../chat/chat_button.html" %}</a></div>
+        <div class="flex-column">
+            <a class="text-reset" href="{% url "chat" commission.get_chat.pk %}">{% include "../chat/chat_button.html" %}</a>
         </div>
         {% if some_space_between_functions %}
             <div class="me-3"></div>
@@ -26,7 +26,7 @@ Expects the following objects:
     {% endif %}
 
     {% if request.user == commission.offer.author %}
-        <div class="dropdown">
+        <div class="dropdown me-3">
             <button class="btn btn-secondary dropdown-toggle text-light" type="button" data-bs-toggle="dropdown">
                 Change State
             </button>
@@ -58,7 +58,7 @@ Expects the following objects:
     {% endif %}
 
     {% if show_edit_button %}
-    <div class="ms-3">
+    <div>
         <a href="{% url "update_commission" commission.pk %}" class="btn btn-primary">Edit</a>
     </div>
     {% endif %}

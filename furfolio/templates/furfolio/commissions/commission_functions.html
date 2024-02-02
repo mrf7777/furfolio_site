@@ -8,6 +8,7 @@ Expects the following objects:
   - fill: (bool) if True, will put functions and state buttons as far apart as possible.
   - some_space_between_functions: (bool) if True, will force add margin between commission functions
   - next: (optional) when setting state of commission or submitting form, where to redirect to
+  - show_edit_button: if True, shows the edit button for the commission
 {% endcomment %}
 
 <div class="d-flex flex-wrap align-items-center">
@@ -54,5 +55,11 @@ Expects the following objects:
                 {% endif %}
             </div>
         </div>
+    {% endif %}
+
+    {% if show_edit_button %}
+    <div class="ms-3">
+        <a href="{% url "update_commission" commission.pk %}" class="btn btn-primary">Edit</a>
+    </div>
     {% endif %}
 </div>

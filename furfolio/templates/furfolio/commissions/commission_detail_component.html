@@ -19,7 +19,11 @@
 <hr>
 
 <div class="my-3">
-    {% include "./commission_functions.html" with commission=commission csrf_token=csrf_token request=request some_space_between_functions=True fill=False next=next only %}
+    {% if request.user.pk == commission.offer.author.pk %}
+        {% include "./commission_functions.html" with commission=commission csrf_token=csrf_token request=request some_space_between_functions=True fill=False next=next show_edit_button=True only %}
+    {% else %}
+        {% include "./commission_functions.html" with commission=commission csrf_token=csrf_token request=request some_space_between_functions=True fill=False next=next only %}
+    {% endif %}
 </div>
 
 <div class="mb-3">
@@ -32,8 +36,4 @@
     <h5>Attachment</h5>
     <a class="text-decoration-none" href="{{ commission.attachment.url }}">{{ commission.attachment.name }}</a>
 </div>
-{% endif %}
-
-{% if request.user.pk == commission.offer.author.pk %}
-    <a href="{% url "update_commission" commission.pk %}"><button class="btn btn-primary">Edit</button></a>
 {% endif %}

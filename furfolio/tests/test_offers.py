@@ -30,6 +30,13 @@ class MaxActiveOffersPerUserTestCase(TestCase):
         offer.full_clean()
         offer.save()
 
+    def test_author_can_update_offer_below_offer_limit(self):
+        offers = self.__class__.make_max_offers_for_user(self.user, models.Offer.MAX_ACTIVE_OFFERS_PER_USER - 1)
+        offer = offers[0]
+        offer.description = "This is a new description that has text."
+        offer.full_clean()
+        offer.save()
+
     def test_author_cannot_go_over_max_offer_limit(self):
         with self.assertRaises(ValidationError):
             self.__class__.make_max_offers_for_user(self.user, models.Offer.MAX_ACTIVE_OFFERS_PER_USER + 1)

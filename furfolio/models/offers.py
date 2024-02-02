@@ -228,7 +228,7 @@ class Offer(mixins.CleaningMixin, mixins.GetFullUrlMixin, models.Model):
             self.min_price, self.max_price)
         furfolio_validators.validate_max_commissions_per_user_is_lte_to_max_review_commissions(
             self)
-        
+
     def post_clean_new_object(self):
         furfolio_validators.check_user_will_not_go_over_max_active_offers(
             self, self.MAX_ACTIVE_OFFERS_PER_USER)

@@ -323,9 +323,8 @@ class ChangeCommissionStateTestCase(TestCase):
         self.commission.full_clean()
         self.commission.save()
 
-
     def test_update_commission_expired_offer(self):
-        self.offer.created_date = timezone.now() - datetime.timedelta(days=(10*365))
+        self.offer.created_date = timezone.now() - datetime.timedelta(days=(10 * 365))
         # no cleaning on the offer here.
         self.offer.save()
 

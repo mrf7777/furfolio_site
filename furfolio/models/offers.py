@@ -25,7 +25,7 @@ OFFER_DESCRIPTION_MIN_LENGTH = math.floor(
     settings.AVERAGE_CHARACTERS_PER_WORD * 4)
 
 
-class Offer(mixins.GetFullUrlMixin, models.Model):
+class Offer(mixins.CleaningMixin, mixins.GetFullUrlMixin, models.Model):
     # https://en.wikipedia.org/wiki/ISO_4217#Active_codes_(List_One)
     EURO_SYMBOL = "\u20AC"
     CURRENCY_USD = "USD"
@@ -36,6 +36,7 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
     ]
 
     HIGHEST_PRICE = 1_000_000_000
+    MAX_ACTIVE_OFFERS_PER_USER = 3
 
     ASPECT_RATIO_MIN = (1, 3)
     ASPECT_RATIO_MAX = (4, 1)
@@ -222,12 +223,15 @@ class Offer(mixins.GetFullUrlMixin, models.Model):
             super(Offer, self).save(*args, **kwargs)
 
     def clean(self):
+        super().clean()
         furfolio_validators.validate_price_min_is_less_than_max(
             self.min_price, self.max_price)
-        furfolio_validators.check_user_will_not_go_over_max_active_offers(
-            self)
         furfolio_validators.validate_max_commissions_per_user_is_lte_to_max_review_commissions(
             self)
+        
+    def post_clean_new_object(self):
+        furfolio_validators.check_user_will_not_go_over_max_active_offers(
+            self, self.MAX_ACTIVE_OFFERS_PER_USER)
 
     def get_absolute_url(self):
         return reverse("offer_detail", kwargs={"pk": self.pk})

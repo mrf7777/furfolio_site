@@ -174,8 +174,7 @@ def validate_commission_message_attachment_has_max_size(value: FileField):
         value, MAX_COMMISSION_MESSAGE_ATTACHMENT_FILE_SIZE)
 
 
-def check_user_will_not_go_over_max_active_offers(offer: 'models.Offer'):
-    MAX_ACTIVE_OFFERS_PER_USER = 3
+def check_user_will_not_go_over_max_active_offers(offer: 'models.Offer', max_active_offers_per_user: int):
     # a closed offer should not count
     if offer.is_closed():
         return
@@ -183,9 +182,9 @@ def check_user_will_not_go_over_max_active_offers(offer: 'models.Offer'):
     # offer is active, so ensure it is under the limit
     active_offers_by_author = offer_queries.get_active_offers_for_user(
         offer.author)
-    if active_offers_by_author.count() >= MAX_ACTIVE_OFFERS_PER_USER:
+    if active_offers_by_author.count() >= max_active_offers_per_user:
         raise ValidationError(
-            f"Cannot save offer because the number of active offers is at its maximum limit (which is {MAX_ACTIVE_OFFERS_PER_USER}). Consider force-closing an active offer or waiting for an offer to pass its cutoff date."
+            f"Cannot save offer because the number of active offers is at its maximum limit (which is {max_active_offers_per_user}). Consider force-closing an active offer or waiting for an offer to pass its cutoff date."
         )
 
 

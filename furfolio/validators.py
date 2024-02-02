@@ -175,7 +175,7 @@ def validate_commission_message_attachment_has_max_size(value: FileField):
 
 
 def check_user_will_not_go_over_max_active_offers(offer: 'models.Offer'):
-    MAX_ACTIVE_OFFERS_PER_USER = 5
+    MAX_ACTIVE_OFFERS_PER_USER = 3
     # a closed offer should not count
     if offer.is_closed():
         return

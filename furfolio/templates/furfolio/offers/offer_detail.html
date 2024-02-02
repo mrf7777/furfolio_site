@@ -73,11 +73,9 @@
         {% endif %}
     </div>
 
-    {{ offer.description|linebreaks|urlize }}
-
     {% if not should_show_create_commission_button %}
         {% if not request.user.is_authenticated %}
-            <b><a href="{% url "login" %}?next={{ request.get_full_path|urlencode }}">Sign In</a> to request commissions.</b>
+            <b class="mb-3 d-block"><a href="{% url "login" %}?next={{ request.get_full_path|urlencode }}">Sign In</a> to request commissions.</b>
         {% elif offer.is_closed %}
             <b>This offer is not accepting commissions because it is closed.</b>
         {% elif offer.has_max_review_commissions %}
@@ -86,6 +84,8 @@
             <b>This offer is not accepting commissions at this time.</b>
         {% endif %}
     {% endif %}
+
+    {{ offer.description|linebreaks|urlize }}
 
 
 {% endblock %}

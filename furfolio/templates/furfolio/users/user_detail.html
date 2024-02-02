@@ -28,6 +28,7 @@
 {% endblock %}
 
 {% block body %}
+{# TODO: extract query url into python context #}
 <a class="btn btn-primary mb-3" href="{% url "offer_list" %}?author={{ user.username }}&sort=created_date">Offers</a>
 <p>
     {{ user.profile|linebreaks|urlize }}

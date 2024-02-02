@@ -54,9 +54,7 @@
 
     <hr>
 
-    {{ offer.description|linebreaks|urlize }}
-
-    <div class="d-flex flex-wrap gap-3 align-items-center">
+    <div class="d-flex flex-wrap gap-3 align-items-center mb-3">
         {% if request.user.pk == offer.author.pk %}
             <div>
                 <a class="btn btn-primary" href="{% url "update_offer" offer.pk %}">Edit</a>
@@ -74,6 +72,8 @@
             </div>
         {% endif %}
     </div>
+
+    {{ offer.description|linebreaks|urlize }}
 
     {% if not should_show_create_commission_button %}
         {% if not request.user.is_authenticated %}

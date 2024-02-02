@@ -9,6 +9,8 @@
     {% if user.pk == request.user.pk %}
         <div>
             <a class="btn btn-primary me-1" href="{% url "followed_list" user.username %}">Followed</a>
+
+            {# TODO: use a dropdown with a gear #}
             <a class="btn btn-primary" href="{% url "update_user" user.username %}">Settings</a>
         </div>
     {% else %}

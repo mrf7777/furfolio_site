@@ -144,6 +144,7 @@ urlpatterns = [
         'notifications/<pk>/view/',
         notifications.OpenNotification.as_view(),
         name="open_notification"),
+    path('notifications/open-all/', notifications.OpenAllNotifications.as_view(), name="open_all_notifications"),
     # support
     path('support/', support.Support.as_view(), name="support"),
     path(

@@ -12,7 +12,8 @@
         "queryset",
         "tbody",
         "thead",
-        "Unfollow"
+        "Unfollow",
+        "urlencode"
     ],
     "python.analysis.typeCheckingMode": "off",
     "[python]": {

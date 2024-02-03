@@ -2,6 +2,7 @@ from typing import Any
 from django.db.models.query import QuerySet
 from django.http import HttpRequest
 from django.http.response import HttpResponse, HttpResponse as HttpResponse
+from django.shortcuts import redirect
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
@@ -55,6 +56,16 @@ class OpenNotification(
         notification_queries.make_notification_seen(self.get_notification())
         return super().get(request, *args, **kwargs)
 
+
+class OpenAllNotifications(
+    LoginRequiredMixin,
+    generic.View,
+):
+    def post(self, request):
+        notification_queries.make_all_notifications_seen_for_user(request.user)
+        redirect_url = request.GET["next"]
+        return redirect(redirect_url)
+        
 
 class NotificationCountBadge(LoginRequiredMixin, generic.TemplateView):
     template_name = "furfolio/notification_count_component.html"

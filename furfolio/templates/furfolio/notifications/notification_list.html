@@ -21,12 +21,14 @@ Notifications
         </div>
     {% endif %}
 
-    <div class="mt-3">
-        <form method="post" action="{% url "open_all_notifications" %}?{% query_replace request "next" request.get_full_path|urlencode %}" onsubmit="return confirm('Do you really want to mark all of your notifications as read? This cannot be undone.');">
-            {% csrf_token %}
-            <input class="btn btn-primary" type="submit" value="Mark all as Read">
-        </form>
-    </div>
+    {% if exists_unread_notifications %}
+        <div class="mt-3">
+            <form method="post" action="{% url "open_all_notifications" %}?{% query_replace request "next" request.get_full_path %}" onsubmit="return confirm('Do you really want to mark all of your notifications as read? This cannot be undone.');">
+                {% csrf_token %}
+                <input class="btn btn-primary" type="submit" value="Mark all as Read">
+            </form>
+        </div>
+    {% endif %}
 {% else %}
     <p>
         Looks like you are all caught up on notifications. Great!

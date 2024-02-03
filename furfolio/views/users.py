@@ -37,14 +37,14 @@ class User(UserMixin, generic.DetailView):
         return context
 
 
-class UpdateUser(
+class UpdateUserProfile(
         UserMixin,
         LoginRequiredMixin,
         UserPassesTestMixin,
         generic.UpdateView):
-    template_name = "furfolio/users/user_update.html"
+    template_name = "furfolio/users/user_profile_update.html"
     context_object_name = "user"
-    form_class = forms.UpdateUserForm
+    form_class = forms.UpdateUserProfileForm
 
     def test_func(self):
         return self.get_object().pk == self.request.user.pk

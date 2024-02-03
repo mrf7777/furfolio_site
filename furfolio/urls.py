@@ -35,8 +35,8 @@ urlpatterns = [
     path('offers/<pk>/', offers.Offer.as_view(), name="offer_detail"),
     # users
     path('users/<username>/', users.User.as_view(), name="user"),
-    path('users/<username>/update/',
-         users.UpdateUser.as_view(), name="update_user"),
+    path('users/<username>/update-profile/',
+         users.UpdateUserProfile.as_view(), name="update_user_profile"),
     path('users/', users.UserList.as_view(), name="user_list"),
     # user following
     path('users/<username>/follow/',

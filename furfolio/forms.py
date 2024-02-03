@@ -38,7 +38,6 @@ class CustomFormRenderer(TemplatesSetting):
 
 class CustomUserCreationForm(UserCreationForm):
     email = EmailField(required=True)
-    pii_settings_split = HorizontalRuleField()
 
     class Meta(UserCreationForm.Meta):
         model = User
@@ -47,17 +46,15 @@ class CustomUserCreationForm(UserCreationForm):
             "email",
             "password1",
             "password2",
-            "pii_settings_split",
             "role",
             "avatar",
             "consent_to_adult_content"]
 
 
-class UpdateUserForm(forms.ModelForm):
+class UpdateUserProfileForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ["profile", "role",
-                  "avatar", "consent_to_adult_content"]
+        fields = ["profile", "role", "avatar"]
 
 
 class UserSearchForm(TextSearchForm):

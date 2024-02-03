@@ -1,18 +1,30 @@
 {% extends "furfolio/layouts/title_body.html" %}
 
+{% load static %}
+
 {% block title %}
-<div class="d-flex flex-wrap align-items-center">
-    <img class="me-3" src="{% include "./avatar_image_url.txt" with user=user only %}">{{ user.username }}
+<img class="me-3" src="{% include "./avatar_image_url.txt" with user=user only %}">{{ user.username }}
+{% endblock %}
 
-    <div class="flex-fill"></div>
+{% block title_class %}
+mb-2
+{% endblock %}
 
+{% block body %}
+<div class="d-flex flex-wrap gap-3">
     {% if user.pk == request.user.pk %}
-        <div>
-            <a class="btn btn-primary me-1" href="{% url "followed_list" user.username %}">Followed</a>
-
-            {# TODO: use a dropdown with a gear #}
-            <a class="btn btn-primary" href="{% url "update_user" user.username %}">Settings</a>
+        <div class="dropdown text-reset">
+            <button class="btn btn-primary dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                <img class="me-2" src={% static "symbols/gear-white.svg" %} style="width: 1.5em;"> Settings
+            </button>
+            <ul class="dropdown-menu">
+                <li class="dropdown-item">
+                    <a class="fw-bold text-reset text-decoration-none" href="{% url "update_user" user.username %}">Settings</a>
+                </li>
+            </ul>
         </div>
+        
+        <a class="btn btn-primary" href="{% url "followed_list" user.username %}">Followed</a>
     {% else %}
         {% if is_user_followed is True %}
             <form method="post" action="{% url "unfollow_user" user.username %}?next={{ request.get_full_path|urlencode }}">
@@ -26,12 +38,13 @@
             </form>
         {% endif %}
     {% endif %}
-</div>
-{% endblock %}
 
-{% block body %}
-{# TODO: extract query url into python context #}
-<a class="btn btn-primary mb-3" href="{% url "offer_list" %}?author={{ user.username }}&sort=created_date">Offers</a>
+    {# TODO: extract query url into python context #}
+    <a class="btn btn-primary" href="{% url "offer_list" %}?author={{ user.username }}&sort=created_date">Offers</a>
+</div>
+
+<hr>
+
 <p>
     {{ user.profile|linebreaks|urlize }}
 </p>

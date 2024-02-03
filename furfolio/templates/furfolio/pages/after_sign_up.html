@@ -27,7 +27,7 @@ Thank you for signing up!
     <h4>Learn</h4>
     Please read this quick overview of Furfolio if you have not already.
     <br>
-    <a href="{% url "what_is_furfolio" %}" class="btn btn-primary">What is Furfolio?</a>
+    <a href="{% url "what_is_furfolio" %}" class="btn btn-primary" target="_blank" rel="noopener noreferrer">What is Furfolio?</a>
 </p>
 
 {% if show_creator_next_steps %}
@@ -35,7 +35,7 @@ Thank you for signing up!
     <h4>I see that you are a Creator</h4>
     In that case, you should set up your profile here.
     <br>
-    <a href="{% url "update_user_profile" request.user.username %}" class="btn btn-primary">Profile Settings</a>
+    <a href="{% url "update_user_profile" request.user.username %}" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Profile Settings</a>
 </p>
 
 <p>
@@ -44,7 +44,7 @@ Thank you for signing up!
     <br>
     You can also find this in the "help" section at the bottom of this website
     <br>
-    <a href="{% url "reference" %}" class="btn btn-primary">Reference</a>
+    <a href="{% url "reference" %}" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Reference</a>
 </p>
 {% endif %}
 
@@ -54,17 +54,17 @@ Thank you for signing up!
     <ul>
         <li>
             <div class="d-inline-flex align-items-center mb-2">
-                <a href="{% url "offer_list" %}" class="btn btn-primary me-2">Offers</a> looking at offers.
+                <a href="{% url "offer_list" %}" class="btn btn-primary me-2" target="_blank" rel="noopener noreferrer">Offers</a> looking at offers.
             </div>
         </li>
         <li>
             <div class="d-inline-flex align-items-center mb-2">
-                <a href="{% url "dashboard" %}" class="btn btn-primary me-2">Dashboard</a> exploring your dashboard.
+                <a href="{% url "dashboard" %}" class="btn btn-primary me-2" target="_blank" rel="noopener noreferrer">Dashboard</a> exploring your dashboard.
             </div>
         </li>
         <li>
             <div class="d-inline-flex align-items-center">
-                <a href="{% url "user_list" %}" class="btn btn-primary me-2">Creators</a> finding Creators on this platform.
+                <a href="{% url "user_list" %}" class="btn btn-primary me-2" target="_blank" rel="noopener noreferrer">Creators</a> finding Creators on this platform.
             </div>
         </li>
     </ul>

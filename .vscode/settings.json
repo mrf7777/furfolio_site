@@ -7,6 +7,8 @@
         "endfor",
         "furfolio",
         "htmx",
+        "noopener",
+        "noreferrer",
         "queryset",
         "tbody",
         "thead",

@@ -37,6 +37,7 @@ urlpatterns = [
     path('users/<username>/', users.User.as_view(), name="user"),
     path('users/<username>/update-profile/',
          users.UpdateUserProfile.as_view(), name="update_user_profile"),
+    path('users/<username>/update-account/', users.UpdateUserAccount.as_view(), name="update_user_account"),
     path('users/', users.UserList.as_view(), name="user_list"),
     # user following
     path('users/<username>/follow/',

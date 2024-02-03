@@ -1,0 +1,15 @@
+{% extends "furfolio/layouts/title_body.html" %}
+
+{% block title %}
+Update Account
+{% endblock %}
+
+{% block body %}
+<form enctype="multipart/form-data" method="post" id="form">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" class="btn btn-primary" value="Save Changes" id="submit-button">
+</form>
+
+{% include "furfolio/scripts/hide_on_submit.html" with form_id="form" id_to_hide="submit-button" only %}
+{% endblock %}

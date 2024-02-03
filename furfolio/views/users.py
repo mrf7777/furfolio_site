@@ -50,6 +50,20 @@ class UpdateUserProfile(
         return self.get_object().pk == self.request.user.pk
 
 
+class UpdateUserAccount(
+    UserMixin,
+    LoginRequiredMixin,
+    UserPassesTestMixin,
+    generic.UpdateView
+):
+    template_name = "furfolio/users/user_account_update.html"
+    context_object_name = "user"
+    form_class = forms.UpdateUserAccountForm
+    
+    def test_func(self) -> bool | None:
+        return self.get_object().pk == self.request.user.pk
+
+
 class UserList(PageRangeContextMixin, UserMixin, generic.ListView):
     context_object_name = "users"
     template_name = "furfolio/users/user_list.html"

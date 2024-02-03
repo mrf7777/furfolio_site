@@ -57,6 +57,12 @@ class UpdateUserProfileForm(forms.ModelForm):
         fields = ["profile", "role", "avatar"]
 
 
+class UpdateUserAccountForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ["consent_to_adult_content"]
+
+
 class UserSearchForm(TextSearchForm):
     pass
 

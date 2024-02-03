@@ -18,11 +18,11 @@ mb-2
                 <img class="me-2" src={% static "symbols/gear-white.svg" %} style="width: 1.5em;"> Settings
             </button>
             <ul class="dropdown-menu">
-                <li class="dropdown-item">
-                    <a class="fw-bold text-reset text-decoration-none" href="{% url "update_user_profile" user.username %}">Profile</a>
+                <li>
+                    <a class="fw-bold text-reset text-decoration-none dropdown-item" href="{% url "update_user_profile" user.username %}">Profile</a>
                 </li>
-                <li class="dropdown-item">
-                    <a class="fw-bold text-reset text-decoration-none" href="{% url "update_user_account" user.username %}">Account</a>
+                <li>
+                    <a class="fw-bold text-reset text-decoration-none dropdown-item" href="{% url "update_user_account" user.username %}">Account</a>
                 </li>
             </ul>
         </div>

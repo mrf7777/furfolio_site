@@ -5,28 +5,19 @@ Expects the following objects:
   - commission: the commission object to show
   - csrf_token: the csrf_token
   - request: the request object
-  - fill: (bool) if True, will put functions and state buttons as far apart as possible.
-  - some_space_between_functions: (bool) if True, will force add margin between commission functions
   - next: (optional) when setting state of commission or submitting form, where to redirect to
   - show_edit_button: if True, shows the edit button for the commission
 {% endcomment %}
 
-<div class="d-flex flex-wrap align-items-center">
+<div class="d-flex flex-wrap align-items-center gap-3">
     {% if commission.get_chat %}
-        <div class="flex-column">
+        <div>
             <a class="text-reset" href="{% url "chat" commission.get_chat.pk %}">{% include "../chat/chat_button.html" %}</a>
         </div>
-        {% if some_space_between_functions %}
-            <div class="me-3"></div>
-        {% endif %}
-    {% endif %}
-
-    {% if fill %}
-        <div class="flex-fill"></div>
     {% endif %}
 
     {% if request.user == commission.offer.author %}
-        <div class="dropdown me-3">
+        <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle text-light" type="button" data-bs-toggle="dropdown">
                 Change State
             </button>

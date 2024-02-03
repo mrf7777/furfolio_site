@@ -51,7 +51,7 @@ next: (optional) when setting commission state or updating other info, where to 
     </div>
 
     <div class="card-footer">
-        {% include "./commission_functions.html" with commission=commission csrf_token=csrf_token request=request fill=True next=next only %}
+        {% include "./commission_functions.html" with commission=commission csrf_token=csrf_token request=request next=next only %}
     </div>
 
 </div>

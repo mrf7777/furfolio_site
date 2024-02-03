@@ -37,7 +37,10 @@ urlpatterns = [
     path('users/<username>/', users.User.as_view(), name="user"),
     path('users/<username>/update-profile/',
          users.UpdateUserProfile.as_view(), name="update_user_profile"),
-    path('users/<username>/update-account/', users.UpdateUserAccount.as_view(), name="update_user_account"),
+    path(
+        'users/<username>/update-account/',
+        users.UpdateUserAccount.as_view(),
+        name="update_user_account"),
     path('users/', users.UserList.as_view(), name="user_list"),
     # user following
     path('users/<username>/follow/',
@@ -144,7 +147,10 @@ urlpatterns = [
         'notifications/<pk>/view/',
         notifications.OpenNotification.as_view(),
         name="open_notification"),
-    path('notifications/open-all/', notifications.OpenAllNotifications.as_view(), name="open_all_notifications"),
+    path(
+        'notifications/open-all/',
+        notifications.OpenAllNotifications.as_view(),
+        name="open_all_notifications"),
     # support
     path('support/', support.Support.as_view(), name="support"),
     path(

@@ -59,7 +59,7 @@ class UpdateUserAccount(
     template_name = "furfolio/users/user_account_update.html"
     context_object_name = "user"
     form_class = forms.UpdateUserAccountForm
-    
+
     def test_func(self) -> bool | None:
         return self.get_object().pk == self.request.user.pk
 

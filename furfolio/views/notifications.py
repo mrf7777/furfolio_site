@@ -31,8 +31,9 @@ class Notifications(
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["search_form"] = NotificationSearchForm(self.request.GET)
-        
-        context["exists_unread_notifications"] = notification_queries.get_num_unread_notifications_for_user(self.request.user) > 0
+
+        context["exists_unread_notifications"] = notification_queries.get_num_unread_notifications_for_user(
+            self.request.user) > 0
         return context
 
 
@@ -67,7 +68,7 @@ class OpenAllNotifications(
         notification_queries.make_all_notifications_seen_for_user(request.user)
         redirect_url = request.GET["next"]
         return redirect(redirect_url)
-        
+
 
 class NotificationCountBadge(LoginRequiredMixin, generic.TemplateView):
     template_name = "furfolio/notification_count_component.html"

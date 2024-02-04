@@ -4,6 +4,10 @@
 Edit Commission: {% include "./commission_title.html" with commission=commission only %}
 {% endblock %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="Update "|add:commission.offer.name only %}
+{% endblock %}
+
 {% block body %}
 
 <form enctype="multipart/form-data" method="post" id="form">

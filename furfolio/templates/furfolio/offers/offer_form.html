@@ -4,6 +4,10 @@
 Create Offer
 {% endblock %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="Create Offer" only %}
+{% endblock %}
+
 {% block body %}
 
 <form enctype="multipart/form-data" action="{% url "create_offer" %}" method="post" id="form">

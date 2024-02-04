@@ -4,6 +4,10 @@
 Delete Tag <code>{{ tag.name }}</code>
 {% endblock %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="Delete "|add:tag.name only %}
+{% endblock %}
+
 {% block body %}
 
 Deleting a tag cannot be undone. Please be sure that this is what you want to do.

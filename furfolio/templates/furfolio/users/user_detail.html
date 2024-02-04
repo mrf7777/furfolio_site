@@ -6,6 +6,10 @@
 <img class="me-3" src="{% include "./avatar_image_url.txt" with user=user only %}">{{ user.username }}
 {% endblock %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title=user.username only %}
+{% endblock %}
+
 {% block title_class %}
 mb-2
 {% endblock %}

@@ -6,6 +6,10 @@
 {{ offer.name }} by {% include "furfolio/users/badge.html" with user=offer.author show_avatar=True only %}
 {% endblock %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title=offer.name only %}
+{% endblock %}
+
 {% block body %}
     {% if offer.thumbnail %}
         <div class="d-flex justify-content-center mb-3">

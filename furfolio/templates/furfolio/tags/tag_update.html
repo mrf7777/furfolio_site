@@ -6,6 +6,10 @@
 Edit Tag <code>{{ tag.name }}</code>
 {% endblock %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="Update "|add:tag.name only %}
+{% endblock %}
+
 {% block body %}
 
 {% if perms.furfolio.delete_tag %}

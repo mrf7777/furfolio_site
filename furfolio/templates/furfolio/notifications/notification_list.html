@@ -6,6 +6,10 @@
 Notifications
 {% endblock %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="Notifications" only %}
+{% endblock %}
+
 {% block body %}
 
 <form method="get" id="notification_search_form">

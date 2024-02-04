@@ -9,6 +9,10 @@
 {% block title_class %}
 {% endblock %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="Dashboard" only %}
+{% endblock %}
+
 {% block content_container_class %}container-fluid{% endblock %}
 
 {% block body %}

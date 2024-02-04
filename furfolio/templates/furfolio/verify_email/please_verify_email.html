@@ -4,6 +4,10 @@
 Please verify your email
 {% endblock %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="Verify Email" only %}
+{% endblock %}
+
 {% block body %}
 An activation link has been sent to your email address which is <code>{{ email }}</code>.
 Please look at the email and follow its instructions to activate your account.

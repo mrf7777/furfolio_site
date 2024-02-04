@@ -4,6 +4,10 @@
 Update Account
 {% endblock %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="Update Account" only %}
+{% endblock %}
+
 {% block body %}
 <form enctype="multipart/form-data" method="post" id="form">
     {% csrf_token %}

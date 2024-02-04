@@ -6,6 +6,10 @@
 Create Commission for <a class="text-decoration-none" href="{% url "offer_detail" offer.pk %}">{{ offer.name }}</a> by {% include "furfolio/users/badge.html" with user=offer.author only %}
 {% endblock %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="Create Commission" only %}
+{% endblock %}
+
 {% block body %}
 
 {% if request.user == offer.author %}

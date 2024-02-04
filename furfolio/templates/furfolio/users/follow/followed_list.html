@@ -6,6 +6,10 @@
 </div>
 {% endblock %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="Following" only %}
+{% endblock %}
+
 {% block body %}
 {% if followed_users %}
     <div class="d-flex flex-wrap gap-3">

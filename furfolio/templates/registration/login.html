@@ -4,6 +4,10 @@
 Login
 {% endblock %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="Login" only %}
+{% endblock %}
+
 {% block body %}
 
 <form class="mb-3" method="post" action="{% url 'login' %}{% if next %}?next={{ next }}{% endif %}">

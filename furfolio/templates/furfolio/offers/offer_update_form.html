@@ -6,6 +6,10 @@
 Edit offer "{{ offer.name }}"
 {% endblock %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="Update "|add:offer.name only %}
+{% endblock %}
+
 {% block body %}
 
 <div class="d-flex justify-content-end">

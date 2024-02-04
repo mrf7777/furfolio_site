@@ -6,6 +6,10 @@
 Support Ticket: "{{ support_ticket.title }}"
 {% endblock %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="Ticket "|add:support_ticket.title only %}
+{% endblock %}
+
 {% block body %}
 <div class="row">
     <div class="col-3 col-sm-2">

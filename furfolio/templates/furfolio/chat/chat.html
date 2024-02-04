@@ -1,5 +1,9 @@
 {% extends "furfolio/layouts/title_body.html" %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title=chat.get_name only %}
+{% endblock %}
+
 {% block title %}
     {% if chat.commissionchat %}
         Chat for commission <a href="{% url "commission_detail" chat.commissionchat.commission.pk %}" class="text-decoration-none">{{ chat.commissionchat.get_name }}</a>

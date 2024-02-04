@@ -2,6 +2,10 @@
 
 {% load static %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="Tags" only %}
+{% endblock %}
+
 {% block content %}
 
 {% include "../wip.html" %}

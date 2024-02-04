@@ -1,0 +1,7 @@
+{% comment "" %}
+Includable website title.
+Expects the following context objects:
+  - title: (str) if given, describes the content of the page
+{% endcomment %}
+
+Furfolio{% if title %} - {{ title }}{% endif %}

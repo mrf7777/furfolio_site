@@ -8,6 +8,10 @@
     {% endif %}
 {% endblock %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="Email Verified" only %}
+{% endblock %}
+
 {% block body %}
     {% if success %}
         Click here to sign in get started: <a class="ms-2 btn btn-primary" href="{% url "after_sign_up" %}">Get Started</a>

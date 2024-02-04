@@ -16,7 +16,7 @@ next: (optional) when setting commission state or updating other info, where to 
 
 <div class="card">
     <div class="card-header">
-        <div class="card-title mb-0 d-flex">
+        <div class="card-title mb-0 d-flex align-items-center">
             <h6 class="mb-0">
                 {% if hide_redundant_users %}
                     {% if request.user.pk == commission.commissioner.pk %}
@@ -32,7 +32,7 @@ next: (optional) when setting commission state or updating other info, where to 
             </h6>
             <div class="flex-fill"></div>
             {% if show_status is True %}
-                <div class="mb-1">
+                <div>
                     {% include "./state_badge_using_commission.html" with commission=commission only %}
                 </div>
             {% endif %}

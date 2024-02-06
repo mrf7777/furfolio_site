@@ -307,13 +307,31 @@ class ChangeCommissionStateTestCase(TestCase):
         self.user1 = utils.make_user("user1", role=User.ROLE_CREATOR)
         self.user2 = utils.make_user("user2", role=User.ROLE_BUYER)
         self.offer = utils.make_offer(self.user1)
-        self.commission = utils.make_commission(self.user2, self.offer, state=Commission.STATE_REVIEW)
-        
-    def test_update_commission_state_closed_offer(self):
+        self.commission = utils.make_commission(
+            self.user2, self.offer, state=Commission.STATE_REVIEW)
+
+    def test_update_commission_closed_offer(self):
         self.offer.forced_closed = True
         self.offer.full_clean()
         self.offer.save()
-        
+
         self.commission.state = Commission.STATE_ACCEPTED
+        self.commission.full_clean()
+        self.commission.save()
+
+        self.commission.initial_request_text = "Blah and stuff that is new."
+        self.commission.full_clean()
+        self.commission.save()
+
+    def test_update_commission_expired_offer(self):
+        self.offer.created_date = timezone.now() - datetime.timedelta(days=(10 * 365))
+        # no cleaning on the offer here.
+        self.offer.save()
+
+        self.commission.state = Commission.STATE_ACCEPTED
+        self.commission.full_clean()
+        self.commission.save()
+
+        self.commission.initial_request_text = "Blah and stuff that is new."
         self.commission.full_clean()
         self.commission.save()

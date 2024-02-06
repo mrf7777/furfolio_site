@@ -4,6 +4,10 @@
 Sorry, we could not find that for you.
 {% endblock %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="Not Found" only %}
+{% endblock %}
+
 {% block body %}
 This page seems to not exist. UwU.
 {% endblock %}

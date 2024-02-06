@@ -35,8 +35,12 @@ urlpatterns = [
     path('offers/<pk>/', offers.Offer.as_view(), name="offer_detail"),
     # users
     path('users/<username>/', users.User.as_view(), name="user"),
-    path('users/<username>/update/',
-         users.UpdateUser.as_view(), name="update_user"),
+    path('users/<username>/update-profile/',
+         users.UpdateUserProfile.as_view(), name="update_user_profile"),
+    path(
+        'users/<username>/update-account/',
+        users.UpdateUserAccount.as_view(),
+        name="update_user_account"),
     path('users/', users.UserList.as_view(), name="user_list"),
     # user following
     path('users/<username>/follow/',
@@ -76,11 +80,18 @@ urlpatterns = [
     # dashboards
     path('dashboard/', dashboards.CreatorDashboard.as_view(),
          name="dashboard"),
+    path(
+        'dashboard/commissions/',
+        dashboards.CreatorDashboardCommissionsComponent.as_view(),
+        name="dashboard_commissions_component"),
     # commissions
     path(
         'commissions/<pk>',
         commissions.Commission.as_view(),
         name="commission_detail"),
+    path('commissions/<pk>/detail-component/',
+         commissions.CommissionDetailComponent.as_view(),
+         name="commission_detail_component"),
     path('offers/<offer_pk>/commissions/create/', commissions.CreateCommission.as_view(),
          name="create_commission"),
     path('commissions/<pk>/update/',
@@ -129,17 +140,30 @@ urlpatterns = [
         'notifications/',
         notifications.Notifications.as_view(),
         name="notifications"),
+    path('notifications/count-component/',
+         notifications.NotificationCountBadge.as_view(),
+         name="notifications_count_component"),
     path(
         'notifications/<pk>/view/',
         notifications.OpenNotification.as_view(),
         name="open_notification"),
+    path(
+        'notifications/open-all/',
+        notifications.OpenAllNotifications.as_view(),
+        name="open_all_notifications"),
     # support
     path('support/', support.Support.as_view(), name="support"),
-    path('support/not-logged-in/', support.SupportNotLoggedIn.as_view(), name="support_not_logged_in"),
+    path(
+        'support/not-logged-in/',
+        support.SupportNotLoggedIn.as_view(),
+        name="support_not_logged_in"),
     path(
         'support/create/',
         support.CreateSupportTicket.as_view(),
         name="create_support_ticket"),
+    path('support/<pk>/create-chat/',
+         support.CreateChatForSupportTicket.as_view(),
+         name="create_support_ticket_chat"),
     path(
         'support/<pk>/',
         support.SupportTicket.as_view(),

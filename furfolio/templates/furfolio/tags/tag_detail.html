@@ -4,6 +4,10 @@
 Tag: <code>{{ tag.name }}</code>
 {% endblock %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title=tag.name only %}
+{% endblock %}
+
 {% block body %}
 
 {% include "../wip.html" %}

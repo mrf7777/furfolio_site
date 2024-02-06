@@ -9,13 +9,14 @@ show_avatars: (bool) if True, shows the avatars of the users in the card
 hide_buyer: (bool) if True, and is not self-manged, hide the buyer
 hide_creator: (bool) if True, and is not self-managed, hide the creator
 hide_redundant_users: (bool) If true, equivallent to setting hide_buyer and hide_creator smartly based on the signed in user. If True, ignores hide_buyer and hide_creator.
+next: (optional) when setting commission state or updating other info, where to redirect to
 {% endcomment %}
 
 {% load static %}
 
 <div class="card">
     <div class="card-header">
-        <div class="card-title mb-0 d-flex">
+        <div class="card-title mb-0 d-flex align-items-center">
             <h6 class="mb-0">
                 {% if hide_redundant_users %}
                     {% if request.user.pk == commission.commissioner.pk %}
@@ -31,7 +32,7 @@ hide_redundant_users: (bool) If true, equivallent to setting hide_buyer and hide
             </h6>
             <div class="flex-fill"></div>
             {% if show_status is True %}
-                <div class="mb-1">
+                <div>
                     {% include "./state_badge_using_commission.html" with commission=commission only %}
                 </div>
             {% endif %}
@@ -50,7 +51,7 @@ hide_redundant_users: (bool) If true, equivallent to setting hide_buyer and hide
     </div>
 
     <div class="card-footer">
-        {% include "./commission_functions.html" with commission=commission csrf_token=csrf_token request=request fill=True only %}
+        {% include "./commission_functions.html" with commission=commission csrf_token=csrf_token request=request next=next only %}
     </div>
 
 </div>

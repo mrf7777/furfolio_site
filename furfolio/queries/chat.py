@@ -21,6 +21,20 @@ def create_chat_for_commission(commission: 'models.Commission'):
         )
 
 
+def create_chat_for_support_ticket(
+        support_ticket: 'models.SupportTicket',
+        assignee: 'models.User'):
+    support_ticket_chat = models.SupportTicketChat.objects.create(
+        support_ticket=support_ticket,
+    )
+    # add participants
+    for user in [support_ticket.author, assignee]:
+        models.ChatParticipant.objects.create(
+            chat=support_ticket_chat,
+            participant=user,
+        )
+
+
 def get_messages_from_chat(
         chat: 'models.Chat') -> 'Manager[models.ChatMessage]':
     return models.ChatMessage.objects.filter(chat=chat)
@@ -37,6 +51,17 @@ def get_commission_chat_by_commission(
             commission=commission,
         )
     except models.CommissionChat.DoesNotExist:
+        return None
+
+
+def get_support_ticket_chat_by_support_ticket(
+    support_ticket: 'models.SupportTicket',
+) -> Union['models.SupportTicketChat', None]:
+    try:
+        return models.SupportTicketChat.objects.get(
+            support_ticket=support_ticket,
+        )
+    except models.SupportTicketChat.DoesNotExist:
         return None
 
 
@@ -57,3 +82,9 @@ def get_recipients_of_message(
     ).exclude(
         pk=message.author.pk
     )
+
+
+def get_chat_participants(chat: 'models.Chat') -> 'Manager[models.User]':
+    return models.User.objects.filter(
+        chatparticipant__chat=chat,
+    ).order_by("username").distinct()

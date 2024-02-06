@@ -3,6 +3,10 @@
 {% load query_replace%}
 {% load static %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="Offers" only %}
+{% endblock %}
+
 {% block content %}
 
 <form method="get" class="mb-3">

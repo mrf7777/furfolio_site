@@ -106,7 +106,7 @@ class Commission(mixins.CleaningMixin, mixins.GetFullUrlMixin, models.Model):
             and self.tracker.has_changed("state")
             and not self.is_self_managed()
         )
-    
+
     def post_clean_new_object(self):
         furfolio_validators.check_commission_meets_offer_max_review_commissions(
             self)
@@ -114,7 +114,7 @@ class Commission(mixins.CleaningMixin, mixins.GetFullUrlMixin, models.Model):
             self)
         furfolio_validators.check_user_is_within_commission_limit_for_offer(
             self)
-        
+
         if not self.is_self_managed():
             furfolio_validators.check_user_is_not_spamming_commissions(
                 self.commissioner

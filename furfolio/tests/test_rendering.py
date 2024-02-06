@@ -20,15 +20,3 @@ class PagesTestCase(TestCase):
     def test_home(self):
         response = self.client.get(reverse("home"), follow=True)
         self.assertEqual(response.status_code, 200)
-
-
-class CommissionsTestCase(TestCase):
-    def setUp(self) -> None:
-        self.user_creator = utils.make_user(
-            "creator", role=models.User.ROLE_CREATOR)
-        self.user_buyer = utils.make_user(
-            "buyer", role=models.User.ROLE_BUYER)
-
-        self.offer = utils.make_offer(self.user_creator)
-        self.commission = utils.make_commission(
-            self.user_buyer, self.offer, state=models.Commission.STATE_REVIEW)

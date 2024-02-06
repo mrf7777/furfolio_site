@@ -48,6 +48,17 @@ class CreateCommission(LoginRequiredMixin, generic.CreateView):
         return response
 
 
+def commission_detail_view_test_func(
+        commission: 'models.Commission',
+        current_user: 'models.User') -> bool:
+    if commission.offer.author.pk == current_user.pk:
+        return True
+    elif commission.commissioner.pk == current_user.pk:
+        return True
+    else:
+        return False
+
+
 class Commission(LoginRequiredMixin, UserPassesTestMixin, generic.DetailView):
     model = models.Commission
     template_name = "furfolio/commissions/commission_detail.html"
@@ -55,12 +66,25 @@ class Commission(LoginRequiredMixin, UserPassesTestMixin, generic.DetailView):
 
     def test_func(self):
         object = self.get_object()
-        if object.offer.author.pk == self.request.user.pk:
-            return True
-        elif object.commissioner.pk == self.request.user.pk:
-            return True
-        else:
-            return False
+        return commission_detail_view_test_func(object, self.request.user)
+
+
+class CommissionDetailComponent(
+        LoginRequiredMixin,
+        UserPassesTestMixin,
+        generic.DetailView):
+    model = models.Commission
+    template_name = "furfolio/commissions/commission_detail_component.html"
+    context_object_name = "commission"
+
+    def test_func(self):
+        object = self.get_object()
+        return commission_detail_view_test_func(object, self.request.user)
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["next"] = self.request.GET["next"]
+        return context
 
 
 class Commissions(PageRangeContextMixin, LoginRequiredMixin, generic.ListView):

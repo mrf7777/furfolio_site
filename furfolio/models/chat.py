@@ -7,6 +7,7 @@ import math
 from .. import validators as furfolio_validators
 from .commissions import Commission
 from .support import SupportTicket
+from ..queries import chat as chat_queries
 from ..queries import notifications as notification_queries
 
 
@@ -31,6 +32,9 @@ class Chat(models.Model):
 
         return "Generic Chat"
 
+    def get_participants(self):
+        return chat_queries.get_chat_participants(self)
+
 
 class CommissionChat(Chat):
     commission = models.ForeignKey(
@@ -53,6 +57,12 @@ class SupportTicketChat(Chat):
 
 
 class ChatParticipant(models.Model):
+    ROLE_BASIC = "BASIC"
+    ROLE_MANAGER = "MANAGER"
+    ROLE_CHOICES = [
+        (ROLE_BASIC, "Basic"),
+        (ROLE_MANAGER, "Manager"),
+    ]
     chat = models.ForeignKey(
         Chat,
         on_delete=models.CASCADE,
@@ -60,6 +70,11 @@ class ChatParticipant(models.Model):
     participant = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
+    )
+    role = models.CharField(
+        max_length=7,
+        choices=ROLE_CHOICES,
+        default=ROLE_BASIC,
     )
 
     created_date = models.DateTimeField(name="created_date", auto_now_add=True)

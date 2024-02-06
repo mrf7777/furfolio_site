@@ -1,0 +1,12 @@
+{% comment "" %}
+Represenets the number of notifications that are unread.
+If that number is 0, this template returns nothing.
+Expects the following context objects:
+  - user: the user of which to count the number of unread notifications
+{% endcomment %}
+
+{% if user.get_num_unread_notifications > 0 %}
+<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+    {{ user.get_num_unread_notifications }}
+</span>
+{% endif %}

@@ -1,16 +1,37 @@
 {% extends "furfolio/layouts/title_body.html" %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title=chat.get_name only %}
+{% endblock %}
+
 {% block title %}
     {% if chat.commissionchat %}
         Chat for commission <a href="{% url "commission_detail" chat.commissionchat.commission.pk %}" class="text-decoration-none">{{ chat.commissionchat.get_name }}</a>
+    {% endif %}
+    {% if chat.supportticketchat %}
+        Chat for support ticket <a href="{% url "support_ticket_detail" chat.supportticketchat.support_ticket.pk %}" class="text-decoration-none">{{ chat.supportticketchat.get_name }}</a>
     {% endif %}
 {% endblock %}
 
 {% block body %}
 
+<details class="mb-3">
+    <summary>
+        Participants
+    </summary>
+    <div class="d-flex align-items-center" style="width: auto; overflow-x: scroll; white-space: nowrap;">
+        {% for participant in chat.get_participants %}
+            <div class="m-2">
+                {% include "furfolio/users/badge.html" with user=participant show_avatar=True only %}
+            </div>
+        {% endfor %}
+    </div>
+</details>
+
 <div
     hx-get="{% url "chat_messages_component" chat.pk %}"
-    hx-trigger="every 4s"
+    hx-trigger="every 5s"
+    hx-swap="morph:innerHTML"
 >
     {# initially populate chat server-side #}
     {% include "./messages.html" with messages=messages current_user=request.user only %}

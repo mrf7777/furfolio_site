@@ -1,7 +1,13 @@
 {% extends "furfolio/layouts/title_body.html" %}
 
+{% load query_replace %}
+
 {% block title %}
-Support Ticket {{ support_ticket.title }}
+Support Ticket: "{{ support_ticket.title }}"
+{% endblock %}
+
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="Ticket "|add:support_ticket.title only %}
 {% endblock %}
 
 {% block body %}
@@ -31,6 +37,23 @@ Support Ticket {{ support_ticket.title }}
 </div>
 
 <hr>
+
+{% if support_ticket.get_chat %}
+<p>
+    <a class="text-reset text-decoration-none" href="{% url "chat" support_ticket.get_chat.pk %}">
+        <div>{% include "furfolio/chat/chat_button.html" %}</div>
+    </a>
+</p>
+{% elif current_user_is_support_mod %}
+<p>
+    <form method="post" action="{% url "create_support_ticket_chat" support_ticket.pk %}?{% query_replace request "next" request.get_full_path %}">
+        {% csrf_token %}
+        <button class="btn btn-primary">
+            Create chat
+        </button>
+    </form>
+</p>
+{% endif %}
 
 <p>
     {{ support_ticket.description|linebreaks|urlize }}

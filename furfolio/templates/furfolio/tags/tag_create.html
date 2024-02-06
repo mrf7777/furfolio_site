@@ -4,6 +4,10 @@
 Create Tag
 {% endblock %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="Create Tag" only %}
+{% endblock %}
+
 {% block body %}
 
 <form method="post" id="form">

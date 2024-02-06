@@ -4,6 +4,10 @@
 Delete offer "{{ offer.name }}"
 {% endblock %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="Delete "|add:offer.name only %}
+{% endblock %}
+
 {% block body %}
 <form method="post">
     {% csrf_token %}

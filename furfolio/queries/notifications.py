@@ -156,5 +156,16 @@ def make_notification_seen(notification: 'models.Notification'):
     notification.save()
 
 
+def make_all_notifications_seen_for_user(user: 'models.User'):
+    unseen_notifications = models.Notification.objects.filter(
+        seen=False,
+        recipient=user,
+    )
+    for notification in unseen_notifications:
+        notification.seen = True
+        notification.full_clean()
+        notification.save()
+
+
 def get_num_unread_notifications_for_user(user: 'models.User') -> int:
     return get_notifications_for_user(user).filter(seen=False).count()

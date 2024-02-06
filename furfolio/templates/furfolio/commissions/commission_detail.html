@@ -1,48 +1,23 @@
 {% extends "furfolio/layouts/title_body.html" %}
 
+{% load query_replace %}
+
 {% block title %}
 {% include "./commission_title.html" with commission=commission link_to_offer=True show_avatars=True only %}
 {% endblock %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title=commission.offer.name only %}
+{% endblock %}
+
 {% block body %}
 
-<div class="row">
-    <div class="col-3 col-sm-2">
-        State: 
-    </div>
-    <div class="col">
-        {% include "./state_badge_using_commission.html" with commission=commission only %}
-    </div>
+<div
+    hx-get="{% url "commission_detail_component" commission.pk %}?{% query_replace request "next" request.get_full_path %}"
+    hx-trigger="every 5s"
+    hx-swap="morph:innerHTML"
+>
+    {% include "./commission_detail_component.html" %}
 </div>
-<div class="row">
-    <div class="col-3 col-sm-2">
-        Created: 
-    </div>
-    <div class="col">
-        {{ commission.created_date }}
-    </div>
-</div>
-
-<hr>
-
-<div class="my-3">
-    {% include "./commission_functions.html" with commission=commission csrf_token=csrf_token request=request some_space_between_functions=True fill=False only %}
-</div>
-
-<div class="mb-3">
-    <h5>Initial Requirements</h5>
-    <p>{{ commission.initial_request_text|linebreaks|urlize }}</p>
-</div>
-
-{% if commission.attachment %}
-<div class="mb-3">
-    <h5>Attachment</h5>
-    <a class="text-decoration-none" href="{{ commission.attachment.url }}">{{ commission.attachment.name }}</a>
-</div>
-{% endif %}
-
-{% if request.user.pk == commission.offer.author.pk %}
-    <a href="{% url "update_commission" commission.pk %}"><button class="btn btn-primary">Edit</button></a>
-{% endif %}
 
 {% endblock %}

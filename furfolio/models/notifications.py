@@ -143,6 +143,6 @@ class SupportTicketStateNotification(models.Model):
         max_length=13,
         choices=SupportTicket.STATE_CHOICES,
     )
-    
+
     def __str__(self):
         return f"support ticket \"{self.support_ticket.title}\" has changed its state to {self.support_ticket_state}"

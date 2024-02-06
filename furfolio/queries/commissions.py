@@ -98,7 +98,6 @@ class CommissionsSearchQuery:
         rejected: bool = False,
         offer: int | None = None,
         order: str | None = None,
-        # TODO: define an order class at the query package level to handle this
         commissioner: str = "",
         creator: str = "",
     ):

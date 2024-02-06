@@ -4,5 +4,9 @@
 Something went wrong.
 {% endblock %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="Server Error" only %}
+{% endblock %}
+
 {% block body %}
 {% endblock %}

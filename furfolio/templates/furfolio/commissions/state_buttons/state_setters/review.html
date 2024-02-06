@@ -5,9 +5,10 @@ Expects the following context objects:
   - commission: the commission to change the state of when this button is pressed
   - request: the request object
   - csrf_token: the csrf token
+  - next: (optional) the url to go to when set
 {% endcomment %}
 
-<form method="post" action="{% url "update_commission_status" commission.pk %}?next={{ request.get_full_path|urlencode }}">
+<form method="post" action="{% url "update_commission_status" commission.pk %}?next={% if next %}{{ next }}{% else %}{{ request.get_full_path|urlencode }}{% endif %}">
     {% csrf_token %}
     <input type="hidden" value="REVIEW" name="state">
     {% include "../review.html" %}

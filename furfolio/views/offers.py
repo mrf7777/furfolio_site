@@ -101,8 +101,6 @@ class UpdateOffer(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     form_class = forms.OfferFormUpdate
     template_name = "furfolio/offers/offer_update_form.html"
 
-    # TODO: use the slightly more efficient version
-    # https://www.django-antipatterns.com/antipattern/checking-ownership-through-the-userpassestestmixin.html
     def test_func(self):
         return self.get_object().author.pk == self.request.user.pk
 

@@ -4,6 +4,10 @@
 This page is forboden.
 {% endblock %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="Forbidden" only %}
+{% endblock %}
+
 {% block body %}
 You do not have the permissions to see this page. OwO.
 {% endblock %}

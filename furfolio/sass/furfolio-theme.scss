@@ -15,8 +15,11 @@ $border-radius: 0.5rem;
 
 $line-height-base: 1.62;
 
+$font-family-sans-serif: Roboto, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif !default;
+
+
 html {
-    font-size: 15px;
+    font-size: 16px;
 }
 
 @import "../../bootstrap-5.3.2/scss/bootstrap.scss";

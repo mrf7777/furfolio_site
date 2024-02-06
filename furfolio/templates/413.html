@@ -4,6 +4,10 @@
 File Upload Too Large
 {% endblock %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="File Too Large" only %}
+{% endblock %}
+
 {% block body %}
 The file that you tried to upload was way too large for the server to handle.
 {% endblock %}

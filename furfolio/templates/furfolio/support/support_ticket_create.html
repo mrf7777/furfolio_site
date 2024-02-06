@@ -4,6 +4,10 @@
 Create support ticket
 {% endblock %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="Create Support Ticket" only %}
+{% endblock %}
+
 {% block body %}
 <form method="post">
     {% csrf_token %}

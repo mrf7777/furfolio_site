@@ -4,9 +4,13 @@
 Support (not logged in)
 {% endblock %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="Support not logged in" only %}
+{% endblock %}
+
 {% block body %}
 <p>
-You are not logged it, try to <a href="{% url "login" %}?next={{ request.get_full_path|urlencode }}">log in here</a>.
+You are not logged in, try to <a href="{% url "login" %}?next={{ request.get_full_path|urlencode }}">log in here</a>.
 </p>
 
 <p>

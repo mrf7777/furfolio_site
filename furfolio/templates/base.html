@@ -23,14 +23,64 @@
         Furfolio
         {% endblock %}
     </title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;0,700;1,100;1,400;1,700&display=swap" rel="stylesheet">
+    
     <link href="{% static "/style/style.css" %}" rel="stylesheet">
     <script src="{% static "/js/bootstrap.bundle.min.js" %}"></script>
+
     <script src="{% static "/js/htmx.min.js" %}"></script>
+    <script src="{% static "/js/idiomorph-ext.min.js" %}"></script>
+    <script type="text/javascript">
+        // set defaults for idiomorph swapping in htmx
+        Idiomorph.defaults.callbacks.beforeNodeMorphed = function(oldNode, newNode) {
+            classToPassThrough = "show"
+            // if the old node has `show` class, so does the new one
+            // if the old node does not have `show` class, the new one does not
+
+            if(!newNode.className){
+                newNode.className = ""
+            }
+            if(!oldNode.className){
+                oldNode.className = ""
+            }
+
+            oldClasses = oldNode.className.split(" ")
+            newClasses = newNode.className.split(" ")
+            
+            if(oldClasses.includes(classToPassThrough)) {
+                // ensure newClasses has the show
+                if(!newClasses.includes(classToPassThrough)) {
+                    newNode.className = newNode.className + " " + classToPassThrough
+                }
+            }
+            else {
+                // ensure that the newClasses does not have the show
+                newClassesForNewNode = ""
+                newClasses.forEach(newClassName => {
+                    if(newClassName === classToPassThrough) {
+                        return
+                    } else {
+                        newClassesForNewNode = newClassesForNewNode + " " + newClassName
+                    }
+                })
+                newClassesForNewNode = newClassesForNewNode.trim()
+                newNode.className = newClassesForNewNode
+            }
+
+            // cleanup classnames
+            newNode.className = newNode.className.trim()
+            oldNode.className = oldNode.className.trim()
+        }
+        Idiomorph.defaults.morphStyle = "innerHTML"
+    </script>
 
     {% progressive_web_app_meta %}
 </head>
 
-<body class="d-flex flex-column vh-100">
+<body class="d-flex flex-column vh-100" hx-ext="morph">
     
     {% block header %}
     <div class="container-fluid">

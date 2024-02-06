@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="Commissions" only %}
+{% endblock %}
+
 {% block content %}
 <h2>
     Commissions (<a href="{% url "commission_search_help" %}">help</a>)

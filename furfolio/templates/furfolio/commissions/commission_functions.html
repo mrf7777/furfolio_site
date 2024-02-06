@@ -5,53 +5,52 @@ Expects the following objects:
   - commission: the commission object to show
   - csrf_token: the csrf_token
   - request: the request object
-  - fill: (bool) if True, will put functions and state buttons as far apart as possible.
-  - some_space_between_functions: (bool) if True, will force add margin between commission functions
+  - next: (optional) when setting state of commission or submitting form, where to redirect to
+  - show_edit_button: if True, shows the edit button for the commission
 {% endcomment %}
 
-<div class="d-flex flex-wrap align-items-center">
+<div class="d-flex flex-wrap align-items-center gap-3">
     {% if commission.get_chat %}
-        <div class="flex-column me-0">
-            <div class="mb-1"><a class="text-reset" href="{% url "chat" commission.get_chat.pk %}">{% include "../chat/chat_button.html" %}</a></div>
+        <div>
+            <a class="text-reset" href="{% url "chat" commission.get_chat.pk %}">{% include "../chat/chat_button.html" %}</a>
         </div>
-        {% if some_space_between_functions %}
-            <div class="me-3"></div>
-        {% endif %}
-    {% endif %}
-
-    {% if fill %}
-        <div class="flex-fill"></div>
     {% endif %}
 
     {% if request.user == commission.offer.author %}
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle text-light" type="button" data-bs-toggle="dropdown">
-                Change State
+                State
             </button>
-            <div class="fs-5 dropdown-menu">
+            <ul class="fs-5 dropdown-menu">
                 {% if commission.state == "REVIEW" %}
-                    <div class="m-3">{% include "furfolio/commissions/state_buttons/state_setters/accept.html" with commission=commission request=request csrf_token=csrf_token only %}</div>
-                    <div class="m-3">{% include "furfolio/commissions/state_buttons/state_setters/reject.html" with commission=commission request=request csrf_token=csrf_token only %}</div>
+                    <li class="dropdown-item mb-3">{% include "furfolio/commissions/state_buttons/state_setters/accept.html" with commission=commission request=request csrf_token=csrf_token next=next only %}</li>
+                    <li class="dropdown-item">{% include "furfolio/commissions/state_buttons/state_setters/reject.html" with commission=commission request=request csrf_token=csrf_token next=next only %}</li>
                 {% endif %}
 
                 {% if commission.state == "ACCEPTED" %}
-                    <div class="m-3 mb-4">{% include "furfolio/commissions/state_buttons/state_setters/in_progress.html" with commission=commission request=request csrf_token=csrf_token only %}</div>
-                    <div class="m-3" style="font-size: 0.65em">{% include "furfolio/commissions/state_buttons/state_setters/review.html" with commission=commission request=request csrf_token=csrf_token only %}</div>
+                    <li class="dropdown-item mb-3">{% include "furfolio/commissions/state_buttons/state_setters/in_progress.html" with commission=commission request=request csrf_token=csrf_token next=next only %}</li>
+                    <li class="dropdown-item" style="font-size: 0.65em">{% include "furfolio/commissions/state_buttons/state_setters/review.html" with commission=commission request=request csrf_token=csrf_token next=next only %}</li>
                 {% endif %}
 
                 {% if commission.state == "IN_PROGRESS" %}
-                    <div class="m-3 mb-4" >{% include "furfolio/commissions/state_buttons/state_setters/close.html" with commission=commission request=request csrf_token=csrf_token only %}</div>
-                    <div class="m-3" style="font-size: 0.65em">{% include "furfolio/commissions/state_buttons/state_setters/accept.html" with commission=commission request=request csrf_token=csrf_token only %}</div>
+                    <li class="dropdown-item mb-3" >{% include "furfolio/commissions/state_buttons/state_setters/close.html" with commission=commission request=request csrf_token=csrf_token next=next only %}</li>
+                    <li class="dropdown-item" style="font-size: 0.65em">{% include "furfolio/commissions/state_buttons/state_setters/accept.html" with commission=commission request=request csrf_token=csrf_token next=next only %}</li>
                 {% endif %}
 
                 {% if commission.state == "CLOSED" %}
-                    <div class="m-3" style="font-size: 0.65em">{% include "furfolio/commissions/state_buttons/state_setters/in_progress.html" with commission=commission request=request csrf_token=csrf_token only %}</div>
+                    <li class="dropdown-item" style="font-size: 0.65em">{% include "furfolio/commissions/state_buttons/state_setters/in_progress.html" with commission=commission request=request csrf_token=csrf_token next=next only %}</li>
                 {% endif %}
 
                 {% if commission.state == "REJECTED" %}
-                    <div class="m-3">{% include "furfolio/commissions/state_buttons/state_setters/accept.html" with commission=commission request=request csrf_token=csrf_token only %}</div>
+                    <li class="dropdown-item">{% include "furfolio/commissions/state_buttons/state_setters/accept.html" with commission=commission request=request csrf_token=csrf_token next=next only %}</li>
                 {% endif %}
-            </div>
+            </ul>
         </div>
+    {% endif %}
+
+    {% if show_edit_button %}
+    <div>
+        <a href="{% url "update_commission" commission.pk %}" class="btn btn-primary">Edit</a>
+    </div>
     {% endif %}
 </div>

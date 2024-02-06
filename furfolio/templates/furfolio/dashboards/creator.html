@@ -1,6 +1,7 @@
-{% extends "furfolio/layouts/3_columns.html" %}
+{% extends "furfolio/layouts/title_body.html" %}
 
 {% load static %}
+{% load query_replace %}
 
 {% block title %}
 {% endblock %}
@@ -8,7 +9,13 @@
 {% block title_class %}
 {% endblock %}
 
-{% block body_1 %}
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="Dashboard" only %}
+{% endblock %}
+
+{% block content_container_class %}container-fluid{% endblock %}
+
+{% block body %}
 <div class="d-flex">
     <div class="dropdown me-3">
         <button class="btn btn-primary dropdown-toggle fw-bold" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -37,52 +44,20 @@
     {{ offer_select_form }}
 </form>
 
+<div
+    hx-get="{% url "dashboard_commissions_component" %}?{% query_replace request "next" request.get_full_path %}"
+    hx-trigger="load, every 5s"
+    hx-swap="morph:innerHTML"
+>
+    <span class="htmx-indicator">
+        <div class="d-flex justify-content-center">
+            {% include "furfolio/components/spinner.html" %}
+        </div>
+    </span>
+</div>
+
 {% include "furfolio/scripts/submit_form_on_change.html" with form_id="offer-select-form" only %}
 {% include "furfolio/scripts/refresh_page_on_history_navigation.html" %}
 
 {% endblock %}
 
-{% block column_1_title %}
-<a class="text-decoration-none" href="{{ see_review_commissions_url }}">
-    {% include "furfolio/commissions/state_badge.html" with state="REVIEW" only %}
-</a>
-<span class="fs-5">
-    {{ review_commissions.count }}
-    of
-    <a class="text-decoration-none" href="{{ see_review_commissions_url }}">{{ review_commissions_total_count }}</a>
-</span>
-{% endblock %}
-
-{% block column_1 %}
-    {% include "./commission_card_list.html" with commissions=review_commissions request=request csrf_token=csrf_token only %}
-{% endblock %}
-
-{% block column_2_title %}
-<a class="text-decoration-none" href="{{ see_accepted_commissions_url }}">
-    {% include "furfolio/commissions/state_badge.html" with state="ACCEPTED" only %}
-</a>
-<span class="fs-5">
-    {{ accepted_commissions.count }}
-    of
-    <a class="text-decoration-none" href="{{ see_accepted_commissions_url }}">{{ accepted_commissions_total_count }}</a>
-</span>
-{% endblock %}
-
-{% block column_2 %}
-    {% include "./commission_card_list.html" with commissions=accepted_commissions request=request csrf_token=csrf_token only %}
-{% endblock %}
-
-{% block column_3_title %}
-<a class="text-decoration-none" href="{{ see_in_progress_commissions_url }}">
-    {% include "furfolio/commissions/state_badge.html" with state="IN_PROGRESS" only %}
-</a>
-<span class="fs-5">
-    {{ in_progress_commissions.count }}
-    of
-    <a class="text-decoration-none" href="{{ see_in_progress_commissions_url }}">{{ in_progress_commissions_total_count }}</a>
-</span>
-{% endblock %}
-
-{% block column_3 %}
-    {% include "./commission_card_list.html" with commissions=in_progress_commissions request=request csrf_token=csrf_token only %}
-{% endblock %}

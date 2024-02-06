@@ -2,14 +2,19 @@
     "cSpell.words": [
         "cartoonistic",
         "Commissionee",
+        "enctype",
         "endcomment",
         "endfor",
         "furfolio",
         "htmx",
+        "Includable",
+        "noopener",
+        "noreferrer",
         "queryset",
         "tbody",
         "thead",
-        "Unfollow"
+        "Unfollow",
+        "urlencode"
     ],
     "python.analysis.typeCheckingMode": "off",
     "[python]": {

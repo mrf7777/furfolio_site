@@ -6,6 +6,10 @@
 {{ offer.name }} by {% include "furfolio/users/badge.html" with user=offer.author show_avatar=True only %}
 {% endblock %}
 
+{% block site_title %}
+{% include "furfolio/website_title.html" with title=offer.name only %}
+{% endblock %}
+
 {% block body %}
     {% if offer.thumbnail %}
         <div class="d-flex justify-content-center mb-3">
@@ -54,22 +58,28 @@
 
     <hr>
 
-    {{ offer.description|linebreaks|urlize }}
+    <div class="d-flex flex-wrap gap-3 align-items-center mb-3">
+        {% if request.user.pk == offer.author.pk %}
+            <div>
+                <a class="btn btn-primary" href="{% url "update_offer" offer.pk %}">Edit</a>
+            </div>
+            <div>
+                <a class="btn btn-primary" href="{{ see_commissions_url }}">Commissions</a>
+            </div>
+        {% endif %}
 
-    {% if request.user.pk == offer.author.pk %}
-        <div>
-            <a class="btn btn-primary mb-3" href="{% url "update_offer" offer.pk %}">Edit</a>
-        </div>
-        <div>
-            <a class="btn btn-primary mb-3" href="{{ see_commissions_url }}">Commissions</a>
-        </div>
-    {% endif %}
-
-    <div>
         {% if should_show_create_commission_button %}
-            <a class="btn btn-primary d-inline-flex align-items-center" href="{% url "create_commission" offer.pk %}"><img class="me-2" src="{% static "symbols/plus-white.svg" %}" style="width: 1em;"> Request Commission</a>
-        {% elif not request.user.is_authenticated %}
-            <b><a href="{% url "login" %}?next={{ request.get_full_path|urlencode }}">Sign In</a> to request commissions.</b>
+            <div>
+                <a class="btn btn-primary" href="{% url "create_commission" offer.pk %}">
+                    <img class="me-2" src="{% static "symbols/plus-white.svg" %}" style="width: 1em;"> Request Commission
+                </a>
+            </div>
+        {% endif %}
+    </div>
+
+    {% if not should_show_create_commission_button %}
+        {% if not request.user.is_authenticated %}
+            <b class="mb-3 d-block"><a href="{% url "login" %}?next={{ request.get_full_path|urlencode }}">Sign In</a> to request commissions.</b>
         {% elif offer.is_closed %}
             <b>This offer is not accepting commissions because it is closed.</b>
         {% elif offer.has_max_review_commissions %}
@@ -77,6 +87,9 @@
         {% else %}
             <b>This offer is not accepting commissions at this time.</b>
         {% endif %}
-    </div>
+    {% endif %}
+
+    {{ offer.description|linebreaks|urlize }}
+
 
 {% endblock %}

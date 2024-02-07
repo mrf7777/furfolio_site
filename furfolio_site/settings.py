@@ -40,6 +40,9 @@ else:
     DOMAIN_AND_SCHEME = "https://{}".format(ALLOWED_HOSTS[0])
 
 
+# beta release settings
+IS_BETA = True
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -86,6 +89,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'furfolio.context_processors.is_beta',
             ],
         },
     },

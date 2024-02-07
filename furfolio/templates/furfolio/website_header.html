@@ -6,7 +6,9 @@ Includable website header.
     <div class="navbar-brand">
         <a href="{% url "home" %}" class="text-decoration-none d-flex align-items-center gap-2">
             <img width="80px" src="{% static "logos/light/light-chrom-f.svg" %}" alt="Furfolio logo">
-            {% include "furfolio/components/beta_badge.html" %}
+            {% if is_beta %}
+                {% include "furfolio/components/beta_badge.html" %}
+            {% endif %}
         </a>
     </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

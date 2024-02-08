@@ -3,7 +3,14 @@ Includable website header.
 {% endcomment %}
 {% load static %}
 <nav class="navbar navbar-expand-md">
-    <a class="navbar-brand" href="{% url "home" %}"><img width="80px" src="{% static "logos/light/light-chrom-f.svg" %}"></img></a>
+    <div class="navbar-brand">
+        <a href="{% url "home" %}" class="text-decoration-none d-flex align-items-center gap-2">
+            <img width="80px" src="{% static "logos/light/light-chrom-f.svg" %}" alt="Furfolio logo">
+            {% if is_beta %}
+                {% include "furfolio/components/beta_badge.html" %}
+            {% endif %}
+        </a>
+    </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>

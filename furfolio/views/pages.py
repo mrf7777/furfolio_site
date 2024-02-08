@@ -24,6 +24,10 @@ class Home(generic.TemplateView):
             return super().get(request, *args, **kwargs)
 
 
+class SocialsAndContacts(EmailsContextMixin, generic.TemplateView):
+    template_name = "furfolio/pages/socials_and_contacts.html"
+
+
 class ExampleOfferAndCommissionMixin:
     def get_context_data(self, **kwargs) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)

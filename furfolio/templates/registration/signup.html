@@ -12,6 +12,15 @@ Sign Up
 
 {% block body %}
   <form enctype="multipart/form-data" method="post" id="form">
+
+    {% if is_beta %}
+      <p class="p-3 border rounded bg-warning-subtle">
+        Furfolio is currently in a beta testing phase. As long as you see <span>{% include "furfolio/components/beta_badge.html" %}</span>
+        at the top of this website, this website is in beta. By using Furfolio and creating an account, you
+        understand that there is a possibility of data loss and feature loss as long as Furfolio is in beta.
+      </p>
+    {% endif %}
+
     {% csrf_token %}
     {{ form }}
 

@@ -1,0 +1,23 @@
+{% extends "furfolio/layouts/title_body.html" %}
+
+{% block title %}
+Socials and Contacts
+{% endblock %}
+
+{% block site_title %}
+{% include "furfolio/website_title.html" with title="Socials and Contacts" only %}
+{% endblock %}
+
+{% block body %}
+<p>
+    <h4>Socials</h4>
+    {% include "furfolio/components/socials.html" %}
+</p>
+
+<p>
+    <h4>Contacts</h4>
+    If you have general questions or need a general point of contact to Furfolio, reach out to <code>{{ info_email }}</code>.
+    If you need support for the Furfolio system but do not have an active account or cannot access your account, reach out
+    to <code>{{ support_email }}</code>.
+</p>
+{% endblock %}

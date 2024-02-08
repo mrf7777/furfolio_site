@@ -175,7 +175,7 @@ urlpatterns = [
     path('legal/privacy-policy/',
          pages.PrivacyPolicy.as_view(), name="privacy_policy"),
     path('legal/credit/', pages.Credit.as_view(), name="credit"),
-    path('socials-and-contacts/', pages.SocialsAndContacts.as_view(), name="socials_and_contacts"),
+    path('links/', pages.SocialsAndContacts.as_view(), name="socials_and_contacts"),
     # help pages
     path('help/', pages.Help.as_view(), name="help"),
     path(

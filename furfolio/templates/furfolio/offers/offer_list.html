@@ -9,6 +9,13 @@
 
 {% block content %}
 
+{% if show_creator_functions %}
+    <a class="btn btn-primary" href="{% url "create_offer" %}">
+        <img src="{% static "symbols/plus-white.svg" %}" style="width: 1em;"> Create
+    </a>
+    <hr>
+{% endif %}
+
 <form method="get" class="mb-3">
     {{ search_form }}
 </form>

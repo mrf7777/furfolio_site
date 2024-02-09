@@ -47,6 +47,8 @@ class OfferList(
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
         context["search_form"] = forms.OfferSearchForm(self.request.GET)
+        if self.request.user.is_authenticated:
+            context["show_creator_functions"] = (self.request.user.role == models.User.ROLE_CREATOR)
         return context
 
 

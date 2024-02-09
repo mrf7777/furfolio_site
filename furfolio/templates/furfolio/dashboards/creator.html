@@ -17,16 +17,7 @@
 
 {% block body %}
 <div class="d-flex">
-    <div class="dropdown me-3">
-        <button class="btn btn-primary dropdown-toggle fw-bold" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Offers
-        </button>
-        <ul class="dropdown-menu">
-            {# TODO: extract offer search url to python context #}
-            <li><a class="dropdown-item fw-bold" href="{% url "offer_list" %}?author={{ request.user.username }}&sort=created_date">View</a></li>
-            <li><a class="dropdown-item d-inline-flex fw-bold"  href="{% url "create_offer" %}"><img class="me-2" src="{% static "symbols/plus-black.svg" %}" style="width: 1em;">Create</a></li>
-        </ul>
-    </div>
+    {% include "furfolio/offers/components/offer_actions.html" with username=request.user.username only %}
 
     <div class="dropdown">
         <button class="btn btn-primary dropdown-toggle fw-bold" type="button" data-bs-toggle="dropdown" aria-expanded="false">

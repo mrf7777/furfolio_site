@@ -10,7 +10,9 @@
 {% block content %}
 
 {% if show_creator_functions %}
-    {% include "./components/offer_actions.html" with username=request.user.username only %}
+    <a class="btn btn-primary" href="{% url "create_offer" %}">
+        <img src="{% static "symbols/plus-white.svg" %}" style="width: 1em;"> Create
+    </a>
     <hr>
 {% endif %}
 

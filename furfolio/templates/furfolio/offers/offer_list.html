@@ -9,6 +9,11 @@
 
 {% block content %}
 
+{% if show_creator_functions %}
+    {% include "./components/offer_actions.html" with username=request.user.username only %}
+    <hr>
+{% endif %}
+
 <form method="get" class="mb-3">
     {{ search_form }}
 </form>

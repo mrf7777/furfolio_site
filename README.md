@@ -10,7 +10,7 @@ A free to use web platform that allows for managing the entire artist's commissi
 
 Furfolio does not handle payment between buyer and creators and delegates that to the user.
 
-## How?
+## How to use?
 ### Official Site
 You can visit [https://www.furfolio.net/](https://www.furfolio.net/)
 

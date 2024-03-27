@@ -23,7 +23,7 @@ urlpatterns = [
     path('', pages.Home.as_view(), name="home"),
     # offers
     path('offers/', offers.OfferList.as_view(), name="offer_list"),
-    path('offers/create/', offers.CreateOffer.as_view(), name="create_offer"),
+    path('offers/create/', pages.FurfolioIsClosing.as_view(), name="create_offer"),
     path(
         'offers/<pk>/update/',
         offers.UpdateOffer.as_view(),
@@ -50,7 +50,7 @@ urlpatterns = [
     path('users/<username>/followed/',
          users.FollowedList.as_view(), name="followed_list"),
     # accounts
-    path('accounts/signup/', registration.SignUp.as_view(), name="signup"),
+    path('accounts/signup/', pages.FurfolioIsClosing.as_view(), name="signup"),
     path(
         'accounts/login/',
         auth_views.LoginView.as_view(
@@ -104,7 +104,7 @@ urlpatterns = [
         name="commissions"),
     # tags
     path('tags/', tags.TagList.as_view(), name="tags"),
-    path('tags/create/', tags.CreateTag.as_view(), name="create_tag"),
+    path('tags/create/', pages.FurfolioIsClosing.as_view(), name="create_tag"),
     path('tags/<name>/update/', tags.UpdateTag.as_view(), name="update_tag"),
     path('tags/<name>/delete/', tags.DeleteTag.as_view(), name="delete_tag"),
     path('tags/<name>/', tags.Tag.as_view(), name="tag_detail"),
@@ -115,7 +115,7 @@ urlpatterns = [
         name="tag_categories"),
     path(
         'tag-categories/create/',
-        tags.CreateTagCategory.as_view(),
+        pages.FurfolioIsClosing.as_view(),
         name="create_tag_category"),
     path(
         'tag-categories/<name>/update/',
@@ -169,6 +169,7 @@ urlpatterns = [
         support.SupportTicket.as_view(),
         name="support_ticket_detail"),
     # static pages
+    path('furfolio-is-closing/', pages.FurfolioIsClosing.as_view(), name="furfolio_is_closing"),
     path('legal/', pages.Legal.as_view(), name="legal"),
     path('legal/terms-of-service/',
          pages.TermsOfService.as_view(), name="terms_of_service"),

@@ -10,6 +10,10 @@ from .breadcrumbs import IBreadcrumbParticipant, breadcrumb_items
 from .mixins import EmailsContextMixin
 
 
+class FurfolioIsClosing(generic.TemplateView):
+    template_name = "furfolio/pages/furfolio_is_closing.html"
+
+
 class Home(generic.TemplateView):
     template_name = "furfolio/home.html"
 

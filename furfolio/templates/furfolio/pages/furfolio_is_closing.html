@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% block breadcrumbs %}
+    {% endblock %}
+
+    <h2 class="mb-5">
+        {% block title %}
+            Furfolio is Shutting Down
+        {% endblock %}
+    </h2>
+
+    <div class="col-lg-7">
+        {% block body %}
+        <p>
+            Sorry, but Furfolio is not allowing new users or offers at this time. Furfolio will be going offline right before May 2024.
+            Development on furfolio has been very educational to me, but it is no longer feasible or viable to keep it running.
+            Thank you all to giving Furfolio a try!
+        </p>
+        {% endblock %}
+    </div>
+
+{% endblock %}
